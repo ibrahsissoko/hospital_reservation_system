@@ -12,11 +12,11 @@
           FROM users 
           WHERE username = " . $username; 
 
-      $result = $conn->query($query);
+      $result = mysql_query($query, $conn);
       $message = "got result, rows: " . $result->num_rows;
 
-      if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+      if (result) {
+        $row = mysql_fetch_assoc($result);
 
         $message = "password: " + $row['password'];
         if ($row && $password == $row['password']) {
@@ -26,6 +26,8 @@
         } else {
           $message = "login failed";
         }
+
+        mysql_free_result($result);
       }
     } 
 ?>

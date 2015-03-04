@@ -9,11 +9,11 @@
 	$dbport = constant("DB_PORT"); // Host port
 	$dbusername = constant("DB_USER"); // Mysql username 
 	$dbpassword = constant("DB_PASS"); // Mysql password 
-	$db_name = "wal"; // Database name 
+	$db_name = "wal";//"constant("DB_NAME")"; // Database name 
 
-	$conn = new mysqli($dbhost, $dbusername, $dbpassword, "", $dbport) or die("Error: " . mysqli_error($conn));
+	$conn = new mysql_connect($dbhost, $dbusername, $dbpassword, "", $dbport) or die("Error: no connection");
 	
-	if ($conn->connect_error) {
-		die("Connection failed: " . $conn->connect_error);
+	if (!mysql_select_db($db_name, $conn)) {
+		die("Error: couldn't select database");
 	}
 ?>
