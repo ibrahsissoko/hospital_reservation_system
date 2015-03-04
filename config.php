@@ -11,9 +11,5 @@
 	$dbpassword = constant("DB_PASS"); // Mysql password 
 	$db_name = "wal";//"constant("DB_NAME")"; // Database name 
 
-	$conn = new mysql_connect($dbhost, $dbusername, $dbpassword, "", $dbport) or die("Error: no connection");
-	
-	if (!mysql_select_db($db_name, $conn)) {
-		die("Error: couldn't select database");
-	}
+	$conn = mysqli_connect($dbhost, $dbusername, $dbpassword, $db_name, $dbport) or die("Error: no connection");
 ?>

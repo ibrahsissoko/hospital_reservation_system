@@ -12,22 +12,19 @@
           FROM users 
           WHERE username = " . $username; 
 
-      $result = mysql_query($query, $conn);
-      $message = "got result, rows: " . $result->num_rows;
+      $result = $conn->query($query);
+      $message = "got result", rows: " . $result->num_rows;"
 
       if (result) {
-        $row = mysql_fetch_assoc($result);
-
-        $message = "password: " + $row['password'];
-        if ($row && $password == $row['password']) {
-          $message = "login success";
-          header("Location: home.php"); 
-          die("Redirecting to: home.php"); 
-        } else {
-          $message = "login failed";
+        while ($row = mysqli_fetch_array($result)) {
+          if ($password == $row['password']) {
+            $message = "login success";
+            header("Location: home.php"); 
+            die("Redirecting to: home.php"); 
+          } else {
+            $message = "login failed";
+          }
         }
-
-        mysql_free_result($result);
       }
     } 
 ?>
