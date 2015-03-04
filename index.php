@@ -1,4 +1,6 @@
 <?php 
+    $debug = true;
+
     require("config.php");
     if(!empty($_POST)) { 
       $username = $_POST['username'];
@@ -12,7 +14,7 @@
       $result = $conn->query($query);
 
       if ($result->num_rows > 0) {
-        syslog(LOG_INFO, "query: " + $query);
+        syslog(LOG_INFO, "query: " . $query);
         $row = $result->fetch_assoc();
 
         syslog(LOG_INFO, $row['password']);
@@ -79,7 +81,15 @@
 </div>
 
 <div class="container hero-unit">
-    <p> <?php echo "query: " . $query . " " . "password: " . $row["password"] ?></p>
+    <p> <?php 
+            if (debug) {
+              echo "query: " . $query . "</br>" . 
+                    "num_rows: " . $rows->num_rows . "</br>" .
+                    "password: " .  $row["password"];
+            } 
+        ?>
+    </p>
+
     <h1>Main Homescreen</h1>
     <p>No user specific content because you haven't logged in.</p>
     <ul>
