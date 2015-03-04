@@ -1,6 +1,8 @@
 <?php 
     require("config.php");
     if(!empty($_POST)) { 
+      openlog("app_log", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+
       $username = $_POST['username'];
       $password = $_POST['password'];
 
@@ -9,17 +11,24 @@
           FROM users 
           WHERE username = " + $username; 
 
+      syslog(LOG_DEBUG, "query: " + $query);
+
       $result = $conn->query($query);
 
       if ($result->num_rows > 0) {
+        syslog(LOG_DEBUG, "more than 0 results");
+
         $row = $result->fetch_assoc();
 
+        syslog(LOG_DEBUG, $row['password']);
         if ($row && $password == $row['password']) {
+          closelog();
           // login is ok!
           header("Location: home.php"); 
           die("Redirecting to: home.php"); 
         } else {
-            echo "failed to login";
+          syslog(LOG_DEBUG, "password didn't match");
+          closelog();
         }
       }
     } 
