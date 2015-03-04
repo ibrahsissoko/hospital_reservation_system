@@ -44,7 +44,7 @@
 
 <body>
 
-<p> <?php echo $query + " " + $row["password"] ?></p>
+
 <div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
@@ -79,6 +79,7 @@
 </div>
 
 <div class="container hero-unit">
+    <p> <?php echo $query + " " + $row["password"] ?></p>
     <h1>Main Homescreen</h1>
     <p>No user specific content because you haven't logged in.</p>
     <ul>
