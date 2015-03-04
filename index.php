@@ -10,7 +10,7 @@
       $query = " 
           SELECT id, username, password, salt, email 
           FROM users 
-          WHERE username = " . $username; 
+          WHERE username = '" . $username . "'"; 
 
       $result = $conn->query($query);
       $message = "got result, rows: ";
