@@ -9,11 +9,11 @@
           FROM users 
           WHERE username = " + $username; 
 
-      $result = mysqli_query($connection, $query)
+      $result = $conn->query($query);
 
-      if (mysql_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        
+      if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
         if ($row && $password == $row['password']) {
           // login is ok!
           header("Location: home.php"); 

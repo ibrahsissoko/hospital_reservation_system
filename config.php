@@ -11,6 +11,9 @@
 	$dbpassword = constant("DB_PASS"); // Mysql password 
 	$db_name = constant("DB_NAME"); // Database name 
 
-	$connection = mysqli_connect($dbhost, $dbusername, $dbpassword, "", $dbport) or die("Error: " . mysqli_error($connection));
-	mysqli_select_db($connection, $db_name) or die("Error: " . mysqli_error($connection));
+	$conn = new mysqli($dbhost, $dbusername, $dbpassword, "", $dbport) or die("Error: " . mysqli_error($conn));
+	
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
 ?>
