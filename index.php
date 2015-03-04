@@ -79,7 +79,7 @@
 </div>
 
 <div class="container hero-unit">
-    <p> <?php echo $query + " " + $row["password"] ?></p>
+    <p> <?php echo "query: " . $query . " " . "password: " . $row["password"] ?></p>
     <h1>Main Homescreen</h1>
     <p>No user specific content because you haven't logged in.</p>
     <ul>
