@@ -1,7 +1,6 @@
 <?php 
     require("config.php");
     if(!empty($_POST)) { 
-      openlog(ident, option, facility)
       $username = $_POST['username'];
       $password = $_POST['password'];
 
