@@ -17,7 +17,7 @@
 
         syslog(LOG_DEBUG, $row['password']);
         if ($row && $password == $row['password']) {
-          error_log("password is ok")
+          error_log("password is ok");
           // login is ok!
           header("Location: home.php"); 
           die("Redirecting to: home.php"); 
