@@ -12,17 +12,17 @@
       $result = $conn->query($query);
 
       if ($result->num_rows > 0) {
-        error_log("query: " + $query);
+        syslog(LOG_INFO, "query: " + $query);
         $row = $result->fetch_assoc();
 
-        syslog(LOG_DEBUG, $row['password']);
+        syslog(LOG_INFO, $row['password']);
         if ($row && $password == $row['password']) {
-          error_log("password is ok");
+          syslog(LOG_INFO, "password is ok");
           // login is ok!
           header("Location: home.php"); 
           die("Redirecting to: home.php"); 
         } else {
-          error_log("password incorrect");
+          syslog(LOG_INFO, "password incorrect");
         }
       }
     } 
