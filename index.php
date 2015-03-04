@@ -13,7 +13,7 @@
           WHERE username = " . $username; 
 
       $result = $conn->query($query);
-      $message = "got result", rows: " . $result->num_rows;"
+      $message = "got result, rows: ";
 
       if (result) {
         while ($row = mysqli_fetch_array($result)) {
