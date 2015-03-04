@@ -4,11 +4,35 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-	if ($password == 'password' && $username == 'admin') {
-	    header("Location: home.php"); 
+        $query = " 
+            SELECT 
+                id, 
+                username, 
+                password, 
+                salt, 
+                email 
+            FROM users 
+            WHERE 
+                username = :username 
+        "; 
+        $query_params = array( 
+            ':username' => $username
+        ); 
+
+        try{ 
+            $statement = $mysqlCon->prepare($query); 
+            $result = $statement->execute($query_params); 
+        } 
+        catch(PDOException $ex){ die("Failed to run query: " . $ex->getMessage()); } 
+
+        $row = $statement->fetch();
+
+      	if ($row && $password == $row['password']) {
+            // login is ok!
+      	    header("Location: home.php"); 
             die("Redirecting to: home.php"); 
-	} else {
-	    print("Failed to login");
+      	} else {
+    	      print("Failed to login");
         }
     } 
 ?>
