@@ -84,7 +84,7 @@
     <p> <?php 
             if (debug) {
               echo "query: " . $query . "</br>" . 
-                    "num_rows: " . $rows->num_rows . "</br>" .
+                    "num_rows: " . $result->num_rows . "</br>" .
                     "password: " .  $row["password"];
             } 
         ?>
