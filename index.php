@@ -1,39 +1,27 @@
 <?php 
     require("config.php");
     if(!empty($_POST)) { 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+      $username = $_POST['username'];
+      $password = $_POST['password'];
 
-        $query = " 
-            SELECT 
-                id, 
-                username, 
-                password, 
-                salt, 
-                email 
-            FROM users 
-            WHERE 
-                username = :username 
-        "; 
-        $query_params = array( 
-            ':username' => $username
-        ); 
+      $query = " 
+          SELECT id, username, password, salt, email 
+          FROM users 
+          WHERE username = " + $username; 
 
-        try{ 
-            $statement = $mysqlCon->prepare($query); 
-            $result = $statement->execute($query_params); 
-        } 
-        catch(PDOException $ex){ die("Failed to run query: " . $ex->getMessage()); } 
+      $result = mysqli_query($connection, $query)
 
-        $row = $statement->fetch();
-
-      	if ($row && $password == $row['password']) {
-            // login is ok!
-      	    header("Location: home.php"); 
-            die("Redirecting to: home.php"); 
-      	} else {
-    	      print("Failed to login");
+      if (mysql_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        
+        if ($row && $password == $row['password']) {
+          // login is ok!
+          header("Location: home.php"); 
+          die("Redirecting to: home.php"); 
+        } else {
+            echo "failed to login";
         }
+      }
     } 
 ?>
 
