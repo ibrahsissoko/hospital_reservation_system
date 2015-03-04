@@ -9,7 +9,7 @@
 	$dbport = constant("DB_PORT"); // Host port
 	$dbusername = constant("DB_USER"); // Mysql username 
 	$dbpassword = constant("DB_PASS"); // Mysql password 
-	$db_name = constant("DB_NAME"); // Database name 
+	$db_name = "wal"; // Database name 
 
 	$conn = new mysqli($dbhost, $dbusername, $dbpassword, "", $dbport) or die("Error: " . mysqli_error($conn));
 	

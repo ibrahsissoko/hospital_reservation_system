@@ -1,5 +1,6 @@
 <?php 
     $debug = true;
+    $message = "";
 
     require("config.php");
     if(!empty($_POST)) { 
@@ -12,19 +13,18 @@
           WHERE username = " . $username; 
 
       $result = $conn->query($query);
+      $message = "got result";
 
       if ($result->num_rows > 0) {
-        syslog(LOG_INFO, "query: " . $query);
         $row = $result->fetch_assoc();
 
-        syslog(LOG_INFO, $row['password']);
+        $message = "password: " + $row['password'];
         if ($row && $password == $row['password']) {
-          syslog(LOG_INFO, "password is ok");
-          // login is ok!
+          $message = "login success";
           header("Location: home.php"); 
           die("Redirecting to: home.php"); 
         } else {
-          syslog(LOG_INFO, "password incorrect");
+          $message = "login failed";
         }
       }
     } 
@@ -84,6 +84,7 @@
     <p> <?php 
             if (debug) {
               echo "query: " . $query . "</br>" . 
+                    "message: " . $message . "</br>" .
                     "num_rows: " . $result->num_rows . "</br>" .
                     "password: " .  $row["password"];
             } 
