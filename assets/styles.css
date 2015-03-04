@@ -1,0 +1,12 @@
+body { 
+	background-image: url("background.png"); 
+}
+
+.hero-unit { 
+	background-color: #fff; 
+}
+
+.center { 
+	display: block; 
+	margin: 0 auto; 
+}
