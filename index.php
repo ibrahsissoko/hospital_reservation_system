@@ -13,7 +13,7 @@
           WHERE username = " . $username; 
 
       $result = $conn->query($query);
-      $message = "got result";
+      $message = "got result, rows: " . $result->num_rows;
 
       if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
