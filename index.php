@@ -102,7 +102,7 @@
         ?>
     </p>
 
-    <form class="login_form" action="index.php" method="post">
+    <form action="index.php" method="post">
         Username:<br/> 
         <input type="text" name="username" value="" /> 
         <br/>

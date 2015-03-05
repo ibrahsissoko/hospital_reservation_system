@@ -2,6 +2,11 @@ body {
 	background-image: url("background.png"); 
 }
 
+form {
+    display: inline-block;
+    text-align: center;
+}
+
 .hero-unit { 
 	background-color: #fff; 
 }
@@ -12,11 +17,6 @@ body {
 		width: 50%;
 		margin: 0 auto;
 	}
-}
-
-.login_form {
-    display: block;
-    margin: 0 auto;
 }
 
 .center { 
