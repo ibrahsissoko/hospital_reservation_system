@@ -21,6 +21,31 @@
         //      Add the columns to the user database on the online phpMyAdmin site
         //      Update that user with the POST answers on here
         //      make sure the 'info_added' column gets set to 1 for that user as well so this doesn't run again.
+
+        $query = "
+            UPDATE users
+            SET
+                info_added = :info_added
+            WHERE
+                id = :id
+        ";
+
+        $query_params = array(
+            ':info_added' => '1',
+            ':id' => $_SESSION['id']
+        );
+
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+
+        if ($result) {
+            header("Location: home.php");
+            die("Redirecting to: home.php");
+        }
     }
 ?>
 
@@ -62,6 +87,7 @@
     <h1>User Info:</h1> <br />
     <form action="user_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->
+        <input type="submit" class="btn btn-info" value="Save" />
     </form>
 </div>
 
