@@ -14,9 +14,10 @@
           WHERE username = '" . $username . "'"; 
 
       $result = $conn->query($query);
-      $row = mysqli_fetch_array($result)[0];
+      $array = mysqli_fetch_array($result);
 
-      if ($row) {
+      if (sizeof($array) > 0) {
+          $row = $array[0];
           $salt = $row['salt'];
           $password = hash('sha256', $password . $salt); 
 
