@@ -140,11 +140,11 @@
             }
 
             $i = 0;
-            while($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 if ($i == 0) {
-                    echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["id"] . "</option>";
+                    echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["type_name"] . "</option>";
                 } else {
-                    echo "<option value=\"" . $row["id"] . "\">" . $row["id"] . "</option>";
+                    echo "<option value=\"" . $row["id"] . "\">" . $row["type_name"] . "</option>";
                 }
 
                 $i = $i + 1;
