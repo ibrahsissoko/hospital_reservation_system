@@ -134,7 +134,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand">Hospital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
           <li><a href="index.php">Login</a></li>
@@ -152,7 +152,7 @@
         <label>Email:</label> 
         <input type="text" name="email" value="" />
         <label>Password:</label> 
-        <input type="password" name="password" value="" /> <br />
+        <input type="password" name="password" value="" /> <br /> <br />
         <input type="submit" class="btn btn-info" value="Register" /> 
     </form>
 </div>

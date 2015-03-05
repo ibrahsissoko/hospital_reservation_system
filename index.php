@@ -46,7 +46,7 @@
                 die("Redirecting to: home.php");
             } else {
                 $failed = true;
-                die("Invalid Password. check password: " . $check_password . " db password: " . $row['password']);
+                die("Invalid Password.");
             }
         }
     } 
@@ -102,6 +102,7 @@
         ?>
     </p>
 
+    <h1>Login</h1> <br />
     <form action="index.php" method="post">
         Username:<br/> 
         <input type="text" name="username" value="" /> 
