@@ -4,9 +4,6 @@
     if(!empty($_POST)) { 
 
         // Ensure that the user fills out fields
-        if(empty($_POST['username'])) { 
-            die("Please enter a username."); 
-        } 
         if(empty($_POST['password'])) { 
             die("Please enter a password.");
         } 
@@ -14,7 +11,6 @@
             die("Invalid E-Mail Address"); 
         } 
 
-        $username = $_POST['username'];
         $email = $_POST['email'];
 
         // has the password a ton so that it can't be un-done
@@ -22,27 +18,7 @@
             $password = hash('sha256', $password . $salt); 
         } 
 
-        // check if the username or email exists
-        $query = " 
-            SELECT *
-            FROM users
-            WHERE
-                username = :username
-        ";
-
-        $query_params = array( ':username' => $username );
-
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-
-        }
-        $row = $stmt->fetch();
-        if($row){
-            die("This username is already in use");
-        }
+        // check if the email exists
 
         $query = "
             SELECT *
@@ -70,15 +46,13 @@
 
         $query = " 
             INSERT INTO users ( 
-                username, 
+                email,
                 password, 
-                salt, 
-                email 
+                salt,
             ) VALUES (
-                :username,
+                :email,
                 :password,
                 :salt,
-                :email
             )
         ";
 
@@ -91,10 +65,9 @@
         }
 
         $query_params = array(
-            ':username' => $_POST['username'],
+            ':email' => $_POST['email'],
             ':password' => $password,
-            ':salt' => $salt,
-            ':email' => $_POST['email']
+            ':salt' => $salt
         );
 
         try {
@@ -147,8 +120,6 @@
 <div class="container hero-unit">
     <h1>Register</h1> <br />
     <form action="register.php" method="post">
-        <label>Username:</label> 
-        <input type="text" name="username" value="" /> 
         <label>Email:</label> 
         <input type="text" name="email" value="" />
         <label>Password:</label> 

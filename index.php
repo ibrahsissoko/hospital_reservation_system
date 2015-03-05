@@ -6,21 +6,20 @@
     require("config.php");
     
     if(!empty($_POST)) { 
-      $username = $_POST['username'];
+      $email = $_POST['email'];
 
       $query = "
             SELECT
                 id,
-                username,
+                email,
                 password,
-                salt,
-                email
+                salt
             FROM users
             WHERE
-                username = :username
+                email = :email
         ";
         $query_params = array(
-            ':username' => $username
+            ':email' => $email
         );
 
         try {
@@ -104,8 +103,8 @@
 
     <h1>Login</h1> <br />
     <form action="index.php" method="post">
-        Username:<br/> 
-        <input type="text" name="username" value="" /> 
+        Email:<br/>
+        <input type="text" name="email" value="" />
         <br/>
         Password:<br/> 
         <input type="password" name="password" value="" /> 
