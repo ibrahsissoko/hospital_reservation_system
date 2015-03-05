@@ -139,12 +139,8 @@
                 die("Failed to run query: " . $ex->getMessage());
             }
 
-            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
-
-            die("row size: " . sizeof($rows));
-            
             $i = 0;
-            foreach($rows as $row) {
+            while($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 if ($i == 0) {
                     echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">'" . $row["type_name"] . "'</option>";
                 } else {
