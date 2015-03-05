@@ -25,13 +25,13 @@
         $query = "
             UPDATE users
             SET
-                info_added = :info_added
+                info_added=:info_added
             WHERE
                 id = :id
         ";
 
         $query_params = array(
-            ':info_added' => '1',
+            ':info_added' => 1,
             ':id' => $_SESSION['id']
         );
 
@@ -45,8 +45,6 @@
         if ($result) {
             header("Location: home.php");
             die("Redirecting to: home.php");
-        } else {
-
         }
     }
 ?>
