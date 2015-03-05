@@ -145,8 +145,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Register</h1> <br /><br />
-    <form action="register.php" method="post"> 
+    <h1>Register</h1> <br />
+    <form class="login_form" action="register.php" method="post">
         <label>Username:</label> 
         <input type="text" name="username" value="" /> 
         <label>Email:</label> 
