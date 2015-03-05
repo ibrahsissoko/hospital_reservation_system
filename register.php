@@ -48,11 +48,11 @@
             INSERT INTO users ( 
                 email,
                 password, 
-                salt,
+                salt
             ) VALUES (
                 :email,
                 :password,
-                :salt,
+                :salt
             )
         ";
 
