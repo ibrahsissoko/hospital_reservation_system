@@ -17,24 +17,53 @@
         $username = $_POST['username'];
         $email = $_POST['email'];
 
-        $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647)); 
-        $password = hash('sha256', $_POST['password'] . $salt); 
-
         // has the password a ton so that it can't be un-done
         for($round = 0; $round < 65536; $round++){ 
             $password = hash('sha256', $password . $salt); 
         } 
 
+        // check if the username or email exists
         $query = " 
             SELECT *
-            FROM users 
-            WHERE username = '" . $username . "'"; 
+            FROM users
+            WHERE
+                username = :username
+        ";
 
-        $result = $conn->query($query);
-        $array = mysqli_fetch_array($result);
+        $query_params = array( ':username' => $username );
 
-        if (sizeof($array) > 0) {
-            die("Username is taken");
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+
+        }
+        $row = $stmt->fetch();
+        if($row){
+            die("This username is already in use");
+        }
+
+        $query = "
+            SELECT *
+            FROM users
+            WHERE
+                email = :email
+        ";
+
+        $query_params = array(
+            ':email' => $email
+        );
+
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+        $row = $stmt->fetch();
+        if($row){
+            die("This email address is already registered");
         }
 
         // Add it to the database
@@ -45,18 +74,39 @@
                 password, 
                 salt, 
                 email 
-            ) VALUES ( " .
-                "'" . $username . "', " .
-                "'" . $password . "', " .
-                "'" . $salt . "', " .
-                "'" . $email . "'" .
-            ")"; 
+            ) VALUES (
+                :username,
+                :password,
+                :salt,
+                :email
+            )
+        ";
 
-        if (mysqli_query($conn, $query)) {
-    	    // redirect to login
-            header("Location: index.php"); 
-            die("Redirecting to index.php"); 
+        // Security measures
+        $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+        $password = hash('sha256', $_POST['password'] . $salt);
+
+        for($round = 0; $round < 65536; $round++) {
+            $password = hash('sha256', $password . $salt);
         }
+
+        $query_params = array(
+            ':username' => $_POST['username'],
+            ':password' => $password,
+            ':salt' => $salt,
+            ':email' => $_POST['email']
+        );
+
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+
+        // redirect to login
+        header("Location: index.php");
+        die("Redirecting to index.php");
     } 
 ?>
 

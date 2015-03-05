@@ -16,7 +16,7 @@
     try { 
     	$db = new PDO("mysql:host=" . $dbhost . ";port=" . $dbport . ";dbname=" . $db_name . ";charset=utf8",
             $dbusername,
-            $dbpassword, 
+            $dbpassword,
             $options);
     } catch(PDOException $ex) { 
     	die("Failed to connect to the database: " . $ex->getMessage());

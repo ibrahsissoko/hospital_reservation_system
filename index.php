@@ -10,35 +10,44 @@
       $password = $_POST['password'];
       $originalPassword = $password;
 
-      $query = " 
-          SELECT id, username, password, salt, email 
-          FROM users 
-          WHERE username = '" . $username . "'"; 
+      $$query = "
+            SELECT
+                id,
+                username,
+                password,
+                salt,
+                email
+            FROM users
+            WHERE
+                username = :username
+        ";
+        $query_params = array(
+            ':username' => $username
+        );
 
-      $result = $conn->query($query);
-      $message = "got result, rows: ";
-
-      if ($result) {
-        if ($row = mysqli_fetch_array($result)) {
-
-          $salt = $row['salt'];
-          $password = hash('sha256', $originalPassword . $salt); 
-
-          // has the password a ton so that it can't be un-done
-          for($round = 0; $round < 65536; $round++){ 
-              $password = hash('sha256', $password . $salt); 
-          } 
-
-          if ($password == $row['password']) {
-              $message = "login success";
-              header("Location: home.php"); 
-              die("Redirecting to: home.php"); 
-          } else {
-              $failed = true;
-              die("Invalid Password");
-          }
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
         }
-      }
+
+        $row = $stmt->fetch();
+        if ($row) {
+            $check_password = hash('sha256', $password . $row['salt']);
+            for($round = 0; $round < 65536; $round++){
+                $check_password = hash('sha256', $check_password . $row['salt']);
+            }
+
+            if($check_password === $row['password']){
+                $message = "login success";
+                header("Location: home.php");
+                die("Redirecting to: home.php");
+            } else {
+                $failed = true;
+                die("Invalid Password");
+            }
+        }
     } 
 ?>
 
