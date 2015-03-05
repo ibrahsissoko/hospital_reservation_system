@@ -9,11 +9,7 @@
       $email = $_POST['email'];
 
       $query = "
-            SELECT
-                id,
-                email,
-                password,
-                salt
+            SELECT *
             FROM users
             WHERE
                 email = :email
@@ -41,8 +37,13 @@
                 unset($row['password']);
                 $_SESSION['user'] = $row;
 
-                header("Location: home.php");
-                die("Redirecting to: home.php");
+                if ($row['info_added'] == 0) {
+                    header("Location: user_info.php");
+                    die("Redirecting to: user_info.php");
+                } else {
+                    header("Location: home.php");
+                    die("Redirecting to: home.php");
+                }
             } else {
                 $failed = true;
                 die("Invalid Password.");
