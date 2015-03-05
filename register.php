@@ -48,11 +48,13 @@
             INSERT INTO users ( 
                 email,
                 password, 
-                salt
+                salt,
+                user_type_id
             ) VALUES (
                 :email,
                 :password,
-                :salt
+                :salt,
+                :user_type_id
             )
         ";
 
@@ -67,7 +69,8 @@
         $query_params = array(
             ':email' => $_POST['email'],
             ':password' => $password,
-            ':salt' => $salt
+            ':salt' => $salt,
+            ':user_type_id' => $_POST['user_type_id']
         );
 
         try {
@@ -120,6 +123,14 @@
 <div class="container hero-unit">
     <h1>Register</h1> <br />
     <form action="register.php" method="post">
+
+        <select name="user_type_id">
+            <option value="1">Administrator</option>
+            <option value="2">Doctor</option>
+            <option value="3">Nurse</option>
+            <option value="4" selected="selected">Patient</option>
+        </select>
+
         <label>Email:</label> 
         <input type="text" name="email" value="" />
         <label>Password:</label> 
