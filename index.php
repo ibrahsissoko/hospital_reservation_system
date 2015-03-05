@@ -7,6 +7,7 @@
     if(!empty($_POST)) { 
       $username = $_POST['username'];
       $password = $_POST['password'];
+      $originalPassword = $password;
 
       $query = " 
           SELECT id, username, password, salt, email 
@@ -20,7 +21,7 @@
         while ($row = mysqli_fetch_array($result)) {
 
           $salt = $row['salt'];
-          $password = hash('sha256', $password . $salt); 
+          $password = hash('sha256', $originalPassword . $salt); 
 
           // has the password a ton so that it can't be un-done
           for($round = 0; $round < 65536; $round++){ 
