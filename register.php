@@ -10,7 +10,7 @@
         if(empty($_POST['password'])) { 
             die("Please enter a password.");
         } 
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
+        if(empty($_POST['email'])) { 
             die("Invalid E-Mail Address"); 
         } 
 
