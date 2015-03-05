@@ -1,8 +1,7 @@
 <?php
     require("config.php");
 
-    // if they aren't logged in, then point them to the generic screen
-    if(false) {
+    if(empty($_SESSION['user'])) {
         header("Location: index.php");
         die("Redirecting to index.php"); 
     }
@@ -43,7 +42,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h2>Here is your home screen</h2>
+    <h2>Hello <?php echo htmlentities($_SESSION['user']['username'], ENT_QUOTES, 'UTF-8'); ?>, here is your home screen</h2>
     <p>You can log out again by using the navigation bar.</p>
 </div>
 

@@ -38,7 +38,10 @@
             }
 
             if($check_password === $row['password']){
-                $message = "login success";
+                unset($row['salt']);
+                unset($row['password']);
+                $_SESSION['user'] = $row;
+
                 header("Location: home.php");
                 die("Redirecting to: home.php");
             } else {
