@@ -140,6 +140,9 @@
             }
 
             $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+
+            die("row size: " . sizeof($rows));
+            
             $i = 0;
             foreach($rows as $row) {
                 if ($i == 0) {
@@ -147,7 +150,7 @@
                 } else {
                     echo "<option value=\"" . $row["id"] . "\">'" . $row["type_name"] . "'</option>";
                 }
-                
+
                 $i = $i + 1;
             }
 
