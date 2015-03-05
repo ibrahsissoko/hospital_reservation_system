@@ -15,7 +15,7 @@
       $result = $conn->query($query);
       $message = "got result, rows: ";
 
-      if (result) {
+      if ($result) {
         while ($row = mysqli_fetch_array($result)) {
           if ($password == $row['password']) {
             $message = "login success";
@@ -81,7 +81,7 @@
 
 <div class="container hero-unit">
     <p> <?php 
-            if (debug) {
+            if ($debug) {
               echo "query: " . $query . "</br>" . 
                     "message: " . $message . "</br>" .
                     "num_rows: " . $result->num_rows . "</br>" .
