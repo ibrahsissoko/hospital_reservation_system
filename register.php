@@ -52,7 +52,7 @@
                 "'" . $email . "'" .
             ")"; 
 
-        if (mysqli_query($conn, $query)) {
+        if (mysqli_execute($conn, $query)) {
     	    // redirect to login
             header("Location: index.php"); 
             die("Redirecting to index.php"); 

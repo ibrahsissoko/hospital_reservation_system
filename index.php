@@ -18,7 +18,7 @@
       $message = "got result, rows: ";
 
       if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
+        if ($row = mysqli_fetch_array($result)) {
 
           $salt = $row['salt'];
           $password = hash('sha256', $originalPassword . $salt); 
@@ -34,7 +34,7 @@
               die("Redirecting to: home.php"); 
           } else {
               $failed = true;
-              die("password: " . $password . " in database: " . $row['password']);
+              die("Invalid Password");
           }
         }
       }
