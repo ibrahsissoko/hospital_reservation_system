@@ -139,15 +139,16 @@
                 die("Failed to run query: " . $ex->getMessage());
             }
 
-            $rows = $result->fetchAll();
-            for ($i = 0; $i < sizeof($rows); $i++) {
-                die("running code");
-                $row = $rows[$i];
+            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+            $i = 0;
+            foreach($rows as $row) {
                 if ($i == 0) {
                     echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">'" . $row["type_name"] . "'</option>";
                 } else {
                     echo "<option value=\"" . $row["id"] . "\">'" . $row["type_name"] . "'</option>";
                 }
+                
+                $i = $i + 1;
             }
 
             ?>
