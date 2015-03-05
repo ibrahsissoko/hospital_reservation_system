@@ -76,7 +76,7 @@
             } 
 
             if ($failed) {
-              echo "Login Failed!"
+              echo "Login Failed!";
             }
         ?>
     </p>
