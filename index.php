@@ -10,7 +10,7 @@
       $password = $_POST['password'];
       $originalPassword = $password;
 
-      $$query = "
+      $query = "
             SELECT
                 id,
                 username,
