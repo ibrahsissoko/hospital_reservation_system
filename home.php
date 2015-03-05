@@ -32,11 +32,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand">Hostpital Management</a>
+      <a href="home.php" class="brand">Hostpital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li><a href="register.php">Register</a></li>
-          <li class="divider-vertical"></li>
           <li><a href="logout.php">Log Out</a></li>
         </ul>
       </div>

@@ -1,14 +1,64 @@
 <?php 
     require("config.php");
+
     if(!empty($_POST)) { 
+
         // Ensure that the user fills out fields
-        // Check if the username is already taken
+        if(empty($_POST['username'])) { 
+            die("Please enter a username."); 
+        } 
+        if(empty($_POST['password'])) { 
+            die("Please enter a password.");
+        } 
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
+            die("Invalid E-Mail Address"); 
+        } 
+
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+
+        $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647)); 
+        $password = hash('sha256', $_POST['password'] . $salt); 
+
+        // has the password a ton so that it can't be un-done
+        for($round = 0; $round < 65536; $round++){ 
+            $password = hash('sha256', $password . $salt); 
+        } 
+
+        $query = " 
+            SELECT *
+            FROM users 
+            WHERE username = '" . $username . "'"; 
+
+        $result = $conn->query($query);
+        $array = mysqli_fetch_array($result);
+
+        if (sizeof($array) > 0) {
+            die("Username is taken");
+        }
+
         // Add it to the database
-        // Hash the password
-        
-	// redirect to login
-        header("Location: index.php"); 
-        die("Redirecting to index.php"); 
+
+        $query = " 
+            INSERT INTO users ( 
+                username, 
+                password, 
+                salt, 
+                email 
+            ) VALUES ( " .
+                "'" . $username . "', " .
+                "'" . $password . "', " .
+                "'" . $salt . "', " .
+                "'" . $email . "'" .
+            ")"; 
+
+        if (mysqli_query($conn, $query));
+    	    // redirect to login
+            header("Location: index.php"); 
+            die("Redirecting to index.php"); 
+        } else {
+            
+        }
     } 
 ?>
 
@@ -38,8 +88,6 @@
       </a>
       <a class="brand">Hospital Management</a>
       <div class="nav-collapse">
-        <ul class="nav pull-right">
-          <li><a href="index.php">Return Home</a></li>
         </ul>
       </div>
     </div>
