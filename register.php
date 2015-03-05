@@ -125,10 +125,31 @@
     <form action="register.php" method="post">
 
         <select name="user_type_id">
-            <option value="1">Administrator</option>
-            <option value="2">Doctor</option>
-            <option value="3">Nurse</option>
-            <option value="4" selected="selected">Patient</option>
+            <?php
+
+            $query = "
+                SELECT *
+                FROM user_types
+            ";
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+
+            $rows = $result->fetchAll();
+            for ($i = 0; $i < sizeof($rows); $i++) {
+                $row = $rows[$i];
+                if ($i == 1) {
+                    echo "<option value='" . $row["id"] . "' selected='selected'>" . $row["type_name"] . "</option>";
+                } else {
+                    echo "<option value='" . $row["id"] . "'>" . $row["type_name"] . "</option>";
+                }
+            }
+
+            ?>
         </select>
 
         <label>Email:</label> 
