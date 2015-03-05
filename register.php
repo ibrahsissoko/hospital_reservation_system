@@ -10,7 +10,7 @@
         if(empty($_POST['password'])) { 
             die("Please enter a password.");
         } 
-        if(empty($_POST['email'])) { 
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
             die("Invalid E-Mail Address"); 
         } 
 
@@ -52,7 +52,7 @@
                 "'" . $email . "'" .
             ")"; 
 
-        if (mysqli_query($conn, $query)){
+        if (mysqli_query($conn, $query)) {
     	    // redirect to login
             header("Location: index.php"); 
             die("Redirecting to index.php"); 
@@ -97,6 +97,8 @@
     <form action="register.php" method="post"> 
         <label>Username:</label> 
         <input type="text" name="username" value="" /> 
+        <label>Email:</label> 
+        <input type="text" name="email" value="" /> <br /><br />
         <label>Password:</label> 
         <input type="password" name="password" value="" /> <br /><br />
         <input type="submit" class="btn btn-info" value="Register" /> 
