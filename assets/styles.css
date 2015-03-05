@@ -4,6 +4,8 @@ body {
 
 .hero-unit { 
 	background-color: #fff; 
+	width: 50%;
+	margin: 0 auto;
 }
 
 .center { 
