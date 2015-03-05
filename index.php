@@ -45,7 +45,7 @@
                 die("Redirecting to: home.php");
             } else {
                 $failed = true;
-                die("Invalid Password");
+                die("Invalid Password. check password: " . $check_password . " db password: " . $row['password']);
             }
         }
     } 
