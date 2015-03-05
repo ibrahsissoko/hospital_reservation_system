@@ -14,15 +14,16 @@
           WHERE username = '" . $username . "'"; 
 
       $result = $conn->query($query);
-      $array = mysqli_fetch_array($result);
+      $message = "got result, rows: ";
 
-      if (sizeof($array) > 0) {
-          $row = $array[0];
+      if ($result) {
+        while ($row = mysqli_fetch_array($result)) {
+
           $salt = $row['salt'];
           $password = hash('sha256', $password . $salt); 
 
           // has the password a ton so that it can't be un-done
-          for($round = 0; $round < 65536; $round++) { 
+          for($round = 0; $round < 65536; $round++){ 
               $password = hash('sha256', $password . $salt); 
           } 
 
@@ -34,6 +35,7 @@
               $failed = true;
               die("password: " . $password . " in database: " . $row['password']);
           }
+        }
       }
     } 
 ?>
