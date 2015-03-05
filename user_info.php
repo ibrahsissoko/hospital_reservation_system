@@ -45,6 +45,8 @@
         if ($result) {
             header("Location: home.php");
             die("Redirecting to: home.php");
+        } else {
+
         }
     }
 ?>
@@ -87,6 +89,8 @@
     <h1>User Info:</h1> <br />
     <form action="user_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->
+        Name:<br/>
+        <input type="text" name="name" value="" />
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
 </div>
