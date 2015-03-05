@@ -54,25 +54,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand">Hostpital Management</a>
+      <a href="home.php" class="brand">Hostpital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
           <li><a href="register.php">Register</a></li>
-          <li class="divider-vertical"></li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In<strong class="caret"></strong></a>
-            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                <form action="index.php" method="post"> 
-                    Username:<br/> 
-                    <input type="text" name="username" value="" /> 
-                    <br/><br/> 
-                    Password:<br/> 
-                    <input type="password" name="password" value="" /> 
-                    <br/><br/> 
-                    <input type="submit" class="btn btn-info" value="Login" /> 
-                </form> 
-            </div>
-          </li>
         </ul>
       </div>
     </div>
@@ -90,14 +75,15 @@
         ?>
     </p>
 
-    <h1>Main Homescreen</h1>
-    <p>No user specific content because you haven't logged in.</p>
-    <ul>
-        <li>Use the default credentials to log in:<br/>
-            <strong>user:</strong> admin<br />
-            <strong>pass:</strong> password<br />
-        </li>
-    </ul>
+    <form action="index.php" method="post"> 
+        Username:<br/> 
+        <input type="text" name="username" value="" /> 
+        <br/><br/> 
+        Password:<br/> 
+        <input type="password" name="password" value="" /> 
+        <br/><br/> 
+        <input type="submit" class="btn btn-info" value="Login" /> 
+    </form> 
 </div>
 
 </body>
