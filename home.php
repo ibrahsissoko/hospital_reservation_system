@@ -45,7 +45,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h2>You logged in!</h2>
+    <h2>Here is your home screen</h2>
     <p>You can log out again by using the navigation bar.</p>
 </div>
 

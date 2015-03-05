@@ -1,5 +1,6 @@
 <?php 
     $debug = false;
+    $failed = false;
     $message = "";
 
     require("config.php");
@@ -22,6 +23,7 @@
             header("Location: home.php"); 
             die("Redirecting to: home.php"); 
           } else {
+            $failed = true;
             $message = "login failed";
           }
         }
@@ -72,6 +74,10 @@
                     "num_rows: " . $result->num_rows . "</br>" .
                     "password: " .  $row["password"];
             } 
+
+            if ($failed) {
+              echo "Login Failed!"
+            }
         ?>
     </p>
 
