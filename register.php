@@ -143,9 +143,9 @@
             for ($i = 0; $i < sizeof($rows); $i++) {
                 $row = $rows[$i];
                 if ($i == 1) {
-                    echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["type_name"] . "</option>";
+                    echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">'" . $row["type_name"] . "'</option>";
                 } else {
-                    echo "<option value=\"" . $row["id"] . "\">" . $row["type_name"] . "</option>";
+                    echo "<option value=\"" . $row["id"] . "\">'" . $row["type_name"] . "'</option>";
                 }
             }
 
