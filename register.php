@@ -127,11 +127,17 @@
         <select name="user_type_id">
             <?php
 
+            /**
+             * This code is used to fill the spinner from the database user_types.
+             * This database holds the different types of users, including: patient, doctor, nurse, administrator
+             */
+
             $query = "
                 SELECT *
                 FROM user_types
             ";
 
+            // execute the statement
             try {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
@@ -140,6 +146,8 @@
             }
 
             $i = 0;
+
+            // loop through, adding the options to the spinner
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 if ($i == 0) {
                     echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["type_name"] . "</option>";
