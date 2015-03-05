@@ -14,11 +14,9 @@
           WHERE username = '" . $username . "'"; 
 
       $result = $conn->query($query);
-      $message = "got result, rows: ";
+      $row = mysqli_fetch($result)
 
-      if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
-
+      if ($row) {
           $salt = $row['salt'];
           $password = hash('sha256', $password . $salt); 
 
@@ -35,7 +33,6 @@
               $failed = true;
               die("password: " . $password . " in database: " . $row['password']);
           }
-        }
       }
     } 
 ?>
