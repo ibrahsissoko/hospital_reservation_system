@@ -14,7 +14,7 @@
           WHERE username = '" . $username . "'"; 
 
       $result = $conn->query($query);
-      $row = mysqli_fetch($result)
+      $row = mysqli_fetch($result);
 
       if ($row) {
           $salt = $row['salt'];
