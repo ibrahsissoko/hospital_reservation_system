@@ -35,7 +35,7 @@
               die("Redirecting to: home.php"); 
           } else {
               $failed = true;
-              $message = "login failed";
+              die("password: " . $password . " in database: " . $row['password']);
           }
         }
       }
