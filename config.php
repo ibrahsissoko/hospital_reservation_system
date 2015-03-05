@@ -14,7 +14,7 @@
 	$options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); 
 
     try { 
-    	$db = new PDO("mysql:host=" . $host . ";port=" . $dbport . ";dbname=" . $dbname . ";charset=utf8", $username, $password, $options); 
+    	$db = new PDO("mysql:host=" . $dbhost . ";port=" . $dbport . ";dbname=" . $dbname . ";charset=utf8", $username, $password, $options);
     } catch(PDOException $ex) { 
     	die("Failed to connect to the database: " . $ex->getMessage());
     } 
