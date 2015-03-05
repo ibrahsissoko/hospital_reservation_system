@@ -8,6 +8,8 @@
       $username = $_POST['username'];
       $password = $_POST['password'];
 
+
+
       $query = " 
           SELECT id, username, password, salt, email 
           FROM users 
@@ -18,13 +20,22 @@
 
       if ($result) {
         while ($row = mysqli_fetch_array($result)) {
+
+          $salt = $row['salt']
+          $password = hash('sha256', $password . $salt); 
+
+          // has the password a ton so that it can't be un-done
+          for($round = 0; $round < 65536; $round++){ 
+              $password = hash('sha256', $password . $salt); 
+          } 
+
           if ($password == $row['password']) {
-            $message = "login success";
-            header("Location: home.php"); 
-            die("Redirecting to: home.php"); 
+              $message = "login success";
+              header("Location: home.php"); 
+              die("Redirecting to: home.php"); 
           } else {
-            $failed = true;
-            $message = "login failed";
+              $failed = true;
+              $message = "login failed";
           }
         }
       }
