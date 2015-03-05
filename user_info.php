@@ -14,6 +14,7 @@
     // registration.php file. (it does it there for the drop down spinner.)
     $user_type = $_SESSION['user_type_id'];
 
+    die("user type: " . $user_type . " user id: " . $_SESSION['id']);
 
     if(!empty($_POST)) {
         // this will be called after they hit the submit button on the form.
@@ -25,7 +26,7 @@
         $query = "
             UPDATE users
             SET
-                info_added=:info_added
+                info_added = :info_added
             WHERE
                 id = :id
         ";
