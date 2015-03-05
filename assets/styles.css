@@ -2,10 +2,6 @@ body {
 	background-image: url("background.png"); 
 }
 
-form {
-    display: inline-block;
-    text-align: center;
-}
 
 .hero-unit { 
 	background-color: #fff; 
@@ -13,9 +9,9 @@ form {
 
 @media (min-width: 550px) {
 	.hero-unit { 
-		background-color: #fff; 
-		width: 50%;
-		margin: 0 auto;
+		background-color: #fff;
+        display: inline-block;
+        text-align: center;
 	}
 }
 
