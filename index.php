@@ -77,7 +77,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="home.php" class="brand">Hostpital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
           <li><a href="register.php">Register</a></li>
