@@ -70,7 +70,7 @@
         ";
         $query_params = array(
             ':info_added' => 1,
-            ':id' => $_SESSION['user']['id']
+            ':id' => $_SESSION['user']['id'],
 				':firstName' => $_POST['firstName'],
                 ':lastName' => $_POST['lastName'], 
                 ':sex' => $_POST['sex'],
