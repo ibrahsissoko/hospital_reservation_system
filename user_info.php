@@ -28,10 +28,66 @@
             WHERE
                 id = :id
         ";
+        // Add it to the database
 
+        $query = " 
+            INSERT INTO users ( 
+                firstName,
+                lastName, 
+                sex,
+                dob,
+				age,
+				status,
+				address,
+				city,
+				zip,
+				phone,
+				insurance,
+				insuranceBegin,
+				insuranceEnd,
+				allergies,
+				diseases,
+				surgeries,
+				history
+            ) VALUES (
+				:firstName,
+                :lastName, 
+                :sex,
+                :dob,
+				:age,
+				:status,
+				:address,
+				:city,
+				:zip,
+				:phone,
+				:insurance,
+				:insuranceBegin,
+				:insuranceEnd,
+				:allergies,
+				:diseases,
+				:surgeries,
+				:history            )
+        ";
         $query_params = array(
             ':info_added' => 1,
             ':id' => $_SESSION['user']['id']
+							:firstName,
+                ':lastName' => $_POST['lastName'], 
+                ':sex' => $_POST['sex'],
+                ':dob' => $_POST['dob'],
+				':age' => $_POST['age'],
+				':status' => $_POST['status'],
+				':address' => $_POST['address'],
+				':city' => $_POST['city'],
+				':zip' => $_POST['zip'],
+				':phone' => $_POST['phone'],
+				':insurance' => $_POST['insurance'],
+				':insuranceBegin' => $_POST['insuranceBegin'],
+				':insuranceEnd' => $_POST['insuranceEnd'],
+				':allergies' => $_POST['allergies'],
+				':diseases' => $_POST['diseases'],
+				':surgeries' => $_POST['surgeries'],
+				':history' => $_POST['history']            
         );
 
         try {
@@ -97,7 +153,7 @@
 		<input type="radio" name="sex" value=""/> Female<br/>
 		<input type="radio" name="sex" value=""> Male<br/>
 		DOB(mmddyyyy):<br/>
-		<input type="text" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
+		<input type="text" name = "dob" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
 		Age:<br/>
 		<input type="number" name="age" min="1" max="120" value=""><br>
 		Marital Status:<br/>
@@ -113,16 +169,16 @@
 		<input type="text" name="city" value="" />
 		<br/>
 		Zip:<br/>
-		<input type="text" pattern="[0-9]{5}"><br/>
+		<input type="text" name="zip" pattern="[0-9]{5}"><br/>
 		Phone:<br/>
-		<input type="text" pattern="[0-9]{10}"><br/>
+		<input type="text" name="phone" pattern="[0-9]{10}"><br/>
 		Insurance Provider:<br/>
 		<input type="text" name="insurance" value="" />
 		<br/>
 		Insurance Beginning Date(mmddyyyy):<br/>
-		<input type="text" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
+		<input type="text" name="insuranceBegin"pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
 		Insurance Ending Date(mmddyyyy):<br/>	
-		<input type="text" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>		
+		<input type="text" name="insuranceEnd" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>		
 		Allergies:<br/>
 		<input type="text" name="allergies" value="" />
 		<br/>
