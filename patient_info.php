@@ -45,7 +45,8 @@
             header("Location: home.php");
             die("Redirecting to: home.php");
         }
-
+		$query = mysql_query("ALTER TABLE users ADD firstName VARCHAR( 255 ) ");
+		
         // Add it to the database
 
         $query = " 
