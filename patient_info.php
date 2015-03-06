@@ -133,7 +133,7 @@
 		<input type="radio" name="sex" value=""/> Female<br/>
 		<input type="radio" name="sex" value=""> Male<br/>
 		DOB(yyyymmdd):<br/>
-		<input type="text" name = "dob" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
+		<input type="text" name = "dob" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>
 		Age:<br/>
 		<input type="number" name="age" min="1" max="120" value=""><br>
 		Marital Status:<br/>
@@ -156,9 +156,9 @@
 		<input type="text" name="insurance" value="" />
 		<br/>
 		Insurance Beginning Date(yyyymmdd):<br/>
-		<input type="text" name="insuranceBegin"pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
+		<input type="text" name="insuranceBegin"pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>
 		Insurance Ending Date(yyyymmdd):<br/>	
-		<input type="text" name="insuranceEnd" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>		
+		<input type="text" name="insuranceEnd" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
 		Allergies:<br/>
 		<input type="text" name="allergies" value="" />
 		<br/>
