@@ -3,3 +3,4 @@
 *.md~
 *.gitignore~
 .idea/
+*.DS_Store

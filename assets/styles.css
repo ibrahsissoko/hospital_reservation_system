@@ -6,7 +6,7 @@ body {
 	background-color: #fff; 
 }
 
-@media (min-width: 550px) {
+@media (min-width: 800px) {
 	.hero-unit { 
 		background-color: #fff;
 		width: 50%;
