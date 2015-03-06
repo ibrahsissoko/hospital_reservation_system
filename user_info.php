@@ -71,7 +71,7 @@
         $query_params = array(
             ':info_added' => 1,
             ':id' => $_SESSION['user']['id']
-							:firstName,
+				':firstName' => $_POST['firstName'],
                 ':lastName' => $_POST['lastName'], 
                 ':sex' => $_POST['sex'],
                 ':dob' => $_POST['dob'],
