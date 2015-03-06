@@ -157,8 +157,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>User Info:</h1> <br />
-    <form action="user_info.php" method="post">
+    <h1>Patient Info:</h1> <br />
+    <form action="patient_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->	
 		
         First Name:<br/>
