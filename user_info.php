@@ -28,6 +28,24 @@
             WHERE
                 id = :id
         ";
+
+        $query_params = array(
+            ':info_added' => 1,
+            ':id' => $_SESSION['user']['id']
+        );
+
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+
+        if ($result) {
+            header("Location: home.php");
+            die("Redirecting to: home.php");
+        }
+
         // Add it to the database
 
         $query = " 
@@ -68,9 +86,9 @@
 				:surgeries,
 				:history            )
         ";
+	       
+		
         $query_params = array(
-            ':info_added' => 1,
-            ':id' => $_SESSION['user']['id'],
 				':firstName' => $_POST['firstName'],
                 ':lastName' => $_POST['lastName'], 
                 ':sex' => $_POST['sex'],
