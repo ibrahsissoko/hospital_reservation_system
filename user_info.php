@@ -12,9 +12,7 @@
     // querying this database for the current user type would result in all the questions we need to ask to
     // get the info on that type of user. There is an example of generating html from a database in the
     // registration.php file. (it does it there for the drop down spinner.)
-    $user_type = $_SESSION['user_type_id'];
-
-    die("user type: " . $user_type . " user id: " . $_SESSION['id']);
+    $user_type = $_SESSION['user']['user_type_id'];
 
     if(!empty($_POST)) {
         // this will be called after they hit the submit button on the form.
@@ -33,7 +31,7 @@
 
         $query_params = array(
             ':info_added' => 1,
-            ':id' => $_SESSION['id']
+            ':id' => $_SESSION['user']['id']
         );
 
         try {
