@@ -24,74 +24,33 @@
         $query = "
             UPDATE users
             SET
-                info_added = :info_added
+                info_added = :info_added,
+				first_name = :first_name,
+				last_name = :last_name, 
+                sex = :sex,
+                dob = :dob,
+				age = :age,
+				status = :status,
+				address = :address,
+				city = :city,
+				zip = :zip,
+				phone = :phone,
+				insurance = :insurance,
+				insuranceBegin = :insuranceBegin,
+				insuranceEnd = :insuranceEnd,
+				allergies = :allergies,
+				diseases = :diseases,
+				surgeries = :surgeries,
+				history = :history
             WHERE
                 id = :id
         ";
 
         $query_params = array(
             ':info_added' => 1,
-            ':id' => $_SESSION['user']['id']
-        );
-
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-        }
-
-        if ($result) {
-            header("Location: home.php");
-            die("Redirecting to: home.php");
-        }
-		$query = mysql_query("ALTER TABLE users ADD firstName VARCHAR( 255 ) ");
-		
-        // Add it to the database
-
-        $query = " 
-            INSERT INTO users ( 
-                firstName,
-                lastName, 
-                sex,
-                dob,
-				age,
-				status,
-				address,
-				city,
-				zip,
-				phone,
-				insurance,
-				insuranceBegin,
-				insuranceEnd,
-				allergies,
-				diseases,
-				surgeries,
-				history
-            ) VALUES (
-				:firstName,
-                :lastName, 
-                :sex,
-                :dob,
-				:age,
-				:status,
-				:address,
-				:city,
-				:zip,
-				:phone,
-				:insurance,
-				:insuranceBegin,
-				:insuranceEnd,
-				:allergies,
-				:diseases,
-				:surgeries,
-				:history            )
-        ";
-	       
-		
-        $query_params = array(
-				':firstName' => $_POST['firstName'],
-                ':lastName' => $_POST['lastName'], 
+            ':id' => $_SESSION['user']['id'],
+			':first_name' => $_POST['first_name'],
+			 ':last_name' => $_POST['last_name'], 
                 ':sex' => $_POST['sex'],
                 ':dob' => $_POST['dob'],
 				':age' => $_POST['age'],
@@ -106,7 +65,8 @@
 				':allergies' => $_POST['allergies'],
 				':diseases' => $_POST['diseases'],
 				':surgeries' => $_POST['surgeries'],
-				':history' => $_POST['history']            
+				':history' => $_POST['history'] 
+			
         );
 
         try {
@@ -120,6 +80,7 @@
             header("Location: home.php");
             die("Redirecting to: home.php");
         }
+		
     }
 ?>
 
