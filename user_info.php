@@ -85,9 +85,56 @@
 <div class="container hero-unit">
     <h1>User Info:</h1> <br />
     <form action="user_info.php" method="post">
-        <!-- TODO: add form here to enter the info. -->
-        Name:<br/>
-        <input type="text" name="name" value="" />
+        <!-- TODO: add form here to enter the info. -->	
+		
+        First Name:<br/>
+        <input type="text" name="firstName" value="" />
+		<br/>
+		Last Name:<br/>
+        <input type="text" name="lastName" value="" />
+		<br/>
+		Sex:<br/>
+		<input type="radio" name="sex" value=""/> Female<br/>
+		<input type="radio" name="sex" value=""> Male<br/>
+		DOB(mmddyyyy):<br/>
+		<input type="text" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
+		Age:<br/>
+		<input type="number" name="age" min="1" max="120" value=""><br>
+		Marital Status:<br/>
+		<input type="radio" name="status" value=""/> Single<br/>
+		<input type="radio" name="status" value=""> Married<br/>
+		<input type="radio" name="status" value=""/> In a relationship<br/>
+		<input type="radio" name="status" value=""> Divorced<br/>
+		<input type="radio" name="status" value=""/> Widowed<br/>
+		Address:<br/>
+		<input type="text" name="address" value="" />
+		<br/>
+		City:<br/>
+		<input type="text" name="city" value="" />
+		<br/>
+		Zip:<br/>
+		<input type="text" pattern="[0-9]{5}"><br/>
+		Phone:<br/>
+		<input type="text" pattern="[0-9]{10}"><br/>
+		Insurance Provider:<br/>
+		<input type="text" name="insurance" value="" />
+		<br/>
+		Insurance Beginning Date(mmddyyyy):<br/>
+		<input type="text" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>
+		Insurance Ending Date(mmddyyyy):<br/>	
+		<input type="text" pattern="[0-9]{2}[0-9]{2}[0-9]{4}"><br/>		
+		Allergies:<br/>
+		<input type="text" name="allergies" value="" />
+		<br/>
+		Diseases:<br/>
+		<input type="text" name="diseases" value="" />
+		<br/>
+		Previous Surgeries:<br/>
+		<input type="text" name="surgeries" value="" />
+		<br/>
+		Other Medical History:<br/>
+		<textarea name="history" cols="40" rows="5"></textarea>
+		<br/><br/>
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
 </div>
