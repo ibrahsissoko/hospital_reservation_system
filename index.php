@@ -39,11 +39,11 @@
 
                 if ($row['info_added'] == 0) {
                     switch($row['user_type_id']) {
-                        case 2: // nurse
+                        case 3: // nurse
                             header("Location: nurse_info.php");
                             die("Redirecting to: nurse_info.php");
                             break;
-                        case 3: // doctor
+                        case 2: // doctor
                             header("Location: doctor_info.php");
                             die("Redirecting to: doctor_info.php");
                             break;
