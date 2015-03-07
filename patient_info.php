@@ -155,10 +155,7 @@
 		Insurance Provider:<br/>
 		<input type="text" name="insurance" value="" />
 		<br/>
-		Insurance Beginning Date(yyyymmdd):<br/>
-		<input type="text" name="insuranceBegin"pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])"><br/>
-		Insurance Ending Date(yyyymmdd):<br/>	
-		<input type="text" name="insuranceEnd" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
+		
 		Allergies:<br/>
 		<input type="text" name="allergies" value="" />
 		<br/>
