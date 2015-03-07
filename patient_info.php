@@ -43,7 +43,7 @@
 				surgeries = :surgeries,
 				history = :history
             WHERE
-                email = :email
+                id = :id
         ";
 
         $query_params = array(
