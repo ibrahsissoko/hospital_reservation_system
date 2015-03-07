@@ -38,16 +38,16 @@
                 $_SESSION['user'] = $row;
 
                 if ($row['info_added'] == 0) {
-                    switch($row['user_type']) {
-                        case '2': // nurse
+                    switch($row['user_type_id']) {
+                        case 2: // nurse
                             header("Location: nurse_info.php");
                             die("Redirecting to: nurse_info.php");
                             break;
-                        case '3': // doctor
+                        case 3: // doctor
                             header("Location: doctor_info.php");
                             die("Redirecting to: doctor_info.php");
                             break;
-                        case '4': // admin
+                        case 4: // admin
                             header("Location: administrator_info.php");
                             die("Redirecting to: administrator_info.php");
                             break;
