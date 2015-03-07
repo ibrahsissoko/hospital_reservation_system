@@ -30,18 +30,18 @@
                 sex = :sex,
                 dob = :dob,
 				age = :age,
-				status = :status,
+				marital_status = :marital_status,
 				address = :address,
 				city = :city,
 				zip = :zip,
 				phone = :phone,
-				insurance = :insurance,
+				insurance_provider = :insurance_provider,
 				insuranceBegin = :insuranceBegin,
 				insuranceEnd = :insuranceEnd,
 				allergies = :allergies,
 				diseases = :diseases,
-				surgeries = :surgeries,
-				history = :history
+				previous_surgeries = :previous_surgeries,
+				other_medical_history = :other_medical_history
             WHERE
                 id = :id
         ";
@@ -54,18 +54,18 @@
                 ':sex' => $_POST['sex'],
                 ':dob' => $_POST['dob'],
 				':age' => $_POST['age'],
-				':status' => $_POST['status'],
+				':marital_status' => $_POST['marital_status'],
 				':address' => $_POST['address'],
 				':city' => $_POST['city'],
 				':zip' => $_POST['zip'],
 				':phone' => $_POST['phone'],
-				':insurance' => $_POST['insurance'],
-				':insuranceBegin' => $_POST['insuranceBegin'],
-				':insuranceEnd' => $_POST['insuranceEnd'],
+				':insurance_provider' => $_POST['insurance_provider'],
+				':insurance_begin' => $_POST['insurance_begin'],
+				':insurance_end' => $_POST['insurance_end'],
 				':allergies' => $_POST['allergies'],
 				':diseases' => $_POST['diseases'],
-				':surgeries' => $_POST['surgeries'],
-				':history' => $_POST['history'] 
+				':previous_surgeries' => $_POST['previous_surgeries'],
+				':other_medical_history' => $_POST['other_medical_history'] 
 			
         );
 
@@ -137,11 +137,11 @@
 		Age:<br/>
 		<input type="number" name="age" min="1" max="120" value=""><br>
 		Marital Status:<br/>
-		<input type="radio" name="status" value=""/> Single<br/>
-		<input type="radio" name="status" value=""> Married<br/>
-		<input type="radio" name="status" value=""/> In a relationship<br/>
-		<input type="radio" name="status" value=""> Divorced<br/>
-		<input type="radio" name="status" value=""/> Widowed<br/>
+		<input type="radio" name="marital_status" value=""/> Single<br/>
+		<input type="radio" name="marital_status" value=""> Married<br/>
+		<input type="radio" name="marital_status" value=""/> In a relationship<br/>
+		<input type="radio" name="marital_status" value=""> Divorced<br/>
+		<input type="radio" name="marital_status" value=""/> Widowed<br/>
 		Address:<br/>
 		<input type="text" name="address" value="" />
 		<br/>
@@ -153,12 +153,12 @@
 		Phone:<br/>
 		<input type="text" name="phone" pattern="[0-9]{10}"><br/>
 		Insurance Provider:<br/>
-		<input type="text" name="insurance" value="" />
+		<input type="text" name="insurance_provider" value="" />
 		<br/>
 		Insurance Beginning Date(yyyymmdd):<br/>
-		<input type="text" name="insuranceBegin"pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])"><br/>
+		<input type="text" name="insurance_begin"pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])"><br/>
 		Insurance Ending Date(yyyymmdd):<br/>	
-		<input type="text" name="insuranceEnd" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
+		<input type="text" name="insurance_end" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
 		Allergies:<br/>
 		<input type="text" name="allergies" value="" />
 		<br/>
@@ -166,10 +166,10 @@
 		<input type="text" name="diseases" value="" />
 		<br/>
 		Previous Surgeries:<br/>
-		<input type="text" name="surgeries" value="" />
+		<input type="text" name="previous_surgeries" value="" />
 		<br/>
 		Other Medical History:<br/>
-		<textarea name="history" cols="40" rows="5"></textarea>
+		<textarea name="other_medical_history" cols="40" rows="5"></textarea>
 		<br/><br/>
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
