@@ -3,17 +3,23 @@
 
     if(!empty($_POST)) { 
 
-        // Ensure that the user fills out fields
-        if(empty($_POST['password'])) { 
-            die("Please enter a password.");
-        } 
+        // Ensure that the user fills out fields.
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
             die("Invalid E-Mail Address"); 
         } 
+        if(empty($_POST['password'])) { 
+            die("Please enter a password.");
+        } 
+        if (empty($_POST['confirmPassword'])) {
+            die("Please confirm your password.");
+        }
+        if ($_POST['password'] != $_POST['confirmPassword']) {
+            die("Passwords do not match.");
+        }
 
         $email = $_POST['email'];
 
-        // has the password a ton so that it can't be un-done
+        // Hash the password a ton so that it can't be un-done
         for($round = 0; $round < 65536; $round++){ 
             $password = hash('sha256', $password . $salt); 
         } 
@@ -164,7 +170,9 @@
         <label>Email:</label> 
         <input type="text" name="email" value="" />
         <label>Password:</label> 
-        <input type="password" name="password" value="" /> <br /> <br />
+        <input type="password" name="password" value="" />
+        <label>Confirm Password:</label>
+        <input type="password" name="confirmPassword" value="" /><br/><br/>
         <input type="submit" class="btn btn-info" value="Register" /> 
     </form>
 </div>
