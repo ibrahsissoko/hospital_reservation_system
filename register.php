@@ -1,20 +1,26 @@
 <?php 
     require("config.php");
 
+    // Initialize error messages to blank.
+    $noEmail = $incorrectEmail = $noPassword = $noConfirmPassword = $noPasswordMatch = "";
+    
     if(!empty($_POST)) { 
 
         // Ensure that the user fills out fields.
+        if(empty($_POST['email'])) { 
+            $noEmail = "Please enter an email address.";
+        } 
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
-            die("Invalid E-Mail Address"); 
+            $incorrectEmail = "Invalid E-Mail Address"; 
         } 
         if(empty($_POST['password'])) { 
-            die("Please enter a password.");
+            $noPassword = "Please enter a password.";
         } 
         if (empty($_POST['confirmPassword'])) {
-            die("Please confirm your password.");
+            $noConfirmPassword = "Please confirm your password.";
         }
         if ($_POST['password'] != $_POST['confirmPassword']) {
-            die("Passwords do not match.");
+            $noPasswordMatch = "Passwords do not match.";
         }
 
         $email = $_POST['email'];
@@ -95,6 +101,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: #FF0000;}</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -169,10 +176,14 @@
 
         <label>Email:</label> 
         <input type="text" name="email" value="" />
+        <span class="error">* <?php echo $noEmail; echo $incorrectEmail;?></span>
         <label>Password:</label> 
         <input type="password" name="password" value="" />
+        <span class="error">* <?php echo $noPassword;?></span>
         <label>Confirm Password:</label>
-        <input type="password" name="confirmPassword" value="" /><br/><br/>
+        <input type="password" name="confirmPassword" value="" />
+        <span class="error">* <?php echo $noConfirmPassword;?></span><br/>
+        <span class="error">* <?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /> 
     </form>
 </div>
