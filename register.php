@@ -8,93 +8,98 @@
 
         // Ensure that the user fills out fields.
         if(empty($_POST['email'])) { 
-            $noEmail = "Please enter an email address.";
+            $noEmail = "* Please enter an email address.";
         } 
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
-            $incorrectEmail = "Invalid E-Mail Address"; 
+            $incorrectEmail = "* Invalid E-Mail Address"; 
         } 
         if(empty($_POST['password'])) { 
-            $noPassword = "Please enter a password.";
+            $noPassword = "* Please enter a password.";
         } 
         if (empty($_POST['confirmPassword'])) {
-            $noConfirmPassword = "Please confirm your password.";
+            $noConfirmPassword = "* Please confirm your password.";
         }
         if ($_POST['password'] != $_POST['confirmPassword']) {
-            $noPasswordMatch = "Passwords do not match.";
+            $noPasswordMatch = "* Passwords do not match.";
         }
+        
+        // Only further process if there were no errors.
+        if ($noEmail != "" && $incorrectEmail != "" && $noPassword != "" && 
+                $noConfirmPassword != "" && $noPasswordMatch != "") {
+            
+            $email = $_POST['email'];
 
-        $email = $_POST['email'];
+            // Hash the password a ton so that it can't be un-done
+            for($round = 0; $round < 65536; $round++){ 
+                $password = hash('sha256', $password . $salt); 
+            } 
 
-        // Hash the password a ton so that it can't be un-done
-        for($round = 0; $round < 65536; $round++){ 
-            $password = hash('sha256', $password . $salt); 
-        } 
+            // check if the email exists
 
-        // check if the email exists
+            $query = "
+                SELECT *
+                FROM users
+                WHERE
+                    email = :email
+            ";
 
-        $query = "
-            SELECT *
-            FROM users
-            WHERE
-                email = :email
-        ";
+            $query_params = array(
+                ':email' => $email
+            );
 
-        $query_params = array(
-            ':email' => $email
-        );
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $row = $stmt->fetch();
+            if($row){
+                die("This email address is already registered");
+            }
 
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
+            // Add it to the database
+
+            $query = " 
+                INSERT INTO users ( 
+                    email,
+                    password, 
+                    salt,
+                    user_type_id
+                ) VALUES (
+                    :email,
+                    :password,
+                    :salt,
+                    :user_type_id
+                )
+            ";
+
+            // Security measures
+            $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+            $password = hash('sha256', $_POST['password'] . $salt);
+
+            for($round = 0; $round < 65536; $round++) {
+                $password = hash('sha256', $password . $salt);
+            }
+
+            $query_params = array(
+                ':email' => $_POST['email'],
+                ':password' => $password,
+                ':salt' => $salt,
+                ':user_type_id' => $_POST['user_type_id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+
+            // redirect to login
+            header("Location: index.php");
+            die("Redirecting to index.php");
         }
-        $row = $stmt->fetch();
-        if($row){
-            die("This email address is already registered");
-        }
-
-        // Add it to the database
-
-        $query = " 
-            INSERT INTO users ( 
-                email,
-                password, 
-                salt,
-                user_type_id
-            ) VALUES (
-                :email,
-                :password,
-                :salt,
-                :user_type_id
-            )
-        ";
-
-        // Security measures
-        $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-        $password = hash('sha256', $_POST['password'] . $salt);
-
-        for($round = 0; $round < 65536; $round++) {
-            $password = hash('sha256', $password . $salt);
-        }
-
-        $query_params = array(
-            ':email' => $_POST['email'],
-            ':password' => $password,
-            ':salt' => $salt,
-            ':user_type_id' => $_POST['user_type_id']
-        );
-
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-        }
-
-        // redirect to login
-        header("Location: index.php");
-        die("Redirecting to index.php");
     } 
 ?>
 
@@ -176,14 +181,14 @@
 
         <label>Email:</label> 
         <input type="text" name="email" value="" />
-        <span class="error">* <?php echo $noEmail; echo $incorrectEmail;?></span>
+        <span class="error"><?php echo $noEmail; echo $incorrectEmail;?></span>
         <label>Password:</label> 
         <input type="password" name="password" value="" />
-        <span class="error">* <?php echo $noPassword;?></span>
+        <span class="error"><?php echo $noPassword;?></span>
         <label>Confirm Password:</label>
         <input type="password" name="confirmPassword" value="" />
-        <span class="error">* <?php echo $noConfirmPassword;?></span><br/>
-        <span class="error">* <?php echo $noPasswordMatch;?></span><br/>
+        <span class="error"><?php echo $noConfirmPassword;?></span><br/>
+        <span class="error"><?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /> 
     </form>
 </div>
