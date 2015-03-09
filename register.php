@@ -19,8 +19,8 @@
         if (empty($_POST['confirmPassword'])) {
             $noConfirmPassword = "Please confirm your password.";
         }
-        if ($_POST['password'] != $_POST['confirmPassword'] && $noPassword != ""
-                && $noConfirmPassword != "") {
+        if ($_POST['password'] != $_POST['confirmPassword'] && $noPassword == ""
+                && $noConfirmPassword == "") {
             $noPasswordMatch = "Passwords do not match.";
         }
         
