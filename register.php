@@ -182,13 +182,13 @@
         </select>
 
         <label>Email:</label> 
-        <input type="text" name="email" value="" />
+        <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
         <span class="error"><?php echo $noEmail; echo $incorrectEmail; echo $registeredEmail;?></span>
         <label>Password:</label> 
-        <input type="password" name="password" value="" />
+        <input type="password" name="password" value="<?php echo htmlspecialchars($_POST['password'])?>" />
         <span class="error"><?php echo $noPassword;?></span>
         <label>Confirm Password:</label>
-        <input type="password" name="confirmPassword" value="" />
+        <input type="password" name="confirmPassword" value="<?php echo htmlspecialchars($_POST['confirmPassword'])?>" />
         <span class="error"><?php echo $noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /> 
