@@ -85,7 +85,7 @@
             }
 
             // If the email is not registered yet, add it to the database.
-            if ($registeredEmail != "") {
+            if (empty($registeredEmail)) {
                 $query = " 
                     INSERT INTO users ( 
                         email,
