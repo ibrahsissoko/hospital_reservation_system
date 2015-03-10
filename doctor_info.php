@@ -45,7 +45,7 @@
 
 <div class="container hero-unit">
     <h1>Doctor Info:</h1> <br />
-    <form action="patient_info.php" method="post">
+    <form action="doctor_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->
 		First Name:<br/>
         <input type="text" name="first_name" value="" />
@@ -56,9 +56,19 @@
 		Sex:<br/>
 		<input type="radio" name="sex" value=""/> Female<br/>
 		<input type="radio" name="sex" value=""> Male<br/>
-		Degree:<br/>
-		<input type="text" name="firstName" value="" />
+		Degree(MBBS, MD, etc.):<br/>
+		<input type="text" name="degree" value="" />
 		<br/>
+		Specialization(Dentist, Epidemiologist, etc.):<br/>
+		<input type="text" name="specialization" value="" />
+		<br/>
+		Years Of Experience:<br/>
+		<input type="text" name="years_of_experience" value="" />
+		<br/>
+		Shift:<br/>
+		<input type="radio" name="shift" value=""/> Morning<br/>
+		<input type="radio" name="shift" value=""> Regular<br/>
+		<input type="radio" name="shift" value=""> Night<br/>
 		Address:<br/>
 		<input type="text" name="address" value="" />
 		<br/>

@@ -45,8 +45,37 @@
 
 <div class="container hero-unit">
     <h1>Nurse Info:</h1> <br />
-    <form action="patient_info.php" method="post">
+    <form action="nurse_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->
+		First Name:<br/>
+        <input type="text" name="first_name" value="" />
+		<br/>
+		Last Name:<br/>
+        <input type="text" name="last_name" value="" />
+		<br/>
+		Sex:<br/>
+		<input type="radio" name="sex" value=""/> Female<br/>
+		<input type="radio" name="sex" value=""> Male<br/>
+		Department(ENT, Dentistry, etc.):<br/>
+		<input type="text" name="department" value="" />
+		<br/>
+		Years Of Experience:<br/>
+		<input type="text" name="years_of_experience" value="" />
+		<br/>
+		Shift:<br/>
+		<input type="radio" name="shift" value=""/> Morning<br/>
+		<input type="radio" name="shift" value=""> Regular<br/>
+		<input type="radio" name="shift" value=""> Night<br/>
+		Address:<br/>
+		<input type="text" name="address" value="" />
+		<br/>
+		City:<br/>
+		<input type="text" name="city" value="" />
+		<br/>
+		Zip:<br/>
+		<input type="text" name="zip" pattern="[0-9]{5}"><br/>
+		Phone:<br/>
+		<input type="text" name="phone" pattern="[0-9]{10}"><br/>
 
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
