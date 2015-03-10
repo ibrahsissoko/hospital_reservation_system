@@ -47,6 +47,28 @@
     <h1>Doctor Info:</h1> <br />
     <form action="patient_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->
+		First Name:<br/>
+        <input type="text" name="first_name" value="" />
+		<br/>
+		Last Name:<br/>
+        <input type="text" name="last_name" value="" />
+		<br/>
+		Sex:<br/>
+		<input type="radio" name="sex" value=""/> Female<br/>
+		<input type="radio" name="sex" value=""> Male<br/>
+		Degree:<br/>
+		<input type="text" name="firstName" value="" />
+		<br/>
+		Address:<br/>
+		<input type="text" name="address" value="" />
+		<br/>
+		City:<br/>
+		<input type="text" name="city" value="" />
+		<br/>
+		Zip:<br/>
+		<input type="text" name="zip" pattern="[0-9]{5}"><br/>
+		Phone:<br/>
+		<input type="text" name="phone" pattern="[0-9]{10}"><br/>
 
         <input type="submit" class="btn btn-info" value="Save" />
     </form>

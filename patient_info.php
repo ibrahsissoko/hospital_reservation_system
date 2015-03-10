@@ -124,10 +124,10 @@
         <!-- TODO: add form here to enter the info. -->	
 		
         First Name:<br/>
-        <input type="text" name="firstName" value="" />
+        <input type="text" name="first_name" value="" />
 		<br/>
 		Last Name:<br/>
-        <input type="text" name="lastName" value="" />
+        <input type="text" name="last_name" value="" />
 		<br/>
 		Sex:<br/>
 		<input type="radio" name="sex" value=""/> Female<br/>
