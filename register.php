@@ -35,7 +35,7 @@
             ";
 
             $query_params = array(
-                ':id' => $_POST['user_type_id']
+                ':type_id' => $_POST['user_type_id']
             );
 
             try {
