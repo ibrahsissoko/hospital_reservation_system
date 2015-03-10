@@ -43,7 +43,7 @@
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
-            $row = $stmt1->fetch();
+            $row = $stmt->fetch();
             if($row && $row['access_code'] != $_POST['access_code']) {
                 $noAccessCode = "Invalid access code";
             }
