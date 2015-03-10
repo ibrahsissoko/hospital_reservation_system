@@ -2,7 +2,7 @@
     require("config.php");
 
     // Initialize error messages to blank.
-    $noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = "";
+    $noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = $noAccessCode = "";
     
     if(!empty($_POST)) {
 
@@ -26,25 +26,25 @@
         if ($_POST['user_type_id'] != 1 && empty($_POST['access_code'])) {
             $noAccessCode = "Enter an access code";
         } else if ($_POST['user_type_id'] != 1) {
-            $query = "
+            $query1 = "
                 SELECT *
                 FROM user_types
                 WHERE 
                   id = :type_id
             ";
 
-            $query_params = array(
+            $query_params1 = array(
                 ':type_id' => $_POST['user_type_id']
             );
 
             try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute($query_params);
+                $stmt1 = $db->prepare($query1);
+                $result1 = $stmt->execute($query_params1);
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
-            $row = $stmt->fetch();
-            if($row && $row['access_code'] != $_POST['access_code']) {
+            $row1 = $stmt1->fetch();
+            if($row1 && $row1['access_code'] != $_POST['access_code']) {
                 $noAccessCode = "Invalid access code";
             }
         }
