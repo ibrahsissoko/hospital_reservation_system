@@ -4,27 +4,50 @@
     // Initialize error messages to blank.
     $noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = "";
     
-    if(!empty($_POST)) { 
+    if(!empty($_POST)) {
 
         // Ensure that the user fills out fields.
-        if(empty($_POST['email'])) { 
+        if (empty($_POST['email'])) {
             $noEmail = "Please enter an email address.";
-        } 
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
-            $incorrectEmail = "Invalid E-Mail Address."; 
-        } 
-        if(empty($_POST['password'])) { 
+        }
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $incorrectEmail = "Invalid E-Mail Address.";
+        }
+        if (empty($_POST['password'])) {
             $noPassword = "Please enter a password.";
-        } 
+        }
         if (empty($_POST['confirmPassword'])) {
             $noConfirmPassword = "Please confirm your password.";
         }
         if ($_POST['password'] != $_POST['confirmPassword'] && $noPassword == ""
-                && $noConfirmPassword == "") {
+            && $noConfirmPassword == ""
+        ) {
             $noPasswordMatch = "Passwords do not match.";
         }
-        if ($_POST['user_type_id'] != 0 && empty($_POST['accesscode'])) {
-            $noAccessCode = "Enter an access Code";
+        if ($_POST['user_type_id'] != 0 && empty($_POST['access_code'])) {
+            $noAccessCode = "Enter an access code";
+        } else {
+            $query = "
+                SELECT *
+                FROM user_types
+                WHERE 
+                  id = :type_id
+            ";
+
+            $query_params = array(
+                ':id' => $_POST['user_type_id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $row = $stmt->fetch();
+            if($row && $row['access_code'] != $_POST['access_code']) {
+                $noAccessCode = "Invalid access code";
+            }
         }
         
         // Only further process if there were no errors.
@@ -184,7 +207,8 @@
             ?>
         </select>
         <label>Access Code (not applicable for patients):</label>
-        <input type="text" name="accesscode" value="" />
+        <input type="text" name="access_code" value="" />
+        <span class="error"><?php echo $noAccessCode; ?></span>
         <label>Email:</label> 
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
         <span class="error"><?php echo $noEmail; echo $incorrectEmail; echo $registeredEmail;?></span>
