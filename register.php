@@ -20,11 +20,10 @@
             $noConfirmPassword = "Please confirm your password.";
         }
         if ($_POST['password'] != $_POST['confirmPassword'] && $noPassword == ""
-            && $noConfirmPassword == ""
-        ) {
+            && $noConfirmPassword == "") {
             $noPasswordMatch = "Passwords do not match.";
         }
-        if ($_POST['user_type_id'] != 0 && empty($_POST['access_code'])) {
+        if ($_POST['user_type_id'] != 1 && empty($_POST['access_code'])) {
             $noAccessCode = "Enter an access code";
         } else {
             $query = "
@@ -207,7 +206,7 @@
             ?>
         </select>
         <label>Access Code (not applicable for patients):</label>
-        <input type="text" name="access_code" value="" />
+        <input type="text" name="access_code" value="<?php echo htmlspecialchars($_POST['access_code'])?>" />
         <span class="error"><?php echo $noAccessCode; ?></span>
         <label>Email:</label> 
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
