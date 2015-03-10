@@ -1,0 +1,44 @@
+1.) get an account on OpenShift
+
+2.) Send me whichever email you used to set it up and I can add you to the project.
+
+3.) Install the tools: https://developers.openshift.com/en/managing-client-tools.html (For me, rubygems came installed with ruby, so I skipped that one.)
+
+4.) Run through the "Setting up your machine" section on the same page.
+	"rhc setup" is the command
+
+After I have added you to the project (just send me your email you made the account with):
+
+5.) Add your SSH keys to your account. (If you have them on github, just copy and paste, otherwise you will have to generate them. Easy on linux/mac.. not sure how to do it on windows though..)
+
+5.) Checkout the project:
+	git clone ssh://54f76b1a5973ca4c6c000062@wal-engproject.rhcloud.com/~/git/wal.git/
+
+6.) To send your commits to the repo:
+	git add --all // to add any files you made
+	git commit -m "message here" -a
+	git push
+
+7.) To checkout others changes:
+	commit your changes first, then:
+	git fetch
+	git rebase
+
+8.) Visit the site: http://wal-engproject.rhcloud.com/
+
+9.) To look at the log output (fatal errors), you will need to ssh into the project:
+
+	ssh 54f76b1a5973ca4c6c000062@wal-engproject.rhcloud.com
+	cd $OPENSHIFT_LOG_DIR
+	vi php.log
+
+10.) To view/edit/add to databases, go here: https://wal-engproject.rhcloud.com/phpmyadmin/
+
+	username: adminpc6LFKv
+	password: u5RAJUHT1tgU
+
+11.) Jenkins build server: https://jenkins-engproject.rhcloud.com/job/wal-build/
+
+	User: admin
+   	Password: 5GnY8gd4mzjQ
+
