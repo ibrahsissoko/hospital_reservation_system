@@ -23,10 +23,13 @@
                 && $noConfirmPassword == "") {
             $noPasswordMatch = "Passwords do not match.";
         }
+        if ($_POST['user_type_id'] != 0 && empty($_POST['accesscode'])) {
+            $noAccessCode = "Enter an access Code";
+        }
         
         // Only further process if there were no errors.
-        if ($noEmail != "" && $incorrectEmail != "" && $noPassword != "" && 
-                $noConfirmPassword != "" && $noPasswordMatch != "") {
+        if (empty($noEmail) && empty($incorrectEmail) && empty($noPassword) &&
+                empty($noConfirmPassword) && empty($noPasswordMatch) && empty($noAccessCode)) {
             
             $email = $_POST['email'];
 
@@ -180,7 +183,8 @@
 
             ?>
         </select>
-
+        <label>Access Code (not applicable for patients):</label>
+        <input type="text" name="accesscode" value="" />
         <label>Email:</label> 
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
         <span class="error"><?php echo $noEmail; echo $incorrectEmail; echo $registeredEmail;?></span>
