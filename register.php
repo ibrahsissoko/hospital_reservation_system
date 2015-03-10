@@ -80,7 +80,7 @@
                 die("Failed to run query: " . $ex->getMessage());
             }
             $row = $stmt->fetch();
-            if($stm1->rowCount() > 0){
+            if($stmt->rowCount() > 0){
                 $registeredEmail = "This email address is already registered.";
             }
 
