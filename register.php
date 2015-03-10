@@ -48,7 +48,7 @@
                 $noAccessCode = "Invalid access code";
             }
         }
-        
+
         // Only further process if there were no errors.
         if (empty($noEmail) && empty($incorrectEmail) && empty($noPassword) &&
                 empty($noConfirmPassword) && empty($noPasswordMatch) && empty($noAccessCode)) {
@@ -126,6 +126,10 @@
                 header("Location: index.php");
                 die("Redirecting to index.php");
             }
+        } else {
+            empty($noEmail) && empty($incorrectEmail) && empty($noPassword) &&
+            empty($noConfirmPassword) && empty($noPasswordMatch) && empty($noAccessCode)
+            die("no email: " . $noEmail . " inco email: " . $incorrectEmail . " noPass: " . $noPassword . " no confirmPass: " . $noConfirmPassword . " no pass match" . $noPasswordMatch . " no access code: " . $noAccessCode);
         }
     } 
 ?>
