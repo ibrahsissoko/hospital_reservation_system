@@ -125,6 +125,8 @@
                 // redirect to login
                 header("Location: index.php");
                 die("Redirecting to index.php");
+            } else {
+                die("email point");
             }
         } else {
             die("no email: " . $noEmail . " inco email: " . $incorrectEmail . " noPass: " . $noPassword . " no confirmPass: " . $noConfirmPassword . " no pass match" . $noPasswordMatch . " no access code: " . $noAccessCode);
