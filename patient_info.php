@@ -51,10 +51,10 @@
             ':id' => $_SESSION['user']['id'],
 			':first_name' => $_POST['first_name'],
 			 ':last_name' => $_POST['last_name'], 
-                ':sex' => $_POST['sex'],
+                ':sex' => isset($_POST['sex']),
                 ':dob' => $_POST['dob'],
 				':age' => $_POST['age'],
-				':marital_status' => $_POST['marital_status'],
+				':marital_status' => isset($_POST['marital_status']),
 				':address' => $_POST['address'],
 				':city' => $_POST['city'],
 				':zip' => $_POST['zip'],
@@ -171,7 +171,7 @@
 		Other Medical History:<br/>
 		<textarea name="other_medical_history" cols="40" rows="5"></textarea>
 		<br/><br/>
-        <input type="submit" class="btn btn-info" value="Save" />
+        <input type="submit" name = "submit" class="btn btn-info" value="Save" />
     </form>
 </div>
 
