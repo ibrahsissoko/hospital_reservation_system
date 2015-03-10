@@ -26,25 +26,25 @@
         if ($_POST['user_type_id'] != 1 && empty($_POST['access_code'])) {
             $noAccessCode = "Enter an access code";
         } else if ($_POST['user_type_id'] != 1) {
-            $query1 = "
+            $query = "
                 SELECT *
                 FROM user_types
                 WHERE 
                   id = :type_id
             ";
 
-            $query_params1 = array(
+            $query_params = array(
                 ':type_id' => $_POST['user_type_id']
             );
 
             try {
-                $stmt1 = $db->prepare($query1);
-                $result1 = $stmt->execute($query_params1);
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
-            $row1 = $stmt1->fetch();
-            if($row1 && $row1['access_code'] != $_POST['access_code']) {
+            $row = $stmt1->fetch();
+            if($row && $row['access_code'] != $_POST['access_code']) {
                 $noAccessCode = "Invalid access code";
             }
         }
@@ -80,7 +80,7 @@
                 die("Failed to run query: " . $ex->getMessage());
             }
             $row = $stmt->fetch();
-            if($row){
+            if($stm1->rowCount() > 0){
                 $registeredEmail = "This email address is already registered.";
             }
 
