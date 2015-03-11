@@ -1,4 +1,5 @@
 <?php
+    require("register.php");
     require("config.php");
 
     // Initialize error messages to blank.
