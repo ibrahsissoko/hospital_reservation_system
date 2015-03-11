@@ -18,14 +18,16 @@
             $dbusername,
             $dbpassword,
             $options);
-    } catch(PDOException $ex) {
         
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+        header('Content-Type: text/html; charset=utf-8');
+
+        session_start();
+
+    } catch(PDOException $ex) {
+
     } 
 
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); 
-
-    header('Content-Type: text/html; charset=utf-8'); 
-
-    session_start(); 
 ?>
