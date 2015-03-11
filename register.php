@@ -1,9 +1,26 @@
 <?php 
     require("config.php");
 
+    class Registration {
+        private $noEmail;
+
+        function _construct() {
+            $this->noEmail = "test";
+        }
+
+        public function initializeValues() {
+            $this->noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = $noAccessCode = "";
+        }
+
+        public function getNoEmail() {
+            return $this->noEmail;
+        }
+    }
+
     // Initialize error messages to blank.
-    $noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = $noAccessCode = "";
-    
+    $r = new Registration();
+    $r->initializeValues();
+
     if(!empty($_POST)) {
 
         // Ensure that the user fills out fields.
