@@ -1,8 +1,4 @@
 <?php
-    function my_autoload ($pClassName) {
-        include("./classes/" . $pClassName . ".php");
-    }
-    spl_autoload_register("my_autoload");
 
 	define('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST'));
 	define('DB_PORT', getenv('OPENSHIFT_MYSQL_DB_PORT'));
@@ -30,7 +26,6 @@
         header('Content-Type: text/html; charset=utf-8');
 
         session_start();
-
     } catch(PDOException $ex) {
 
     } 
