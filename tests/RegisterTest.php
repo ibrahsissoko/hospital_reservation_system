@@ -7,7 +7,7 @@ class RegisterTest  extends PHPUnit_Framework_TestCase {
         $r->initializeValues();
 
         $string = $r->getNoEmail();
-        $this->assertFalse(empty($string));
+        $this->assertTrue(empty($string));
     }
 }
 
