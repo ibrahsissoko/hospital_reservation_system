@@ -3,6 +3,6 @@
     "phpunit/phpunit": "4.2.*"
   },
   "autoload": {
-    "psr-0": {"":"src/"}
+    "classpath": ["src/classes"]
   }
 }
