@@ -207,21 +207,21 @@
             try {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
-            } catch(PDOException $ex) {
-                die("Failed to run query: " . $ex->getMessage());
-            }
 
-            $i = 0;
+                $i = 0;
 
-            // loop through, adding the options to the spinner
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if ($i == 0) {
-                    echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["type_name"] . "</option>";
-                } else {
-                    echo "<option value=\"" . $row["id"] . "\">" . $row["type_name"] . "</option>";
+                // loop through, adding the options to the spinner
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    if ($i == 0) {
+                        echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["type_name"] . "</option>";
+                    } else {
+                        echo "<option value=\"" . $row["id"] . "\">" . $row["type_name"] . "</option>";
+                    }
+
+                    $i = $i + 1;
                 }
-
-                $i = $i + 1;
+            } catch(Exception $e) {
+                
             }
 
             ?>
