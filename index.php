@@ -3,7 +3,7 @@
     $failed = false;
     $message = "";
 
-    require("config.php");
+    require("src/config.php");
     
     if(!empty($_POST)) { 
       $email = $_POST['email'];
@@ -40,24 +40,24 @@
                 if ($row['info_added'] == 0) {
                     switch($row['user_type_id']) {
                         case 3: // nurse
-                            header("Location: nurse_info.php");
-                            die("Redirecting to: nurse_info.php");
+                            header("Location: src/nurse_info.php");
+                            die("Redirecting to: src/nurse_info.php");
                             break;
                         case 2: // doctor
-                            header("Location: doctor_info.php");
-                            die("Redirecting to: doctor_info.php");
+                            header("Location: src/doctor_info.php");
+                            die("Redirecting to: src/doctor_info.php");
                             break;
                         case 4: // admin
-                            header("Location: administrator_info.php");
-                            die("Redirecting to: administrator_info.php");
+                            header("Location: src/administrator_info.php");
+                            die("Redirecting to: src/administrator_info.php");
                             break;
                         default:
-                            header("Location: patient_info.php");
-                            die("Redirecting to: patient_info.php");
+                            header("Location: src/patient_info.php");
+                            die("Redirecting to: src/patient_info.php");
                             break;
                     }
                 } else {
-                    header("Location: home.php");
+                    header("Location: src/home.php");
                     die("Redirecting to: home.php");
                 }
             } else {
@@ -93,10 +93,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="home.php" class="brand">Hospital Management</a>
+      <a href="src/home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
-          <li><a href="register.php">Register</a></li>
+          <li><a href="src/register.php">Register</a></li>
         </ul>
       </div>
     </div>

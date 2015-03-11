@@ -179,7 +179,7 @@
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li><a href="index.php">Login</a></li>
+          <li><a href="../index.php">Login</a></li>
         </ul>
       </div>
     </div>
