@@ -3,6 +3,6 @@
     "phpunit/phpunit": "4.2.*"
   },
   "autoload": {
-    "classpath": ["src/classes"]
+    "classmap": ["src/classes"]
   }
 }
