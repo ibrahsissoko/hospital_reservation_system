@@ -16,9 +16,9 @@
     <meta name="author" content="WAL Consulting">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
-    <link href="assets/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="assets/styles.css" rel="stylesheet" type="text/css">
+    <script src="../assets/bootstrap.min.js"></script>
+    <link href="../assets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../assets/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
