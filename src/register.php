@@ -18,7 +18,7 @@
     }
 
     // Initialize error messages to blank.
-    $r = new Registration();
+    $r = new Register();
     $r->initializeValues();
 
     if(!empty($_POST)) {
