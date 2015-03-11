@@ -122,10 +122,6 @@
                     die("Failed to run query: " . $ex->getMessage());
                 }
 
-                $msg = "Thank you, your registration was successful. Have a great day"
-                        . " exploring the use of this hospital management system.";
-                $msg = wordwrap($msg,70);
-                mail($email,"Registration Confirmation",$msg);
                 // Redirect to login.
                 header("Location: index.php");
                 die("Redirecting to index.php");
