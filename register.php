@@ -1,7 +1,7 @@
 <?php 
     require("config.php");
 
-    class Registration {
+    class Register {
         private $noEmail;
 
         function _construct() {
