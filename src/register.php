@@ -1,6 +1,5 @@
 <?php 
     require("config.php");
-    require("Register.class.php");
 
     // Initialize error messages to blank.
     $r = new Register();
