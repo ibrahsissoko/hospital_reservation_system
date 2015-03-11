@@ -1,5 +1,7 @@
 <?php
 
+require("../src/register.php");
+
 class RegisterTest  extends PHPUnit_Framework_TestCase {
 
     public function testInitialize() {
