@@ -18,8 +18,8 @@
             $dbusername,
             $dbpassword,
             $options);
-    } catch(PDOException $ex) { 
-    	die("Failed to connect to the database: " . $ex->getMessage());
+    } catch(PDOException $ex) {
+        
     } 
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
