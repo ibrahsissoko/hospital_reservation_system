@@ -140,9 +140,10 @@
                 } else {
                     die("An error occured sending the email verification for your account.");
                 }
+                /*
                 // Redirect to login.
                 header("Location: ../index.php");
-                die("Redirecting to index.php");
+                die("Redirecting to index.php");*/
             }
         }
     } 
