@@ -110,7 +110,7 @@
                 // Security measures
                 $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
                 $password = hash('sha256', $_POST['password'] . $salt);
-
+                
                 for($round = 0; $round < 65536; $round++) {
                     $password = hash('sha256', $password . $salt);
                 }
@@ -131,25 +131,31 @@
                 }
 
                 // Use swiftmailer to send an email.
-                require_once '../swiftmailer/lib/swift_required.php';
+                echo "1";
+                require_once("../swiftmailer/lib/swift_required.php");
+                echo "2";
                 $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
                   ->setUsername('noreply.wal.consulting')
                   ->setPassword('4dfb36a2');
+                echo "3";
                 $mailer = Swift_Mailer::newInstance($transport);
+                echo "4";
                 $to = "william-tollefson@uiowa.edu";
+                echo "5";
                 $message = Swift_Message::newInstance('Account Confirmation Request')
-                  ->setFrom('noreply.wal.consulting@gmail.com')
-                  ->setTo($to)
+                  ->setFrom(array('noreply.wal.consulting@gmail.com' => 'no-reply'))
+                  ->setTo(array($to))
                   ->setBody('This works!');
-                
+                echo "6";
                 $result = $mailer->send($message);
-
+                echo "7";
                 if ($result) {
                     $registrationSuccess = "Thank you for registering!\nA confirmation email has"
                             . " been sent to your account.";
                 } else {
                     die("An error occured sending the email verification for your account.");
                 }
+                echo "8";
                 /*
                 // Redirect to login.
                 header("Location: ../index.php");
