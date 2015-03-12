@@ -197,7 +197,7 @@
 
 <div class="container hero-unit">
     <h1>Register</h1> <br />
-    <form action="Register.php" method="post">
+    <form action="register.php" method="post">
 
         <select name="user_type_id">
             <?php
