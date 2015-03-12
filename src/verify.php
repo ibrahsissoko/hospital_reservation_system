@@ -91,7 +91,7 @@
 
 <div class="container hero-unit">
     <h1>Verification Page</h1> <br/><br/>
-    <?php echo $status;?>
+    <p><?php echo "Statement: " . $status;?></p>
 </div>
 
 </body>
