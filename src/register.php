@@ -7,7 +7,6 @@
     $r->initializeValues();
 
     if(!empty($_POST)) {
-
         // Ensure that the user fills out fields.
         if (empty($_POST['email'])) {
             $noEmail = "Please enter an email address.";
@@ -128,18 +127,20 @@
                     die("Failed to run query: " . $ex->getMessage());
                 }
 
-                // Redirect to login.
                 // Email user with instructions of how to verify account
                 $to = "william-tollefson@uiowa.edu";
                 $subject = "Account Confirmation Request";
-                $message = "";
+                $message = "Hello,\nThank you for registering for an account!\n\n "
+                        . "Please paste the following link into your browswer to\n"
+                        . "verify your account:\n\n"
+                        . "http://http://wal-engproject.rhcloud.com/verify.php";
                 $headers = "From: wal-engproject@noreply.com";
-                if (mail($to,$subject,$txt,$headers)) {
+                if (mail($to,$subject,$message,$headers)) {
                     $registrationSuccess = "Confirmation Email Sent Successfully";
                 } else {
-                    die("An error occured sending the email verification of your account.");
+                    die("An error occured sending the email verification for your account.");
                 }
-                
+                // Redirect to login.
                 header("Location: ../index.php");
                 die("Redirecting to index.php");
             }
