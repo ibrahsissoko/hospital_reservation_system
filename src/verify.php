@@ -79,10 +79,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="src/home.php" class="brand">Hospital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
-          <li><a href="src/register.php">Register</a></li>
+          <li><a href="register.php">Register</a></li>
         </ul>
       </div>
     </div>
@@ -90,8 +90,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Verification Page</h1> <br/><br/>
-    <label><?php echo "Statement: " . $status;?><label/>
+    <h1><?php echo "Statement: " . $status;?></h1> <br/><br/>
+   
 </div>
 
 </body>
