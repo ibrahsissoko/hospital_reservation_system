@@ -2,6 +2,7 @@
     $debug = false;
     $failed = false;
     $message = "";
+    
 
     require("src/config.php");
     
@@ -33,44 +34,53 @@
             }
 
             if($check_password === $row['password']){
-                unset($row['salt']);
-                unset($row['password']);
-                $_SESSION['user'] = $row;
-
-                if ($row['info_added'] == 0) {
-                    switch($row['user_type_id']) {
-                        case 3: // nurse
-                            header("Location: src/nurse_info.php");
-                            die("Redirecting to: src/nurse_info.php");
-                            break;
-                        case 2: // doctor
-                            header("Location: src/doctor_info.php");
-                            die("Redirecting to: src/doctor_info.php");
-                            break;
-                        case 4: // admin
-                            header("Location: src/administrator_info.php");
-                            die("Redirecting to: src/administrator_info.php");
-                            break;
-                        default:
-                            header("Location: src/patient_info.php");
-                            die("Redirecting to: src/patient_info.php");
-                            break;
-                    }
+                if ($row['active_user'] == 0) {
+                    $failed = true;
+                    $message = "You must activate your account first.";
                 } else {
-                    header("Location: src/home.php");
-                    die("Redirecting to: home.php");
+                    unset($row['salt']);
+                    unset($row['password']);
+                    $_SESSION['user'] = $row;
+
+                    if ($row['info_added'] == 0) {
+                        switch($row['user_type_id']) {
+                            case 3: // nurse
+                                header("Location: src/nurse_info.php");
+                                die("Redirecting to: src/nurse_info.php");
+                                break;
+                            case 2: // doctor
+                                header("Location: src/doctor_info.php");
+                                die("Redirecting to: src/doctor_info.php");
+                                break;
+                            case 4: // admin
+                                header("Location: src/administrator_info.php");
+                                die("Redirecting to: src/administrator_info.php");
+                                break;
+                            default:
+                                header("Location: src/patient_info.php");
+                                die("Redirecting to: src/patient_info.php");
+                                break;
+                        }
+                    } else {
+                        header("Location: src/home.php");
+                        die("Redirecting to: home.php");
+                    }
                 }
             } else {
                 $failed = true;
-                die("Invalid Password.");
+                $message = "Invalid Password.";
             }
-        }
+        } else {
+            $failed = true;
+            $message = "The email address is not registered.";
+        }  
     } 
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: #FF0000;}</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -120,12 +130,12 @@
 
     <h1>Login</h1> <br />
     <form action="index.php" method="post">
-        Email:<br/>
+        <label>Email:</label>
         <input type="text" name="email" value="" />
-        <br/>
-        Password:<br/> 
-        <input type="password" name="password" value="" /> 
-        <br/><br/> 
+        <label>Password:</label>
+        <input type="password" name="password" value="" /><br/>
+        <span class="error"><?php echo $message;?></span>
+        <br/> 
         <input type="submit" class="btn btn-info" value="Login" /> 
     </form> 
 </div>
