@@ -1,5 +1,5 @@
 <?php
-    require("classes/Register.class.php");
+    require("classes/Register.php");
     require("config.php");
 
     // Initialize error messages to blank.
