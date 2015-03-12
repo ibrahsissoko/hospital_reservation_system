@@ -32,7 +32,7 @@
                 FROM user_types
                 WHERE 
                   id = :type_id
-            "; 
+            ";  
 
             $query_params = array(
                 ':type_id' => $_POST['user_type_id']
