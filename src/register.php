@@ -239,7 +239,7 @@
         <span class="error"><?php echo $noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
-        <span class = "success"><?php echo $registrationSuccess;?><span/>
+        <span class = "success"><?php echo $hash;?><span/>
     </form>
 </div>
 
