@@ -26,7 +26,7 @@
         }
         if ($_POST['user_type_id'] != 1 && empty($_POST['access_code'])) {
             $noAccessCode = "Enter an access code";
-        } else if ($_POST['user_type_id'] != 1) {
+        } else if ($_POST['user_type_id'] != 1) { 
             $query = "
                 SELECT *
                 FROM user_types
