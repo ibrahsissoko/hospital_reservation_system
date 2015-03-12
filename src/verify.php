@@ -40,11 +40,18 @@
                 ':active_user' => 1,
                 ':email' => $_GET['email']
             );
+            try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $status = "You are now registered!";
         } else {
-            die("Either the email you entered was invalid, or you are already registered.");
+            $status = "Either the email you entered was invalid, or you are already registered.";
         }
     } else {
-        die("Invalid method for account verification.");
+        $status = "Invalid method for account verification.";
     }
 
 ?>
@@ -83,7 +90,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Verification Page</h1> <br />
+    <h1>Verification Page</h1> <br/><br/>
+    <?php echo $status;?>
 </div>
 
 </body>
