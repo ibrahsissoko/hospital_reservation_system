@@ -131,7 +131,7 @@
     <h1>Login</h1> <br />
     <form action="index.php" method="post">
         <label>Email:</label>
-        <input type="text" name="email" value="" />
+        <input type="text" name="email" value="<?php echo $email?>" />
         <label>Password:</label>
         <input type="password" name="password" value="" /><br/>
         <span class="error"><?php echo $message;?></span>
