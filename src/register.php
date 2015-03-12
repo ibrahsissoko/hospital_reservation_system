@@ -96,12 +96,14 @@
                         email,
                         password, 
                         salt,
-                        user_type_id
+                        user_type_id,
+                        hash
                     ) VALUES (
                         :email,
                         :password,
                         :salt,
-                        :user_type_id
+                        :user_type_id,
+                        :hash
                     )
                 ";
 
@@ -117,7 +119,8 @@
                     ':email' => $_POST['email'],
                     ':password' => $password,
                     ':salt' => $salt,
-                    ':user_type_id' => $_POST['user_type_id']
+                    ':user_type_id' => $_POST['user_type_id'],
+                    ':hash' => $hash
                 );
 
                 try {
@@ -239,7 +242,7 @@
         <span class="error"><?php echo $noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
-        <span class = "success"><?php echo $hash;?><span/>
+        <span class = "success"><?php echo $registrationSuccess;?><span/>
     </form>
 </div>
 
