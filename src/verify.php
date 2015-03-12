@@ -27,7 +27,7 @@
             die("Failed to run query: " . $ex->getMessage());
         }
         $row = $stmt->fetch();
-        if($stmt->rowCount() == 1){
+        if($stmt->rowCount() > 0){
             $query = "
                 UPDATE users
                 SET 
@@ -90,7 +90,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h1><?php echo "Statement: " . $status;?></h1> <br/><br/>
+    <h3><?php echo $status;?></h3> <br/><br/>
 </div>
 
 </body>
