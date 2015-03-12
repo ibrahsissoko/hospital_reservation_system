@@ -125,20 +125,26 @@
 
                 try {
                     $stmt = $db->prepare($query);
-                    $result = $stmt->execute($query_params);
+                    $stmt->execute($query_params);
                 } catch(PDOException $ex) {
                     die("Failed to run query: " . $ex->getMessage());
                 }
 
-                // Email user with instructions of how to verify account
+                // Use swiftmailer to send an email.
+                require_once '../swiftmailer/lib/swift_required.php';
+                $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+                  ->setUsername('noreply.wal.consulting')
+                  ->setPassword('4dfb36a2');
+                $mailer = Swift_Mailer::newInstance($transport);
                 $to = "william-tollefson@uiowa.edu";
-                $subject = "Account Confirmation Request";
-                $message = "Hello,\nThank you for registering for an account!\n\n "
-                        . "Please paste the following link into your browswer to\n"
-                        . "verify your account:\n\n"
-                        . "http://http://wal-engproject.rhcloud.com/verify.php";
-                $headers = "From: wal-engproject@noreply.com";
-                if (mail($to,$subject,$message,$headers)) {
+                $message = Swift_Message::newInstance('Account Confirmation Request')
+                  ->setFrom('noreply.wal.consulting@gmail.com')
+                  ->setTo($to)
+                  ->setBody('This works!');
+                
+                $result = $mailer->send($message);
+
+                if ($result) {
                     $registrationSuccess = "Thank you for registering!\nA confirmation email has"
                             . " been sent to your account.";
                 } else {
