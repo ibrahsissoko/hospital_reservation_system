@@ -10,14 +10,11 @@
                     email = :email
                 AND
                     hash  = :hash
-                AND
-                    active_user = :active_user
         ";
 
         $query_params = array(
             ':email' => $_GET['email'],
             ':hash' => $_GET['hash'],
-            ':active_user' => 0
         );
 
         try {
@@ -28,27 +25,31 @@
         }
         $row = $stmt->fetch();
         if($stmt->rowCount() > 0){
-            $query = "
-                UPDATE users
-                SET 
-                    active_user = :active_user
-                WHERE
-                    email = :email
-            ";
-            
-            $query_params = array(
-                ':active_user' => 1,
-                ':email' => $_GET['email']
-            );
-            try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-            } catch(PDOException $ex) {
-                die("Failed to run query: " . $ex->getMessage());
+            if (row['active_user'] == 1) {
+                $status = "This email account has already been registered.";
+            } else {
+                $query = "
+                    UPDATE users
+                    SET 
+                        active_user = :active_user
+                    WHERE
+                        email = :email
+                ";
+
+                $query_params = array(
+                    ':active_user' => 1,
+                    ':email' => $_GET['email']
+                );
+                try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+                } catch(PDOException $ex) {
+                    die("Failed to run query: " . $ex->getMessage());
+                }
+                $status = "You are now registered!";
             }
-            $status = "You are now registered!";
         } else {
-            $status = "Either the email you entered was invalid, or you are already registered.";
+            $status = "The link you entered is invalid. Make sure that you copied it correctly.";
         }
     } else {
         $status = "Invalid method for account verification.";

@@ -139,7 +139,8 @@
                         . "http://http://wal-engproject.rhcloud.com/verify.php";
                 $headers = "From: wal-engproject@noreply.com";
                 if (mail($to,$subject,$message,$headers)) {
-                    $registrationSuccess = "Confirmation Email Sent Successfully!";
+                    $registrationSuccess = "Thank you for registering!\nA confirmation email has"
+                            . " been sent to your account.";
                 } else {
                     die("An error occured sending the email verification for your account.");
                 }
