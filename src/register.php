@@ -136,7 +136,7 @@
                         . "http://http://wal-engproject.rhcloud.com/verify.php";
                 $headers = "From: wal-engproject@noreply.com";
                 if (mail($to,$subject,$message,$headers)) {
-                    $registrationSuccess = "Confirmation Email Sent Successfully";
+                    $registrationSuccess = "Confirmation Email Sent Successfully!";
                 } else {
                     die("An error occured sending the email verification for your account.");
                 }
@@ -153,6 +153,7 @@
 <html lang="en">
 <head>
     <style>.error {color: #FF0000;}</style>
+    <style>.success {color: #00FF00;</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -238,7 +239,7 @@
         <span class="error"><?php echo $noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
-        <label><?php echo $registrationSuccess;?><label/>
+        <span class = "success"><?php echo $registrationSuccess;?><span/>
     </form>
 </div>
 
