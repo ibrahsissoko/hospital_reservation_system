@@ -1,6 +1,37 @@
 <?php
+    if(!empty($_GET['email']) && !empty($_GET['hash'])) {
+        $query = "
+                SELECT *
+                FROM users
+                WHERE
+                    email = :email
+                AND
+                    hash  = :hash
+                AND
+                    active_user = :active_user
+        ";
 
+        $query_params = array(
+            ':email' => $_GET['email'],
+            ':hash' => $_GET['hash'],
+            ':active_user' => 0
+        );
 
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+        $row = $stmt->fetch();
+        if($stmt->rowCount() == 1){
+            echo "Lets get you registered.";
+        } else {
+            die("Either the email you entered was invalid, or you are already registered.");
+        }
+    } else {
+        die("Invalid method for account verification.");
+    }
 
 ?>
 <html lang="en">
