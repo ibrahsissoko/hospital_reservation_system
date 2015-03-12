@@ -106,7 +106,7 @@
       <a href="src/home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
-          <li><a href="src/Register.php">Register</a></li>
+          <li><a href="src/register.php">Register</a></li>
         </ul>
       </div>
     </div>

@@ -83,7 +83,7 @@
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
-          <li><a href="Register.php">Register</a></li>
+          <li><a href="register.php">Register</a></li>
         </ul>
       </div>
     </div>
