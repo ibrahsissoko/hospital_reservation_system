@@ -1,4 +1,7 @@
 <?php
+
+    require("config.php");
+
     if(!empty($_GET['email']) && !empty($_GET['hash'])) {
         $query = "
                 SELECT *
@@ -25,7 +28,18 @@
         }
         $row = $stmt->fetch();
         if($stmt->rowCount() == 1){
-            echo "Lets get you registered.";
+            $query = "
+                UPDATE users
+                SET 
+                    active_user = :active_user
+                WHERE
+                    email = :email
+            ";
+            
+            $query_params = array(
+                ':active_user' => 1,
+                ':email' => $_GET['email']
+            );
         } else {
             die("Either the email you entered was invalid, or you are already registered.");
         }
