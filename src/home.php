@@ -2,7 +2,7 @@
     require("config.php");
 
     if(empty($_SESSION['user'])) {
-        header("Location: index.php");
+        header("Location: ../index.php");
         die("Redirecting to index.php"); 
     }
 ?>
@@ -31,7 +31,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="home.php" class="brand">Hostpital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
           <li><a href="logout.php">Log Out</a></li>
