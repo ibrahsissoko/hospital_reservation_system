@@ -1,5 +1,5 @@
 <?php
-    require("register.php");
+    require("classes/Register.class.php");
     require("config.php");
 
     // Initialize error messages to blank.
@@ -55,8 +55,12 @@
         if (empty($noEmail) && empty($incorrectEmail) && empty($noPassword) &&
                 empty($noConfirmPassword) && empty($noPasswordMatch) && empty($noAccessCode)) {
             
+            // Set the email to the entered value. 
             $email = $_POST['email'];
-
+            
+            // Generate a hash.
+            $hash = md5(rand(0,2147483647));
+            
             // Hash the password a ton so that it can't be un-done
             for($round = 0; $round < 65536; $round++){ 
                 $password = hash('sha256', $password . $salt); 
@@ -125,7 +129,18 @@
                 }
 
                 // Redirect to login.
-                header("Location: index.php");
+                // Email user with instructions of how to verify account
+                $to = "william-tollefson@uiowa.edu";
+                $subject = "Account Confirmation Request";
+                $message = "";
+                $headers = "From: wal-engproject@noreply.com";
+                if (mail($to,$subject,$txt,$headers)) {
+                    $registrationSuccess = "Confirmation Email Sent Successfully";
+                } else {
+                    die("An error occured sending the email verification of your account.");
+                }
+                
+                header("Location: ../index.php");
                 die("Redirecting to index.php");
             }
         }
@@ -220,7 +235,8 @@
         <input type="password" name="confirmPassword" value="<?php echo htmlspecialchars($_POST['confirmPassword'])?>" />
         <span class="error"><?php echo $noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $noPasswordMatch;?></span><br/>
-        <input type="submit" class="btn btn-info" value="Register" /> 
+        <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
+        <label><?php echo $registrationSuccess;?><label/>
     </form>
 </div>
 
