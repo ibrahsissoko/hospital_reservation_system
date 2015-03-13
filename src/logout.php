@@ -1,5 +1,5 @@
 <?php 
-    require("config.php");
+    require("Config.php");
     unset($_SESSION['user']);
 
     header("Location: ../index.php");

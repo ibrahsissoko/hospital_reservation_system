@@ -1,48 +1,32 @@
 <?php
-    require("config.php");
+    require("Config.php");
 
-    // this is the current session's user type. It will be:
-    //      1 - patient
-    //      2 - doctor
-    //      3 - nurse
-    //      4 - administrator
-    // These values correspond to rows in the user_type table.
-    // We will have to use this user type to generate the correct questions for each type of person.
-    // They could go in a user_info_questions database that just stores the user_type and a question.
-    // querying this database for the current user type would result in all the questions we need to ask to
-    // get the info on that type of user. There is an example of generating html from a database in the
-    // registration.php file. (it does it there for the drop down spinner.)
     $user_type = $_SESSION['user']['user_type_id'];
 
     if(!empty($_POST)) {
         // this will be called after they hit the submit button on the form.
-        // TODO:
-        //      Add the columns to the user database on the online phpMyAdmin site
-        //      Update that user with the POST answers on here
-        //      make sure the 'info_added' column gets set to 1 for that user as well so this doesn't run again.
-
         $query = "
             UPDATE users
             SET
                 info_added = :info_added,
-		first_name = :first_name,
+		        first_name = :first_name,
                 last_name = :last_name, 
                 sex = :sex,
                 dob = :dob,
-		age = :age,
-		marital_status = :marital_status,
-		address = :address,
-		city = :city,
+                age = :age,
+                marital_status = :marital_status,
+                address = :address,
+                city = :city,
                 state = :state,
-		zip = :zip,
-		phone = :phone,
-		insurance_provider = :insurance_provider,
-		insurance_begin = :insurance_begin,
-		insurance_end = :insurance_end,
-		allergies = :allergies,
-		diseases = :diseases,
-		previous_surgeries = :previous_surgeries,
-		other_medical_history = :other_medical_history
+                zip = :zip,
+                phone = :phone,
+                insurance_provider = :insurance_provider,
+                insurance_begin = :insurance_begin,
+                insurance_end = :insurance_end,
+                allergies = :allergies,
+                diseases = :diseases,
+                previous_surgeries = :previous_surgeries,
+                other_medical_history = :other_medical_history
             WHERE
                 id = :id
         ";
@@ -51,24 +35,23 @@
             ':info_added' => 1,
             ':id' => $_SESSION['user']['id'],
 			':first_name' => $_POST['first_name'],
-			 ':last_name' => $_POST['last_name'], 
-                ':sex' => isset($_POST['sex']),
-                ':dob' => $_POST['dob'],
-				':age' => $_POST['age'],
-				':marital_status' => isset($_POST['marital_status']),
-				':address' => $_POST['address'],
-				':city' => $_POST['city'],
-                                ':state' => $_POST['state'],
-				':zip' => $_POST['zip'],
-				':phone' => $_POST['phone'],
-				':insurance_provider' => $_POST['insurance_provider'],
-				':insurance_begin' => $_POST['insurance_begin'],
-				':insurance_end' => $_POST['insurance_end'],
-				':allergies' => $_POST['allergies'],
-				':diseases' => $_POST['diseases'],
-				':previous_surgeries' => $_POST['previous_surgeries'],
-				':other_medical_history' => $_POST['other_medical_history'] 
-			
+			':last_name' => $_POST['last_name'],
+            ':sex' => isset($_POST['sex']),
+            ':dob' => $_POST['dob'],
+			':age' => $_POST['age'],
+			':marital_status' => isset($_POST['marital_status']),
+			':address' => $_POST['address'],
+			':city' => $_POST['city'],
+            ':state' => $_POST['state'],
+			':zip' => $_POST['zip'],
+			':phone' => $_POST['phone'],
+			':insurance_provider' => $_POST['insurance_provider'],
+			':insurance_begin' => $_POST['insurance_begin'],
+			':insurance_end' => $_POST['insurance_end'],
+			':allergies' => $_POST['allergies'],
+			':diseases' => $_POST['diseases'],
+			':previous_surgeries' => $_POST['previous_surgeries'],
+			':other_medical_history' => $_POST['other_medical_history']
         );
 
         try {
@@ -79,8 +62,8 @@
         }
 
         if ($result) {
-            header("Location: home.php");
-            die("Redirecting to: home.php");
+            header("Location: Home.php");
+            die("Redirecting to: Home.php");
         }
 		
     }
@@ -110,10 +93,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a href="home.php" class="brand">Hospital Management</a>
+            <a href="Home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <li><a href="home.php">Home</a></li>
+                    <li><a href="Home.php">Home</a></li>
                 </ul>
             </div>
         </div>
@@ -122,7 +105,7 @@
 
 <div class="container hero-unit">
     <h1>Patient Info:</h1> <br />
-    <form action="patient_info.php" method="post">
+    <form action="PatientInfo.php" method="post">
         <!-- TODO: add form here to enter the info. -->	
 		
         First Name:<br/>

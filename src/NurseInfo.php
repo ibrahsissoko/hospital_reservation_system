@@ -1,6 +1,6 @@
 <?php
 
-    require("config.php");
+    require("Config.php");
 
     $user_type = $_SESSION['user']['user_type_id'];
 
@@ -33,10 +33,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a href="home.php" class="brand">Hospital Management</a>
+            <a href="Home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <li><a href="home.php">Home</a></li>
+                    <li><a href="Home.php">Home</a></li>
                 </ul>
             </div>
         </div>
@@ -44,8 +44,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Doctor Info:</h1> <br />
-    <form action="doctor_info.php" method="post">
+    <h1>Nurse Info:</h1> <br />
+    <form action="NurseInfo.php" method="post">
         <!-- TODO: add form here to enter the info. -->
 		First Name:<br/>
         <input type="text" name="first_name" value="" />
@@ -56,11 +56,8 @@
 		Sex:<br/>
 		<input type="radio" name="sex" value=""/> Female<br/>
 		<input type="radio" name="sex" value=""> Male<br/>
-		Degree(MBBS, MD, etc.):<br/>
-		<input type="text" name="degree" value="" />
-		<br/>
-		Specialization(Dentist, Epidemiologist, etc.):<br/>
-		<input type="text" name="specialization" value="" />
+		Department(ENT, Dentistry, etc.):<br/>
+		<input type="text" name="department" value="" />
 		<br/>
 		Years Of Experience:<br/>
 		<input type="text" name="years_of_experience" value="" />

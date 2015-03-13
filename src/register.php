@@ -3,24 +3,9 @@
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
-    require("config.php");
+    require("Config.php");
     require("MailFiles/PHPMailerAutoload.php");
 
-    function testPassword($password) {
-        if (strlen($password) == 0) {
-            // Already caught by empty password.
-            return "";
-        } elseif (strlen($password) > 20 ) {
-            return "Password cannot be longer than 20 characters.";
-        } elseif (preg_match("/\d/",$password) == 0) {
-            return "Password must have at least one number.";
-        } elseif (preg_match("/[A-Z,a-z]/",$password) == 0) {
-            return "Password must have at least one letter.";
-        }
-        // If password passes all of the other tests, then there is no error message.
-        return "";
-    }
-    
     // Initialize error messages to blank.
     $r = new Register();
 
@@ -95,7 +80,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="home.php" class="brand">Hospital Management</a>
+      <a href="Home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
           <li><a href="../index.php">Login</a></li>
@@ -107,7 +92,7 @@
 
 <div class="container hero-unit">
     <h1>Register</h1> <br />
-    <form action="register.php" method="post">
+    <form action="Register.php" method="post">
 
         <select name="user_type_id">
             <?php

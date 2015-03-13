@@ -2,7 +2,7 @@
     $debug = false;
     $message = "";
     
-    require("src/config.php");
+    require("src/Config.php");
     
     if(!empty($_POST)) { 
       $email = $_POST['email'];
@@ -42,25 +42,25 @@
                     if ($row['info_added'] == 0) {
                         switch($row['user_type_id']) {
                             case 3: // nurse
-                                header("Location: src/nurse_info.php");
-                                die("Redirecting to: src/nurse_info.php");
+                                header("Location: src/NurseInfo.php");
+                                die("Redirecting to: src/NurseInfo.php");
                                 break;
                             case 2: // doctor
-                                header("Location: src/doctor_info.php");
-                                die("Redirecting to: src/doctor_info.php");
+                                header("Location: src/DoctorInfo.php");
+                                die("Redirecting to: src/DoctorInfo.php");
                                 break;
                             case 4: // admin
-                                header("Location: src/administrator_info.php");
-                                die("Redirecting to: src/administrator_info.php");
+                                header("Location: src/AdministratorInfo.php");
+                                die("Redirecting to: src/AdministratorInfo.php");
                                 break;
                             default:
-                                header("Location: src/patient_info.php");
-                                die("Redirecting to: src/patient_info.php");
+                                header("Location: src/PatientInfo.php");
+                                die("Redirecting to: src/PatientInfo.php");
                                 break;
                         }
                     } else {
-                        header("Location: src/home.php");
-                        die("Redirecting to: home.php");
+                        header("Location: src/Home.php");
+                        die("Redirecting to: Home.php");
                     }
                 }
             } else {
@@ -98,10 +98,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="src/home.php" class="brand">Hospital Management</a>
+      <a href="src/Home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
-          <li><a href="src/register.php">Register</a></li>
+          <li><a href="src/Register.php">Register</a></li>
         </ul>
       </div>
     </div>
@@ -109,6 +109,7 @@
 </div>
 
 <div class="container hero-unit">
+<<<<<<< HEAD
     <p> <?php 
             if ($debug) {
               echo "query: " . $query . "</br>" . 
@@ -119,6 +120,8 @@
         ?>
     </p>
 
+=======
+>>>>>>> code cleanup
     <h1>Login</h1> <br />
     <form action="index.php" method="post">
         <label>Email:</label>
