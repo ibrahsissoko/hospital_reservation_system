@@ -145,8 +145,7 @@
                 $mail->Subject = 'Here is the subject';
                 $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
                 if(!$mail->send()) {
-                    $registrationSuccess = "Message could not be sent.";
-                    echo 'Mailer Error: ' . $mail->ErrorInfo;
+                    $registrationSuccess = "Message could not be sent. " . $mail->ErrorInfo;
                 } else {
                     $registrationSuccess = "Message has been sent";
                 }
