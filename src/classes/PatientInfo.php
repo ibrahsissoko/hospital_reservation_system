@@ -2,7 +2,7 @@
 
 class PatientInfo extends UserInfo{
 
-    function insertIntoDatabase($_POST, $_SESSION, $db) {
+    protected function insertIntoDatabase($_POST, $_SESSION, $db) {
         if(!empty($_POST)) {
             // this will be called after they hit the submit button on the form.
             $query = "
@@ -31,28 +31,7 @@ class PatientInfo extends UserInfo{
                 id = :id
         ";
 
-            $query_params = array(
-                ':info_added' => 1,
-                ':id' => $_SESSION['user']['id'],
-                ':first_name' => $_POST['first_name'],
-                ':last_name' => $_POST['last_name'],
-                ':sex' => isset($_POST['sex']),
-                ':dob' => $_POST['dob'],
-                ':age' => $_POST['age'],
-                ':marital_status' => isset($_POST['marital_status']),
-                ':address' => $_POST['address'],
-                ':city' => $_POST['city'],
-                ':state' => $_POST['state'],
-                ':zip' => $_POST['zip'],
-                ':phone' => $_POST['phone'],
-                ':insurance_provider' => $_POST['insurance_provider'],
-                ':insurance_begin' => $_POST['insurance_begin'],
-                ':insurance_end' => $_POST['insurance_end'],
-                ':allergies' => $_POST['allergies'],
-                ':diseases' => $_POST['diseases'],
-                ':previous_surgeries' => $_POST['previous_surgeries'],
-                ':other_medical_history' => $_POST['other_medical_history']
-            );
+            $query_params = $this->getQueryParams($_POST, $_SESSION);
 
             try {
                 $stmt = $db->prepare($query);
@@ -67,5 +46,30 @@ class PatientInfo extends UserInfo{
             }
 
         }
+    }
+
+    function getQueryParams($_POST, $_SESSION) {
+        return array(
+            ':info_added' => 1,
+            ':id' => $_SESSION['user']['id'],
+            ':first_name' => $_POST['first_name'],
+            ':last_name' => $_POST['last_name'],
+            ':sex' => isset($_POST['sex']),
+            ':dob' => $_POST['dob'],
+            ':age' => $_POST['age'],
+            ':marital_status' => isset($_POST['marital_status']),
+            ':address' => $_POST['address'],
+            ':city' => $_POST['city'],
+            ':state' => $_POST['state'],
+            ':zip' => $_POST['zip'],
+            ':phone' => $_POST['phone'],
+            ':insurance_provider' => $_POST['insurance_provider'],
+            ':insurance_begin' => $_POST['insurance_begin'],
+            ':insurance_end' => $_POST['insurance_end'],
+            ':allergies' => $_POST['allergies'],
+            ':diseases' => $_POST['diseases'],
+            ':previous_surgeries' => $_POST['previous_surgeries'],
+            ':other_medical_history' => $_POST['other_medical_history']
+        );
     }
 }

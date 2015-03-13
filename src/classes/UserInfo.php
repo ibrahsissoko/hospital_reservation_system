@@ -13,5 +13,6 @@ abstract class UserInfo {
         }
     }
 
+    protected abstract function getQueryParams($_POST, $_SESSION);
     protected abstract function insertIntoDatabase($_POST, $_SESSION, $db);
 }
