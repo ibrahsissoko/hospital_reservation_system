@@ -132,12 +132,11 @@
 
                 // Send the email.
                 $mail = new PHPMailer();
-                $mail->isSMTP();                                      // Set mailer to use SMTP
-                $mail->Host = 'smtp.mailgun.org';  // Specify main and backup SMTP servers
-                $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                $mail->isSMTP();                  
+                $mail->Host = 'smtp.mailgun.org'; 
+                $mail->SMTPAuth = true;                               
                 $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';                 // SMTP username
-                $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           // SMTP password
-                $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+                $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
                 $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
                 $mail->FromName = 'MailGun';
                 $mail->addAddress('william-tollefson@uiowa.edu', 'Will');     // Add a recipient
