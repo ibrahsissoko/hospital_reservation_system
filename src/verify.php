@@ -91,7 +91,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h3><?php echo $status;?></h3> <br/><br/>
+    <h3><center><?php echo $status;?></center></h3> <br/><br/>
 </div>
 
 </body>
