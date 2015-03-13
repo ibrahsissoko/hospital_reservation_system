@@ -62,18 +62,22 @@
             $success = "An email has been sent to the address that you provided. "
                     . "Use the password included in the email to log in.";
             }
+            $query_password = hash('sha256', $password . $salt);
+            for($round = 0; $round < 65536; $round++){
+                $query_password = hash('sha256', $query_password . $salt);
+            }
             // Update the users table.
             $query = "
                 UPDATE users
                 SET 
-                    password = :password,
+                    password = :query_password,
                     salt = :salt
                 WHERE
                     email = :email
             ";
 
             $query_params = array(
-                ':password' => $password,
+                ':password' => $query_password,
                 ':salt' => $salt,
                 ':email' => $_POST['email']
             );
