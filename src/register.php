@@ -8,14 +8,14 @@
     require("MailFiles/PHPMailerAutoload.php");
 
     function testPassword($password) {
-        if (strlen(testPassword) == 0) {
+        if (strlen($password) == 0) {
             // Already caught by empty password.
             return "";
         } elseif (strlen($password) > 20 ) {
             return "Password cannot be longer than 20 characters.";
         } elseif (preg_match("/\d/",$password) == 0) {
             return "Password must have at least one digit.";
-        } elseif (preg_Match("/[A-Z,a-z]/") == 0) {
+        } elseif (preg_Match("/[A-Z,a-z]/",$password) == 0) {
             return "Password must have at least one letter.";
         }
         // If password passes all of the other tests, then there is no error message.
