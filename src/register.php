@@ -89,9 +89,30 @@
                 $registeredEmail = "This email address is already registered.";
             }
 
-            // If the email is not registered yet, add it to the database.
+            // If the email is not registered yet, send them a confirmation email
+            // and add it to the database.
             if (empty($registeredEmail)) {
-                $query = " 
+                $mail = new PHPMailer();
+                $mail->isSMTP();                  
+                $mail->Host = 'smtp.mailgun.org'; 
+                $mail->SMTPAuth = true;                               
+                $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';                 // SMTP username
+                $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
+                $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+                $mail->FromName = 'No-reply Wal Consulting';
+                $mail->addAddress($email);
+                $mail->isHTML(true);
+                $mail->WordWrap = 70;
+                $mail->Subject = "Account verification request";
+                $mail->Body    = "Hello!\n\nThanks for registering for an account through our Hospital"
+                        . " Management System! Below is a link to verify this email address:\n\n"
+                        . "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
+                if(!$mail->send()) {
+                    $registrationSuccess = "Message could not be sent. " . $mail->ErrorInfo;
+                } else {
+                    $registrationSuccess = "Message has been sent";
+                    // Store the results into the users table.
+                    $query = " 
                     INSERT INTO users ( 
                         email,
                         password, 
@@ -105,48 +126,30 @@
                         :user_type_id,
                         :hash
                     )
-                ";
+                    ";
 
-                // Security measures
-                $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-                $password = hash('sha256', $_POST['password'] . $salt);
-                
-                for($round = 0; $round < 65536; $round++) {
-                    $password = hash('sha256', $password . $salt);
-                }
+                    // Security measures
+                    $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+                    $password = hash('sha256', $_POST['password'] . $salt);
 
-                $query_params = array(
-                    ':email' => $_POST['email'],
-                    ':password' => $password,
-                    ':salt' => $salt,
-                    ':user_type_id' => $_POST['user_type_id'],
-                    ':hash' => $hash
-                );
+                    for($round = 0; $round < 65536; $round++) {
+                        $password = hash('sha256', $password . $salt);
+                    }
 
-                try {
-                    $stmt = $db->prepare($query);
-                    $stmt->execute($query_params);
-                } catch(PDOException $ex) {
-                    die("Failed to run query: " . $ex->getMessage());
-                }
+                    $query_params = array(
+                        ':email' => $_POST['email'],
+                        ':password' => $password,
+                        ':salt' => $salt,
+                        ':user_type_id' => $_POST['user_type_id'],
+                        ':hash' => $hash
+                    );
 
-                // Send the email.
-                $mail = new PHPMailer();
-                $mail->isSMTP();                  
-                $mail->Host = 'smtp.mailgun.org'; 
-                $mail->SMTPAuth = true;                               
-                $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';                 // SMTP username
-                $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-                $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-                $mail->FromName = 'MailGun';
-                $mail->addAddress('william-tollefson@uiowa.edu', 'Will');     // Add a recipient
-                $mail->isHTML(true);                                  // Set email format to HTML
-                $mail->Subject = 'Here is the subject';
-                $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-                if(!$mail->send()) {
-                    $registrationSuccess = "Message could not be sent. " . $mail->ErrorInfo;
-                } else {
-                    $registrationSuccess = "Message has been sent";
+                    try {
+                        $stmt = $db->prepare($query);
+                        $stmt->execute($query_params);
+                    } catch(PDOException $ex) {
+                        die("Failed to run query: " . $ex->getMessage());
+                    }
                 }
             }
         }
