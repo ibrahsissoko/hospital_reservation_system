@@ -1,8 +1,11 @@
 <?php
+    echo "1";
     require("classes/Register.php");
+    echo "2";
     require("config.php");
+    echo "3";
     require("PHPMailer/PHPMailerAutoload.php"); 
-
+    echo "4";
     // Initialize error messages to blank.
     $r = new Register();
     $r->initializeValues();
