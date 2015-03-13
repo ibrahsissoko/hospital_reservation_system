@@ -109,9 +109,9 @@
                         . " Management System! Below is a link to verify this email address:</p>"
                         . "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
                 if(!$mail->send()) {
-                    $registrationSuccess = "Message could not be sent. " . $mail->ErrorInfo;
+                    $registrationSuccess = "Verification email could not be sent. " . $mail->ErrorInfo;
                 } else {
-                    $registrationSuccess = "Message has been sent";
+                    $registrationSuccess = "A confirmation email has been sent to the email address that you provided";
                     // Store the results into the users table.
                     $query = " 
                     INSERT INTO users ( 

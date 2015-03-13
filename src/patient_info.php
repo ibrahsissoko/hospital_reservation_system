@@ -25,23 +25,24 @@
             UPDATE users
             SET
                 info_added = :info_added,
-				first_name = :first_name,
-				last_name = :last_name, 
+		first_name = :first_name,
+                last_name = :last_name, 
                 sex = :sex,
                 dob = :dob,
-				age = :age,
-				marital_status = :marital_status,
-				address = :address,
-				city = :city,
-				zip = :zip,
-				phone = :phone,
-				insurance_provider = :insurance_provider,
-				insurance_begin = :insurance_begin,
-				insurance_end = :insurance_end,
-				allergies = :allergies,
-				diseases = :diseases,
-				previous_surgeries = :previous_surgeries,
-				other_medical_history = :other_medical_history
+		age = :age,
+		marital_status = :marital_status,
+		address = :address,
+		city = :city,
+                state = :state,
+		zip = :zip,
+		phone = :phone,
+		insurance_provider = :insurance_provider,
+		insurance_begin = :insurance_begin,
+		insurance_end = :insurance_end,
+		allergies = :allergies,
+		diseases = :diseases,
+		previous_surgeries = :previous_surgeries,
+		other_medical_history = :other_medical_history
             WHERE
                 id = :id
         ";
@@ -57,6 +58,7 @@
 				':marital_status' => isset($_POST['marital_status']),
 				':address' => $_POST['address'],
 				':city' => $_POST['city'],
+                                ':state' => $_POST['state'],
 				':zip' => $_POST['zip'],
 				':phone' => $_POST['phone'],
 				':insurance_provider' => $_POST['insurance_provider'],
@@ -148,6 +150,9 @@
 		City:<br/>
 		<input type="text" name="city" value="" />
 		<br/>
+                State:<br/>
+                <input type="text" name="state" value="" />
+                <br/>
 		Zip:<br/>
 		<input type="text" name="zip" pattern="[0-9]{5}"><br/>
 		Phone:<br/>
