@@ -1,7 +1,12 @@
 <?php
-    require("classes/Register.php");
+
+    include_once('../AutoLoader.php');
+    // Register the directory to your include files
+    AutoLoader::registerDirectory('../src/classes');
+
     require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
+
     // Initialize error messages to blank.
     $r = new Register();
     $r->initializeValues();
