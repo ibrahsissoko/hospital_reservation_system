@@ -1,7 +1,7 @@
 <?php 
     $debug = false;
     $message = "";
-    
+
     require("src/Config.php");
     
     if(!empty($_POST)) { 

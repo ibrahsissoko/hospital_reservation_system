@@ -12,41 +12,19 @@
     if(!empty($_POST)) {
         // Ensure that the user fills out fields.
         if ($r->checkNoFormErrors($_POST, $db)) {
-            // Set the email to the entered value. 
-            $email = $_POST['email'];
-            
-            // Generate a hash.
             $hash = md5(rand(0,2147483647));
 
             // check if the email exists
-            $r->checkEmailExists($email, $db);
+            $r->checkEmailExists($_POST['email'], $db);
 
             // If the email is not registered yet, send them a confirmation email
             // and add it to the database.
             if (empty($r->registeredEmail)) {
                 $link = "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
-                $mail = new PHPMailer();
-                $mail->isSMTP();                  
-                $mail->Host = 'smtp.mailgun.org'; 
-                $mail->SMTPAuth = true;                               
-                $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-                $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-                $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-                $mail->FromName = 'No-reply Wal Consulting';
-                $mail->addAddress($email);
-                $mail->isHTML(true);
-                $mail->WordWrap = 70;
-                $mail->Subject = "Account verification request";
-                $mail->Body    = 'Hello!<br/><br/>'
-                        . 'Thanks for registering for an account through our Hospital'
-                        . ' Management System! Please click <a href='.$link.'>here</a> to verify your account.'
-                        . '<p>If you are having trouble with the link, paste the link below directly into your'
-                        . ' browser:<br/><br/>'.$link.'<br/><br/>Thank you,<br/>Wal Consulting';
-                if(!$mail->send()) {
-                    $r->registrationSuccess = "Verification email could not be sent. " . $mail->ErrorInfo;
+                if(!$r->sendRegistrationEmail($_POST['email'], $link)) {
+                    $r->registrationSuccess = "Verification email could not be sent.";
                 } else {
                     $r->registrationSuccess = "A confirmation email has been sent to the email address that you provided";
-
                     $r->saveRegistration($_POST, $hash, $db);
                 }
             }
@@ -135,7 +113,7 @@
         <span class="error"><?php echo $r->noAccessCode; ?></span>
         <label>Email:</label> 
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
-        <span class="error"><?php echo $r->noEmail; echo $r->incorrectEmail; echo $registeredEmail;?></span>
+        <span class="error"><?php echo $r->noEmail; echo $r->incorrectEmail; echo $r->registeredEmail;?></span>
         <label>Password:</label> 
         <input type="password" name="password" value="" />
         <span class="error"><?php echo $r->noPassword;?></span>
@@ -145,8 +123,12 @@
         <span class="error"><?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
+<<<<<<< HEAD
         <span class = "success"><?php echo $registrationSuccess;?></span>
         <span class = "error"><?php echo $registrationFailure;?></span>
+=======
+        <span class = "success"><?php echo $r->registrationSuccess;?></span>
+>>>>>>> finish converting registration
     </form>
 </div>
 
