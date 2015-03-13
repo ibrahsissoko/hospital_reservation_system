@@ -1,7 +1,7 @@
 <?php
     require("classes/Register.php");
     require("config.php");
-    require("../PHPMailer/PHPMailerAutoload.php"); 
+    require("PHPMailerAutoload.php"); 
 
     // Initialize error messages to blank.
     $r = new Register();
