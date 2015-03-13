@@ -37,12 +37,12 @@
         if (empty($_POST['password'])) {
             $noPassword = "Please enter a password.";
         }
-        $badPassword = testPassword($password);
+        $badPassword = testPassword($_POST['password']);
         if (empty($_POST['confirmPassword'])) {
             $noConfirmPassword = "Please confirm your password.";
         }
-        if ($_POST['password'] != $_POST['confirmPassword'] && $noPassword == ""
-            && $noConfirmPassword == "") {
+        if ($_POST['password'] != $_POST['confirmPassword'] && empty($noPassword)
+            && empty($badPassword) && empty($noConfirmPassword)) {
             $noPasswordMatch = "Passwords do not match.";
         }
         if ($_POST['user_type_id'] != 1 && empty($_POST['access_code'])) {
