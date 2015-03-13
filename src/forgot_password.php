@@ -35,9 +35,8 @@
         // If the email was found, generate a new password and send them an email.
         if (empty($noEmail)) {
             
-            // Generate new salt and password
-            $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-            $password = substr(hash('sha256', md5(rand(0,2147483647)) . $salt),10,10);
+            // Generate a new password
+            $password = substr(md5(rand(0,2147483647)),10,10);
             // Start writing the email.
             $mail = new PHPMailer();
             $mail->isSMTP();                  
@@ -62,22 +61,24 @@
             $success = "An email has been sent to the address that you provided. "
                     . "Use the password included in the email to log in.";
             }
-            $query_password = hash('sha256', $password . $salt);
+            // Re-hash the password and create new salt.
+            $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+            $password = hash('sha256', $password . $salt);
             for($round = 0; $round < 65536; $round++){
-                $query_password = hash('sha256', $query_password . $salt);
+                $password = hash('sha256', $password . $salt);
             }
             // Update the users table.
             $query = "
                 UPDATE users
                 SET 
-                    password = :query_password,
+                    password = :password,
                     salt = :salt
                 WHERE
                     email = :email
             ";
 
             $query_params = array(
-                ':password' => $query_password,
+                ':password' => $password,
                 ':salt' => $salt,
                 ':email' => $_POST['email']
             );
