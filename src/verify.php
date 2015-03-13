@@ -1,61 +1,15 @@
 <?php
 
+    include_once('../AutoLoader.php');
+    AutoLoader::registerDirectory('../src/classes');
+
     require("Config.php");
 
-    if(!empty($_GET['email']) && !empty($_GET['hash'])) {
-        $query = "
-                SELECT *
-                FROM users
-                WHERE
-                    email = :email
-                AND
-                    hash  = :hash
-        ";
-
-        $query_params = array(
-            ':email' => $_GET['email'],
-            ':hash' => $_GET['hash'],
-        );
-
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-        }
-        $row = $stmt->fetch();
-        if($stmt->rowCount() > 0) {
-            if ($row['active_user'] == 1) {
-                $status = "This email account has already been registered.";
-            } else {
-                $query = "
-                    UPDATE users
-                    SET 
-                        active_user = :active_user
-                    WHERE
-                        email = :email
-                ";
-
-                $query_params = array(
-                    ':active_user' => 1,
-                    ':email' => $_GET['email']
-                );
-                try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute($query_params);
-                } catch(PDOException $ex) {
-                    die("Failed to run query: " . $ex->getMessage());
-                }
-                $status = "You are now registered!";
-            }
-        } else {
-            $status = "The link you entered is invalid. Make sure that you copied it correctly.";
-        }
-    } else {
-        $status = "Invalid method for account verification.";
-    }
+    $verify = new Verify($_GET['hash'], $_GET['email'], $db);
+    $verify->verifyUser();
 
 ?>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -91,7 +45,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h3><center><?php echo $status;?></center></h3> <br/><br/>
+    <h3><center><?php echo $verify->status;?></center></h3> <br/><br/>
 </div>
 
 </body>
