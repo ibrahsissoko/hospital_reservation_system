@@ -72,8 +72,8 @@
         }
 
         // Only further process if there were no errors.
-        if (empty($noEmail) && empty($incorrectEmail) && empty($noPassword) &&
-                empty($noConfirmPassword) && empty($noPasswordMatch) && empty($noAccessCode)) {
+        if (empty($noEmail) && empty($incorrectEmail) && empty($noPassword) && empty($badPassword)
+                && empty($noConfirmPassword) && empty($noPasswordMatch) && empty($noAccessCode)) {
             
             // Set the email to the entered value. 
             $email = $_POST['email'];
