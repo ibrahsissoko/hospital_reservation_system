@@ -8,7 +8,7 @@ class Register {
     }
 
     public function initializeValues() {
-        $this->noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = $noAccessCode = $registrationSuccess = "";
+        $this->noEmail = $incorrectEmail = $noPassword = $registeredEmail = $noConfirmPassword = $noPasswordMatch = $noAccessCode = $registrationSuccess = $registrationFailure = $badPassword = "";
     }
 
     public function getNoEmail() {

@@ -7,6 +7,21 @@
     require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
 
+    function testPassword($password) {
+        if (strlen(testPassword) == 0) {
+            // Already caught by empty password.
+            return "";
+        } elseif (strlen($password) > 20 ) {
+            return "Password cannot be longer than 20 characters.";
+        } elseif (preg_match("/\d/",$password) == 0) {
+            return "Password must have at least one digit.";
+        } elseif (preg_Match("/[A-Z,a-z]/") == 0) {
+            return "Password must have at least one letter.";
+        }
+        // If password passes all of the other tests, then there is no error message.
+        return "";
+    }
+    
     // Initialize error messages to blank.
     $r = new Register();
     $r->initializeValues();
@@ -22,6 +37,7 @@
         if (empty($_POST['password'])) {
             $noPassword = "Please enter a password.";
         }
+        $badPassword = testPassword($password);
         if (empty($_POST['confirmPassword'])) {
             $noConfirmPassword = "Please confirm your password.";
         }
@@ -102,7 +118,7 @@
                 $mail->isSMTP();                  
                 $mail->Host = 'smtp.mailgun.org'; 
                 $mail->SMTPAuth = true;                               
-                $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';                 // SMTP username
+                $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
                 $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
                 $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
                 $mail->FromName = 'No-reply Wal Consulting';
@@ -116,7 +132,7 @@
                         . '<p>If you are having trouble with the link, paste the link below directly into your'
                         . ' browser:<br/><br/>'.$link.'<br/><br/>Thank you,<br/>Wal Consulting';
                 if(!$mail->send()) {
-                    $registrationSuccess = "Verification email could not be sent. " . $mail->ErrorInfo;
+                    $registrationFailure = "Verification email could not be sent. " . $mail->ErrorInfo;
                 } else {
                     $registrationSuccess = "A confirmation email has been sent to the email address that you provided";
                     // Store the results into the users table.
@@ -249,12 +265,14 @@
         <label>Password:</label> 
         <input type="password" name="password" value="" />
         <span class="error"><?php echo $noPassword;?></span>
+        <span class="error"><?php echo $badPassword;?></span><br/>
         <label>Confirm Password:</label>
         <input type="password" name="confirmPassword" value="" />
         <span class="error"><?php echo $noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
         <span class = "success"><?php echo $registrationSuccess;?></span>
+        <span class = "error"><?php echo $registrationFailure;?></span>
     </form>
 </div>
 
