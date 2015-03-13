@@ -1,9 +1,7 @@
 <?php 
     $debug = false;
-    $failed = false;
     $message = "";
     
-
     require("src/config.php");
     
     if(!empty($_POST)) { 
@@ -35,7 +33,6 @@
 
             if($check_password === $row['password']){
                 if ($row['active_user'] == 0) {
-                    $failed = true;
                     $message = "You must activate your account first.";
                 } else {
                     unset($row['salt']);
@@ -67,11 +64,9 @@
                     }
                 }
             } else {
-                $failed = true;
                 $message = "Invalid Password.";
             }
         } else {
-            $failed = true;
             $message = "The email address is not registered.";
         }  
     } 
@@ -121,10 +116,6 @@
                     "num_rows: " . $result->num_rows . "</br>" .
                     "password: " .  $row["password"];
             } 
-
-            if ($failed) {
-              echo "Login Failed!";
-            }
         ?>
     </p>
 
@@ -136,8 +127,9 @@
         <input type="password" name="password" value="" /><br/>
         <span class="error"><?php echo $message;?></span>
         <br/> 
-        <input type="submit" class="btn btn-info" value="Login" /> 
+        <input type="submit" class="btn btn-info" value="Login" />
     </form> 
+    <a href="src/forgot_password.php">Forgot Password?</a>
 </div>
 
 </body>

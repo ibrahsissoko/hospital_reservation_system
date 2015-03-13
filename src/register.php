@@ -14,8 +14,8 @@
         } elseif (strlen($password) > 20 ) {
             return "Password cannot be longer than 20 characters.";
         } elseif (preg_match("/\d/",$password) == 0) {
-            return "Password must have at least one digit.";
-        } elseif (preg_Match("/[A-Z,a-z]/",$password) == 0) {
+            return "Password must have at least one number.";
+        } elseif (preg_match("/[A-Z,a-z]/",$password) == 0) {
             return "Password must have at least one letter.";
         }
         // If password passes all of the other tests, then there is no error message.
