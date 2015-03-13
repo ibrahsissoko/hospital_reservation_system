@@ -92,6 +92,7 @@
             // If the email is not registered yet, send them a confirmation email
             // and add it to the database.
             if (empty($registeredEmail)) {
+                $link = "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
                 $mail = new PHPMailer();
                 $mail->isSMTP();                  
                 $mail->Host = 'smtp.mailgun.org'; 
@@ -104,10 +105,11 @@
                 $mail->isHTML(true);
                 $mail->WordWrap = 70;
                 $mail->Subject = "Account verification request";
-                $mail->Body    = "<p>Hello!</p>"
-                        . "<p>Thanks for registering for an account through our Hospital"
-                        . " Management System! Below is a link to verify this email address:</p>"
-                        . "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
+                $mail->Body    = '<p>Hello!</p>'
+                        . '<p>Thanks for registering for an account through our Hospital'
+                        . ' Management System! Please click <a href=$link>here</a> to verify your account.</p>'
+                        . '<p>If you having trouble with the link, paste the link below directly into your'
+                        . ' browser:</p><p>$link</p><p>Thank you,<br/>Wal Consulting</p>';
                 if(!$mail->send()) {
                     $registrationSuccess = "Verification email could not be sent. " . $mail->ErrorInfo;
                 } else {
