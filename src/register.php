@@ -130,36 +130,27 @@
                     die("Failed to run query: " . $ex->getMessage());
                 }
 
-                // Use swiftmailer to send an email.
-                echo "1";
-                require_once("../swiftmailer/lib/swift_required.php");
-                echo "2";
-                $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
-                  ->setUsername('noreply.wal.consulting')
-                  ->setPassword('4dfb36a2');
-                echo "3";
-                $mailer = Swift_Mailer::newInstance($transport);
-                echo "4";
-                $to = "william-tollefson@uiowa.edu";
-                echo "5";
-                $message = Swift_Message::newInstance('Account Confirmation Request')
-                  ->setFrom(array('noreply.wal.consulting@gmail.com' => 'no-reply'))
-                  ->setTo(array($to))
-                  ->setBody('This works!');
-                echo "6";
-                $result = $mailer->send($message);
-                echo "7";
-                if ($result) {
-                    $registrationSuccess = "Thank you for registering!\nA confirmation email has"
-                            . " been sent to your account.";
+                // Send the email.
+                require("../PHPMailer/PHPMailerAutoload.php"); 
+                $mail = new PHPMailer;
+                $mail->isSMTP();                                      // Set mailer to use SMTP
+                $mail->Host = 'smtp.mailgun.org';  // Specify main and backup SMTP servers
+                $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';                 // SMTP username
+                $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           // SMTP password
+                $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+                $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+                $mail->FromName = 'MailGun';
+                $mail->addAddress('william-tollefson@uiowa.edu', 'Will');     // Add a recipient
+                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->Subject = 'Here is the subject';
+                $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+                if(!$mail->send()) {
+                    echo 'Message could not be sent.';
+                    echo 'Mailer Error: ' . $mail->ErrorInfo;
                 } else {
-                    die("An error occured sending the email verification for your account.");
+                    echo 'Message has been sent';
                 }
-                echo "8";
-                /*
-                // Redirect to login.
-                header("Location: ../index.php");
-                die("Redirecting to index.php");*/
             }
         }
     } 
