@@ -4,7 +4,7 @@
     echo "2";
     require("config.php");
     echo "3";
-    require_once('dirname(__FILE__)' . '/../PHPMailer/PHPMailerAutoload.php');
+    require("PHPMailerAutoload.php");
     echo "4";
     // Initialize error messages to blank.
     $r = new Register();
