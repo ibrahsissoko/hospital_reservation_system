@@ -1,6 +1,7 @@
 <?php
     require("classes/Register.php");
     require("config.php");
+    require("../PHPMailer/PHPMailerAutoload.php"); 
 
     // Initialize error messages to blank.
     $r = new Register();
@@ -131,7 +132,6 @@
                 }
 
                 // Send the email.
-                require("../PHPMailer/PHPMailerAutoload.php"); 
                 $mail = new PHPMailer;
                 $mail->isSMTP();                                      // Set mailer to use SMTP
                 $mail->Host = 'smtp.mailgun.org';  // Specify main and backup SMTP servers
