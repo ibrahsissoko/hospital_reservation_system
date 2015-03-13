@@ -104,8 +104,9 @@
                 $mail->isHTML(true);
                 $mail->WordWrap = 70;
                 $mail->Subject = "Account verification request";
-                $mail->Body    = "Hello!\n\nThanks for registering for an account through our Hospital"
-                        . " Management System! Below is a link to verify this email address:\n\n"
+                $mail->Body    = "<p>Hello!</p>"
+                        . "<p>Thanks for registering for an account through our Hospital"
+                        . " Management System! Below is a link to verify this email address:</p>"
                         . "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
                 if(!$mail->send()) {
                     $registrationSuccess = "Message could not be sent. " . $mail->ErrorInfo;

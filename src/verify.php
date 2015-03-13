@@ -24,8 +24,8 @@
             die("Failed to run query: " . $ex->getMessage());
         }
         $row = $stmt->fetch();
-        if($stmt->rowCount() > 0){
-            if (row['active_user'] == 1) {
+        if($stmt->rowCount() > 0) {
+            if ($row['active_user'] == 1) {
                 $status = "This email account has already been registered.";
             } else {
                 $query = "
