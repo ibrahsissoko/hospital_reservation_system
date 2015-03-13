@@ -1,11 +1,7 @@
 <?php
-    echo "1";
     require("classes/Register.php");
-    echo "2";
     require("config.php");
-    echo "3";
-    require("PHPMailerAutoload.php");
-    echo "4";
+    require("../PHPMailer/PHPMailerAutoload.php");
     // Initialize error messages to blank.
     $r = new Register();
     $r->initializeValues();
@@ -135,7 +131,7 @@
                 }
 
                 // Send the email.
-                $mail = new PHPMailer;
+                $mail = new PHPMailer();
                 $mail->isSMTP();                                      // Set mailer to use SMTP
                 $mail->Host = 'smtp.mailgun.org';  // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -149,10 +145,10 @@
                 $mail->Subject = 'Here is the subject';
                 $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
                 if(!$mail->send()) {
-                    echo 'Message could not be sent.';
+                    $registrationSuccess = "Message could not be sent.";
                     echo 'Mailer Error: ' . $mail->ErrorInfo;
                 } else {
-                    echo 'Message has been sent';
+                    $registrationSuccess = "Message has been sent";
                 }
             }
         }
