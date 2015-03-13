@@ -1,6 +1,6 @@
 <?php
 
-class RegisterTest  extends PHPUnit_Framework_TestCase {
+class RegisterTest extends PHPUnit_Framework_TestCase {
 
     public function test_initialize() {
         $r = new Register();

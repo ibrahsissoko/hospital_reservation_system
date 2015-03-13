@@ -1,12 +1,12 @@
 <?php
 
+    include_once('../AutoLoader.php');
+    AutoLoader::registerDirectory('../src/classes');
+
     require("Config.php");
 
-    $user_type = $_SESSION['user']['user_type_id'];
-
-    if(!empty($_POST)) {
-
-    }
+    $nurse = new NurseInfo();
+    $nurse->saveInfo($_POST, $_SESSION, $db);
 ?>
 
 <!doctype html>

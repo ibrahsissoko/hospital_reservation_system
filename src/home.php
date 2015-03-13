@@ -1,4 +1,8 @@
 <?php
+
+    include_once('../AutoLoader.php');
+    AutoLoader::registerDirectory('../src/classes');
+
     require("Config.php");
 
     if(empty($_SESSION['user'])) {
