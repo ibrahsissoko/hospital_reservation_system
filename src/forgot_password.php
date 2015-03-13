@@ -37,12 +37,7 @@
             
             // Generate new salt and password
             $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-            $password = hash('sha256', md5(rand(0,2147483647)) . $salt);
-
-            for($round = 0; $round < 65536; $round++) {
-                $password = hash('sha256', $password . $salt);
-            }
-            
+            $password = substr(hash('sha256', md5(rand(0,2147483647)) . $salt),10,10);
             // Start writing the email.
             $mail = new PHPMailer();
             $mail->isSMTP();                  
@@ -58,7 +53,8 @@
             $mail->Subject = "Password Retrieval";
             $mail->Body    = 'Hello!<br/><br/>'
                     . 'You recently requested a password retrieval.<br/><br/>'
-                    . 'Here is a new password use it to login:'. $password
+                    . 'Here is a new password use it to login.<br/><br/>'
+                    . 'Password: '. $password
                     . '<br/><br/>Thank you,<br/>Wal Consulting';
             if(!$mail->send()) {
                 $registrationFailure = "Verification email could not be sent. " . $mail->ErrorInfo;
@@ -133,7 +129,7 @@
     <form action="forgot_password.php" method="post">
         <label>Email:</label>
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
-        <span class="error"><?php echo $noEmail;?></span>
+        <span class="error"><?php echo $noEmail;?></span><br/><br/>
         <input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>
         <span class = "success"><?php echo $success;?></span>
     </form>
