@@ -30,7 +30,7 @@ class RegisterTest extends PHPUnit_Framework_TestCase {
         $r->passwordError("", "");
         $this->assertFalse(empty($r->noPassword));
         $this->assertFalse(empty($r->noConfirmPassword));
-        $this->assertFalse(empty($r->noPasswordMatch));
+        $this->assertTrue(empty($r->noPasswordMatch));
 
         $r = new Register();
         $r->passwordError("klink", "klink");
@@ -66,6 +66,6 @@ class RegisterTest extends PHPUnit_Framework_TestCase {
 
         $r = new Register();
         $r->userTypeError(2, "", "11");
-        $this->assertTrue(empty($r->noAccessCode));
+        $this->assertFalse(empty($r->noAccessCode));
     }
 }
