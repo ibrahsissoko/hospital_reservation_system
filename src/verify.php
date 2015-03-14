@@ -3,7 +3,7 @@
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
-    require("Config.php");
+    require("config.php");
 
     $verify = new Verify($_GET['hash'], $_GET['email'], $db);
     $verify->verifyUser();

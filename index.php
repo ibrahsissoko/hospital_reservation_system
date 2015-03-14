@@ -2,9 +2,9 @@
     $debug = false;
     $message = "";
 
-    require("src/Config.php");
+    require("src/config.php");
     
-    if(!empty($_POST)) { 
+    if(!empty($_POST)) {
       $email = $_POST['email'];
 
       $query = "

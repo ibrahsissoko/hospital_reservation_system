@@ -3,7 +3,7 @@
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
-    require("Config.php");
+    require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
 
     // Initialize error messages to blank.

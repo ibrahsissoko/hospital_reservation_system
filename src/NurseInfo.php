@@ -3,7 +3,7 @@
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
-    require("Config.php");
+    require("config.php");
 
     $nurse = new NurseInfo();
     $nurse->saveInfo($_POST, $_SESSION, $db);
