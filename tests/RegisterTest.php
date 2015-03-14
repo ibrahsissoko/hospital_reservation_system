@@ -48,7 +48,7 @@ class RegisterTest extends PHPUnit_Framework_TestCase {
         $r->passwordError("", "klink");
         $this->assertFalse(empty($r->noPassword));
         $this->assertTrue(empty($r->noConfirmPassword));
-        $this->assertFalse(empty($r->noPasswordMatch));
+        $this->assertTrue(empty($r->noPasswordMatch));
     }
 
     function test_userType() {
