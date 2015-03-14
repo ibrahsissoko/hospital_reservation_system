@@ -109,19 +109,6 @@
 </div>
 
 <div class="container hero-unit">
-<<<<<<< HEAD
-    <p> <?php 
-            if ($debug) {
-              echo "query: " . $query . "</br>" . 
-                    "message: " . $message . "</br>" .
-                    "num_rows: " . $result->num_rows . "</br>" .
-                    "password: " .  $row["password"];
-            } 
-        ?>
-    </p>
-
-=======
->>>>>>> code cleanup
     <h1>Login</h1> <br />
     <form action="index.php" method="post">
         <label>Email:</label>
