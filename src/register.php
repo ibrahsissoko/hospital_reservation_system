@@ -122,9 +122,9 @@
         <input type="password" name="confirmPassword" value="" />
         <span class="error"><?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
-        <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
         <span class = "success"><?php echo $r->registrationSuccess;?></span>
         <span class = "error"><?php echo $r->registrationFailure;?></span>
+        <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
     </form>
 </div>
 
