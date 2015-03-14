@@ -58,7 +58,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="Home.php" class="brand">Hospital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
           <li><a href="../index.php">Login</a></li>
@@ -70,7 +70,7 @@
 
 <div class="container hero-unit">
     <h1>Register</h1> <br />
-    <form action="Register.php" method="post">
+    <form action="register.php" method="post">
 
         <select name="user_type_id">
             <?php

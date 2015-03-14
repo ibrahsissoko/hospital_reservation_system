@@ -34,7 +34,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="Home.php" class="brand">Hospital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
           <li><a href="../index.php">Login</a></li>
