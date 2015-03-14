@@ -49,12 +49,12 @@ class Register {
         }
     }
 
-    function checkNoFormErrors($_POST, $db) {
-        $this->emailError($_POST['email']);
-        $this->passwordError($_POST['password'], $_POST['confirmPassword']);
+    function checkNoFormErrors($post, $db) {
+        $this->emailError($post['email']);
+        $this->passwordError($post['password'], $post['confirmPassword']);
 
-        $accessCode = $this->getAccessCode($_POST['user_type_id'], $db);
-        $this->userTypeError($_POST['user_type_id'], $_POST['access_code'], $accessCode);
+        $accessCode = $this->getAccessCode($post['user_type_id'], $db);
+        $this->userTypeError($post['user_type_id'], $post['access_code'], $accessCode);
 
         return empty($this->noEmail) && empty($this->incorrectEmail) && empty($this->noPassword) &&
                 empty($this->noConfirmPassword) && empty($this->noPasswordMatch) &&
@@ -120,7 +120,7 @@ class Register {
         return $row['access_code'];
     }
 
-    function saveRegistration($_POST, $hash, $db) {
+    function saveRegistration($post, $hash, $db) {
         // Store the results into the users table.
         $query = "
                     INSERT INTO users (
@@ -140,17 +140,17 @@ class Register {
 
         // Security measures
         $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-        $password = hash('sha256', $_POST['password'] . $salt);
+        $password = hash('sha256', $post['password'] . $salt);
 
         for($round = 0; $round < 65536; $round++) {
             $password = hash('sha256', $password . $salt);
         }
 
         $query_params = array(
-            ':email' => $_POST['email'],
+            ':email' => $post['email'],
             ':password' => $password,
             ':salt' => $salt,
-            ':user_type_id' => $_POST['user_type_id'],
+            ':user_type_id' => $post['user_type_id'],
             ':hash' => $hash
         );
 
