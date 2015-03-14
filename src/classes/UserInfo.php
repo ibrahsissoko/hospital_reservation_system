@@ -4,15 +4,15 @@ abstract class UserInfo {
 
     public $status;
 
-    function saveInfo($_POST, $_SESSION, $db) {
-        if (!empty($_POST)) {
-            $this->insertIntoDatabase($_POST, $_SESSION, $db);
+    function saveInfo($post, $session, $db) {
+        if (!empty($post)) {
+            $this->insertIntoDatabase($post, $session, $db);
             $this->status = "success";
         } else {
             $this->status = "failed";
         }
     }
 
-    protected abstract function getQueryParams($_POST, $_SESSION);
-    protected abstract function insertIntoDatabase($_POST, $_SESSION, $db);
+    protected abstract function getQueryParams($post, $session);
+    protected abstract function insertIntoDatabase($post, $session, $db);
 }
