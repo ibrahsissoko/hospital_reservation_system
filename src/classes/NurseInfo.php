@@ -2,7 +2,7 @@
 
 class NurseInfo extends UserInfo {
 
-    protected function insertIntoDatabase($session, $session, $db) {
+    protected function insertIntoDatabase($post, $session, $db) {
         // TODO: insert post data into database (just like PatientInfo).
     }
 
