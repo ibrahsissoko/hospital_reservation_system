@@ -10,7 +10,7 @@ class Register {
     public $noAccessCode;
     public $registrationSuccess;
     public $badPassword;
-    public $registrationError;
+    public $registrationFailure;
 
     function _construct() {
         $this->noEmail =
