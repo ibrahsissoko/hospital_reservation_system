@@ -20,9 +20,9 @@
             // If the email is not registered yet, send them a confirmation email
             // and add it to the database.
             if (empty($r->registeredEmail)) {
-                $link = "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $email . "&hash=" . $hash;
+                $link = "http://wal-engproject.rhcloud.com/src/verify.php?email=" . $_POST['email'] . "&hash=" . $hash;
                 if(!$r->sendRegistrationEmail($_POST['email'], $link)) {
-                    $r->registrationSuccess = "Verification email could not be sent.";
+                    $r->registrationFailure = "Verification email could not be sent.";
                 } else {
                     $r->registrationSuccess = "A confirmation email has been sent to the email address that you provided";
                     $r->saveRegistration($_POST, $hash, $db);
@@ -123,12 +123,8 @@
         <span class="error"><?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
-<<<<<<< HEAD
-        <span class = "success"><?php echo $registrationSuccess;?></span>
-        <span class = "error"><?php echo $registrationFailure;?></span>
-=======
         <span class = "success"><?php echo $r->registrationSuccess;?></span>
->>>>>>> finish converting registration
+        <span class = "error"><?php echo $r->registrationFailure;?></span>
     </form>
 </div>
 
