@@ -22,7 +22,6 @@ class Register {
             $this->noAccessCode =
             $this->registrationSuccess =
                 "";
-
     }
 
     function checkEmailExists($email, $db) {

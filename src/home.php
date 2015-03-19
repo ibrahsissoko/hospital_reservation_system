@@ -35,10 +35,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="Home.php" class="brand">Hospital Management</a>
+      <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li><a href="Logout.php">Log Out</a></li>
+          <li><a href="my_account.php">Account</a></li>
+            <li><a href="logout.php">Log Out</a></li>
         </ul>
       </div>
     </div>

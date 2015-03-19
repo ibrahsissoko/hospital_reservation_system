@@ -1,34 +1,34 @@
 <?php
 
-class PatientInfo extends UserInfo{
+class PatientInfo extends UserInfo {
 
     protected function insertIntoDatabase($post, $session, $db) {
         // this will be called after they hit the submit button on the form.
         $query = "
-        UPDATE users
-        SET
-            info_added = :info_added,
-            first_name = :first_name,
-            last_name = :last_name,
-            sex = :sex,
-            dob = :dob,
-            age = :age,
-            marital_status = :marital_status,
-            address = :address,
-            city = :city,
-            state = :state,
-            zip = :zip,
-            phone = :phone,
-            insurance_provider = :insurance_provider,
-            insurance_begin = :insurance_begin,
-            insurance_end = :insurance_end,
-            allergies = :allergies,
-            diseases = :diseases,
-            previous_surgeries = :previous_surgeries,
-            other_medical_history = :other_medical_history
-        WHERE
-            id = :id
-    ";
+            UPDATE users
+            SET
+                info_added = :info_added,
+                first_name = :first_name,
+                last_name = :last_name,
+                sex = :sex,
+                dob = :dob,
+                age = :age,
+                marital_status = :marital_status,
+                address = :address,
+                city = :city,
+                state = :state,
+                zip = :zip,
+                phone = :phone,
+                insurance_provider = :insurance_provider,
+                insurance_begin = :insurance_begin,
+                insurance_end = :insurance_end,
+                allergies = :allergies,
+                diseases = :diseases,
+                previous_surgeries = :previous_surgeries,
+                other_medical_history = :other_medical_history
+            WHERE
+                id = :id
+        ";
 
         $query_params = $this->getQueryParams($post, $session);
 
@@ -40,8 +40,8 @@ class PatientInfo extends UserInfo{
         }
 
         if ($result) {
-            header("Location: Home.php");
-            die("Redirecting to: Home.php");
+            header("Location: home.php");
+            die("Redirecting to: home.php");
         }
     }
 

@@ -33,10 +33,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a href="Home.php" class="brand">Hospital Management</a>
+            <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <li><a href="Home.php">Home</a></li>
+                    <li><a href="home.php">Home</a></li>
                 </ul>
             </div>
         </div>
@@ -45,7 +45,7 @@
 
 <div class="container hero-unit">
     <h1>Patient Info:</h1> <br />
-    <form action="PatientInfo.php" method="post">
+    <form action="patient_info.php" method="post">
         <!-- TODO: add form here to enter the info. -->	
 		
         First Name:<br/>

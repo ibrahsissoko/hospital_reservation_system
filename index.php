@@ -31,7 +31,7 @@
                 $check_password = hash('sha256', $check_password . $row['salt']);
             }
 
-            if($check_password === $row['password']){
+            if($check_password == $row['password']) {
                 if ($row['active_user'] == 0) {
                     $message = "You must activate your account first.";
                 } else {
@@ -42,25 +42,25 @@
                     if ($row['info_added'] == 0) {
                         switch($row['user_type_id']) {
                             case 3: // nurse
-                                header("Location: src/NurseInfo.php");
-                                die("Redirecting to: src/NurseInfo.php");
+                                header("Location: src/nurse_info.php");
+                                die("Redirecting to: src/nurse_info.php");
                                 break;
                             case 2: // doctor
-                                header("Location: src/DoctorInfo.php");
-                                die("Redirecting to: src/DoctorInfo.php");
+                                header("Location: src/doctor_info.php");
+                                die("Redirecting to: src/doctor_info.php");
                                 break;
                             case 4: // admin
-                                header("Location: src/AdministratorInfo.php");
-                                die("Redirecting to: src/AdministratorInfo.php");
+                                header("Location: src/administrator_info.php");
+                                die("Redirecting to: src/administrator_info.php");
                                 break;
                             default:
-                                header("Location: src/PatientInfo.php");
-                                die("Redirecting to: src/PatientInfo.php");
+                                header("Location: src/patient_info.php");
+                                die("Redirecting to: src/patient_info.php");
                                 break;
                         }
                     } else {
-                        header("Location: src/Home.php");
-                        die("Redirecting to: Home.php");
+                        header("Location: src/home.php");
+                        die("Redirecting to: home.php");
                     }
                 }
             } else {

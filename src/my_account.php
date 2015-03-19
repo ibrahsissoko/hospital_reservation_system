@@ -5,8 +5,10 @@
 
     require("config.php");
 
-    $admin = new AdministratorInfo();
-    $admin->saveInfo($_POST, $_SESSION, $db);
+    if(empty($_SESSION['user'])) {
+        header("Location: ../index.php");
+        die("Redirecting to index.php");
+    }
 ?>
 
 <!doctype html>
@@ -33,10 +35,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a href="Home.php" class="brand">Hospital Management</a>
+            <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <li><a href="Home.php">Home</a></li>
+                    <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -44,12 +46,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Administrator Info:</h1> <br />
-    <form action="PatientInfo.php" method="post">
-        <!-- TODO: add form here to enter the info. -->
-
-        <input type="submit" class="btn btn-info" value="Save" />
-    </form>
+    <h1>My Account</h1> <br />
+    <a href="change_password.php">Change Password</a>
 </div>
 
 </body>
