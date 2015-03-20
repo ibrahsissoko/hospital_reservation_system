@@ -38,6 +38,8 @@
 
             if ($check_password == $row['password']) {
                 $changer->makePasswordChange($db, $_POST['new_password'], $row['salt'], $row['id']);
+            } else {
+                $changer->errorMessage = "Incorrect password.";
             }
         }
     }
