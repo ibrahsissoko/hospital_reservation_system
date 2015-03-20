@@ -117,13 +117,13 @@
         <label>Password:</label> 
         <input type="password" name="password" value="" />
         <span class="error"><?php echo $r->noPassword;?></span>
-        <span class="error"><?php echo $$r->badPassword;?></span><br/>
+        <span class="error"><?php echo $r->badPassword;?></span><br/>
         <label>Confirm Password:</label>
         <input type="password" name="confirmPassword" value="" />
         <span class="error"><?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
-        <span class = "success"><?php echo $r->registrationSuccess;?></span>
-        <span class = "error"><?php echo $r->registrationFailure;?></span>
+        <span class="success"><?php echo $r->registrationSuccess;?></span>
+        <span class="error"><?php echo $r->registrationFailure;?></span>
         <br/>
         <input type="submit" class="btn btn-info" value="Register" />
     </form>
