@@ -124,7 +124,8 @@
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
         <span class = "success"><?php echo $r->registrationSuccess;?></span>
         <span class = "error"><?php echo $r->registrationFailure;?></span>
-        <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
+        <br/>
+        <input type="submit" class="btn btn-info" value="Register" />
     </form>
 </div>
 
