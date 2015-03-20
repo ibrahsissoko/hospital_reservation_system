@@ -8,13 +8,11 @@ class Verify {
 
     public $status;
 
-    function _construct($hash, $email, $db) {
+    function verifyUser($hash, $email, $db) {
+
         $this->email = $email;
         $this->hash = $hash;
         $this->db = $db;
-    }
-
-    function verifyUser() {
 
         if(!empty($this->email) && !empty($this->hash)) {
             $stmt = $this->getUserStatement();

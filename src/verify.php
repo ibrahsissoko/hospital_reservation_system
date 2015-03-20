@@ -5,8 +5,8 @@
 
     require("config.php");
 
-    $verify = new Verify($_GET['hash'], $_GET['email'], $db);
-    $verify->verifyUser();
+    $verify = new Verify();
+    $verify->verifyUser($_GET['hash'], $_GET['email'], $db);
 
 ?>
 
