@@ -21,7 +21,7 @@ class ChangePassword {
         }
     }
 
-    function makePasswordChange($db, $newPassword, $salt) {
+    function makePasswordChange($db, $newPassword, $salt, $id) {
         $query = "
             UPDATE users
             SET
@@ -31,7 +31,8 @@ class ChangePassword {
         ";
 
         $query_params = array(
-            ':password' => $this->hashPassword($newPassword, $salt)
+            ':password' => $this->hashPassword($newPassword, $salt),
+            ':id' => $id
         );
 
         try {
