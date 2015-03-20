@@ -21,7 +21,7 @@ class ChangePassword {
         }
     }
 
-    function changePassword($db, $newPassword, $salt) {
+    function makePasswordChange($db, $newPassword, $salt) {
         $query = "
             UPDATE users
             SET

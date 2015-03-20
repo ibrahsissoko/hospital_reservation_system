@@ -37,7 +37,7 @@
             }
 
             if ($check_password == $row['password']) {
-                $changer->changePassword($db, $_POST['new_password'], $row['salt']);
+                $changer->makePasswordChange($db, $_POST['new_password'], $row['salt']);
             }
         }
     }
