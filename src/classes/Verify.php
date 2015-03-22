@@ -58,7 +58,7 @@ class Verify {
         try {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
+        } catch(Exception $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
 
