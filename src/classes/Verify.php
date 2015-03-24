@@ -56,9 +56,13 @@ class Verify {
         );
 
         try {
-            $stmt = $this->db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
+            if ($this->db != null) {
+                $stmt = $this->db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } else {
+                return null;
+            }
+        } catch(Exception $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
 
