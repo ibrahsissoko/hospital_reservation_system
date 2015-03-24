@@ -1,94 +1,29 @@
 <?php
 
+    include_once('../AutoLoader.php');
+    AutoLoader::registerDirectory('../src/classes');
+
     require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
-
-    $noEmail = $success = "";
     
+    $fp = new ForgotPassword();
+  
     if(!empty($_POST)) {
-        // Set the email to the entered value. 
-        $email = $_POST['email'];
-        
-        // Check if the email is in the database.
-        $query = "
-            SELECT *
-            FROM users
-            WHERE
-                email = :email
-        ";
-
-        $query_params = array(
-            ':email' => $email
-        );
-
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-        }
-        $row = $stmt->fetch();
-        if($stmt->rowCount() == 0){
-            $noEmail = "This email is not recognized.";
-        }
-
-        // If the email was found, generate a new password and send them an email.
-        if (empty($noEmail)) {
-            
-            // Generate a new password
-            $password = substr(md5(rand(0,2147483647)),10,10);
-            // Start writing the email.
-            $mail = new PHPMailer();
-            $mail->isSMTP();                  
-            $mail->Host = 'smtp.mailgun.org'; 
-            $mail->SMTPAuth = true;                               
-            $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-            $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-            $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-            $mail->FromName = 'No-reply Wal Consulting';
-            $mail->addAddress($email);
-            $mail->isHTML(true);
-            $mail->WordWrap = 70;
-            $mail->Subject = "Password Retrieval";
-            $mail->Body    = 'Hello!<br/><br/>'
-                    . 'You recently requested a password retrieval.<br/><br/>'
-                    . 'Here is a new password use it to login.<br/><br/>'
-                    . 'Password: '. $password
-                    . '<br/><br/>Thank you,<br/>Wal Consulting';
-            if(!$mail->send()) {
-                $registrationFailure = "Verification email could not be sent. " . $mail->ErrorInfo;
-            } else {
-            $success = "An email has been sent to the address that you provided. "
+        // Check if the email is recognized.
+        $fp->checkEmail($_POST['email'], $db);
+        // If the email was recognized, generate a new password and send an email.
+        if(empty($fp->noEmail)) {
+            $fp->makeNewPassword();
+            if($fp->sendNewPassword()) {
+                $fp->success = "An email has been sent to the address that you provided. "
                     . "Use the password included in the email to log in.";
+                // Hash the new password and update the tables.
+                $fp->hashNewPassword();
+                $fp->updateTables($db);
+            } else {
+                $fp->registrationFailure = "Verification email could not be sent. Please try again later.";
             }
-            // Re-hash the password and create new salt.
-            $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-            $password = hash('sha256', $password . $salt);
-            for($round = 0; $round < 65536; $round++){
-                $password = hash('sha256', $password . $salt);
-            }
-            // Update the users table.
-            $query = "
-                UPDATE users
-                SET 
-                    password = :password,
-                    salt = :salt
-                WHERE
-                    email = :email
-            ";
-
-            $query_params = array(
-                ':password' => $password,
-                ':salt' => $salt,
-                ':email' => $_POST['email']
-            );
-
-            try {
-                $stmt = $db->prepare($query);
-                $stmt->execute($query_params);
-            } catch(PDOException $ex) {
-                die("Failed to run query: " . $ex->getMessage());
-            }
+            
         }
     }
 ?>
@@ -137,6 +72,7 @@
         <span class="error"><?php echo $noEmail;?></span><br/><br/>
         <input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>
         <span class = "success"><?php echo $success;?></span>
+        <span class = "error"><?php echo $regisrationFailure;?></span>
     </form>
 </div>
 
