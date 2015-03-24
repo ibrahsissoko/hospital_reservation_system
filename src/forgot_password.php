@@ -69,10 +69,10 @@
     <form action="forgot_password.php" method="post">
         <label>Email:</label>
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
-        <span class="error"><?php echo $noEmail;?></span><br/><br/>
+        <span class="error"><?php echo $fp->noEmail;?></span><br/><br/>
         <input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>
-        <span class = "success"><?php echo $success;?></span>
-        <span class = "error"><?php echo $regisrationFailure;?></span>
+        <span class = "success"><?php echo $fp->success;?></span>
+        <span class = "error"><?php echo $fp->regisrationFailure;?></span>
     </form>
 </div>
 
