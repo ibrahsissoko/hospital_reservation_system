@@ -37,7 +37,7 @@
                 $changer->errorMessage = PasswordUtils::testPassword($_POST['new_password']);
                 if(empty($changer->errorMessage)) {
                     $changer->makePasswordChange($db, $_POST['new_password'], $row['salt'], $row['id']);
-                    $change->success = "Password changed successfully.";
+                    $changer->success = "Password changed successfully.";
                 }
             } else {
                 $changer->errorMessage = "Incorrect password.";
