@@ -11,7 +11,7 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if (!empty($_POST) && $changer->checkFieldsFilled($_POST)) {
+    } else if (!empty($_POST) && $changer->checkFieldsCorrect($_POST)) {
         $query = "
                     SELECT *
                     FROM users
@@ -34,7 +34,7 @@
             $check_password = PasswordUtils::hashPassword($_POST['current_password'], $row['salt']);
             
             if (PasswordUtils::checkMatchingPasswords($check_password, $row['password'])) {
-                $changer->errorMessage = PasswordUtils::testPassword($checkPassword);
+                $changer->errorMessage = PasswordUtils::testPassword($_POST['new_password']);
                 if(empty($changer->errorMessage)) {
                     $changer->makePasswordChange($db, $_POST['new_password'], $row['salt'], $row['id']);
                     $change->success = "Password changed successfully.";

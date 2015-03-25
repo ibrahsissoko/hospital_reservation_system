@@ -5,9 +5,12 @@ class ChangePassword {
     public $errorMessage;
     public $success;
 
-    function checkFieldsFilled($post) {
+    function checkFieldsCorrect($post) {
         if (empty($post['current_password']) || empty($post['new_password']) || empty($post['confirm_password'])) {
             $this->errorMessage = "Please fill all fields.";
+            return false;
+        } elseif (!PasswordUtils::checkMatchingPassword($post['new_password'], $post['confirm_password'])) {
+            $this->errorMessage = "Passwords don't match.";
             return false;
         } else {
             return true;
