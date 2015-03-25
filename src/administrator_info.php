@@ -54,8 +54,8 @@
         <input type="text" name="last_name" value="" />
 		<br/>
 		Sex:<br/>
-		<input type="radio" name="sex" value=""/> Female<br/>
-		<input type="radio" name="sex" value=""> Male<br/>
+		<input type="radio" name="sex" value="Female"/> Female<br/>
+		<input type="radio" name="sex" value="Male"> Male<br/>
 		Address:<br/>
 		<input type="text" name="address" value="" />
 		<br/>

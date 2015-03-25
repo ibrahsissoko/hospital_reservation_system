@@ -54,8 +54,8 @@
         <input type="text" name="last_name" value="" />
 		<br/>
 		Sex:<br/>
-		<input type="radio" name="sex" value=""/> Female<br/>
-		<input type="radio" name="sex" value=""> Male<br/>
+		<input type="radio" name="sex" value="Female"/> Female<br/>
+		<input type="radio" name="sex" value="Male"> Male<br/>
 		Degree(MBBS, MD, etc.):<br/>
 		<input type="text" name="degree" value="" />
 		<br/>
@@ -66,9 +66,9 @@
 		<input type="text" name="years_of_experience" value="" />
 		<br/>
 		Shift:<br/>
-		<input type="radio" name="shift" value=""/> Morning<br/>
-		<input type="radio" name="shift" value=""> Regular<br/>
-		<input type="radio" name="shift" value=""> Night<br/>
+		<input type="radio" name="shift" value="Morning"/> Morning<br/>
+		<input type="radio" name="shift" value="Regular"> Regular<br/>
+		<input type="radio" name="shift" value="Night"> Night<br/>
 		Address:<br/>
 		<input type="text" name="address" value="" />
 		<br/>
