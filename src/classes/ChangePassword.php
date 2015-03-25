@@ -30,14 +30,9 @@ class ChangePassword {
 
         try {
             $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
+            $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
-        }
-
-        if ($result) {
-            header("Location: home.php");
-            die("Redirecting to: home.php");
         }
     }
 }
