@@ -9,7 +9,7 @@ class ChangePassword {
         if (empty($post['current_password']) || empty($post['new_password']) || empty($post['confirm_password'])) {
             $this->errorMessage = "Please fill all fields.";
             return false;
-        } elseif (!PasswordUtils::checkMatchingPassword($post['new_password'], $post['confirm_password'])) {
+        } elseif (!PasswordUtils::checkMatchingPasswords($post['new_password'], $post['confirm_password'])) {
             $this->errorMessage = "Passwords don't match.";
             return false;
         } else {
