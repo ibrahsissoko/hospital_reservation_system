@@ -98,7 +98,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a href="src/Home.php" class="brand">Hospital Management</a>
+      <a href="src/home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-right">
           <li><a href="src/register.php">Register</a></li>
