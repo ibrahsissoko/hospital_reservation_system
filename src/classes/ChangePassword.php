@@ -12,15 +12,6 @@ class ChangePassword {
         }
     }
 
-    function checkMatchingPasswords($newPassword, $confirmed) {
-        if ($newPassword == $confirmed) {
-            return true;
-        } else {
-            $this->errorMessage = "Passwords do not match";
-            return false;
-        }
-    }
-
     function makePasswordChange($db, $newPassword, $salt, $id) {
         $query = "
             UPDATE users
@@ -46,15 +37,5 @@ class ChangePassword {
             header("Location: home.php");
             die("Redirecting to: home.php");
         }
-    }
-
-    function hashPassword($newPassword, $salt) {
-        $password = hash('sha256', $newPassword . $salt);
-
-        for($round = 0; $round < 65536; $round++) {
-            $password = hash('sha256', $password . $salt);
-        }
-
-        return $password;
     }
 }

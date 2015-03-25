@@ -31,12 +31,9 @@
 
         $row = $stmt->fetch();
         if ($row) {
-            $check_password = hash('sha256', $_POST['current_password'] . $row['salt']);
-            for ($round = 0; $round < 65536; $round++) {
-                $check_password = hash('sha256', $check_password . $row['salt']);
-            }
-
-            if ($check_password == $row['password']) {
+            $check_password = PasswordUtils::hashPassword($_POST['current_password'], $row['salt']);
+            
+            if (PasswordUtils::checkMatchingPasswords($check_password, $row['password'])) {
                 $changer->makePasswordChange($db, $_POST['new_password'], $row['salt'], $row['id']);
             } else {
                 $changer->errorMessage = "Incorrect password.";
