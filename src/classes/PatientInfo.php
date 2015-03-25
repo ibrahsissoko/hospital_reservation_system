@@ -51,11 +51,8 @@ class PatientInfo extends UserInfo {
             ':id' => $session['user']['id'],
             ':first_name' => $post['first_name'],
             ':last_name' => $post['last_name'],
-			<?php
-			if (isset($_POST['sex'])) {
-				':sex' =>$$_POST['sex'] ;
-			}
-?>
+			
+			':sex' =>$$_POST['sex'] ;
             ':dob' => $post['dob'],
             ':age' => $post['age'],
             ':marital_status' => isset($post['marital_status']),
