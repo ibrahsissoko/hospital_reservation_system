@@ -13,13 +13,14 @@
         $fp->checkEmail($_POST['email'], $db);
         // If the email was recognized, generate a new password and send an email.
         if(empty($fp->noEmail)) {
-            $fp->makeNewPassword();
-            if($fp->sendNewPassword()) {
+            $newPassword = PasswordUtils::generateNewPassword();
+            if($fp->sendNewPassword($newPassword)) {
                 $fp->success = "An email has been sent to the address that you provided. "
                     . "Use the password included in the email to log in.";
                 // Hash the new password and update the tables.
-                $fp->hashNewPassword();
-                $fp->updateTables($db);
+                $newSalt = PasswordUtils::generatePasswordSalt();
+                $newPassword = PasswordUtils::hashPassword($newPassword, $newSalt);
+                $fp->updateTables($newPassword, $newSalt, $db);
             } else {
                 $fp->registrationFailure = "Verification email could not be sent. Please try again later.";
             }

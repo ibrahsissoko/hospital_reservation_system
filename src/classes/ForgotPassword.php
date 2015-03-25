@@ -5,15 +5,11 @@ class ForgotPassword {
     public $noEmail;
     public $success;
     public $email;
-    public $password;
-    public $salt;
     
     function _construct() {
         $this->noEmail =
         $this->success =
-        $this->email =
-        $this->password = 
-        $this->salt = "";
+        $this->email = "";
     }
     
     function checkEmail($email, $db) {
@@ -43,11 +39,7 @@ class ForgotPassword {
         }
     }
     
-    function makeNewPassword() {
-        $this->password = substr(md5(rand(0,2147483647)),10,10);
-    }
-    
-    function sendNewPassword() {
+    function sendNewPassword($newPassword) {
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 
@@ -63,22 +55,12 @@ class ForgotPassword {
         $mail->Body    = 'Hello!<br/><br/>'
                 . 'You recently requested a password retrieval.<br/><br/>'
                 . 'Here is a new password use it to login.<br/><br/>'
-                . 'Password: '. $this->password
+                . 'Password: '. $newPassword
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
-    function hashNewPassword() {
-        // Re-hash the password and create new salt.
-        $this->salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-        $newPassword = hash('sha256', $this->password . $this->salt);
-        for($round = 0; $round < 65536; $round++){
-            $newPassword = hash('sha256', $newPassword . $this->salt);
-        }
-        $this->password = $newPassword;
-    }
-    
-    function updateTables($db) {
+    function updateTables($password, $salt, $db) {
         $query = "
             UPDATE users
             SET 
@@ -89,8 +71,8 @@ class ForgotPassword {
         ";
 
         $query_params = array(
-            ':password' => $this->password,
-            ':salt' => $this->salt,
+            ':password' => $password,
+            ':salt' => $salt,
             ':email' => $this->email
         );
 
