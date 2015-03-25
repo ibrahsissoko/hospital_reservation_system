@@ -71,7 +71,7 @@ class Register {
     }
 
     function passwordError($password, $confirm) {
-        $this->badPassword = $this->testPassword($password);
+        $this->badPassword = PasswordUtils::testPassword($password);
 
         if (empty($password)) {
             $this->noPassword = "Please enter a password.";
@@ -159,21 +159,6 @@ class Register {
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
-    }
-
-    function testPassword($password) {
-        if (strlen($password) == 0) {
-            // Already caught by empty password.
-            return "";
-        } elseif (strlen($password) > 20 ) {
-            return "Password cannot be longer than 20 characters.";
-        } elseif (preg_match("/\d/",$password) == 0) {
-            return "Password must have at least one number.";
-        } elseif (preg_match("/[A-Z,a-z]/",$password) == 0) {
-            return "Password must have at least one letter.";
-        }
-        // If password passes all of the other tests, then there is no error message.
-        return "";
     }
 
     function sendRegistrationEmail($email, $link) {

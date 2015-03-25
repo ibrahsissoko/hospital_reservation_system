@@ -12,7 +12,7 @@ class PasswordUtils {
     
     static function testPassword($password) {
         if (strlen($password) == 0) {
-            // Already caught by empty password.
+            // This case is caught later.
             return "";
         } elseif (strlen($password) > 20 ) {
             return "Password cannot be longer than 20 characters.";
@@ -21,7 +21,7 @@ class PasswordUtils {
         } elseif (preg_match("/[A-Z,a-z]/",$password) == 0) {
             return "Password must have at least one letter.";
         }
-        // If password passes all of the other tests, then there is no error message.
+        // No error message needed.
         return "";
     }
 

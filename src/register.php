@@ -13,7 +13,6 @@
         // Ensure that the user fills out fields.
         if ($r->checkNoFormErrors($_POST, $db)) {
             $hash = md5(rand(0,2147483647));
-
             // check if the email exists
             $r->checkEmailExists($_POST['email'], $db);
 
