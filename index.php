@@ -26,10 +26,7 @@
 
         $row = $stmt->fetch();
         if ($row) {
-            $check_password = hash('sha256', $_POST['password'] . $row['salt']);
-            for($round = 0; $round < 65536; $round++){
-                $check_password = hash('sha256', $check_password . $row['salt']);
-            }
+            $check_password = PasswordUtils::hashPassword($_POST['password'], $row['salt']);
 
             if($check_password == $row['password']) {
                 if ($row['active_user'] == 0) {
