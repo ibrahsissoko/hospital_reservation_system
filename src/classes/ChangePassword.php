@@ -1,7 +1,9 @@
 <?php
 
 class ChangePassword {
+    
     public $errorMessage;
+    public $success;
 
     function checkFieldsFilled($post) {
         if (empty($post['current_password']) || empty($post['new_password']) || empty($post['confirm_password'])) {
@@ -22,7 +24,7 @@ class ChangePassword {
         ";
 
         $query_params = array(
-            ':password' => $this->hashPassword($newPassword, $salt),
+            ':password' => PasswordUtils::hashPassword($newPassword, $salt),
             ':id' => $id
         );
 

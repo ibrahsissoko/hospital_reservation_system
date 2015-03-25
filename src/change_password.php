@@ -34,7 +34,11 @@
             $check_password = PasswordUtils::hashPassword($_POST['current_password'], $row['salt']);
             
             if (PasswordUtils::checkMatchingPasswords($check_password, $row['password'])) {
-                $changer->makePasswordChange($db, $_POST['new_password'], $row['salt'], $row['id']);
+                $changer->errorMessage = PasswordUtils::testPassword($checkPassword);
+                if(empty($changer->errorMessage)) {
+                    $changer->makePasswordChange($db, $_POST['new_password'], $row['salt'], $row['id']);
+                    $change->success = "Password changed successfully.";
+                }
             } else {
                 $changer->errorMessage = "Incorrect password.";
             }
@@ -45,6 +49,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: #FF0000;}</style>
+    <style>.success {color: #00FF00;}</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -85,7 +91,8 @@
         <input type="password" name="new_password" value="" /><br/>
         <label>Confirm New Password:</label>
         <input type="password" name="confirm_password" value="" /><br/>
-        <span class="error"><?php echo $changer->errorMessage;?></span><br/>
+        <span class="error"><?php echo $changer->errorMessage;?></span>
+        <span class="success"><?php echo $changer->success;?></span><br/>
         <input type="submit" class="btn btn-info" value="Change Password" />
     </form>
 </div>
