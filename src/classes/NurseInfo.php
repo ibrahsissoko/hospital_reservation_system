@@ -45,7 +45,7 @@ class NurseInfo extends UserInfo {
             ':id' => $session['user']['id'],
             ':first_name' => $post['first_name'],
             ':last_name' => $post['last_name'],
-            ':sex' => isset($post['sex']),
+            ':sex' => $post['sex'],
             ':years_of_experience' => $post['years_of_experience'],
 			':shift' => $post['shift'],
             ':department' => $post['department'],

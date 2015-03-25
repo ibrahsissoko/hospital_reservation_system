@@ -42,7 +42,7 @@ class AdministratorInfo extends UserInfo {
             ':id' => $session['user']['id'],
             ':first_name' => $post['first_name'],
             ':last_name' => $post['last_name'],
-            ':sex' => isset($post['sex']),
+            ':sex' => $post['sex'],
             ':address' => $post['address'],
             ':city' => $post['city'],
             ':state' => $post['state'],

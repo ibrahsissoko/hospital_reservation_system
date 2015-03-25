@@ -46,7 +46,7 @@ class DoctorInfo extends UserInfo {
             ':id' => $session['user']['id'],
             ':first_name' => $post['first_name'],
             ':last_name' => $post['last_name'],
-            ':sex' => isset($post['sex']),
+            ':sex' => $post['sex'],
 			':degree' => ($post['degree']),
             ':specialization' => ($post['specialization']),
             ':years_of_experience' => $post['years_of_experience'],
