@@ -55,18 +55,18 @@
         <input type="text" name="last_name" value="" />
 		<br/>
 		Sex:<br/>
-		<input type="radio" name="sex" value=""/> Female<br/>
-		<input type="radio" name="sex" value=""> Male<br/>
+		<input type="radio" name="sex" value="Female"/> Female<br/>
+		<input type="radio" name="sex" value="Male"> Male<br/>
 		DOB(yyyymmdd):<br/>
 		<input type="text" name = "dob" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>
 		Age:<br/>
 		<input type="number" name="age" min="1" max="120" value=""><br>
 		Marital Status:<br/>
-		<input type="radio" name="marital_status" value=""/> Single<br/>
-		<input type="radio" name="marital_status" value=""> Married<br/>
-		<input type="radio" name="marital_status" value=""/> In a relationship<br/>
-		<input type="radio" name="marital_status" value=""> Divorced<br/>
-		<input type="radio" name="marital_status" value=""/> Widowed<br/>
+		<input type="radio" name="marital_status" value="Single"/> Single<br/>
+		<input type="radio" name="marital_status" value="Married"> Married<br/>
+		<input type="radio" name="marital_status" value="In a relationship"/> In a relationship<br/>
+		<input type="radio" name="marital_status" value="Divorced"> Divorced<br/>
+		<input type="radio" name="marital_status" value="Widowed"/> Widowed<br/>
 		Address:<br/>
 		<input type="text" name="address" value="" />
 		<br/>
