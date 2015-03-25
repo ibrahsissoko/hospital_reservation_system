@@ -75,6 +75,9 @@
 		City:<br/>
 		<input type="text" name="city" value="" />
 		<br/>
+		State:<br/>
+                <input type="text" name="state" value="" />
+                <br/>
 		Zip:<br/>
 		<input type="text" name="zip" pattern="[0-9]{5}"><br/>
 		Phone:<br/>
