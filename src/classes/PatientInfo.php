@@ -51,7 +51,19 @@ class PatientInfo extends UserInfo {
             ':id' => $session['user']['id'],
             ':first_name' => $post['first_name'],
             ':last_name' => $post['last_name'],
-            ':sex' => isset($post['sex']),
+			<?php
+			if (isset($_POST['sex'])) {
+			$selected_radio = $_POST['sex'];
+			if ($selected_radio == 'Female') {
+				':sex' =>female;
+			}
+			else if ($selected_radio = = 'Male') {
+				':sex' =>male;
+
+			}
+
+		}
+?>
             ':dob' => $post['dob'],
             ':age' => $post['age'],
             ':marital_status' => isset($post['marital_status']),
