@@ -4,7 +4,6 @@ class AdministratorInfo extends UserInfo {
 
     protected function insertIntoDatabase($post, $session, $db) {
         // TODO: insert post data into database (just like PatientInfo).
-		// TODO: insert post data into database (just like PatientInfo).
 		 // this will be called after they hit the submit button on the form.
         $query = "
             UPDATE users
