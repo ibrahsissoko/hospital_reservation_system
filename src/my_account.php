@@ -8,6 +8,21 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
+    } else {
+        switch($_SESSION['user']['user_type_id']) {
+                            case 3: // nurse
+                                $userType = "nurse";
+                                break;
+                            case 2: // doctor
+                                $userType = "doctor";
+                                break;
+                            case 4: // admin
+                                $userType = "administrator";
+                                break;
+                            default:
+                                $userType = "patient";
+                                break;
+                        }
     }
 ?>
 
@@ -47,7 +62,8 @@
 
 <div class="container hero-unit">
     <h1>My Account</h1> <br />
-    <a href="change_password.php">Change Password</a>
+    <a href="change_password.php">Change Password</a><br/>
+    <a href="<?php echo $userType . "_info.php";?>">Update information</a><br/>
 </div>
 
 </body>

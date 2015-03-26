@@ -138,12 +138,8 @@ class Register {
                     ";
 
         // Security measures
-        $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-        $password = hash('sha256', $post['password'] . $salt);
-
-        for($round = 0; $round < 65536; $round++) {
-            $password = hash('sha256', $password . $salt);
-        }
+        $salt = PasswordUtils::generatePasswordSalt();
+        $password = PasswordUtils::hashPassword($post['password'], $salt);
 
         $query_params = array(
             ':email' => $post['email'],
