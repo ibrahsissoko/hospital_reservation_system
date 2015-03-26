@@ -1,5 +1,6 @@
 <?php
-
+    session_start();
+    
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
@@ -49,56 +50,54 @@
         <!-- TODO: add form here to enter the info. -->	
 		
         First Name:<br/>
-        <input type="text" name="first_name" value="" />
-		<br/>
-		Last Name:<br/>
-        <input type="text" name="last_name" value="" />
-		<br/>
-		Sex:<br/>
-		<input type="radio" name="sex" value="Female"/> Female<br/>
-		<input type="radio" name="sex" value="Male"> Male<br/>
-		DOB(yyyymmdd):<br/>
-		<input type="text" name = "dob" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>
-		Age:<br/>
-		<input type="number" name="age" min="1" max="120" value=""><br>
-		Marital Status:<br/>
-		<input type="radio" name="marital_status" value="Single"/> Single<br/>
-		<input type="radio" name="marital_status" value="Married"> Married<br/>
-		<input type="radio" name="marital_status" value="In a relationship"/> In a relationship<br/>
-		<input type="radio" name="marital_status" value="Divorced"> Divorced<br/>
-		<input type="radio" name="marital_status" value="Widowed"/> Widowed<br/>
-		Address:<br/>
-		<input type="text" name="address" value="" />
-		<br/>
-		City:<br/>
-		<input type="text" name="city" value="" />
-		<br/>
-                State:<br/>
-                <input type="text" name="state" value="" />
-                <br/>
-		Zip:<br/>
-		<input type="text" name="zip" pattern="[0-9]{5}"><br/>
-		Phone:<br/>
-		<input type="text" name="phone" pattern="[0-9]{10}"><br/>
-		Insurance Provider:<br/>
-		<input type="text" name="insurance_provider" value="" />
-		<br/>
-		Insurance Beginning Date(yyyymmdd):<br/>
-		<input type="text" name="insurance_begin"pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])"><br/>
-		Insurance Ending Date(yyyymmdd):<br/>	
-		<input type="text" name="insurance_end" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
-		Allergies:<br/>
-		<input type="text" name="allergies" value="" />
-		<br/>
-		Diseases:<br/>
-		<input type="text" name="diseases" value="" />
-		<br/>
-		Previous Surgeries:<br/>
-		<input type="text" name="previous_surgeries" value="" />
-		<br/>
-		Other Medical History:<br/>
-		<textarea name="other_medical_history" cols="40" rows="5"></textarea>
-		<br/><br/>
+        <input type="text" name="first_name" value="<?php echo $_SESSION['user']['first_name'];?>" /><br/>
+        Last Name:<br/>
+        <input type="text" name="last_name" value="<?php echo $_SESSION['user']['last_name'];?>" /><br/>
+        Sex:<br/>
+        <input type="radio" name="sex" value="Female"/> Female<br/>
+        <input type="radio" name="sex" value="Male"> Male<br/>
+        DOB(yyyymmdd):<br/>
+        <input type="text" name = "dob" value = "<?php echo $_SESSION['user']['dob'];?>" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>
+        Age:<br/>
+        <input type="number" name="age" min="1" max="120" value="<?php echo $_SESSION['user']['age'];?>"><br>
+        Marital Status:<br/>
+        <input type="radio" name="marital_status" value="Single"/> Single<br/>
+        <input type="radio" name="marital_status" value="Married"> Married<br/>
+        <input type="radio" name="marital_status" value="In a relationship"/> In a relationship<br/>
+        <input type="radio" name="marital_status" value="Divorced"> Divorced<br/>
+        <input type="radio" name="marital_status" value="Widowed"/> Widowed<br/>
+        Address:<br/>
+        <input type="text" name="address" value="<?php echo $_SESSION['user']['address'];?>" />
+        <br/>
+        City:<br/>
+        <input type="text" name="city" value="<?php echo $_SESSION['user']['city'];?>" />
+        <br/>
+        State:<br/>
+        <input type="text" name="state" value="<?php echo $_SESSION['user']['state'];?>" />
+        <br/>
+        Zip:<br/>
+        <input type="text" name="zip" value = "<?php echo $_SESSION['user']['zip'];?>" pattern="[0-9]{5}"><br/>
+        Phone:<br/>
+        <input type="text" name="phone" value = "<?php echo $_SESSION['user']['phone'];?>" pattern="[0-9]{10}"><br/>
+        Insurance Provider:<br/>
+        <input type="text" name="insurance_provider" value="<?php echo $_SESSION['user']['insurance_provider'];?>" />
+        <br/>
+        Insurance Beginning Date(yyyymmdd):<br/>
+        <input type="text" name="insurance_begin"pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])"><br/>
+        Insurance Ending Date(yyyymmdd):<br/>	
+        <input type="text" name="insurance_end" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
+        Allergies:<br/>
+        <input type="text" name="allergies" value="<?php echo $_SESSION['user']['allergies'];?>" />
+        <br/>
+        Diseases:<br/>
+        <input type="text" name="diseases" value="<?php echo $_SESSION['user']['diseases'];?>" />
+        <br/>
+        Previous Surgeries:<br/>
+        <input type="text" name="previous_surgeries" value="<?php echo $_SESSION['user']['previous_surgeries'];?>" />
+        <br/>
+        Other Medical History:<br/>
+        <textarea name="other_medical_history" value = "<?php echo $_SESSION['user']['other_medical_history'];?>" cols="40" rows="5"></textarea>
+        <br/><br/>
         <input type="submit" name = "submit" class="btn btn-info" value="Save" />
     </form>
 </div>
