@@ -15,6 +15,8 @@ class ScheduleAppointment {
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
         $this->date = $date;
+        $this->error = "Doctor Name: " . $doctorName . ". Patient Name: " 
+                . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date;
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
             $stmt = $db->prepare($query);
@@ -52,7 +54,7 @@ class ScheduleAppointment {
         $mail->Subject = "Diagnosis";
         $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName
-                . 'on' . $this->date . '. The doctor will confirm that this time will'
+                . 'on ' . $this->date . '. The doctor will confirm that this time will'
                 . ' work as well.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
