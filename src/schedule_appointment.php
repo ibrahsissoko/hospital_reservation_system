@@ -23,6 +23,11 @@
     <script src="../assets/bootstrap.min.js"></script>
     <link href="../assets/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="../assets/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script>$(function() {$( "#datepicker" ).datepicker();});</script>
 </head>
 
 <body>
@@ -38,18 +43,22 @@
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li><a href="../index.php">Login</a></li>
+          <li><a href="logout.php">Log Out</a></li>
         </ul>
       </div>
     </div>
   </div>
 </div>
-
+ 
+<p>Date: <input type="text" id="datepicker"></p>
+    
 <div class="container hero-unit">
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post">
         Date:<br/>
-        <input type="text" name="date" value="" /><br/>
+        <input type="text" id="datepicker" name ="date" /><br/>
+        Time:<br/>
+        <input type="text" name="time" value="" /><br/>
         Which Doctor Would You Like?<br/>
         <select name="doctor_name">
             <?php
@@ -62,13 +71,13 @@
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if ($i == 0) {
                         echo "<option value=\"" . "Dr. " . $row["first_name"] . " " 
-                                . $row["last_name"] . "\" selected=\"selected\">" 
+                                . $row["last_name"] . "\" selected=\"selected\">Dr. "
                                 . $row["first_name"] . " " . $row["last_name"] . "</option>";
                         $i++;
                     } else {
                         echo "<option value=\"" . "Dr. " . $row["first_name"] . " " 
-                                . $row["last_name"] . "\">" . $row["first_name"] . " "
-                                . $row["last_name"] . "</option>";
+                                . $row["last_name"] . "\">Dr. " . $row["first_name"]
+                                . " " . $row["last_name"] . "</option>";
                     }
                 }
             } catch(PDOException $e) {
