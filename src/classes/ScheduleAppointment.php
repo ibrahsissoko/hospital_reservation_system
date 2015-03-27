@@ -25,9 +25,9 @@ class ScheduleAppointment {
                 // Currently assuming no doctors will have the same first name, last
                 // name, and degree.
                 $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . $row["last_name"]
-                        . $row["degree"] . ". ";
-                $string1 = (string) $row["first_name"] . $row["last_name"] . $row["degree"];
-                $string2 = (string) str_replace(' ', '', $doctorName);
+                        . $row["degree"] . ".***";
+                $string1 = tr_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
+                $string2 = str_replace(' ', '', $doctorName);
                 if(strcmp($string1, $string2) == 0) {
                     $this->doctorEmail = $row["email"];
                     break;
