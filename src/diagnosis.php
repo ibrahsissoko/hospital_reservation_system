@@ -4,26 +4,14 @@
     AutoLoader::registerDirectory('../src/classes');
 
     require("config.php");
-
-    if(empty($_SESSION['user'])) {
-        header("Location: ../index.php");
-        die("Redirecting to index.php");
-    } else {
-        switch($_SESSION['user']['user_type_id']) {
-                            case 3: // nurse
-                                $userType = "nurse";
-                                break;
-                            case 2: // doctor
-                                $userType = "doctor";
-                                break;
-                            case 4: // admin
-                                $userType = "administrator";
-                                break;
-                            default:
-                                $userType = "patient";
-                                break;
-                        }
+    
+    if(!empty($_POST)) {
+        // Send an email to the doctor and/or patient about the diagnosis.
+        $d = new Diagnosis();
+        $d->sendEmailToPatient();
+        $d->sendEmailToDoctor();
     }
+    
 ?>
 
 <!doctype html>
@@ -53,7 +41,7 @@
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <li><a href="logout.php">Log Out</a></li>
+                    <li><a href="home.php">Home</a></li>
                 </ul>
             </div>
         </div>
@@ -61,12 +49,23 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>My Account</h1> <br />
-    <a href="change_password.php">Change Password</a><br/>
-    <a href="<?php echo $userType . "_info.php";?>">Update information</a><br/>
-    <a href="schedule_appointment.php"><?php if($userType == 1){echo "Schedule an Appointment";}?>></a>
-    <a href="diagnosis.php"><?php if($userType == 2){echo "Diagnosis Form";}?>></a>
-    
+    <h1>Diagnosis Form:</h1> <br />
+    <form action="diagnosis.php" method="post">
+        Patient First Name:<br/>
+        <input type="text" name="first_name" value="" /><br/>
+        Patient Last Name:<br/>
+        <input type="text" name="last_name" value="" /><br/>
+        Patient First Name:<br/>
+        <input type="text" name="first_name" value="" /><br/>
+        Patient Last Name:<br/>
+        <input type="text" name="last_name" value="" /><br/>
+        Observations:<br/>
+        <textarea name="Observations" cols="40" rows="5"></textarea><br/>
+        Diagnosis:<br/>
+        <input type="text" name="diagnosis" value="" /><br/>
+        <br/><br/>
+        <input type="submit" name = "submit" class="btn btn-info" value="Save" />
+    </form>
 </div>
 
 </body>
