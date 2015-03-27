@@ -112,18 +112,18 @@
         <span class="error"><?php echo $r->noAccessCode; ?></span>
         <label>Email:</label> 
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
-        <span class="error"><?php echo $r->noEmail; echo $r->incorrectEmail; echo $r->registeredEmail;?></span>
+        <span class="error"> * <?php echo $r->noEmail; echo $r->incorrectEmail; echo $r->registeredEmail;?></span>
         <label>Password:</label> 
         <input type="password" name="password" value="" />
-        <span class="error"><?php echo $r->noPassword;?></span>
-        <span class="error"><?php echo $r->badPassword;?></span><br/>
+        <span class="error"> * <?php echo $r->noPassword; echo $r->badPassword; ?></span>
         <label>Confirm Password:</label>
         <input type="password" name="confirmPassword" value="" />
-        <span class="error"><?php echo $r->noConfirmPassword;?></span><br/>
+        <span class="error"> * <?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
         <span class="success"><?php echo $r->registrationSuccess;?></span>
         <span class="error"><?php echo $r->registrationFailure;?></span>
-        <input type="submit" class="btn btn-info" value="Register" />
+        <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
+        <p>Password must have at least one number and letter, and must be 20 characters long or fewer</p> 
     </form>
 </div>
 
