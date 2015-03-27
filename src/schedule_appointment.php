@@ -93,7 +93,7 @@
             } catch(PDOException $e) {
                 die("Failed to gather doctor's names.");
             }?></select><br/><br/>
-        <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/>
+        <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>
         <span class="success"><?php echo $appointment->success;?></span>
         <span class="error"><?php echo $appointment->error;?></span>
         

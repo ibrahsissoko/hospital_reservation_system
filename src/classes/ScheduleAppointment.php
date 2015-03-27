@@ -15,28 +15,32 @@ class ScheduleAppointment {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
-        $this->time = $time;
-        $this->date = $date;
-        
-        $query = "SELECT * FROM users WHERE user_type_id=2";
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute();
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                // Currently assuming no doctors will have the same first name, last
-                // name, and degree.
-                $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
-                $string2 = str_replace(' ', '', $doctorName);
-                if(strcmp($string1, $string2) == 0) {
-                    $this->doctorEmail = $row["email"];
-                    break;
+        if (!empty($date) || !empty($time)) {
+            $this->time = $time;
+            $this->date = $date;
+
+            $query = "SELECT * FROM users WHERE user_type_id=2";
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    // Currently assuming no doctors will have the same first name, last
+                    // name, and degree.
+                    $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
+                    $string2 = str_replace(' ', '', $doctorName);
+                    if(strcmp($string1, $string2) == 0) {
+                        $this->doctorEmail = $row["email"];
+                        break;
+                    }
                 }
+            } catch(PDOException $e) {
+                die("Failed to gather doctor's email address.");
             }
-        } catch(PDOException $e) {
-            die("Failed to gather doctor's email address.");
-        }
-        if (empty($this->doctorEmail)) {
-            $this->error = "An internal error occurred acquiring the doctor's information.";
+            if (empty($this->doctorEmail)) {
+                $this->error = "An internal error occurred acquiring the doctor's information.";
+            }
+        } else {
+            $this->error = "Please fill out all fields.";
         }
     }
     
