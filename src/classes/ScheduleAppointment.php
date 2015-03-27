@@ -24,8 +24,6 @@ class ScheduleAppointment {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Currently assuming no doctors will have the same first name, last
                 // name, and degree.
-                $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . $row["last_name"]
-                        . $row["degree"] . ".***";
                 $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
                 $string2 = str_replace(' ', '', $doctorName);
                 if(strcmp($string1, $string2) == 0) {
@@ -35,10 +33,10 @@ class ScheduleAppointment {
             }
         } catch(PDOException $e) {
             die("Failed to gather doctor's email address.");
-        }/*
+        }
         if (empty($this->doctorEmail)) {
             $this->error = "An internal error occurred acquiring the doctor's information.";
-        }*/
+        }
     }
     
     function sendEmailToPatient() {
@@ -77,7 +75,7 @@ class ScheduleAppointment {
         $mail->WordWrap = 70;
         $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello!<br/><br/>'
-                . $this->patientName . 'Requested an appointment with you on '
+                . $this->patientName . ' requested an appointment with you on '
                 . $this->date . '. Hopefully this time can work for you...' 
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
