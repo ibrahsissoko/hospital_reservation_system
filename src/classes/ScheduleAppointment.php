@@ -7,16 +7,17 @@ class ScheduleAppointment {
     private $doctorName;
     private $patientName;
     private $date;
+    private $time;
     public $success;
     public $error;
     
-    function __construct($doctorName, $patientName, $patientEmail, $date, $db) {
+    function __construct($doctorName, $patientName, $patientEmail, $date, $time, $db) {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
+        $this->time = $time;
         $this->date = $date;
-        $this->error = "Doctor Name: " . str_replace(' ', '', $doctorName) . ". Patient Name: " 
-                . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date . ". ";
+        
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
             $stmt = $db->prepare($query);
@@ -55,7 +56,7 @@ class ScheduleAppointment {
         $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName
-                . ' on ' . $this->date . '. The doctor will confirm that this time will'
+                . ' on ' . $this->date . ' at ' . $this->time . '. The doctor will confirm that this time will'
                 . ' work as well.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
@@ -76,7 +77,7 @@ class ScheduleAppointment {
         $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello!<br/><br/>'
                 . $this->patientName . ' requested an appointment with you on '
-                . $this->date . '. Hopefully this time can work for you...' 
+                . $this->date . ' at ' . $this->time . '. Hopefully this time can work for you...' 
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }

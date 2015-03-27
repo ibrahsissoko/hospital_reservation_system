@@ -8,7 +8,7 @@
     
     if (!empty($_POST)) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
-                . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $db);
+                . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
             if($appointment->sendEmailToPatient()) {
                 $appointment->success = "Confirmation email was sent to you";
