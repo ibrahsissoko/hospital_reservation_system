@@ -15,6 +15,8 @@ class ScheduleAppointment {
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
         $this->date = $date;
+        $this->error = "Doctor Name: " . $doctorName . ". Patient Name: " 
+                . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date . "\n";
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
             $stmt = $db->prepare($query);
@@ -22,6 +24,8 @@ class ScheduleAppointment {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Currently assuming no doctors will have the same first name, last
                 // name, and degree.
+                $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . " " . $row["last_name"] . " "
+                        . $row["degree"] . "\n"
                 if($row["first_name"] . " " . $row["last_name"] . " "
                         . $row["degree"] == $this->docotorName) {
                     $this->doctorEmail = $row["email"];
