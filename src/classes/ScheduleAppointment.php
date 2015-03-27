@@ -34,10 +34,10 @@ class ScheduleAppointment {
             }
         } catch(PDOException $e) {
             die("Failed to gather doctor's email address.");
-        }
+        }/*
         if (empty($this->doctorEmail)) {
             $this->error = "An internal error occurred acquiring the doctor's information.";
-        }
+        }*/
     }
     
     function sendEmailToPatient() {
