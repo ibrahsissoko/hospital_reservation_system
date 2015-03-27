@@ -10,13 +10,11 @@ class ScheduleAppointment {
     public $success;
     public $error;
     
-    function __construct($doctorName, $patientName, $patientEmail, $date) {
+    function __construct($doctorName, $patientName, $patientEmail, $date, $db) {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
         $this->date = $date;
-        $this->error = "Doctor Name: " . $doctorName . ". Patient Name: " 
-                . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date;
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
             $stmt = $db->prepare($query);
