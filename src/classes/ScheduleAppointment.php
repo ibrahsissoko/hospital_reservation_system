@@ -10,7 +10,7 @@ class ScheduleAppointment {
     public $success;
     public $error;
     
-    function _construct($doctorName, $patientName, $patientEmail, $date) {
+    function __construct($doctorName, $patientName, $patientEmail, $date) {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
