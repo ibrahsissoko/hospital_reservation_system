@@ -18,15 +18,13 @@
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
     <meta name="author" content="WAL Consulting">
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="../assets/bootstrap.min.js"></script>
     <link href="../assets/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="../assets/styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>$(function() {$( "#datepicker" ).datepicker();});</script>
 </head>
 
@@ -50,8 +48,6 @@
   </div>
 </div>
  
-<p>Date: <input type="text" id="datepicker"></p>
-    
 <div class="container hero-unit">
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post">
