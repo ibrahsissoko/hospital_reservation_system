@@ -123,7 +123,7 @@
         <span class="success"><?php echo $r->registrationSuccess;?></span>
         <span class="error"><?php echo $r->registrationFailure;?></span>
         <input type="submit" class="btn btn-info" value="Register" /><br/><br/>
-        <p>Password must have at least one number and letter, and must be 20 characters long or fewer</p> 
+        <p>Password must have at least one number and letter, and must be 20 characters long or fewer.</p> 
     </form>
 </div>
 
