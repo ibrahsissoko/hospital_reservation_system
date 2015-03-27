@@ -63,44 +63,45 @@
 
 <div class="container hero-unit">
     <h2>Welcome!</h2>
-    <p>
+    <br/><br/>
     <?php
         if ($userType == "patient") {
-            echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a>";
+            echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a><br/>";
+            echo "<a href=\"pay_bills.php\">Pay Bills</a><br/>";
         } else if ($userType == "doctor") {
-            echo "<a href=\"diagnosis.php\">Diagnosis Form</a>";   
+            echo "<a href=\"diagnosis.php\">Diagnosis Form</a>";
+            echo "<a href=\"view_appointments.php\">View Current Appointments</a>";
         }
     ?><br/>
-        <br>Name:           <?php echo htmlentities($_SESSION['user']['first_name'], ENT_QUOTES, 'UTF-8') . " " . htmlentities($_SESSION['user']['last_name'], ENT_QUOTES, 'UTF-8'); ?>
-        <br>Email:          <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
-        <br>Sex:            <?php echo htmlentities($_SESSION['user']['sex'], ENT_QUOTES, 'UTF-8') ?>
-        <br>Age:            <?php echo htmlentities($_SESSION['user']['age'], ENT_QUOTES, 'UTF-8'); ?>
-        <br>Phone Number:   <?php echo htmlentities($_SESSION['user']['phone'], ENT_QUOTES, 'UTF-8'); ?>
-        <br>State:          <?php echo htmlentities($_SESSION['user']['state'], ENT_QUOTES, 'UTF-8'); ?>
-        <br>User Type:      <?php
-                                $query = "
-                                        SELECT *
-                                        FROM user_types
-                                        WHERE
-                                            id = :id
-                                        ";
-                                $query_params = array(
-                                    ':id' => $_SESSION['user']['user_type_id']
-                                );
+    <br>Name:           <?php echo htmlentities($_SESSION['user']['first_name'], ENT_QUOTES, 'UTF-8') . " " . htmlentities($_SESSION['user']['last_name'], ENT_QUOTES, 'UTF-8'); ?>
+    <br>Email:          <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
+    <br>Sex:            <?php echo htmlentities($_SESSION['user']['sex'], ENT_QUOTES, 'UTF-8') ?>
+    <br>Age:            <?php echo htmlentities($_SESSION['user']['age'], ENT_QUOTES, 'UTF-8'); ?>
+    <br>Phone Number:   <?php echo htmlentities($_SESSION['user']['phone'], ENT_QUOTES, 'UTF-8'); ?>
+    <br>State:          <?php echo htmlentities($_SESSION['user']['state'], ENT_QUOTES, 'UTF-8'); ?>
+    <br>User Type:      <?php
+                            $query = "
+                                    SELECT *
+                                    FROM user_types
+                                    WHERE
+                                        id = :id
+                                    ";
+                            $query_params = array(
+                                ':id' => $_SESSION['user']['user_type_id']
+                            );
 
-                                try {
-                                    $stmt = $db->prepare($query);
-                                    $result = $stmt->execute($query_params);
-                                } catch(PDOException $ex) {
-                                    die("Failed to run query: " . $ex->getMessage());
-                                }
+                            try {
+                                $stmt = $db->prepare($query);
+                                $result = $stmt->execute($query_params);
+                            } catch(PDOException $ex) {
+                                die("Failed to run query: " . $ex->getMessage());
+                            }
 
-                                $row = $stmt->fetch();
-                                if ($row) {
-                                    echo $row['type_name'];
-                                }
-                        ?>
-    </p>
+                            $row = $stmt->fetch();
+                            if ($row) {
+                                echo $row['type_name'];
+                            }
+                    ?>
 
 </div>
 

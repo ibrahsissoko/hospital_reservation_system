@@ -21,6 +21,10 @@
     <script src="../assets/bootstrap.min.js"></script>
     <link href="../assets/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="../assets/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>$(function() {$( "#datepicker" ).datepicker();});</script>
 </head>
 
 <body>
@@ -46,7 +50,6 @@
 <div class="container hero-unit">
     <h1>Patient Info:</h1> <br />
     <form action="patient_info.php" method="post">
-        <!-- TODO: add form here to enter the info. -->	
 		
         First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>
