@@ -10,11 +10,8 @@
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
-            if($appointment->sendEmailToPatient()) {
-                $appointment->success = "Confirmation email was sent to you";
-                if ($appointment->sendEmailToDoctor()) {
-                    $appointment->success = $appointment->success . " and the doctor!";
-                }
+            if($appointment->sendEmailToPatient() && $appointment->sendEmailToDoctor()) {
+                $appointment->success = "Confirmation emails were sent to you and the doctor you requested!";
             } else {
                 $appointment->error = "An error occurred sending confirmation emails. Try again soon.";
             }   
