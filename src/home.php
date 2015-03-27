@@ -8,6 +8,21 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php"); 
+    } else {
+        switch($_SESSION['user']['user_type_id']) {
+                            case 3: // nurse
+                                $userType = "nurse";
+                                break;
+                            case 2: // doctor
+                                $userType = "doctor";
+                                break;
+                            case 4: // admin
+                                $userType = "administrator";
+                                break;
+                            default:
+                                $userType = "patient";
+                                break;
+                        }
     }
 ?>
 
@@ -49,6 +64,13 @@
 <div class="container hero-unit">
     <h2>Welcome!</h2>
     <p>
+    <?php
+        if ($userType == "patient") {
+            echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a>";
+        } else if ($userType == "doctor") {
+            echo "<a href=\"diagnosis.php\">Diagnosis Form</a>";   
+        }
+    ?><br/>
         <br>Name:           <?php echo htmlentities($_SESSION['user']['first_name'], ENT_QUOTES, 'UTF-8') . " " . htmlentities($_SESSION['user']['last_name'], ENT_QUOTES, 'UTF-8'); ?>
         <br>Email:          <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
         <br>Sex:            <?php echo htmlentities($_SESSION['user']['sex'], ENT_QUOTES, 'UTF-8') ?>

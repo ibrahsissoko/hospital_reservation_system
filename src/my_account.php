@@ -63,14 +63,7 @@
 <div class="container hero-unit">
     <h1>My Account</h1> <br />
     <a href="change_password.php">Change Password</a><br/>
-    <a href="<?php echo $userType . "_info.php";?>">Update information</a><br/>
-    <?php
-        if ($userType == "patient") {
-            echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a>";
-        } else if ($userType == "doctor") {
-            echo "<a href=\"diagnosis.php\">Diagnosis Form</a>";   
-        }
-    ?><br/><br/>
+    <a href="<?php echo $userType . "_info.php";?>">Update information</a><br/><br/>
 </div>
 
 </body>
