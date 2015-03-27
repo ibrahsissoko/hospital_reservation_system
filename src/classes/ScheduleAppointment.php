@@ -26,8 +26,8 @@ class ScheduleAppointment {
                 // name, and degree.
                 $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . $row["last_name"]
                         . $row["degree"] . ". ";
-                if($row["first_name"] . $row["last_name"] . $row["degree"] 
-                        == str_replace(' ', '', $this->doctorName)) {
+                if(strcmp($row["first_name"] . $row["last_name"] . $row["degree"],
+                        str_replace(' ', '', $this->doctorName)) == 0) {
                     $this->doctorEmail = $row["email"];
                     break;
                 }
@@ -53,10 +53,10 @@ class ScheduleAppointment {
         $mail->addAddress($this->patientEmail);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis";
+        $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName
-                . 'on ' . $this->date . '. The doctor will confirm that this time will'
+                . ' on ' . $this->date . '. The doctor will confirm that this time will'
                 . ' work as well.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
@@ -74,7 +74,7 @@ class ScheduleAppointment {
         $mail->addAddress($this->doctorEmail);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis";
+        $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello!<br/><br/>'
                 . $this->patientName . 'Requested an appointment with you on '
                 . $this->date . '. Hopefully this time can work for you...' 
