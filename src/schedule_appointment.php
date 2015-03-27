@@ -4,6 +4,8 @@
     AutoLoader::registerDirectory('../src/classes');
 
     require("config.php");
+    require("MailFiles/PHPMailerAutoload.php");
+    
     
     if (!empty($_POST)) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
