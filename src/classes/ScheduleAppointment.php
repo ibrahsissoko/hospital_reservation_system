@@ -26,8 +26,9 @@ class ScheduleAppointment {
                 // name, and degree.
                 $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . $row["last_name"]
                         . $row["degree"] . ". ";
-                if(strcmp($row["first_name"] . $row["last_name"] . $row["degree"],
-                        str_replace(' ', '', $this->doctorName)) == 0) {
+                $string1 = (string) $row["first_name"] . $row["last_name"] . $row["degree"];
+                $string2 = (string) str_replace(' ', '', $doctorName);
+                if(strcmp($string1, $string2) == 0) {
                     $this->doctorEmail = $row["email"];
                     break;
                 }
