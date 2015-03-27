@@ -15,7 +15,7 @@ class ScheduleAppointment {
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
         $this->date = $date;
-        $this->error = "Doctor Name: " . $doctorName . ". Patient Name: " 
+        $this->error = "Doctor Name: " . str_replace(' ', '', $doctorName) . ". Patient Name: " 
                 . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date . ". ";
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
@@ -24,10 +24,10 @@ class ScheduleAppointment {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Currently assuming no doctors will have the same first name, last
                 // name, and degree.
-                $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . " " . $row["last_name"] . " "
+                $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . $row["last_name"]
                         . $row["degree"] . ". ";
-                if($row["first_name"] . " " . $row["last_name"] . " "
-                        . $row["degree"] == $this->docotorName) {
+                if($row["first_name"] . $row["last_name"] . $row["degree"] 
+                        == str_replace(' ', '', $this->doctorName)) {
                     $this->doctorEmail = $row["email"];
                     break;
                 }
