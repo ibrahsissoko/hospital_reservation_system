@@ -10,10 +10,15 @@
     if (!empty($_POST)) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"]);
-        if($appointment->sendEmailToPatient() && $appointment->sendEmailToDoctor()) {
-            $appointment->success = "Confirmation emails were successfully sent to you and the doctor!";
-        } else {
-            $appointment->error = "An error occurred sending confirmation emails. Try again soon.";
+        if (empty($appointment->error)) {
+            if($appointment->sendEmailToPatient()) {
+                $appointment->success = "Confirmation email was sent to you";
+                if ($appointment->sendEmailToDoctor()) {
+                    $appointment->success = $appointment->success . " and the doctor!";
+                }
+            } else {
+                $appointment->error = "An error occurred sending confirmation emails. Try again soon.";
+            }   
         }
     }
 ?>
@@ -61,7 +66,7 @@
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post">
         Date:<br/>
-        <input type="text" id="datepicker" name ="date" /><br/>
+        <input type="text" id="datepicker" name ="date" readonly="readonly"/><br/>
         Time:<br/>
         <input type="text" name="time" value="" /><br/>
         Which Doctor Would You Like?<br/>

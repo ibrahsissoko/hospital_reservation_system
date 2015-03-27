@@ -16,22 +16,24 @@ class ScheduleAppointment {
         $this->patientEmail = $patientEmail;
         $this->date = $date;
         $query = "SELECT * FROM users WHERE user_type_id=2";
-            try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute();
-                $i = 0;
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    // Currently assuming no doctors will have the same first name, last
-                    // name, and degree.
-                    if($row["first_name"] . " " . $row["last_name"] . " "
-                            . $row["degree"] == $this->docotorName) {
-                        $this->doctorEmail = $row["email"];
-                        break;
-                    }
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Currently assuming no doctors will have the same first name, last
+                // name, and degree.
+                if($row["first_name"] . " " . $row["last_name"] . " "
+                        . $row["degree"] == $this->docotorName) {
+                    $this->doctorEmail = $row["email"];
+                    break;
                 }
-            } catch(PDOException $e) {
-                die("Failed to gather doctor's email address.");
             }
+        } catch(PDOException $e) {
+            die("Failed to gather doctor's email address.");
+        }
+        if (empty($this->doctorEmail)) {
+            $this->error = "An internal error occurred acquiring the doctor's information.";
+        }
     }
     
     function sendEmailToPatient() {
