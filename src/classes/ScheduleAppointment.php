@@ -16,7 +16,7 @@ class ScheduleAppointment {
         $this->patientEmail = $patientEmail;
         $this->date = $date;
         $this->error = "Doctor Name: " . $doctorName . ". Patient Name: " 
-                . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date . "\n";
+                . $patientName . ". Patient email: " . $patientEmail . ". Date: " . $date . ". ";
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
             $stmt = $db->prepare($query);
@@ -25,7 +25,7 @@ class ScheduleAppointment {
                 // Currently assuming no doctors will have the same first name, last
                 // name, and degree.
                 $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . " " . $row["last_name"] . " "
-                        . $row["degree"] . "\n";
+                        . $row["degree"] . ". ";
                 if($row["first_name"] . " " . $row["last_name"] . " "
                         . $row["degree"] == $this->docotorName) {
                     $this->doctorEmail = $row["email"];
