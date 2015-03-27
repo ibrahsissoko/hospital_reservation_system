@@ -4,8 +4,15 @@
     AutoLoader::registerDirectory('../src/classes');
 
     require("config.php");
+    
     if (!empty($_POST)) {
-        $appointment = new ScheduleAppointment();
+        $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
+                . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"]);
+        if($appointment->sendEmailToPatient() && $appointment->sendEmailToDoctor()) {
+            $appointment->success = "Confirmation emails were successfully sent to you and the doctor!";
+        } else {
+            $appointment->error = "An error occurred sending confirmation emails. Try again soon.";
+        }
     }
 ?>
 
@@ -66,20 +73,24 @@
                 $i = 0;
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if ($i == 0) {
-                        echo "<option value=\"" . "Dr. " . $row["first_name"] . " " 
-                                . $row["last_name"] . "\" selected=\"selected\">Dr. "
-                                . $row["first_name"] . " " . $row["last_name"] . "</option>";
+                        echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
+                                . " " . $row["degree"] . "\" selected=\"selected\">" 
+                                . $row["first_name"] . " " . $row["last_name"] . " " 
+                                . $row["degree"] . "</option>";
                         $i++;
                     } else {
-                        echo "<option value=\"" . "Dr. " . $row["first_name"] . " " 
-                                . $row["last_name"] . "\">Dr. " . $row["first_name"]
-                                . " " . $row["last_name"] . "</option>";
+                        echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
+                                . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
+                                . $row["last_name"] . " " . $row["degree"] . "</option>";
                     }
                 }
             } catch(PDOException $e) {
                 die("Failed to gather doctor's names.");
             }?></select><br/><br/>
-        <input type="submit" name = "submit" class="btn btn-info" value="Submit" />
+        <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/>
+        <span class="success"><?php echo $appointment->success;?></span>
+        <span class="error"><?php echo $appointment->error;?></span>
+        
     </form>
 </div>
 
