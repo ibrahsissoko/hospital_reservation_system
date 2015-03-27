@@ -64,9 +64,13 @@
     <h1>My Account</h1> <br />
     <a href="change_password.php">Change Password</a><br/>
     <a href="<?php echo $userType . "_info.php";?>">Update information</a><br/>
-    <a href="schedule_appointment.php"><?php if($userType == 1){echo "Schedule an Appointment";}?>></a>
-    <a href="diagnosis.php"><?php if($userType == 2){echo "Diagnosis Form";}?>></a>
-    
+    <?php
+        if($userType == 1) {
+            echo "<a href=\"schedule_appointment.php\"><Schedule an Appointment</a>"; 
+        } else if ($userType == 2) {
+            echo "<a href=\"diagnosis.php\"><Diagnosis Form</a>";
+        }
+    ?><br/><br/>
 </div>
 
 </body>
