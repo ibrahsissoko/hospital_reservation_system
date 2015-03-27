@@ -25,7 +25,7 @@ class ScheduleAppointment {
                 // Currently assuming no doctors will have the same first name, last
                 // name, and degree.
                 $this->error = $this->error . "Doctor name in db: " . $row["first_name"] . " " . $row["last_name"] . " "
-                        . $row["degree"] . "\n"
+                        . $row["degree"] . "\n";
                 if($row["first_name"] . " " . $row["last_name"] . " "
                         . $row["degree"] == $this->docotorName) {
                     $this->doctorEmail = $row["email"];
