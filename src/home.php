@@ -1,7 +1,5 @@
 <?php
 
-    session_start();
-
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
@@ -53,7 +51,7 @@
     <p>
         <br>Name:           <?php echo htmlentities($_SESSION['user']['first_name'], ENT_QUOTES, 'UTF-8') . " " . htmlentities($_SESSION['user']['last_name'], ENT_QUOTES, 'UTF-8'); ?>
         <br>Email:          <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
-        <br>Sex:            <?php if ($_SESSION['user']['sex'] == 1) { echo "Male"; } else { echo "Female"; } ?>
+        <br>Sex:            <?php echo htmlentities($_SESSION['user']['sex'], ENT_QUOTES, 'UTF-8') ?>
         <br>Age:            <?php echo htmlentities($_SESSION['user']['age'], ENT_QUOTES, 'UTF-8'); ?>
         <br>Phone Number:   <?php echo htmlentities($_SESSION['user']['phone'], ENT_QUOTES, 'UTF-8'); ?>
         <br>State:          <?php echo htmlentities($_SESSION['user']['state'], ENT_QUOTES, 'UTF-8'); ?>
