@@ -61,8 +61,8 @@
             FROM users
             WHERE first_name LIKE '%" . $_POST['search'] . "%' OR
                     last_name LIKE '%" . $_POST['search'] . "%' OR
-                    first_name + ' ' last_name LIKE '%" . $_POST['search'] . "%' OR
-                    last_name + ' ' first_name LIKE '%" . $_POST['search'] . "%' OR
+                    CONCAT(first_name, ' ', last_name) LIKE '%" . $_POST['search'] . "%' OR
+                    CONCAT(last_name, ' ', first_name) LIKE '%" . $_POST['search'] . "%' OR
                     email LIKE '%" . $_POST['search'] . "%'
         ";
         $query_params = array( );
