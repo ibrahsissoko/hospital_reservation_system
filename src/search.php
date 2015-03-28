@@ -69,9 +69,14 @@
             $stmt = $db->prepare($query);
             $result = $stmt->execute($query_params);
 
+            $i = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<li>" .$row['first_name'] . " " . $row['last_name'] . "</li>";
                 $i = $i + 1;
+            }
+
+            if ($i == 0) {
+                echo "<li>" . "No Results!" . "</li>";
             }
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
