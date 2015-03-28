@@ -52,6 +52,9 @@
       </a>
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
+          <form class="navbar-search pull-left">
+              <input type="text" class="search-query" placeholder="search" >
+          </form>
         <ul class="nav pull-right">
           <li><a href="my_account.php">Account</a></li>
             <li><a href="logout.php">Log Out</a></li>
@@ -73,12 +76,7 @@
         }
         echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";
     ?><br/>
-    <br>Name:           <?php echo htmlentities($_SESSION['user']['first_name'], ENT_QUOTES, 'UTF-8') . " " . htmlentities($_SESSION['user']['last_name'], ENT_QUOTES, 'UTF-8'); ?>
-    <br>Email:          <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
-    <br>Sex:            <?php echo htmlentities($_SESSION['user']['sex'], ENT_QUOTES, 'UTF-8') ?>
-    <br>Age:            <?php echo htmlentities($_SESSION['user']['age'], ENT_QUOTES, 'UTF-8'); ?>
-    <br>Phone Number:   <?php echo htmlentities($_SESSION['user']['phone'], ENT_QUOTES, 'UTF-8'); ?>
-    <br>State:          <?php echo htmlentities($_SESSION['user']['state'], ENT_QUOTES, 'UTF-8'); ?>
+
     <br>User Type:      <?php
                             $query = "
                                     SELECT *
