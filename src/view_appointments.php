@@ -45,17 +45,14 @@
     <h1>View Appointments:</h1>  <br/><br/>
     <?php
         switch($_SESSION['user']['user_type_id']) {
-                            case 3: // nurse
-                                $userType = "nurse";
-                                break;
-                            case 2: // doctor
-                                $userType = "doctor";
-                                break;
-                            case 4: // admin
-                                $userType = "administrator";
-                                break;
-                            default:
+                            case 3: // nurse, therefore having appointment with patient
                                 $userType = "patient";
+                                break;
+                            case 2: // doctor, therefore having appointment with patient
+                                $userType = "patient";
+                                break;
+                            case 1: // patient, therefore having appointment with doctor
+                                $userType = "doctor";
                                 break;
                         }
         $query = "
@@ -82,9 +79,9 @@
             echo "Click on the " . $userType . "'s name to learn more information.";
         } else if ($stmt->rowCount() > 1) {
             echo "Click on the " . $userType . "s' name to learn more information.";
-        }
-            
-    ?>
+        } else {
+            echo "You currently have no current appointments scheduled.";
+        }?>
 </div>
 
 </body>
