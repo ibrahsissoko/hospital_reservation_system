@@ -85,4 +85,38 @@ class ScheduleAppointment {
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
+    
+    function updateAppointmentTable($db) {
+        $query = "
+                    INSERT INTO appointment (
+                        date,
+                        time,
+                        patient_name,
+                        patient_email,
+                        doctor_name,
+                        doctor_email
+                    ) VALUES (
+                        :date,
+                        :time,
+                        :patient_name,
+                        :patient_email,
+                        :doctor_name,
+                        :doctor_email
+                    )
+                    ";
+        $query_params = array(
+            ':date' => $this->date,
+            ':time' => $this->time,
+            ':patient_name' => $this->patientName,
+            ':patient_email' => $this->patientEmail,
+            ':doctor_name' => $this->doctorName,
+            ':doctor_email' => $this->doctorEmail
+        );
+        try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $e) {
+                die("Failed to updated tables.");
+            }
+    }
 }

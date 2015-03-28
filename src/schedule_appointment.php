@@ -11,6 +11,7 @@
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
             if($appointment->sendEmailToPatient() && $appointment->sendEmailToDoctor()) {
+                $appointment->updateAppointmentTable($db);
                 $appointment->success = "Confirmation emails were sent to you and the doctor you requested!";
             } else {
                 $appointment->error = "An error occurred sending confirmation emails. Try again soon.";
