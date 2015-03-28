@@ -71,7 +71,20 @@ if(empty($_SESSION['user'])) {
 
 <div class="container hero-unit">
     <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?>:</h1> <br/><br/>
-    <p>No information available yet.</p>
+
+    <?php
+        // TODO: we will just echo out the important information for each profile.
+        switch($userProfile['user_type_id']) {
+            case 1: // patient
+                break;
+            case 2: // doctor
+                break;
+            case 3: // nurse
+                break;
+            case 4: // admin
+                break;
+        }
+    ?>
 
 </div>
 
