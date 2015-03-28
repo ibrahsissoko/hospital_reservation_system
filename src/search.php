@@ -54,8 +54,8 @@
 <div class="container hero-unit">
     <h2>Searching: <?php echo $_POST['search'] ?></h2>
 
+    <ul>
     <?php
-
         $query = "
             SELECT *
             FROM users
@@ -70,7 +70,7 @@
             $result = $stmt->execute($query_params);
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo $row['first_name'] . " " . $row['last_name'];
+                echo "<li>" .$row['first_name'] . " " . $row['last_name'] . "</li>";
                 $i = $i + 1;
             }
         } catch(PDOException $ex) {
@@ -78,6 +78,7 @@
         }
 
     ?>
+    </ul>
 
 </div>
 
