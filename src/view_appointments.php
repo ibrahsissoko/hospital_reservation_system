@@ -77,8 +77,14 @@
             echo "<p>You have an appointment with <a href=\"" . $userType . "_profile.php\">" 
             . $row[$userType . "_name"] . "</a> on " . $row["date"] . " at " . $row["time"] . "</p>";
         }
-    ?><br/><br/>
-    <p>Click on the name to learn more information.</p>
+        echo "<br/><br/>";
+        if($stmt->rowCount() == 1) {
+            echo "Click on the " . $userType . "'s name to learn more information.";
+        } else if ($stmt->rowCount() > 1) {
+            echo "Click on the " . $userType . "s' name to learn more information.";
+        }
+            
+    ?>
 </div>
 
 </body>
