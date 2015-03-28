@@ -69,7 +69,7 @@
             echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a><br/>";
             echo "<a href=\"pay_bills.php\">Pay Bills</a><br/>";
         } else if ($userType == "doctor") {
-            echo "<a href=\"diagnosis.php\">Diagnosis Form</a>";
+            echo "<a href=\"diagnosis.php\">Diagnosis Form</a><br/>";
             echo "<a href=\"view_appointments.php\">View Current Appointments</a>";
         }
     ?><br/>
