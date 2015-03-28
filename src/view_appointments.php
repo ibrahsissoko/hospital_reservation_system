@@ -61,7 +61,7 @@
         $query = "
                 SELECT *
                 FROM appointment
-                WHERE"
+                WHERE "
                     . $userType . "Email = " . $_SESSION["user"]["email"]
                 ;
         try {
