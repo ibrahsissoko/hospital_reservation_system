@@ -61,7 +61,7 @@
               $searchText = "Search Users";
           }
           ?>
-          
+
           <form class="navbar-search pull-left" action="search.php" method="GET" >
               <input type="text" class="search-query" name="search" placeholder="<?php echo $searchText ?>" >
           </form>
