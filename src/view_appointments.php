@@ -62,11 +62,14 @@
                 SELECT *
                 FROM appointment
                 WHERE "
-                    . $userType . "Email = " . $_SESSION["user"]["email"]
+                    . $userType . "Email = :" . $userType . "Email"
                 ;
+        $query_params = array(
+            ":" . $userType . "Email" => $_SESSION["user"]["email"]
+        );
         try {
             $stmt = $db->prepare($query);
-            $result = $stmt->execute();
+            $result = $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
