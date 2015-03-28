@@ -76,11 +76,11 @@
                     CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
                     CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
                     email LIKE '%" . $_GET['search'] . "%') AND
-                    (user_type_id = :type_id);
+                    (user_type_id = :type_id)
             ";
 
             $query_params = array(
-                ":type_id" <= '2'
+                ':type_id' => '2'
             );
         } else {
             $query = "
