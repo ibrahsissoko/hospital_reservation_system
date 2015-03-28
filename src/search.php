@@ -40,7 +40,7 @@
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <form class="navbar-search pull-left" action="search.php" method="POST" >
-                    <input type="text" class="search-query" placeholder="search" >
+                    <input type="text" class="search-query" name="search" placeholder="Search" >
                 </form>
                 <ul class="nav pull-right">
                     <li><a href="my_account.php">Account</a></li>
@@ -55,6 +55,27 @@
     <h2>Searching: <?php echo $_POST['search'] ?></h2>
 
     <?php
+
+        $query = "
+            SELECT *
+            FROM users
+            WHERE first_name LIKE '%" . $_POST['search'] . "%' OR
+                    last_name LIKE '%" . $_POST['search'] . "%' OR
+                    email LIKE '%" . $_POST['search'] . "%'
+        ";
+        $query_params = array( );
+
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo $row['first_name'] . " " . $row['last_name'];
+                $i = $i + 1;
+            }
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
 
     ?>
 

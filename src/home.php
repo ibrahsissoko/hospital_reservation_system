@@ -74,8 +74,7 @@
             echo "<a href=\"diagnosis.php\">Diagnosis Form</a><br/>";
         }
         echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";
-    ?><br/>
-
+    ?>
     <br>User Type:      <?php
                             $query = "
                                     SELECT *
