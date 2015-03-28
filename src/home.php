@@ -70,8 +70,8 @@
             echo "<a href=\"pay_bills.php\">Pay Bills</a><br/>";
         } else if ($userType == "doctor") {
             echo "<a href=\"diagnosis.php\">Diagnosis Form</a><br/>";
-            echo "<a href=\"view_appointments.php\">View Current Appointments</a>";
         }
+        echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";
     ?><br/>
     <br>Name:           <?php echo htmlentities($_SESSION['user']['first_name'], ENT_QUOTES, 'UTF-8') . " " . htmlentities($_SESSION['user']['last_name'], ENT_QUOTES, 'UTF-8'); ?>
     <br>Email:          <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
