@@ -39,8 +39,8 @@
             </a>
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
-                <form class="navbar-search pull-left" action="search.php" method="POST" >
-                    <input type="text" class="search-query" name="search" placeholder="<?php echo $_POST['search'] ?>" >
+                <form class="navbar-search pull-left" action="search.php" method="GET" >
+                    <input type="text" class="search-query" name="search" placeholder="<?php echo $_GET['search'] ?>" >
                 </form>
                 <ul class="nav pull-right">
                     <li><a href="my_account.php">Account</a></li>
@@ -57,11 +57,11 @@
         $query = "
             SELECT *
             FROM users
-            WHERE first_name LIKE '%" . $_POST['search'] . "%' OR
-                    last_name LIKE '%" . $_POST['search'] . "%' OR
-                    CONCAT(first_name, ' ', last_name) LIKE '%" . $_POST['search'] . "%' OR
-                    CONCAT(last_name, ' ', first_name) LIKE '%" . $_POST['search'] . "%' OR
-                    email LIKE '%" . $_POST['search'] . "%'
+            WHERE first_name LIKE '%" . $_GET['search'] . "%' OR
+                    last_name LIKE '%" . $_GET['search'] . "%' OR
+                    CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
+                    CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
+                    email LIKE '%" . $_GET['search'] . "%'
         ";
         $query_params = array( );
 

@@ -52,7 +52,7 @@
       </a>
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
-          <form class="navbar-search pull-left" action="search.php" method="POST" >
+          <form class="navbar-search pull-left" action="search.php" method="GET" >
               <input type="text" class="search-query" name="search" placeholder="Search" >
           </form>
         <ul class="nav pull-right">
