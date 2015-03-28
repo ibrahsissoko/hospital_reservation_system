@@ -40,7 +40,7 @@
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <form class="navbar-search pull-left" action="search.php" method="POST" >
-                    <input type="text" class="search-query" name="search" placeholder="Search" >
+                    <input type="text" class="search-query" name="search" placeholder="<?php $_POST['search'] ?>" >
                 </form>
                 <ul class="nav pull-right">
                     <li><a href="my_account.php">Account</a></li>
@@ -52,8 +52,6 @@
 </div>
 
 <div class="container hero-unit">
-    <h2>Searching: <?php echo $_POST['search'] ?></h2>
-
     <ul>
     <?php
         $query = "
