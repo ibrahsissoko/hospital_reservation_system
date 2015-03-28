@@ -52,7 +52,7 @@
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li><a href="logout.php">Log Out</a></li>
+          <li><a href="home.php">Home</a></li>
         </ul>
       </div>
     </div>

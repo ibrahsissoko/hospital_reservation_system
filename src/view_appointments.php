@@ -46,13 +46,16 @@
     <?php
         switch($_SESSION['user']['user_type_id']) {
                             case 3: // nurse, therefore having appointment with patient
-                                $userType = "patient";
+                                $userType = "nurse";
+                                $appointmentWith = "patient";
                                 break;
                             case 2: // doctor, therefore having appointment with patient
-                                $userType = "patient";
+                                $userType = "doctor";
+                                $appointmentWith = "patient";
                                 break;
                             case 1: // patient, therefore having appointment with doctor
-                                $userType = "doctor";
+                                $userType = "patient";
+                                $appointmentWith = "doctor";
                                 break;
                         }
         $query = "
@@ -71,14 +74,14 @@
             die("Failed to run query: " . $ex->getMessage());
         }
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<p>You have an appointment with <a href=\"" . $userType . "_profile.php\">" 
-            . $row[$userType . "_name"] . "</a> on " . $row["date"] . " at " . $row["time"] . "</p>";
+            echo "<p>You have an appointment with <a href=\"" . $appointmentWith . "_profile.php\">" 
+            . $row[$appointmentWith . "_name"] . "</a> on " . $row["date"] . " at " . $row["time"] . "</p>";
         }
         echo "<br/><br/>";
         if($stmt->rowCount() == 1) {
-            echo "Click on the " . $userType . "'s name to learn more information.";
+            echo "Click on the " . $appointmentWith . "'s name to learn more information.";
         } else if ($stmt->rowCount() > 1) {
-            echo "Click on the " . $userType . "s' name to learn more information.";
+            echo "Click on the " . $appointmentWith . "s' name to learn more information.";
         } else {
             echo "You currently have no current appointments scheduled.";
         }?>
