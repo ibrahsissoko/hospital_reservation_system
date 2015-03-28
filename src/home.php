@@ -52,8 +52,18 @@
       </a>
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
+
+          <?php
+          $searchText = "";
+          if ($userType == "patient") {
+              $searchText = "Search Doctors";
+          } else {
+              $searchText = "Search Users";
+          }
+          ?>
+          
           <form class="navbar-search pull-left" action="search.php" method="GET" >
-              <input type="text" class="search-query" name="search" placeholder="Search" >
+              <input type="text" class="search-query" name="search" placeholder="<?php echo $searchText ?>" >
           </form>
         <ul class="nav pull-right">
           <li><a href="my_account.php">Account</a></li>
