@@ -9,7 +9,28 @@ if(empty($_SESSION['user'])) {
     header("Location: ../index.php");
     die("Redirecting to index.php");
 } else {
+    $query = "
+        SELECT *
+        FROM users
+        WHERE
+          id = :id
+    ";
+    $query_params = array(
+        ':id' => $_GET['id']
+    );
 
+    try {
+        $stmt = $db->prepare($query);
+        $result = $stmt->execute($query_params);
+
+        $row = $stmt->fetch();
+        if ($row) {
+            $userProfile = $row;
+        }
+
+    } catch(PDOException $ex) {
+        die("Failed to run query: " . $ex->getMessage());
+    }
 }
 ?>
 
@@ -49,31 +70,8 @@ if(empty($_SESSION['user'])) {
 </div>
 
 <div class="container hero-unit">
-    <?php
-    $query = "
-        SELECT *
-        FROM users
-        WHERE
-          id = :id
-    ";
-    $query_params = array(
-        ':id' => $_GET['id']
-    );
-
-    try {
-        $stmt = $db->prepare($query);
-        $result = $stmt->execute($query_params);
-
-        $row = $stmt->fetch();
-        if ($row) {
-            echo "User: " . $row['first_name'] . " " . $row['last_name'];
-        }
-
-    } catch(PDOException $ex) {
-        die("Failed to run query: " . $ex->getMessage());
-    }
-
-    ?>
+    <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?>:</h1> <br/><br/>
+    <p>No information available yet.</p>
 
 </div>
 

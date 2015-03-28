@@ -75,7 +75,7 @@
         }
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
-            echo "<p>You have an appointment with <a href=\"" . $link . "\">" 
+            echo "<p>You have an appointment with <a href=\"" . $link . "\">"
             . $row[$appointmentWith . "_name"] . "</a> on " . $row["date"] . " at " . $row["time"] . "</p>";
         }
         echo "<br/><br/>";
