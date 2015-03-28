@@ -43,7 +43,39 @@
 
 <div class="container hero-unit">
     <h1>View Appointments:</h1>  <br/><br/>
-    <p>You have no appointments scheduled right now.</p>
+    <?php
+        switch($_SESSION['user']['user_type_id']) {
+                            case 3: // nurse
+                                $userType = "nurse";
+                                break;
+                            case 2: // doctor
+                                $userType = "doctor";
+                                break;
+                            case 4: // admin
+                                $userType = "administrator";
+                                break;
+                            default:
+                                $userType = "patient";
+                                break;
+                        }
+        $query = "
+                SELECT *
+                FROM appointment
+                WHERE"
+                    . $userType . "Email = " . $_SESSION["user"]["email"]
+                ;
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute();
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<p>You have an appointment with <a href=\"" . $userType . "_profile.php\">" 
+            . $row[$userType . "_name"] . "</a> on " . $row["date"] . " at " . $row["time"] . "</p>";
+        }
+    ?><br/><br/>
+    <p>Click on the name to learn more information.</p>
 </div>
 
 </body>
