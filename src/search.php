@@ -69,14 +69,16 @@
             $stmt = $db->prepare($query);
             $result = $stmt->execute($query_params);
 
-            $i = 0; 
+            $i = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<li>" .$row['first_name'] . " " . $row['last_name'] . "</li>";
+                $name = $row['first_name'] . " " . $row['last_name'];
+                $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
+                echo "<li>" . "<a href=\"pay_bills.php\">" . $name . "</a>" . "</li>";
                 $i = $i + 1;
             }
 
             if ($i == 0) {
-                echo "<li>" . "No Results!" . "</li>";
+                echo "<li>" . "No search results!" . "</li>";
             }
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
