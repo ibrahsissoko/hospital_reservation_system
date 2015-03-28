@@ -69,7 +69,7 @@
             $stmt = $db->prepare($query);
             $result = $stmt->execute($query_params);
 
-            $i = 0;
+            $i = 0; 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<li>" .$row['first_name'] . " " . $row['last_name'] . "</li>";
                 $i = $i + 1;
