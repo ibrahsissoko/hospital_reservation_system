@@ -80,7 +80,7 @@
             ";
 
             $query_params = array(
-                ":type_id" <= 2
+                ":type_id" <= '2'
             );
         } else {
             $query = "
