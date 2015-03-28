@@ -68,7 +68,7 @@ if(empty($_SESSION['user'])) {
         if ($row) {
             echo "User: " . $row['first_name'] . " " . $row['last_name'];
         }
-        
+
     } catch(PDOException $ex) {
         die("Failed to run query: " . $ex->getMessage());
     }

@@ -73,7 +73,7 @@
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $name = $row['first_name'] . " " . $row['last_name'];
                 $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
-                echo "<li>" . "<a href=\"pay_bills.php\">" . $name . "</a>" . "</li>";
+                echo "<li>" . "<a href=\"". $link . "\">" . $name . "</a>" . "</li>";
                 $i = $i + 1;
             }
 
