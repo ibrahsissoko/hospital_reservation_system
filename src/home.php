@@ -52,8 +52,8 @@
       </a>
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
-          <form class="navbar-search pull-left">
-              <input type="text" class="search-query" placeholder="search" >
+          <form class="navbar-search pull-left" action="search.php" method="POST" >
+              <input type="text" class="search-query" name="search" placeholder="Search" >
           </form>
         <ul class="nav pull-right">
           <li><a href="my_account.php">Account</a></li>
@@ -66,7 +66,6 @@
 
 <div class="container hero-unit">
     <h2>Welcome!</h2>
-    <br/><br/>
     <?php
         if ($userType == "patient") {
             echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a><br/>";
