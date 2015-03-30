@@ -45,9 +45,9 @@
     <h1>Make a Prescription:</h1> <br />
     <form action="prescription.php" method="post">
         Doctor First Name:<br/>
-        <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["first_name"];?>" /><br/>
+        <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["user"]["first_name"];?>" /><br/>
         Doctor Last Name:<br/>
-        <input type="text" name="doctor_last_name" value="<?php echo $_SESSION["last_name"];?>" /><br/>
+        <input type="text" name="doctor_last_name" value="<?php echo $_SESSION["user"]["last_name"];?>" /><br/>
         Patient First Name:<br/>
         <input type="text" name="patient_first_name" value="<?php echo htmlspecialchars($_POST["patient_first_name"]);?>" /><br/>
         Patient Last Name:<br/>
