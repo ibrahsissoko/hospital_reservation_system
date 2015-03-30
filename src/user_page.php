@@ -77,7 +77,7 @@ if(empty($_SESSION['user'])) {
 
     echo "<b>Email:</b> " . $userProfile['email'] . "<br/>";
     echo "<b>Phone:</b> " . $userProfile['phone'] . "<br/>";
-    echo "<b>Address:</b> <br/>" . $userProfile['address'] . "<br/>" . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
+    echo "<b>Address:</b> " . $userProfile['address'] . "<br/>         " . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
 
     ?>
 
