@@ -82,18 +82,17 @@ if(empty($_SESSION['user'])) {
     ?>
 
     <?php
-        // TODO: we will just echo out the important information for each profile.
         switch($userProfile['user_type_id']) {
-            case 1: // patient
+            case 1: // patient (sex, age, dob, marital status, insurance provider, insurance begin, insurance end, allergies, diseases, previous surgeries, other medical history)
                 echo "<h2>Patient Info:</h2>" . "<br/>";
                 break;
-            case 2: // doctor
+            case 2: // doctor (sex, degree, years of experience, specialization, shift)
                 echo "<h2>Doctor Info:</h2>" . "<br/>";
                 break;
-            case 3: // nurse
+            case 3: // nurse (sex, department, years of experience, shift)
                 echo "<h2>Nurse Info:</h2>" . "<br/>";
                 break;
-            case 4: // admin
+            case 4: // admin (sex)
                 echo "<h2>Admin Info:</h2>" . "<br/>";
                 break;
         }
