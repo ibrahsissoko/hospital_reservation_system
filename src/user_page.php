@@ -70,14 +70,14 @@ if(empty($_SESSION['user'])) {
 </div>
 
 <div class="container hero-unit">
-    <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?>:</h1> <br/>
+    <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?></h1> <br/>
 
     <h2>Contact Info:</h2>
     <?php
 
     echo "<b>Email:</b> " . $userProfile['email'] . "<br/>";
     echo "<b>Phone:</b> " . $userProfile['phone'] . "<br/>";
-    echo "<b>Address:</b> " . $userProfile['address'] . "<br/>         " . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
+    echo "<b>Address:</b> " . $userProfile['address'] . "<br/>&nbsp;" . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
 
     ?>
 
