@@ -51,8 +51,8 @@
         Last Name:<br/>
         <input type="text" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name']);?>" /><br/>
         Sex:<br/>
-        <input type="radio" name="sex" value="Female"/> Female<br/>
-        <input type="radio" name="sex" value="Male"> Male<br/>
+        <input type="radio" name="sex" value="Female" <?php echo ($_SESSION['user']['sex'] == 'Female') ? 'checked="checked"' : ''; ?>/> Female<br/>
+        <input type="radio" name="sex" value="Male" <?php echo ($_SESSION['user']['sex'] == 'Male') ? 'checked="checked"' : ''; ?> > Male<br/>
         Degree(MBBS, MD, etc.):<br/>
         <input type="text" name="degree" value="<?php echo htmlspecialchars($_SESSION['user']['degree']);?>" />
         <br/>
@@ -63,9 +63,9 @@
         <input type="text" name="years_of_experience" value="<?php echo htmlspecialchars($_SESSION['user']['years_of_experience']);?>" />
         <br/>
         Shift:<br/>
-        <input type="radio" name="shift" value="Morning"/> Morning<br/>
-        <input type="radio" name="shift" value="Regular"> Regular<br/>
-        <input type="radio" name="shift" value="Night"> Night<br/>
+        <input type="radio" name="shift" value="Morning" <?php echo ($_SESSION['user']['shift'] == 'Morning') ? 'checked="checked"' : ''; ?> /> Morning<br/>
+        <input type="radio" name="shift" value="Regular" <?php echo ($_SESSION['user']['shift'] == 'Regular') ? 'checked="checked"' : ''; ?> > Regular<br/>
+        <input type="radio" name="shift" value="Night" <?php echo ($_SESSION['user']['shift'] == 'Night') ? 'checked="checked"' : ''; ?> > Night<br/>
         Address:<br/>
         <input type="text" name="address" value="<?php echo htmlspecialchars($_SESSION['user']['address']);?>" />
         <br/>

@@ -56,18 +56,18 @@
         Last Name:<br/>
         <input type="text" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name']);?>" /><br/>
         Sex:<br/>
-        <input type="radio" name="sex" value="Female"/> Female<br/>
-        <input type="radio" name="sex" value="Male"> Male<br/>
+        <input type="radio" name="sex" value="Female" <?php echo ($_SESSION['user']['sex'] == 'Female') ? 'checked="checked"' : ''; ?> /> Female<br/>
+        <input type="radio" name="sex" value="Male" <?php echo ($_SESSION['user']['sex'] == 'Male') ? 'checked="checked"' : ''; ?>> Male<br/>
         DOB(yyyymmdd):<br/>
         <input type="text" name = "dob" value = "<?php echo htmlspecialchars($_SESSION['user']['dob']);?>" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>
         Age:<br/>
         <input type="number" name="age" min="1" max="120" value="<?php echo htmlspecialchars($_SESSION['user']['age']);?>"><br>
         Marital Status:<br/>
-        <input type="radio" name="marital_status" value="Single"/> Single<br/>
-        <input type="radio" name="marital_status" value="Married"> Married<br/>
-        <input type="radio" name="marital_status" value="In a relationship"/> In a relationship<br/>
-        <input type="radio" name="marital_status" value="Divorced"> Divorced<br/>
-        <input type="radio" name="marital_status" value="Widowed"/> Widowed<br/>
+        <input type="radio" name="marital_status" value="Single" <?php echo ($_SESSION['user']['marital_status'] == 'Single') ? 'checked="checked"' : ''; ?> /> Single<br/>
+        <input type="radio" name="marital_status" value="Married" <?php echo ($_SESSION['user']['marital_status'] == 'Married') ? 'checked="checked"' : ''; ?> > Married<br/>
+        <input type="radio" name="marital_status" value="In a relationship" <?php echo ($_SESSION['user']['marital_status'] == 'In a relationship') ? 'checked="checked"' : ''; ?> /> In a relationship<br/>
+        <input type="radio" name="marital_status" value="Divorced" <?php echo ($_SESSION['user']['marital_status'] == 'Divorced') ? 'checked="checked"' : ''; ?> > Divorced<br/>
+        <input type="radio" name="marital_status" value="Widowed" <?php echo ($_SESSION['user']['marital_status'] == 'Widowed') ? 'checked="checked"' : ''; ?> /> Widowed<br/>
         Address:<br/>
         <input type="text" name="address" value="<?php echo htmlspecialchars($_SESSION['user']['address']);?>" />
         <br/>
@@ -85,9 +85,9 @@
         <input type="text" name="insurance_provider" value="<?php echo htmlspecialchars($_SESSION['user']['insurance_provider']);?>" />
         <br/>
         Insurance Beginning Date(yyyymmdd):<br/>
-        <input type="text" name="insurance_begin"pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])"><br/>
+        <input type="text" name="insurance_begin" pattern="(19|20)[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])" value="<?php echo $_SESSION['user']['insurance_begin'];?>"><br/>
         Insurance Ending Date(yyyymmdd):<br/>	
-        <input type="text" name="insurance_end" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"><br/>		
+        <input type="text" name="insurance_end" pattern="(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])" value="<?php echo $_SESSION['user']['insurance_end']?>"><br/>		
         Allergies:<br/>
         <input type="text" name="allergies" value="<?php echo htmlspecialchars($_SESSION['user']['allergies']);?>" />
         <br/>

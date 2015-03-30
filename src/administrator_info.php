@@ -52,8 +52,8 @@
 	Last Name:<br/>
         <input type="text" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name']);?>" /><br/>
         Sex:<br/>
-        <input type="radio" name="sex" value="Female"/> Female<br/>
-        <input type="radio" name="sex" value="Male"> Male<br/>
+        <input type="radio" name="sex" value="Female"  <?php echo ($_SESSION['user']['sex'] == 'Female') ? 'checked="checked"' : ''; ?>/> Female<br/>
+        <input type="radio" name="sex" value="Male"  <?php echo ($_SESSION['user']['sex'] == 'Male') ? 'checked="checked"' : ''; ?>> Male<br/>
         Address:<br/>
         <input type="text" name="address" value="<?php echo htmlspecialchars($_SESSION['user']['address']);?>" />
         <br/>
