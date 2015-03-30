@@ -74,11 +74,13 @@ if(empty($_SESSION['user'])) {
 
     <h2>Contact Info:</h2>
     <?php
-
     echo "<b>Email:</b> " . $userProfile['email'] . "<br/>";
-    echo "<b>Phone:</b> " . $userProfile['phone'] . "<br/>";
-    echo "<b>Address:</b> " . $userProfile['address'] . "<br/>&nbsp;" . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
-
+    if (!empty($userProfile['phone'])) {
+        echo "<b>Phone:</b> " . $userProfile['phone'] . "<br/>";
+    }
+    if (!empty($userProfile['address']) && !empty($userProfile['city']) && !empty($userProfile['state']) && !empty($userProfile['zip'])) {
+        echo "<b>Address:</b> " . $userProfile['address'] . "<br/>&nbsp;" . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
+    }
     ?>
 
     <?php
@@ -100,7 +102,7 @@ if(empty($_SESSION['user'])) {
                     );
                 break;
             case 2: // doctor (sex, degree, years of experience, specialization, shift)
-                echo "<h2>Doctor Info:</h2>" . "<br/><br/>";
+                echo "<h2>Doctor Info:</h2>" . "<br/>";
                 $info = array( 
                     "Sex" => "sex",
                     "Degree" => "degree",
@@ -110,7 +112,7 @@ if(empty($_SESSION['user'])) {
                     );
                 break;
             case 3: // nurse (sex, department, years of experience, shift)
-                echo "<h2>Nurse Info:</h2>" . "<br/><br/>";
+                echo "<h2>Nurse Info:</h2>" . "<br/>";
                 $info = array( 
                     "Sex" => "sex",
                     "Department" => "department",
@@ -119,13 +121,13 @@ if(empty($_SESSION['user'])) {
                     );
                 break;
             case 4: // admin (sex)
-                echo "<h2>Admin Info:</h2>" . "<br/><br/>";
+                echo "<h2>Admin Info:</h2>" . "<br/>";
                 $info = array("Sex" => "sex");
                 break;
         }
         foreach($info as $key => $value) {
             if(!empty($userProfile[$value])) {     
-                echo $key . ": " . $value . "<br/>";
+                echo $key . ": " . $userProfile[$value] . "<br/>";
             }
         }
         
