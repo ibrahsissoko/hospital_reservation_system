@@ -86,7 +86,7 @@
     <h1>Change Password</h1> <br />
     <form action="change_password.php" method="post">
         <label>Current Password:</label>
-        <input type="password" name="current_password" value="<?php echo $_POST['current_password']?>" />
+        <input type="password" name="current_password" value="<?php echo htmlspecialchars($_POST['current_password']);?>" />
         <label>New Password:</label>
         <input type="password" name="new_password" value="" /><br/>
         <label>Confirm New Password:</label>

@@ -84,18 +84,51 @@ if(empty($_SESSION['user'])) {
     <?php
         switch($userProfile['user_type_id']) {
             case 1: // patient (sex, age, dob, marital status, insurance provider, insurance begin, insurance end, allergies, diseases, previous surgeries, other medical history)
-                echo "<h2>Patient Info:</h2>" . "<br/>";
+                echo "<h2>Patient Info:</h2>" . "<br/><br/>";
+                $info = array( 
+                    "Sex" => "sex",
+                    "Age" => "age",
+                    "Date of Birth" => "dob",
+                    "Marital Status" => "marital_status",
+                    "Insurance Provider" => "insurance_provider",
+                    "Begin Date" => "insurance_begin",
+                    "End Date" => "insurance_end",
+                    "Allergies" => "allergies",
+                    "Disease" => "diseases",
+                    "Previous Surgeries" => "previous_surgeries",
+                    "Other Medical History" => "other_medical_history"
+                    );
                 break;
             case 2: // doctor (sex, degree, years of experience, specialization, shift)
-                echo "<h2>Doctor Info:</h2>" . "<br/>";
+                echo "<h2>Doctor Info:</h2>" . "<br/><br/>";
+                $info = array( 
+                    "Sex" => "sex",
+                    "Degree" => "degree",
+                    "Years of Experience" => "years_of_experience",
+                    "Specialization" => "specialization",
+                    "Shift" => "shift"
+                    );
                 break;
             case 3: // nurse (sex, department, years of experience, shift)
-                echo "<h2>Nurse Info:</h2>" . "<br/>";
+                echo "<h2>Nurse Info:</h2>" . "<br/><br/>";
+                $info = array( 
+                    "Sex" => "sex",
+                    "Department" => "department",
+                    "Years of Experience" => "years_of_experience",
+                    "Shift" => "shift"
+                    );
                 break;
             case 4: // admin (sex)
-                echo "<h2>Admin Info:</h2>" . "<br/>";
+                echo "<h2>Admin Info:</h2>" . "<br/><br/>";
+                $info = array("Sex" => "sex");
                 break;
         }
+        foreach($info as $key => $value) {
+            if(!empty($userProfile[$value])) {     
+                echo $key . ": " . $value . "<br/>";
+            }
+        }
+        
     ?>
 
 </div>
