@@ -5,13 +5,6 @@
 
     require("config.php");
     
-    if(!empty($_POST)) {
-        // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis();
-        $d->sendEmailToPatient();
-        $d->sendEmailToDoctor();
-    }
-    
 ?>
 
 <!doctype html>
@@ -49,8 +42,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Diagnosis Form:</h1> <br />
-    <form action="diagnosis.php" method="post">
+    <h1>Make a Prescription:</h1> <br />
+    <form action="prescription.php" method="post">
         Doctor First Name:<br/>
         <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["first_name"];?>" /><br/>
         Doctor Last Name:<br/>
@@ -59,15 +52,15 @@
         <input type="text" name="patient_first_name" value="<?php echo htmlspecialchars($_POST["patient_first_name"]);?>" /><br/>
         Patient Last Name:<br/>
         <input type="text" name="patient_last_name" value="<?php echo htmlspecialchars($_POST["patient_last_name"]);?>" /><br/>
-        Observations:<br/>
-        <textarea name="Observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_POST["observations"]);?>" ></textarea><br/>
-        Diagnosis:<br/>
-        <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_POST["diagnosis"]);?>" /><br/>
+        Prescription:<br/>
+        <input type="text" name="prescription" value="<?php echo htmlspecialchars($_POST["prescription"]);?>" /><br/>
+        Pharmacy:<br/>
+        <input type="text" name="pharmacy" value="<?php echo htmlspecialchars($_POST["pharmacy"]);?>" /><br/>
         <br/><br/>
         <input type="submit" name = "submit" class="btn btn-info" value="Save" />
     </form>
     <br/>
-    <a href="prescription.php">Prescribe Medication</a>
+    <a href="">Prescribe Medication</a>
 </div>
 
 </body>
