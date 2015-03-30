@@ -86,7 +86,7 @@ if(empty($_SESSION['user'])) {
     <?php
         switch($userProfile['user_type_id']) {
             case 1: // patient (sex, age, dob, marital status, insurance provider, insurance begin, insurance end, allergies, diseases, previous surgeries, other medical history)
-                echo "<h2>Patient Info:</h2>" . "<br/><br/>";
+                echo "<h2>Patient Info:</h2>" . "<br/>";
                 $info = array( 
                     "Sex" => "sex",
                     "Age" => "age",
@@ -127,7 +127,7 @@ if(empty($_SESSION['user'])) {
         }
         foreach($info as $key => $value) {
             if(!empty($userProfile[$value])) {     
-                echo $key . ": " . $userProfile[$value] . "<br/>";
+                echo "<b>" . $key . ":</b> " . $userProfile[$value] . "<br/>";
             }
         }
         
