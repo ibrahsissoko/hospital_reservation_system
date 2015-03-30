@@ -70,14 +70,14 @@ if(empty($_SESSION['user'])) {
 </div>
 
 <div class="container hero-unit">
-    <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?>:</h1> <br/><br/>
+    <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?>:</h1> <br/>
 
     <h2>Contact Info:</h2>
     <?php
 
-    echo "Email: " . $userProfile['email'];
-    echo "Phone: " . $userProfile['phone'];
-    echo "Address: <br/>" . $userProfile['address'] . "<br/>" . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
+    echo "<b>Email:</b> " . $userProfile['email'] . "<br/>";
+    echo "<b>Phone:</b> " . $userProfile['phone'] . "<br/>";
+    echo "<b>Address:</b> <br/>" . $userProfile['address'] . "<br/>" . $userProfile['city'] . ", " . $userProfile['state'] . " " . $userProfile['zip'];
 
     ?>
 
@@ -85,12 +85,16 @@ if(empty($_SESSION['user'])) {
         // TODO: we will just echo out the important information for each profile.
         switch($userProfile['user_type_id']) {
             case 1: // patient
+                echo "<h2>Patient Info:</h2>" . "<br/>";
                 break;
             case 2: // doctor
+                echo "<h2>Doctor Info:</h2>" . "<br/>";
                 break;
             case 3: // nurse
+                echo "<h2>Nurse Info:</h2>" . "<br/>";
                 break;
             case 4: // admin
+                echo "<h2>Admin Info:</h2>" . "<br/>";
                 break;
         }
     ?>
