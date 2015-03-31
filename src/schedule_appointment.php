@@ -10,6 +10,21 @@
         header("Location: ../index.php");
         die("Redirecting to index.php");
     } else if (!empty($_POST)) {
+        if(!empty($_GET['id'])) {
+            $query = "
+                    SELECT *
+                    FROM users
+                    WHERE
+                        id = " . $_GET['id']
+                    ;
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+                $docInfo = $stmt->fetch();
+            } catch(PDOException $e) {
+                die("Failed to run query: " . $e->getMessage());
+            }
+        }
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
@@ -109,18 +124,36 @@
             try {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
-                $i = 0;
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($i == 0) {
-                        echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
-                                . " " . $row["degree"] . "\" selected=\"selected\">" 
-                                . $row["first_name"] . " " . $row["last_name"] . " " 
-                                . $row["degree"] . "</option>";
-                        $i++;
-                    } else {
-                        echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
-                                . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
-                                . $row["last_name"] . " " . $row["degree"] . "</option>";
+                if (empty($docInfo)) {
+                    $i = 0;
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        if ($i == 0) {
+                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
+                                    . " " . $row["degree"] . "\" selected=\"selected\">" 
+                                    . $row["first_name"] . " " . $row["last_name"] . " " 
+                                    . $row["degree"] . "</option>";
+                            $i++;
+                        } else {
+                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
+                                    . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
+                                    . $row["last_name"] . " " . $row["degree"] . "</option>";
+                        }
+                    }
+                } else {
+                    $docName = $docInfo['first_name'] . " " . $docInfo['last_name'] . " " . $docInfo['degree'];
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        // If it is the doctor's name, select them in the drop down menu.
+                        if ($docName == $row["first_name"] . " " . $row["last_name"]
+                                    . " " . $row["degree"]) {
+                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
+                                    . " " . $row["degree"] . "\" selected=\"selected\">" 
+                                    . $row["first_name"] . " " . $row["last_name"] . " " 
+                                    . $row["degree"] . "</option>";
+                        } else {
+                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
+                                    . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
+                                    . $row["last_name"] . " " . $row["degree"] . "</option>";
+                        }
                     }
                 }
             } catch(PDOException $e) {

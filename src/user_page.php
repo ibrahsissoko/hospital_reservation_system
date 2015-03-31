@@ -131,6 +131,10 @@ if(empty($_SESSION['user'])) {
                 echo "<b>" . $key . ":</b> " . $userProfile[$value] . "<br/>";
             }
         }
+        if($userProfile['user_type_id'] == 2) {
+            $line = "http://wal-engproject.rhcloud.com/src/schedule_appointment.php?id=" . $userProfile['id'];
+            echo "<a href=\"" . $link . "\">Schedule an appointment</a><br/>";
+        }
         
     ?>
 
