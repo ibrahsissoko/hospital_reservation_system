@@ -64,8 +64,6 @@
         <br/><br/>
         <input type="submit" name = "submit" class="btn btn-info" value="Save" />
     </form>
-    <br/>
-    <a href="">Prescribe Medication</a>
 </div>
 
 </body>

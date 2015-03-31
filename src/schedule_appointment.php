@@ -68,7 +68,16 @@
         Date:<br/>
         <input type="text" id="datepicker" name ="date" readonly="readonly"/><br/>
         Time:<br/>
-        <input type="text" name="time" value="" /><br/>
+        <select name="time">
+            <option value="8:00 am" selected="selected"></option>
+            <option value="9:00 am"></option>
+            <option value="10:00 am"></option>
+            <option value="11:00 am"></option>
+            <option value="1:00 pm"></option>
+            <option value="2:00 pm"></option>
+            <option value="3:00 pm"></option>
+            <option value="4:00 pm"></option>
+        </select>
         Which Doctor Would You Like?<br/>
         <select name="doctor_name">
             <?php
