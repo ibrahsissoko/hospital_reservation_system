@@ -140,11 +140,10 @@
                         }
                     }
                 } else {
-                    $docName = $docInfo['first_name'] . " " . $docInfo['last_name'] . " " . $docInfo['degree'];
+                    $docName = $docInfo['first_name'] . " " . $docInfo['last_name'];
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         // If it is the doctor's name, select them in the drop down menu.
-                        if ($docName == $row["first_name"] . " " . $row["last_name"]
-                                    . " " . $row["degree"]) {
+                        if ($docName == $row["first_name"] . " " . $row["last_name"]) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
