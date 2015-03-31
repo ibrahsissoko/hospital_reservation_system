@@ -63,7 +63,7 @@
         <input type="radio" name="sex" value="Female" <?php echo ($_SESSION['user']['sex'] == 'Female') ? 'checked="checked"' : ''; ?> /> Female<br/>
         <input type="radio" name="sex" value="Male" <?php echo ($_SESSION['user']['sex'] == 'Male') ? 'checked="checked"' : ''; ?>> Male<br/>
         DOB(yyyymmdd):<br/>
-        <input type="text" id="datepicker" name = "dob" value = "<?php echo htmlspecialchars($_SESSION['user']['dob']);?>" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}"><br/>
+        <input type="text" class="datepicker" id="one" name = "dob" value = "<?php echo htmlspecialchars($_SESSION['user']['dob']);?>" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}"><br/>
         Age:<br/>
         <input type="number" name="age" min="1" max="120" value="<?php echo htmlspecialchars($_SESSION['user']['age']);?>"><br>
         Marital Status:<br/>
@@ -89,9 +89,9 @@
         <input type="text" name="insurance_provider" value="<?php echo htmlspecialchars($_SESSION['user']['insurance_provider']);?>" />
         <br/>
         Insurance Beginning Date(yyyymmdd):<br/>
-        <input type="text" id="datepicker" name="insurance_begin" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_begin'];?>"><br/>
+        <input type="text" class="datepicker" id="two" name="insurance_begin" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_begin'];?>"><br/>
         Insurance Ending Date(yyyymmdd):<br/>	
-        <input type="text" id="datepicker" name="insurance_end" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_end']?>"><br/>		
+        <input type="text" class="datepicker" id="three" name="insurance_end" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_end']?>"><br/>		
         Allergies:<br/>
         <input type="text" name="allergies" value="<?php echo htmlspecialchars($_SESSION['user']['allergies']);?>" />
         <br/>
