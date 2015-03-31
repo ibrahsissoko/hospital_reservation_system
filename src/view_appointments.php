@@ -99,7 +99,7 @@
             $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry['id'];
             echo "<p>You have an appointment with <a href=\"" . $link . "\">"
             . $row[$appointmentWith . "_name"] . "</a> on " . $row["date"] . " at " 
-            . $row["time"] . ". <a href=\"cancle_appointment.php?id=" . $row['id'] . "\">Cancle this appointment</a> </p>";
+            . $row["time"] . ". <a href=\"cancel_appointment.php?id=" . $row['id'] . "\">Cancle this appointment</a> </p>";
         }
         echo "<br/><br/>";
         if($stmt->rowCount() == 1) {
