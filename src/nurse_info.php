@@ -51,7 +51,6 @@
 <div class="container hero-unit">
     <h1>Nurse Info:</h1> <br />
     <form action="nurse_info.php" method="post">
-        <!-- TODO: add form here to enter the info. -->
         First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>
 	Last Name:<br/>

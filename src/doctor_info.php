@@ -51,7 +51,7 @@
 <div class="container hero-unit">
     <h1>Doctor Info:</h1> <br />
     <form action="doctor_info.php" method="post">
-		First Name:<br/>
+        First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>
         Last Name:<br/>
         <input type="text" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name']);?>" /><br/>
