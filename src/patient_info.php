@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script>$(function() {$( "#datepicker" ).datepicker();});</script>
+    <script>$(function() {$( "#datepicker1, #datepicker2, #datepicker3" ).datepicker();});</script>
 </head>
 
 <body>
@@ -63,7 +63,7 @@
         <input type="radio" name="sex" value="Female" <?php echo ($_SESSION['user']['sex'] == 'Female') ? 'checked="checked"' : ''; ?> /> Female<br/>
         <input type="radio" name="sex" value="Male" <?php echo ($_SESSION['user']['sex'] == 'Male') ? 'checked="checked"' : ''; ?>> Male<br/>
         DOB(yyyymmdd):<br/>
-        <input type="text" class="datepicker" id="one" name = "dob" value = "<?php echo htmlspecialchars($_SESSION['user']['dob']);?>" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}"><br/>
+        <input type="text" id="datepicker1" name = "dob" value = "<?php echo htmlspecialchars($_SESSION['user']['dob']);?>" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}"><br/>
         Age:<br/>
         <input type="number" name="age" min="1" max="120" value="<?php echo htmlspecialchars($_SESSION['user']['age']);?>"><br>
         Marital Status:<br/>
@@ -89,9 +89,9 @@
         <input type="text" name="insurance_provider" value="<?php echo htmlspecialchars($_SESSION['user']['insurance_provider']);?>" />
         <br/>
         Insurance Beginning Date(yyyymmdd):<br/>
-        <input type="text" class="datepicker" id="two" name="insurance_begin" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_begin'];?>"><br/>
+        <input type="text" id="datepicker2" name="insurance_begin" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_begin'];?>"><br/>
         Insurance Ending Date(yyyymmdd):<br/>	
-        <input type="text" class="datepicker" id="three" name="insurance_end" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_end']?>"><br/>		
+        <input type="text" id="datepicker3" name="insurance_end" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_end']?>"><br/>		
         Allergies:<br/>
         <input type="text" name="allergies" value="<?php echo htmlspecialchars($_SESSION['user']['allergies']);?>" />
         <br/>
