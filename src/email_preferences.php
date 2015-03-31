@@ -31,7 +31,7 @@
             die("Failed to run query: " . $ex->getMessage());
         }
         if($result) {
-            $success = "Preferenes successfully updated.";
+            $success = "Preferences successfully updated.";
         } else {
             $error = "An error occurred. Please try again soon.";
         }
@@ -41,6 +41,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: #FF0000;}</style>
+    <style>.success {color: #00FF00;</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">

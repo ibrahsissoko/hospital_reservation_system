@@ -13,9 +13,9 @@
         $cancelAppointment = new CancelAppointment();
         
         if ($cancelAppointment->updateAppointmentTable($db, $_GET['id'])) {
-            $success = "Appointment Deleted";
+            $cancelAppointment->success = "Appointment Deleted";
         } else {
-            $error = "Error Deleting Appointment";
+            $cancelAppointment->error = "Error Deleting Appointment";
         }
 
         if($_SESSION['user']['appointment_deleted_email'] == "Yes" || $_SESSION['user']['appointment_deleted_email'] == NULL) {
@@ -61,7 +61,7 @@
 </div>
  
 <div class="container hero-unit">
-    <h3><center><?php echo $success; echo $error;?></center></h3>
+    <h3><center><?php echo $cancelAppointment->success; echo $cancelAppointment->error;?></center></h3>
 </div>
 
 </body>

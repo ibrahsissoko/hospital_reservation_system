@@ -1,14 +1,7 @@
 <?php
 
-class ScheduleAppointment {
+class CancelAppointment {
 
-    public $doctorEmail;
-    public $patientEmail;
-    private $doctorName;
-    private $patientName;
-    private $doctorInfo;
-    private $date;
-    private $time;
     public $success;
     public $error;
     
