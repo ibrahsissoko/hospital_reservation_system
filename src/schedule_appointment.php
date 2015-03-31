@@ -125,7 +125,7 @@
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
                 if (empty($docInfo)) {
-                    die("DocInfo is empty.");
+                    echo "<option value=\"Wrong\">Wrong</option>";
                     $i = 0;
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         if ($i == 0) {
@@ -141,7 +141,7 @@
                         }
                     }
                 } else {
-                    die("DocInfo is not empty (this is what should happen.");
+                    echo "<option value=\"Right\">Right</option>";
                     $docName = $docInfo['first_name'] . " " . $docInfo['last_name'];
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         // If it is the doctor's name, select them in the drop down menu.
