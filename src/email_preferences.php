@@ -8,7 +8,7 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if (!emtpy($_POST)) {
+    } else if (!empty($_POST)) {
         $query = "
             UPDATE users
             SET
@@ -20,7 +20,8 @@
 
         $query_params = array(
             ":appointment_confirm_email" => $_POST['appointment_confirm_email'],
-            ":appointment_deleted_email" => $_POST['appointment_deleted_email']
+            ":appointment_deleted_email" => $_POST['appointment_deleted_email'],
+            ":id" => $_SESSION['user']['id']
         );
 
         try {
