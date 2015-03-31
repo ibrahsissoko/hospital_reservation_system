@@ -6,7 +6,7 @@ class ScheduleAppointment {
     public $patientEmail;
     private $doctorName;
     private $patientName;
-    private $doctorInfo;
+    public $doctorInfo;
     private $date;
     private $time;
     public $success;
