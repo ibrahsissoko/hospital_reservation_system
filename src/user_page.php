@@ -132,7 +132,7 @@ if(empty($_SESSION['user'])) {
             }
         }
         if($userProfile['user_type_id'] == 2) {
-            $line = "http://wal-engproject.rhcloud.com/src/schedule_appointment.php?id=" . $userProfile['id'];
+            $link = "http://wal-engproject.rhcloud.com/src/schedule_appointment.php?id=" . $userProfile['id'];
             echo "<a href=\"" . $link . "\">Schedule an appointment</a><br/>";
         }
         
