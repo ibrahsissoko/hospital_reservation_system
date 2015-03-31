@@ -67,7 +67,7 @@
 </div>
  
 <div class="container hero-unit">
-    <h1>Appointment Deleted</h1>
+    <h3><center>Appointment Deleted</center></h3>
 </div>
 
 </body>

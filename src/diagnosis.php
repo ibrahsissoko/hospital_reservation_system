@@ -5,7 +5,10 @@
 
     require("config.php");
     
-    if(!empty($_POST)) {
+    if(empty($_SESSION['user'])) {
+        header("Location: ../index.php");
+        die("Redirecting to index.php");
+    } else if(!empty($_POST)) {
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis();
         $d->sendEmailToPatient();

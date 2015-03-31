@@ -5,6 +5,11 @@
 
     require("config.php");
 
+    if(empty($_SESSION['user'])) {
+        header("Location: ../index.php");
+        die("Redirecting to index.php");
+    }
+    
     $nurse = new NurseInfo();
     $nurse->saveInfo($_POST, $_SESSION, $db);
 ?>

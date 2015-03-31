@@ -6,7 +6,10 @@
     require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
     
-    if (!empty($_POST)) {
+    if(empty($_SESSION['user'])) {
+        header("Location: ../index.php");
+        die("Redirecting to index.php");
+    } else if (!empty($_POST)) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
