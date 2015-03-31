@@ -12,8 +12,8 @@
     } else if (!empty($_GET)) {
         
         $query = "
-            DELETE *
-            FROM users
+            DELETE
+            FROM appointment
             WHERE
               id = :id
         ";
