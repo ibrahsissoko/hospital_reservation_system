@@ -12,7 +12,7 @@
         $query = "
             UPDATE users
             SET
-                appointment_comfirm_email = :appointment_confirm_email,
+                appointment_confirm_email = :appointment_confirm_email,
                 appointment_deleted_email = :appointment_deleted_email
             WHERE
                 id = :id
