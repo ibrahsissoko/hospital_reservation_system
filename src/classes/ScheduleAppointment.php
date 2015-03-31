@@ -6,6 +6,7 @@ class ScheduleAppointment {
     public $patientEmail;
     private $doctorName;
     private $patientName;
+    private $doctorInfo;
     private $date;
     private $time;
     public $success;
@@ -29,7 +30,8 @@ class ScheduleAppointment {
                     $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
                     $string2 = str_replace(' ', '', $doctorName);
                     if(strcmp($string1, $string2) == 0) {
-                        $this->doctorEmail = $row["email"];
+                        $this->doctorInfo = $row;
+                        $this->doctorEmail = $this->doctorInfo["email"];
                         break;
                     }
                 }
@@ -45,7 +47,6 @@ class ScheduleAppointment {
     }
     
     function sendEmailToPatient() {
-    
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 

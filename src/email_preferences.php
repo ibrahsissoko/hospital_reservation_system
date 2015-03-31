@@ -13,7 +13,7 @@
             UPDATE users
             SET
                 appointment_comfirm_email = :appointment_confirm_email,
-                appointment_deleted_email = :appointment_deleted_email,
+                appointment_deleted_email = :appointment_deleted_email
             WHERE
                 id = :id
         ";
@@ -81,12 +81,12 @@
     <p>Click yes or no for whether you would like to receive email notification for the
         following situations.</p>
     <form action="email_preferences.php" method="post">	
-        Appointment Confirmation:<br/>
-        <input type="radio" name="appointment_confirm_email" value="Yes" <?php echo ($_SESSION['user']['appointment_confirm_email'] == 'Yes') ? 'checked="checked"' : ''; ?> />Yes
-        <input type="radio" name="appointment_confirm_email" value="No" <?php echo ($_SESSION['user']['appointment_confirm_email'] == 'No' || $_SESSION['user']['appointment_confirm_email'] == NULL) ? 'checked="checked"' : ''; ?> /> No<br/>
-        Deleted Appointment:<br/>
-        <input type="radio" name="appointment_deleted_email" value="Yes" <?php echo ($_SESSION['user']['appointment_deleted_email'] == 'Yes') ? 'checked="checked"' : ''; ?> />Yes
-        <input type="radio" name="appointment_deleted_email" value="No" <?php echo ($_SESSION['user']['appointment_deleted_email'] == 'No' || $_SESSION['user']['appointment_deleted_email'] == NULL) ? 'checked="checked"' : ''; ?> /> No<br/>
+        Appointment Confirmation:&nbsp;
+        <input type="radio" name="appointment_confirm_email" value="Yes" <?php echo ($_SESSION['user']['appointment_confirm_email'] == 'Yes' || $_SESSION['user']['appointment_confirm_email'] == NULL) ? 'checked="checked"' : ''; ?> />Yes
+        <input type="radio" name="appointment_confirm_email" value="No" <?php echo ($_SESSION['user']['appointment_confirm_email'] == 'No') ? 'checked="checked"' : ''; ?> /> No<br/><br/>
+        Deleted Appointment:&nbsp;
+        <input type="radio" name="appointment_deleted_email" value="Yes" <?php echo ($_SESSION['user']['appointment_deleted_email'] == 'Yes'  || $_SESSION['user']['appointment_deleted_email'] == NULL) ? 'checked="checked"' : ''; ?> />Yes
+        <input type="radio" name="appointment_deleted_email" value="No" <?php echo ($_SESSION['user']['appointment_deleted_email'] == 'No') ? 'checked="checked"' : ''; ?> /> No<br/><br/>
         <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>
     </form>
     <span class="success"><?php echo $success;?></span>

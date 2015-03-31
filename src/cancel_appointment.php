@@ -10,22 +10,16 @@
         header("Location: ../index.php");
         die("Redirecting to index.php");
     } else if (!empty($_GET)) {
+        $cancelAppointment = new CancelAppointment();
         
-        $query = "
-            DELETE
-            FROM appointment
-            WHERE
-              id = :id
-        ";
-        $query_params = array(
-            ':id' => $_GET['id']
-        );
-        
-        try {
-            $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-                die("Failed to run query: " . $ex->getMessage());
+        if ($cancelAppointment->updateAppointmentTable($db, $_GET['id'])) {
+            $success = "Appointment Deleted";
+        } else {
+            $error = "Error Deleting Appointment";
+        }
+
+        if($_SESSION['user']['appointment_deleted_email'] == "Yes" || $_SESSION['user']['appointment_deleted_email'] == NULL) {
+            $cancelAppointment->sendEmailToUser($_SESSION['user']['email'], $_SESSION['user']['first_name'] . " " . $_SESSION['user']['last_name']);
         }
         
     }
@@ -67,7 +61,7 @@
 </div>
  
 <div class="container hero-unit">
-    <h3><center>Appointment Deleted</center></h3>
+    <h3><center><?php echo $success; echo $error;?></center></h3>
 </div>
 
 </body>
