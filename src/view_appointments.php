@@ -77,7 +77,7 @@
             // Need to query the users table to get the user ID we are looking for
             // with the link to the user profile page.
             $query = "
-                   SELCECT *
+                   SELECT *
                    FROM users
                    WHERE
                        first_name = :appointmentWithFirstName
