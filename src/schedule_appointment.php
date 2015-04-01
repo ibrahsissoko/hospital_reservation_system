@@ -180,7 +180,7 @@
                     $endTime += 24;
                 }
                 // Create an empty value.
-                echo "<option value=\"\" selected=\"selected\">$beginTime, $endTime, " . $beginTime . " " . $endTime . "</option>";
+                echo "<option value=\"\" selected=\"selected\">" . $shift['start_time'] . ", " . $shift['end_time'] . "</option>";
                 for($i = $beginTime; $i < $endTime; $i++) {
                     if ($i < 12) {
                         echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
