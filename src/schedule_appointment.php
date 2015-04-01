@@ -217,14 +217,14 @@
                     } else if ($i == 12) { 
                         echo "<option value =\"" . $i . ":00 pm\">" . $i . ":00 am</option>";
                     } else if ($i > 12 && $i < 24) {
-                        $i -= 12;
-                        echo "<option value =\"" . $i . ":00 pm\">" . $i . ":00 pm</option>";   
+                        $val = $i - 12;
+                        echo "<option value =\"" . $val . ":00 pm\">" . $val . ":00 pm</option>";   
                     } else if ($i == 24) {
-                        $i -= 12;
-                        echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
+                        $val = i - 12;
+                        echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
                     } else {
-                        $i -= 24;
-                        echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
+                        $val = i - 24;
+                        echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
                     }
                 }
                 echo "</select><br/><br/>";
