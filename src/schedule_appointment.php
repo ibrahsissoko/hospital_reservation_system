@@ -113,7 +113,7 @@
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
                 
-                if (!$docInfo) {
+                if (!$docInfo || empty($_POST['doctor_name'])) {
                     // Create a blank entry and select it.
                     echo "<option value=\"\" selected=\"selected\"></option>";
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -127,7 +127,12 @@
                     $docName = $docInfo['first_name'] . " " . $docInfo['last_name'];
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         // If it is the doctor's name, select them in the drop down menu.
-                        if ($docName == $row["first_name"] . " " . $row["last_name"]) {
+                        if (!empty($_POST['doctor_name']) && $_POST['doctor_name'] == $row["first_name"] . " " . $row["last_name"] . " " . $row["degree"]) {
+                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
+                                    . " " . $row["degree"] . "\" selected=\"selected\">" 
+                                    . $row["first_name"] . " " . $row["last_name"] . " " 
+                                    . $row["degree"] . "</option>";
+                        }else if ($docName == $row["first_name"] . " " . $row["last_name"]) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
@@ -147,7 +152,7 @@
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" onchange="update()"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value=' . $_POST["date"] . ' onchange="update()"/><br/>';
             }
             if (!empty($_POST['date'])) {
                 $query = '
