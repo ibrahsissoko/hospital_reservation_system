@@ -62,6 +62,7 @@
  
 <div class="container hero-unit">
     <h3><center><?php echo $cancelAppointment->success; echo $cancelAppointment->error;?></center></h3>
+    <a href="view_appointments.php">Back to List of Appointments</a>
 </div>
 
 </body>
