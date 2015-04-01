@@ -155,6 +155,31 @@
                 echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="update()"/><br/>';
             }
             if (!empty($_POST['date'])) {
+                if (empty($docInfo)) {
+                    $query2 = "
+                            SELECT *
+                            FROM users
+                            WHERE
+                                id = :id
+                                AND
+                                first_name = :doctorFirstName
+                                AND
+                                last_name = :doctorWithLastName
+                             ";
+                     $name = explode(" ", $_POST['doctor_name']);
+                     $query_params2 = array(
+                         ":id" => 2,
+                         ":appointmentWithFirstName" => $name[0],
+                         ":appointmentWithLastName" => $name[1]
+                     );
+                     try {
+                         $stmt2 = $db->prepare($query2);
+                         $result2 = $stmt2->execute($query_params2);
+                     } catch(PDOException $ex) {
+                         die("Failed to run query: " . $ex->getMessage());
+                     }
+                     $docInfo = $stmt2->fetch();
+                }
                 $query = '
                         SELECT *
                         FROM shift
