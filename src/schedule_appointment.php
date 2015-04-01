@@ -9,7 +9,7 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if (!empty($_POST)) {
+    } else if (!empty($_POST['time'])) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
@@ -63,6 +63,7 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
+    <script>function update(){document.getElementById("mainForm").submit();}</script>
 </head>
 
 <body>
@@ -87,22 +88,9 @@
  
 <div class="container hero-unit">
     <h1>Schedule an Appointment</h1> <br />
-    <form action="schedule_appointment.php" method="post">
-        Date:<br/>
-        <input type="text" id="datepicker" name ="date" readonly="readonly"/><br/>
-        Time:<br/>
-        <select name="time">
-            <option value="8:00 am" selected="selected">8:00 am</option>
-            <option value="9:00 am">9:00 am</option>
-            <option value="10:00 am">10:00 am</option>
-            <option value="11:00 am">11:00 am</option>
-            <option value="1:00 pm">1:00 pm</option>
-            <option value="2:00 pm">2:00 pm</option>
-            <option value="3:00 pm">3:00 pm</option>
-            <option value="4:00 pm">4:00 pm</option>
-        </select><br/>
+    <form action="schedule_appointment.php" method="post" id="mainForm">
         Which Doctor Would You Like?<br/>
-        <select name="doctor_name">
+        <select name="doctor_name" onchange="update()">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
@@ -158,7 +146,28 @@
             } catch(PDOException $e) {
                 die("Failed to gather doctor's names.");
             }?></select><br/><br/>
-        <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>
+        <?php
+            if(!empty($_POST['doctor_name'])) {
+                echo "Date:<br/>";
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" onchange="update()"/><br/>';
+            }
+            if (!empty($_POST['date'])) {
+                echo "Time:<br/>";
+                echo '
+                <select name="time">
+                    <option value="8:00 am" selected="selected">8:00 am</option>
+                    <option value="9:00 am">9:00 am</option>
+                    <option value="10:00 am">10:00 am</option>
+                    <option value="11:00 am">11:00 am</option>
+                    <option value="1:00 pm">1:00 pm</option>
+                    <option value="2:00 pm">2:00 pm</option>
+                    <option value="3:00 pm">3:00 pm</option>
+                    <option value="4:00 pm">4:00 pm</option>
+                </select><br/>
+                <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>
+                ';
+            }
+        ?>
         <span class="success"><?php echo $appointment->success;?></span>
         <span class="error"><?php echo $appointment->error;?></span>
         
