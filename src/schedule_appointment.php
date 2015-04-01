@@ -64,10 +64,7 @@
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
     <script>
-        function displayDates() {
-            document.getElementById("mainForm").submit();
-        }
-        function dislpayTimes() {
+        function update() {
             document.getElementById("mainForm").submit();
         }
     </script>
@@ -97,7 +94,7 @@
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
         Which Doctor Would You Like?<br/>
-        <select name="doctor_name" onchange="displayDates()">
+        <select name="doctor_name" onchange="update()">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
@@ -159,7 +156,7 @@
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="displayTimes()"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="update()"/><br/>';
             }
             if (!empty($_POST['date'])) {
                 if (empty($docInfo)) {
@@ -220,10 +217,10 @@
                         $val = $i - 12;
                         echo "<option value =\"" . $val . ":00 pm\">" . $val . ":00 pm</option>";   
                     } else if ($i == 24) {
-                        $val = i - 12;
+                        $val = $i - 12;
                         echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
                     } else {
-                        $val = i - 24;
+                        $val = $i - 24;
                         echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
                     }
                 }
