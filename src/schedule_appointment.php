@@ -67,9 +67,15 @@
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
     <script>
         function doctorNameUpdated() {
+            var dateField = document.getElementById("date");
+            dateField.type = 'text';
+            var timeField = document.getElementById("time");
+            timeField.type = 'hidden';
             document.getElementById("mainForm").submit();
         }
         function dateUpdated() {
+            var timeField = document.getElementById("time");
+            timeField.type = 'text';
             document.getElementById("mainForm").submit();
         }
     </script>
