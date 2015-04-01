@@ -62,7 +62,7 @@
         <input type="text" name="degree" value="<?php echo htmlspecialchars($_SESSION['user']['degree']);?>" />
         <br/>
         Department:
-        <select name="user_type_id">
+        <select name="department_id">
             <?php
 
             /**
@@ -84,7 +84,7 @@
 
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($i == 0) {
+                    if ($i == $_SESSION['user']['department_id']) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
@@ -103,7 +103,7 @@
         <input type="text" name="years_of_experience" value="<?php echo htmlspecialchars($_SESSION['user']['years_of_experience']);?>" />
         <br/>
         Shift:
-        <select name="user_type_id">
+        <select name="shift_id">
             <?php
 
             /**
@@ -126,7 +126,7 @@
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $text = $row['name'] . " (" . $row['start_time'] . ":00-" . $row['end_time'] . ":00)";
-                    if ($i == 0) {
+                    if ($i == $_SESSION['user']['shift_id']) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $text . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $text . "</option>";
