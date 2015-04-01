@@ -66,6 +66,7 @@
     <a href="change_password.php">Change Password</a><br/>
     <a href="email_preferences.php">Email Preferences</a><br/>
     <a href="<?php echo $userType . "_info.php";?>">Update information</a><br/><br/>
+    <a href="delete_account.php">Delete Account</a><br/>
 </div>
 
 </body>
