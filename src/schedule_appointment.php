@@ -162,15 +162,15 @@
                             WHERE
                                 id = :id
                                 AND
-                                first_name = :doctorFirstName
+                                first_name = :doctorFirsttName
                                 AND
-                                last_name = :doctorWithLastName
+                                last_name = :doctorLastName
                              ";
                      $name = explode(" ", $_POST['doctor_name']);
                      $query_params2 = array(
                          ":id" => 2,
-                         ":appointmentWithFirstName" => $name[0],
-                         ":appointmentWithLastName" => $name[1]
+                         ":doctorFirstName" => $name[0],
+                         ":doctorLastName" => $name[1]
                      );
                      try {
                          $stmt2 = $db->prepare($query2);
