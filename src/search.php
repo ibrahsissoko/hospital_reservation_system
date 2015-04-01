@@ -91,6 +91,7 @@
                     CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
                     CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
                     email LIKE '%" . $_GET['search'] . "%'
+            ORDER BY user_type_id ASC
             ";
 
             $query_params = array( );
@@ -102,7 +103,26 @@
 
             $i = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $name = $row['first_name'] . " " . $row['last_name'];
+
+                $query = "
+                SELECT *
+                FROM user_types
+                WHERE
+                  id = :type_id
+                ";
+
+                $query_params = array(
+                    ':type_id' => $row['user_type_id']
+                );
+                try {
+                    $stmt1 = $db->prepare($query);
+                    $result1 = $stmt1->execute($query_params);
+                    $type = $stmt1->fetch(PDO::FETCH_ASSOC);
+                    $name = $row['first_name'] . " " . $row['last_name'] . " (" . $type['type_name'] . ")";
+                } catch(Exception $ex) {
+                    $name = $row['first_name'] . " " . $row['last_name'];
+                }
+
                 $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
                 echo "<li>" . "<a href=\"". $link . "\">" . $name . "</a>" . "</li>";
                 $i = $i + 1;
