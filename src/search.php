@@ -102,7 +102,26 @@
 
             $i = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $name = $row['first_name'] . " " . $row['last_name'];
+
+                $query = "
+                SELECT *
+                FROM user_types
+                WHERE
+                  id = :type_id
+                ";
+
+                $query_params = array(
+                    ':type_id' => $row['user_type_id']
+                );
+                try {
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute($query_params);
+                    $type = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $name = $row['first_name'] . " " . $row['last_name'] . " (" . $type['type_name'] . ")";
+                } catch(Exception $ex) {
+                    $name = $row['first_name'] . " " . $row['last_name'];
+                }
+
                 $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
                 echo "<li>" . "<a href=\"". $link . "\">" . $name . "</a>" . "</li>";
                 $i = $i + 1;
