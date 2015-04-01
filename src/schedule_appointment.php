@@ -152,7 +152,7 @@
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value=' . $_POST["date"] . ' onchange="update()"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="update()"/><br/>';
             }
             if (!empty($_POST['date'])) {
                 $query = '
