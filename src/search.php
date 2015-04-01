@@ -114,9 +114,9 @@
                     ':type_id' => $row['user_type_id']
                 );
                 try {
-                    $stmt = $db->prepare($query);
-                    $result = $stmt->execute($query_params);
-                    $type = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt1 = $db->prepare($query);
+                    $result1 = $stmt1->execute($query_params);
+                    $type = $stmt1->fetch(PDO::FETCH_ASSOC);
                     $name = $row['first_name'] . " " . $row['last_name'] . " (" . $type['type_name'] . ")";
                 } catch(Exception $ex) {
                     $name = $row['first_name'] . " " . $row['last_name'];
