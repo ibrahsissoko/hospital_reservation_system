@@ -112,22 +112,18 @@
             try {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
+                
                 if (!$docInfo) {
-                    $i = 0;
+                    // Create a blank entry and select it.
+                    echo "<option value=\"\" selected=\"selected\"></option>";
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        if ($i == 0) {
-                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
-                                    . " " . $row["degree"] . "\" selected=\"selected\">" 
-                                    . $row["first_name"] . " " . $row["last_name"] . " " 
-                                    . $row["degree"] . "</option>";
-                            $i++;
-                        } else {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
                                     . $row["last_name"] . " " . $row["degree"] . "</option>";
-                        }
                     }
                 } else {
+                    // Create a blank entry.
+                    echo "<option value=\"\"></option>";
                     $docName = $docInfo['first_name'] . " " . $docInfo['last_name'];
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         // If it is the doctor's name, select them in the drop down menu.
@@ -136,6 +132,8 @@
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
                                     . $row["degree"] . "</option>";
+                            // Set the post value of the doctor's name.
+                            $_POST['doctor_name'] = $docName;
                         } else {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
@@ -145,27 +143,57 @@
                 }
             } catch(PDOException $e) {
                 die("Failed to gather doctor's names.");
-            }?></select><br/><br/>
+            }?></select><br/>
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
                 echo '<input type="text" id="datepicker" name ="date" readonly="readonly" onchange="update()"/><br/>';
             }
             if (!empty($_POST['date'])) {
+                $query = '
+                        SELECT *
+                        FROM shift
+                        WHERE
+                            id = :id
+                        ';
+                $query_params = array(
+                    ':id' => $docInfo['shift_id']
+                );
+                try {
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute($query_params);
+                    $shift = $stmt->fetch();
+                } catch(PDOException $e) {
+                    die("Failed to run query: " . $e->getMessage());
+                }
                 echo "Time:<br/>";
-                echo '
-                <select name="time">
-                    <option value="8:00 am" selected="selected">8:00 am</option>
-                    <option value="9:00 am">9:00 am</option>
-                    <option value="10:00 am">10:00 am</option>
-                    <option value="11:00 am">11:00 am</option>
-                    <option value="1:00 pm">1:00 pm</option>
-                    <option value="2:00 pm">2:00 pm</option>
-                    <option value="3:00 pm">3:00 pm</option>
-                    <option value="4:00 pm">4:00 pm</option>
-                </select><br/>
-                <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>
-                ';
+                echo '<select name="time">';
+                $beginTime = intval($shift['start_time']);
+                $endTime = intval($shift['end_time']);
+                if ($endTime < $beginTime) {
+                    // E.g 19-3 => 19-27 for simplicity.
+                    $endTime += 24;
+                }
+                // Create an empty value.
+                echo "<option value=\"\" selected=\"selected\"></option>";
+                for($i = $beginTime; $i < $endTime; $i++) {
+                    if ($i < 12) {
+                        echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
+                    } else if ($i == 12) { 
+                        echo "<option value =\"" . $i . ":00 pm\">" . $i . ":00 am</option>";
+                    } else if ($i > 12 && $i < 24) {
+                        $i -= 12;
+                        echo "<option value =\"" . $i . ":00 pm\">" . $i . ":00 pm</option>";   
+                    } else if ($i == 24) {
+                        $i -= 12;
+                        echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
+                    } else {
+                        $i -= 24;
+                        echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
+                    }
+                }
+                echo "</select><br/><br/>";
+                echo '<input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>';
             }
         ?>
         <span class="success"><?php echo $appointment->success;?></span>
