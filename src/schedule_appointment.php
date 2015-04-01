@@ -120,7 +120,7 @@
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
                                     . $row["last_name"] . " " . $row["degree"] . "</option>";
-                            echo "option value=\"1\">1</option>";
+                            echo "<option value=\"1\">1</option>";
                     }
                 } else {
                     // Create a blank entry.
@@ -133,7 +133,7 @@
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
                                     . $row["degree"] . "</option>";
-                            echo "option value=\"2\">1</option>";
+                            echo "<option value=\"2\">1</option>";
                         } else if ($docName == $row["first_name"] . " " . $row["last_name"]) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
@@ -141,12 +141,12 @@
                                     . $row["degree"] . "</option>";
                             // Set the post value of the doctor's name.
                             $_POST['doctor_name'] = $docName . " " . $row['degree'];
-                            echo "option value=\"3\">1</option>";
+                            echo "<option value=\"3\">1</option>";
                         } else {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
                                     . $row["last_name"] . " " . $row["degree"] . "</option>";
-                            echo "option value=\"4\">1</option>";
+                            echo "<option value=\"4\">1</option>";
                         }
                     }
                 }
