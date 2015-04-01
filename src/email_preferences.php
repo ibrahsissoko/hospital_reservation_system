@@ -9,6 +9,10 @@
         header("Location: ../index.php");
         die("Redirecting to index.php");
     } else if (!empty($_POST)) {
+        // Reset the session variables.
+        $_SESSION['user']['appointment_confirm_email'] = $_POST['appointment_confirm_email'];
+        $_SESSION['user']['appointment_deleted_email'] = $_POST['appointment_deleted_email'];
+        
         $query = "
             UPDATE users
             SET
