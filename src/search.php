@@ -91,6 +91,7 @@
                     CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
                     CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
                     email LIKE '%" . $_GET['search'] . "%'
+            ORDER BY user_type_id ASC
             ";
 
             $query_params = array( );
