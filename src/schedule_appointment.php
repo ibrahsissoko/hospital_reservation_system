@@ -6,27 +6,10 @@
     require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
     
-    $docInfo;
-    
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
     } else if (!empty($_POST)) {
-        if(!empty($_GET['id'])) {
-            $query = "
-                    SELECT *
-                    FROM users
-                    WHERE
-                        id = " . $_GET['id']
-                    ;
-            try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute();
-                $docInfo = $stmt->fetch();
-            } catch(PDOException $e) {
-                die("Failed to run query: " . $e->getMessage());
-            }
-        }
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                 . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
         if (empty($appointment->error)) {
@@ -121,6 +104,21 @@
         Which Doctor Would You Like?<br/>
         <select name="doctor_name">
             <?php
+            if(!empty($_GET['id'])) {
+                $query = "
+                        SELECT *
+                        FROM users
+                        WHERE
+                            id = " . $_GET['id']
+                        ;
+                try {
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute();
+                    $docInfo = $stmt->fetch();
+                } catch(PDOException $e) {
+                    die("Failed to run query: " . $e->getMessage());
+                }
+            }
             // Only select doctors.
             $query = "SELECT * FROM users WHERE user_type_id=2";
             try {
