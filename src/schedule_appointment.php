@@ -64,9 +64,11 @@
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
     <script>
-        function update() {
-            document.getElementById("mainForm").submit();
-        }
+        $(function() {
+            $('#update').change(function() {
+                this.form.submit();
+            });
+        });
     </script>
 </head>
 
@@ -94,7 +96,7 @@
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
         Which Doctor Would You Like?<br/>
-        <select name="doctor_name" onchange="update()">
+        <select name="doctor_name" id="update">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
@@ -156,7 +158,7 @@
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="update()"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" id="update"/><br/>';
             }
             if (!empty($_POST['doctor_name']) && !empty($_POST['date'])) {
                 if (empty($docInfo)) {
