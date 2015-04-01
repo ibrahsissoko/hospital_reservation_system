@@ -61,16 +61,85 @@
         Degree(MBBS, MD, etc.):<br/>
         <input type="text" name="degree" value="<?php echo htmlspecialchars($_SESSION['user']['degree']);?>" />
         <br/>
-        Specialization(Dentist, Epidemiologist, etc.):<br/>
-        <input type="text" name="specialization" value="<?php echo htmlspecialchars($_SESSION['user']['specialization']);?>" />
+        Department:
+        <select name="user_type_id">
+            <?php
+
+            /**
+             * This code is used to fill the spinner from the database user_types.
+             * This database holds the different types of users, including: patient, doctor, nurse, administrator
+             */
+
+            $query = "
+                SELECT *
+                FROM department
+            ";
+
+            // execute the statement
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+
+                $i = 0;
+
+                // loop through, adding the options to the spinner
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    if ($i == 0) {
+                        echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
+                    } else {
+                        echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
+                    }
+
+                    $i = $i + 1;
+                }
+            } catch(Exception $e) {
+
+            }
+
+            ?>
+        </select>
         <br/>
         Years Of Experience:<br/>
         <input type="text" name="years_of_experience" value="<?php echo htmlspecialchars($_SESSION['user']['years_of_experience']);?>" />
         <br/>
-        Shift:<br/>
-        <input type="radio" name="shift" value="Morning" <?php echo ($_SESSION['user']['shift'] == 'Morning') ? 'checked="checked"' : ''; ?> /> Morning<br/>
-        <input type="radio" name="shift" value="Regular" <?php echo ($_SESSION['user']['shift'] == 'Regular') ? 'checked="checked"' : ''; ?> > Regular<br/>
-        <input type="radio" name="shift" value="Night" <?php echo ($_SESSION['user']['shift'] == 'Night') ? 'checked="checked"' : ''; ?> > Night<br/>
+        Shift:
+        <select name="user_type_id">
+            <?php
+
+            /**
+             * This code is used to fill the spinner from the database user_types.
+             * This database holds the different types of users, including: patient, doctor, nurse, administrator
+             */
+
+            $query = "
+                SELECT *
+                FROM shift
+            ";
+
+            // execute the statement
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+
+                $i = 0;
+
+                // loop through, adding the options to the spinner
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $text = $row['name'] . " (" . $row['start_time'] . ":00-" . $row['end_time'] . ":00)";
+                    if ($i == 0) {
+                        echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $text . "</option>";
+                    } else {
+                        echo "<option value=\"" . $row["id"] . "\">" . $text . "</option>";
+                    }
+
+                    $i = $i + 1;
+                }
+            } catch(Exception $e) {
+
+            }
+
+            ?>
+        </select><br/>
         Address:<br/>
         <input type="text" name="address" value="<?php echo htmlspecialchars($_SESSION['user']['address']);?>" />
         <br/>
