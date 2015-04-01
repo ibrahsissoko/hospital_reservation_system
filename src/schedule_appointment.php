@@ -162,7 +162,7 @@
                             WHERE
                                 id = :id
                                 AND
-                                first_name = :doctorFirsttName
+                                first_name = :doctorFirstName
                                 AND
                                 last_name = :doctorLastName
                              ";
