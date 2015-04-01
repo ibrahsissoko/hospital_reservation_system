@@ -99,7 +99,7 @@
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
         Which Doctor Would You Like?<br/>
-        <select name="doctor_name" id="doctorNameUpdate">
+        <select name="doctor_name" onchange="doctorNameUpdated()">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
