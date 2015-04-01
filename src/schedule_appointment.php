@@ -67,7 +67,7 @@
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
     <script>
         function doctorNameUpdated() {
-            var dateField = document.getElementById("date");
+            var dateField = document.getElementById("datepicker");
             dateField.type = 'text';
             var timeField = document.getElementById("time");
             timeField.type = 'hidden';
@@ -212,7 +212,7 @@
                     die("Failed to run query: " . $e->getMessage());
                 }
                 echo "Time:<br/>";
-                echo '<select name="time">';
+                echo '<select name="time" id="time">';
                 $beginTime = intval($shift['start_time']);
                 $endTime = intval($shift['end_time']);
                 if ($endTime < $beginTime) {
