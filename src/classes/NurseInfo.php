@@ -3,7 +3,6 @@
 class NurseInfo extends UserInfo {
 
     protected function insertIntoDatabase($post, $session, $db) {
-        // TODO: insert post data into database (just like PatientInfo).
 		 // this will be called after they hit the submit button on the form.
         $query = "
             UPDATE users
@@ -12,9 +11,9 @@ class NurseInfo extends UserInfo {
                 first_name = :first_name,
                 last_name = :last_name,
                 sex = :sex,
-				department = :department,
+				department_id = :department,
 				years_of_experience = :years_of_experience,
-				shift = :shift,
+				shift_id = :shift,
                 address = :address,
                 city = :city,
                 state = :state,
