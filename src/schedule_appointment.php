@@ -113,7 +113,7 @@
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
                 
-                if (!$docInfo || empty($_POST['doctor_name'])) {
+                if (!$docInfo && empty($_POST['doctor_name'])) {
                     // Create a blank entry and select it.
                     echo "<option value=\"\" selected=\"selected\"></option>";
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
