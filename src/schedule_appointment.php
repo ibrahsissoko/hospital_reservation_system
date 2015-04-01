@@ -160,7 +160,7 @@
                             SELECT *
                             FROM users
                             WHERE
-                                id = :id
+                                user_type_id = :id
                                 AND
                                 first_name = :doctorFirstName
                                 AND
@@ -205,7 +205,7 @@
                     $endTime += 24;
                 }
                 // Create an empty value.
-                echo "<option value=\"\" selected=\"selected\">" . $docInfo . "</option>";
+                echo "<option value=\"\" selected=\"selected\"></option>";
                 for($i = $beginTime; $i < $endTime; $i++) {
                     if ($i < 12) {
                         echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
