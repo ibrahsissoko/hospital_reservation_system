@@ -120,7 +120,6 @@
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
                                     . $row["last_name"] . " " . $row["degree"] . "</option>";
-                            echo "<option value=\"1\">1</option>";
                     }
                 } else {
                     // Create a blank entry.
@@ -133,7 +132,6 @@
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
                                     . $row["degree"] . "</option>";
-                            echo "<option value=\"2\">2</option>";
                         } else if ($docName == $row["first_name"] . " " . $row["last_name"]) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
@@ -141,12 +139,10 @@
                                     . $row["degree"] . "</option>";
                             // Set the post value of the doctor's name.
                             $_POST['doctor_name'] = $docName . " " . $row['degree'];
-                            echo "<option value=\"3\">3</option>";
                         } else {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
                                     . $row["last_name"] . " " . $row["degree"] . "</option>";
-                            echo "<option value=\"4\">4</option>";
                         }
                     }
                 }
@@ -184,7 +180,7 @@
                     $endTime += 24;
                 }
                 // Create an empty value.
-                echo "<option value=\"\" selected=\"selected\"></option>";
+                echo "<option value=\"\" selected=\"selected\">$beginTime, $endTime, " . $beginTime . " " . $endTime . "</option>";
                 for($i = $beginTime; $i < $endTime; $i++) {
                     if ($i < 12) {
                         echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
