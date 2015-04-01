@@ -6,6 +6,8 @@
     require("config.php");
     require("MailFiles/PHPMailerAutoload.php");
     
+    $docInfo;
+    
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
@@ -124,7 +126,7 @@
             try {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
-                if (empty($docInfo)) {
+                if (!$docInfo) {
                     echo "<option value=\"Wrong\">Wrong</option>";
                     $i = 0;
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
