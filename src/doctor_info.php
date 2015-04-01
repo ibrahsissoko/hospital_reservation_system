@@ -84,7 +84,7 @@
 
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($i == $_SESSION['user']['department_id']) {
+                    if ($i == $_SESSION['user']['department_id'] - 1) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
@@ -126,7 +126,7 @@
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $text = $row['name'] . " (" . $row['start_time'] . ":00-" . $row['end_time'] . ":00)";
-                    if ($i == $_SESSION['user']['shift_id']) {
+                    if ($i == $_SESSION['user']['shift_id'] - 1) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $text . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $text . "</option>";
