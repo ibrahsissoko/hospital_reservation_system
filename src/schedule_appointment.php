@@ -65,10 +65,13 @@
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
     <script>
         $(function() {
-            $('#update').change(function() {
+            $('#doctorNameUpdate').change(function() {
                 this.form.submit();
             });
         });
+        function dateUpdated() {
+            document.getElementById("mainForm").submit();
+        }
     </script>
 </head>
 
@@ -158,7 +161,7 @@
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" id="update"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
             }
             if (!empty($_POST['doctor_name']) && !empty($_POST['date'])) {
                 if (empty($docInfo)) {
