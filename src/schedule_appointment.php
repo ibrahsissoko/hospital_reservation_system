@@ -63,7 +63,14 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
-    <script>function update(){document.getElementById("mainForm").submit();}</script>
+    <script>
+        function displayDates() {
+            document.getElementById("mainForm").submit();
+        }
+        function dislpayTimes() {
+            document.getElementById("mainForm").submit();
+        }
+    </script>
 </head>
 
 <body>
@@ -90,7 +97,7 @@
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
         Which Doctor Would You Like?<br/>
-        <select name="doctor_name" onchange="update()">
+        <select name="doctor_name" onchange="displayDates()">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
@@ -152,7 +159,7 @@
         <?php
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="update()"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="displayTimes()"/><br/>';
             }
             if (!empty($_POST['date'])) {
                 if (empty($docInfo)) {
@@ -204,8 +211,6 @@
                     // E.g 19-3 => 19-27 for simplicity.
                     $endTime += 24;
                 }
-                // Create an empty value.
-                echo "<option value=\"\" selected=\"selected\"></option>";
                 for($i = $beginTime; $i < $endTime; $i++) {
                     if ($i < 12) {
                         echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
