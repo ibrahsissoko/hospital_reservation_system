@@ -1,6 +1,6 @@
 <?php
 
-class ForgotPassword {
+class Diagnosis {
 
     public $doctorEmail;
     public $patientEmail;
