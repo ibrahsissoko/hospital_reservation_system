@@ -70,7 +70,7 @@
           <?php
 
           if ($showAdvanced) {
-              echo "<a href=\"home.php\" >Adv. Search</a>";
+              echo "<a href=\"advanced_search.php\" >Advanced Search</a>";
           }
 
           ?>
