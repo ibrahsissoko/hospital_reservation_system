@@ -63,12 +63,12 @@ if(empty($_SESSION['user'])) {
 
 <div class="container hero-unit">
 
-    <form action="advanced_doctor_search.php" method="GET" >
+    <form action="advanced_user_search.php" method="GET" >
         <?php
         if (isset($_GET['search']) && $_GET['search'] != "") {
             echo "<input type=\"text\" name=\"search\" placeholder=\"" . $_GET['search'] . "\" >";
         } else {
-            echo "<input type=\"text\" name=\"search\" placeholder=\"" . "Doctor's Name" . "\" >";
+            echo "<input type=\"text\" name=\"search\" placeholder=\"" . "User's Name" . "\" >";
         }
         ?>
 
