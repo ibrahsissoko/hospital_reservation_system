@@ -16,6 +16,10 @@
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis($_POST['doctor_first_name'],$_POST['patient_first_name'],
             $_SESSION["user"]["email"],$_POST['diagnosis'], $db);
+        <?php 
+        echo "************* $_POST['doctor_first_name'],$_POST['patient_first_name'],
+            $_SESSION["user"]["email"],$_POST['diagnosis']";
+        ?>
         $d->sendEmailToPatient();
         $d->sendEmailToDoctor();
     }
