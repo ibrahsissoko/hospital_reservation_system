@@ -148,11 +148,12 @@
             }
             echo "</select><br/>";
 
-            if(!empty($_POST['doctor_name'])) {
+            $doctorName = !empty($_POST['doctor_name']) || !empty($_GET['id']);
+            if($doctorName) {
                 echo "Date:<br/>";
                 echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
             }
-            if (!empty($_POST['doctor_name']) && !empty($_POST['date'])) {
+            if ($doctorName && !empty($_POST['date'])) {
                 $query2 = "
                        SELECT *
                        FROM users
