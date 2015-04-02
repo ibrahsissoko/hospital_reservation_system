@@ -4,9 +4,46 @@ class ForgotPassword {
 
     public $doctorEmail;
     public $patientEmail;
+    private $doctorName;
+    private $patientName;
+    private $diagnosis;
+    private $amount_due = 500;
+    public error;
+
+  function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $db) {
+        $this->doctorName = $doctorName;
+        $this->patientName = $patientName;
+        $this->doctorEmail = $doctorEmail;
+
+        if (!empty($diagnosis)) {
+            $this->diagnosis = $diagnosis;
+
+            $query = "SELECT * FROM users WHERE user_type_id=1";
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"]);
+                    $string2 = str_replace(' ', '', $patientName);
+                    if(strcmp($string1, $string2) == 0) {
+                        $this->patientInfo = $row;
+                        $this->patientEmail = $this->patientInfo["email"];
+                        break;
+                    }
+                }
+            } catch(PDOException $e) {
+                die("Failed to gather patient's email address.");
+            }
+            if (empty($this->patientEmail)) {
+                $this->error = "An internal error occurred acquiring the doctor's information.";
+            }
+        } else {
+            $this->error = "Please fill out all fields.";
+        }
+  }
+
+    function sendEmailToPatient()) {
     
-    function sendEmailToPatient() {
-    /*
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 
@@ -18,16 +55,16 @@ class ForgotPassword {
         $mail->addAddress($this->patientEmail);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis";
-        $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with Dr. DOCTOR_NAME. Here are'
-                . ' some of the details of your appointment: 
-                . '<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();*/
+        $mail->Subject = "Diagnosis and Billing";
+        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
+                . 'You recently scheduled an appointment with ' . $this->doctorName
+                . '. Here are some details of your appointment:'
+                . 'Your total is $'. $this->amount_due . '<br/><br/>Thank you,<br/>Wal Consulting';
+        return $mail->send();
     }
     
     function sendEmailToDoctor() {
-    /*
+    
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 
@@ -39,11 +76,42 @@ class ForgotPassword {
         $mail->addAddress($this->doctorEmail);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis";
+        $mail->Subject = "Diagnosis and Billing";
         $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with PATIENT_NAME. Here is'
-                . ' the receipt of the diagnosis form that you submitted: 
+                . 'You recently had an appointment with ' . $this->patientName . 'Here is'
+                . ' the receipt of the diagnosis form that you submitted:' . $this->amount_due .
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();*/
+        return $mail->send();
+    }
+
+    function updateBillTable($db) {
+        $query = "
+                    INSERT INTO bill (
+                        amount_due,
+                        patient_name,
+                        patient_email,
+                        doctor_name,
+                        doctor_email
+                    ) VALUES (
+                        :amount_due,
+                        :patient_name,
+                        :patient_email,
+                        :doctor_name,
+                        :doctor_email
+                    )
+                    ";
+        $query_params = array(
+            ':amount_due' => $this->amount_due,
+            ':patient_name' => $this->patientName,
+            ':patient_email' => $this->patientEmail,
+            ':doctor_name' => $this->doctorName,
+            ':doctor_email' => $this->doctorEmail
+        );
+        try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $e) {
+                die("Failed to updated tables.");
+            }
     }
 }
