@@ -254,16 +254,15 @@
         ?>
         <script>
         function doctorNameUpdated() {
-            var time = $('#time').val();
-            if(time != "") {
-                $('#time').val('');
-            }
+            window.alert("DoctorName");
             document.getElementById("mainForm").submit();  
         }
         function dateUpdated() {
+            window.alert("Date updated.");
             document.getElementById("mainForm").submit();
         }
         function submitButtonClicked() {
+            window.alert("Submit button clicked.");
                 <?php    
                 if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time'])) {
                     $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
