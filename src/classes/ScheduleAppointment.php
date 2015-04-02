@@ -117,7 +117,7 @@ class ScheduleAppointment {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute($query_params);
             } catch(PDOException $e) {
-                die("Failed to updated tables.");
+                die("Failed to update tables.");
             }
     }
 }

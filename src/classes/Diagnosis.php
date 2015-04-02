@@ -10,7 +10,7 @@ class Diagnosis {
     private $diagnosis;
     private $observations;
     private $amount_due = 500;
-    public error;
+    public $error;
 
   function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
         $this->doctorName = $doctorName;

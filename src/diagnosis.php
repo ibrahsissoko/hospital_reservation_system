@@ -17,12 +17,14 @@
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis($_POST['doctor_name'],$_POST['patient_name'],
             $_SESSION["user"]["email"],$_POST['diagnosis'], $_POST['observations'], $db);
+        if(empty($d->error)){
+            if($d->sendEmailToPatient() && $d->sendEmailToDoctor()) {
+                $d->updateBillTable($db);
         
-       if($d->sendEmailToPatient() && $d->sendEmailToDoctor()) {
-            $d->updateBillTable($db);
-        
+            }else {
+                $d->error = "An error occurred sending confirmation emails. Try again soon.";
+            } 
         }
-
     }
     
 ?>
@@ -30,6 +32,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: #FF0000;}</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -78,6 +81,9 @@
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_POST["diagnosis"]);?>" /><br/>
         <br/><br/>
         <input type="submit" name = "submit" class="btn btn-info" value="Save" />
+    
+        <span class="error"><?php echo $d->error;?></span>
+        
     </form>
     <br/>
     <a href="prescription.php">Prescribe Medication</a>
