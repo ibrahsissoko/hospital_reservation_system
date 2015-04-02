@@ -85,7 +85,7 @@ if(empty($_SESSION['user'])) {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
 
-                $i = 0;
+                $i = 1;
 
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
