@@ -60,7 +60,7 @@
               $searchText = "Search Doctors";
               $showAdvanced = true;
           } else {
-              $searchText = "Search Users";
+              $searchText = "Search All Users";
           }
           ?>
 
