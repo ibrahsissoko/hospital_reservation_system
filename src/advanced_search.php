@@ -103,6 +103,7 @@ if(empty($_SESSION['user'])) {
 
             ?>
         </select>
+        <input type="submit" class="btn btn-info" value="Search" />
     </form>
 
     <ul>
