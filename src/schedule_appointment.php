@@ -285,7 +285,7 @@
                     }
                 }
                 echo "</select><br/><br/>";
-                echo '<input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>';
+                echo '<input type="submit" name = "submitButton" class="btn btn-info" value="Save" /><br/><br/>';
             }
         ?>
         <script>
