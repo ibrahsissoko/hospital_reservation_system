@@ -139,7 +139,7 @@
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
                                     . $row["degree"] . "</option>";
                             // Set the post value of the doctor's name.
-                            $_POST['doctor_name'] = $docName . " " . $row['degree'];
+                        //    $_POST['doctor_name'] = $docName . " " . $row['degree'];
                         } else {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
