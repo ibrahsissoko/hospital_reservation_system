@@ -138,8 +138,6 @@
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
                                     . $row["degree"] . "</option>";
-                            // Set the post value of the doctor's name.
-                        //    $_POST['doctor_name'] = $docName . " " . $row['degree'];
                         } else {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
@@ -292,14 +290,12 @@
         ?>
         <script>
         function doctorNameUpdated() {
-            window.alert("DocName: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
             document.getElementById("mainForm").submit();
             window.alert("DocName: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
         }
         function dateUpdated() {
-            window.alert("Date: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>" );
             document.getElementById("mainForm").submit();
-            window.alert("Date: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
+            window.alert("Date: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'] . ", " . $_POST['date'];?>");
         }
     </script>
         <span class="success"><?php echo $appointment->success;?></span>
