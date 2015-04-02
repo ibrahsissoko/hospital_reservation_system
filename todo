@@ -1,5 +1,0 @@
-column changes:
-    department/specialization -> department_id
-    shift -> shift_id
-
-    These need to be changed to spinners when inputting the user information for doctors and nurses

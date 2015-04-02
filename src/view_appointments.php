@@ -89,11 +89,14 @@
                        first_name = :appointmentWithFirstName
                        AND
                        last_name = :appointmentWithLastName
+                       AND
+                       user_type_id = :user_type
                     ";
             $name = explode(" ", $row[$appointmentWith . "_name"]);
             $query_params2 = array(
                 ":appointmentWithFirstName" => $name[0],
-                ":appointmentWithLastName" => $name[1]
+                ":appointmentWithLastName" => $name[1],
+                ":user_type" => "2"
             );
             try {
                 $stmt2 = $db->prepare($query2);
