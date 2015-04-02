@@ -67,12 +67,14 @@
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
     <script>
         function doctorNameUpdated() {
-            window.alert("Doctor name updated called.");
+            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
             document.getElementById("mainForm").submit();
+            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
         }
         function dateUpdated() {
-            window.alert("Date updated called.");
+            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>" );
             document.getElementById("mainForm").submit();
+            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
         }
     </script>
 </head>
@@ -138,7 +140,7 @@
                     $docName = $docInfo['first_name'] . " " . $docInfo['last_name'];
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         // If it is the doctor's name, select them in the drop down menu.
-                        if (!empty($_POST['doctor_name']) && $_POST['doctor_name'] == $row["first_name"] . " " . $row["last_name"] . " " . $row["degree"]) {
+                        if ($_POST['doctor_name'] == $row["first_name"] . " " . $row["last_name"] . " " . $row["degree"]) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
                                     . " " . $row["degree"] . "\" selected=\"selected\">" 
                                     . $row["first_name"] . " " . $row["last_name"] . " " 
@@ -168,31 +170,28 @@
             }
             if (!empty($_POST['doctor_name']) && !empty($_POST['date'])) {
                 $query2 = "
-                        SELECT *
-                        FROM users
-                        WHERE
-                            user_type_id = :id
-                            AND
-                            first_name = :doctorFirstName
-                            AND
-                            last_name = :doctorLastName
-                         ";
-                 $name = explode(" ", $_POST['doctor_name']);
-                 $query_params2 = array(
-                     ":id" => 2,
-                     ":doctorFirstName" => $name[0],
-                     ":doctorLastName" => $name[1]
-                 );
-                 try {
-                     $stmt2 = $db->prepare($query2);
-                     $result2 = $stmt2->execute($query_params2);
-                 } catch(PDOException $ex) {
-                     die("Failed to run query: " . $ex->getMessage());
-                 }
-                 $currentDocInfo = $stmt2->fetch();
-                 if ($currentDocInfo != $docInfo) {
-                     $docInfo = $currentDocInfo;
-                 }
+                       SELECT *
+                       FROM users
+                       WHERE
+                           user_type_id = :id
+                           AND
+                           first_name = :doctorFirstName
+                           AND
+                           last_name = :doctorLastName
+                        ";
+                $name = explode(" ", $_POST['doctor_name']);
+                $query_params2 = array(
+                    ":id" => 2,
+                    ":doctorFirstName" => $name[0],
+                    ":doctorLastName" => $name[1]
+                );
+                try {
+                    $stmt2 = $db->prepare($query2);
+                    $result2 = $stmt2->execute($query_params2);
+                } catch(PDOException $ex) {
+                    die("Failed to run query: " . $ex->getMessage());
+                }
+                $docInfo = $stmt2->fetch();
                 $query = '
                         SELECT *
                         FROM shift
@@ -200,7 +199,7 @@
                             id = :id
                         ';
                 $query_params = array(
-                    ':id' => $currentDocInfo['shift_id']
+                    ':id' => $docInfo['shift_id']
                 );
                 try {
                     $stmt = $db->prepare($query);
