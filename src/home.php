@@ -55,8 +55,10 @@
 
           <?php
           $searchText = "";
+          $showAdvanced = false;
           if ($userType == "patient") {
               $searchText = "Search Doctors";
+              $showAdvanced = true;
           } else {
               $searchText = "Search Users";
           }
@@ -65,6 +67,13 @@
           <form class="navbar-search pull-left" action="search.php" method="GET" >
               <input type="text" class="search-query" name="search" placeholder="<?php echo $searchText ?>" >
           </form>
+          <?php
+
+          if ($showAdvanced) {
+              echo "<a href=\"home.php\" >Adv. Search</a>";
+          }
+
+          ?>
         <ul class="nav pull-right">
           <li><a href="my_account.php">Account</a></li>
             <li><a href="logout.php">Log Out</a></li>
