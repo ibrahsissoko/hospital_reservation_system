@@ -57,7 +57,7 @@
           $searchText = "";
           $showAdvanced = false;
           if ($userType == "patient") {
-              $searchText = "Search Doctors";
+              $searchText = "Search All Doctors";
               $showAdvanced = true;
           } else {
               $searchText = "Search All Users";
@@ -80,10 +80,11 @@
     <h2>Welcome!</h2>
     <?php
         if ($userType == "patient") {
-            echo "<a href=\"advanced_search.php\">Advanced Doctor Search</a><br/>";
+            echo "<a href=\"advanced_doctor_search.php\">Advanced Doctor Search</a><br/>";
             echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a><br/>";
             echo "<a href=\"pay_bills.php\">Pay Bills</a><br/>";
         } else if ($userType == "doctor") {
+            echo "<a href=\"advanced_user_search.php\">Advanced User Search</a><br/>";
             echo "<a href=\"diagnosis.php\">Diagnosis Form</a><br/>";
         }
 
