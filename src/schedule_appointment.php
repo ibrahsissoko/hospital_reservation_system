@@ -292,14 +292,14 @@
         ?>
         <script>
         function doctorNameUpdated() {
-            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
+            window.alert("DocName: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
             document.getElementById("mainForm").submit();
-            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
+            window.alert("DocName: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
         }
         function dateUpdated() {
-            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>" );
+            window.alert("Date: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>" );
             document.getElementById("mainForm").submit();
-            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
+            window.alert("Date: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
         }
     </script>
         <span class="success"><?php echo $appointment->success;?></span>
