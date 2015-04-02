@@ -52,9 +52,6 @@ if(empty($_SESSION['user'])) {
             </a>
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
-                <form class="navbar-search pull-left" action="search.php" method="GET" >
-                    <input type="text" class="search-query" name="search" placeholder="<?php echo $_GET['search'] ?>" >
-                </form>
                 <ul class="nav pull-right">
                     <li><a href="my_account.php">Account</a></li>
                     <li><a href="logout.php">Log Out</a></li>
@@ -66,15 +63,17 @@ if(empty($_SESSION['user'])) {
 
 <div class="container hero-unit">
 
-    <form action="search.php" method="GET" >
-        <input type="text" name="search" placeholder="<?php echo $_GET['search'] ?>" >
+    <form action="advanced_search.php" method="GET" >
+        <?php
+        if (isset($_GET['search'])) {
+            echo "<input type=\"text\" name=\"search\" placeholder=\"" . $_GET['search'] . "\" >";
+        } else {
+            echo "<input type=\"text\" name=\"search\" placeholder=\"" . "Doctor's Name" . "\" >";
+        }
+        ?>
+
         <select name="department_id">
             <?php
-
-            /**
-             * This code is used to fill the spinner from the database user_types.
-             * This database holds the different types of users, including: patient, doctor, nurse, administrator
-             */
 
             $query = "
                 SELECT *
@@ -121,7 +120,7 @@ if(empty($_SESSION['user'])) {
         ";
 
         $query_params = array(
-            ':department_id' => $_GET['deparment_id']
+            ':department_id' => $_GET['department_id']
         );
 
         try {
@@ -155,7 +154,7 @@ if(empty($_SESSION['user'])) {
                 $i = $i + 1;
             }
 
-            if ($i == 0) {
+            if ($i == 0 && isset($_GET['search'])) {
                 echo "<li>" . "No search results!" . "</li>";
             }
         } catch(PDOException $ex) {

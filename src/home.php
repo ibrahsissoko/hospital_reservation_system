@@ -67,13 +67,6 @@
           <form class="navbar-search pull-left" action="search.php" method="GET" >
               <input type="text" class="search-query" name="search" placeholder="<?php echo $searchText ?>" >
           </form>
-          <?php
-
-          if ($showAdvanced) {
-              echo "<a href=\"advanced_search.php\" >Advanced Search</a>";
-          }
-
-          ?>
         <ul class="nav pull-right">
           <li><a href="my_account.php">Account</a></li>
             <li><a href="logout.php">Log Out</a></li>
@@ -87,11 +80,13 @@
     <h2>Welcome!</h2>
     <?php
         if ($userType == "patient") {
+            echo "<a href=\"advanced_search\">Advanced Doctor Search</a><br/>";
             echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a><br/>";
             echo "<a href=\"pay_bills.php\">Pay Bills</a><br/>";
         } else if ($userType == "doctor") {
             echo "<a href=\"diagnosis.php\">Diagnosis Form</a><br/>";
         }
+
         echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";
     ?>
     <br>User Type:      <?php
