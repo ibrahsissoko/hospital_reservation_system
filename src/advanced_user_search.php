@@ -72,10 +72,10 @@ if(empty($_SESSION['user'])) {
         }
         ?>
 
-        <select name="department_id">
+        <!--<select name="department_id">
             <?php
 
-            $query = "
+            /*$query = "
                 SELECT *
                 FROM department
             ";
@@ -99,10 +99,10 @@ if(empty($_SESSION['user'])) {
                 }
             } catch(Exception $e) {
 
-            }
+            }*/
 
             ?>
-        </select>
+        </select>-->
         <select name="user_type_id">
             <?php
 
@@ -134,7 +134,6 @@ if(empty($_SESSION['user'])) {
 
             ?>
         </select>
-        <br/>
         <input type="submit" class="btn btn-info" value="Search" />
     </form>
 
@@ -149,12 +148,10 @@ if(empty($_SESSION['user'])) {
                 CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
                 CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
                 email LIKE '%" . $_GET['search'] . "%') AND
-                (department_id = :department_id) AND
                 (user_type_id = :type_id)
         ";
 
         $query_params = array(
-            ':department_id' => $_GET['department_id'],
             ':type_id' => $_GET['user_type_id']
         );
 
