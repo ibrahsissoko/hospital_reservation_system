@@ -254,11 +254,7 @@
         ?>
         <script>
         function doctorNameUpdated() {
-            <?php
-            if (empty($_POST['date']) && empty($_POST['time'])) {
-                echo 'document.getElementById("mainForm").submit();';
-            }
-            ?>   
+                document.getElementById("mainForm").submit();  
         }
         function dateUpdated() {
             document.getElementById("mainForm").submit();
