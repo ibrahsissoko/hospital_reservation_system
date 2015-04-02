@@ -4,13 +4,18 @@
     AutoLoader::registerDirectory('../src/classes');
 
     require("config.php");
+    require("MailFiles/PHPMailerAutoload.php");
+    
     
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_POST)) {
+    } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
+        !empty($_POST['patient_first_name']) &&!empty($_POST['patient_last_name']) && 
+        !empty($_POST['observations']) && !empty($_POST['diagnosis'])) {
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis();
+        $d = new Diagnosis($_POST['doctor_first_name'],$_POST['patient_first_name'],
+            $_SESSION["user"]["email"],$_POST['diagnosis'], $db);
         $d->sendEmailToPatient();
         $d->sendEmailToDoctor();
     }
