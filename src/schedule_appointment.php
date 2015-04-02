@@ -116,7 +116,7 @@
 
             if(!empty($_POST['doctor_name'])) {
                 echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onblur="dateUpdated()"/><br/>';
             }
             if (!empty($_POST['doctor_name']) && !empty($_POST['date'])) {
                 $query2 = "
@@ -254,7 +254,11 @@
         ?>
         <script>
         function doctorNameUpdated() {
-            document.getElementById("mainForm").submit();
+            <?php
+            if (empty($_POST['date']) && empty($_POST['time'])) {
+                echo 'document.getElementById("mainForm").submit();';
+            }
+            ?>   
         }
         function dateUpdated() {
             document.getElementById("mainForm").submit();
