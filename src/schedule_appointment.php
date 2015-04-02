@@ -65,18 +65,6 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
-    <script>
-        function doctorNameUpdated() {
-            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
-            document.getElementById("mainForm").submit();
-            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
-        }
-        function dateUpdated() {
-            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>" );
-            document.getElementById("mainForm").submit();
-            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
-        }
-    </script>
 </head>
 
 <body>
@@ -302,6 +290,18 @@
                 echo '<input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>';
             }
         ?>
+        <script>
+        function doctorNameUpdated() {
+            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
+            document.getElementById("mainForm").submit();
+            window.alert("DocName: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
+        }
+        function dateUpdated() {
+            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>" );
+            document.getElementById("mainForm").submit();
+            window.alert("Date: <?php echo $_POST['doctorName'] . ", " . $docInfo['shift_id'];?>");
+        }
+    </script>
         <span class="success"><?php echo $appointment->success;?></span>
         <span class="error"><?php echo $appointment->error;?></span>
         
