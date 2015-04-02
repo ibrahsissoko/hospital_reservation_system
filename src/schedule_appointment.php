@@ -249,7 +249,7 @@
                     }
                 }
                 echo "</select><br/><br/>";
-                echo '<input type="button" name ="submitButton" class="btn btn-info" value="Save" onclick="submitButtonPressed(event)"/><br/><br/>';
+                echo '<input type="button" name ="submitButton" class="btn btn-info" value="Submit"/><br/><br/>';
             }
         ?>
         <script>
@@ -259,9 +259,9 @@
         function dateUpdated() {
             document.getElementById("mainForm").submit();
         }
-        function submitButtonPressed(event) {
-            <?php
-            if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time']) && event.target.name == "submitButton") {
+        $("submitButton").click(function() {
+            <?php    
+            if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time'])) {
                 $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
                     . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
                 if (empty($appointment->error)) {
@@ -296,7 +296,7 @@
                     }
                 }
             }?>
-        }
+        });
     </script>
         <span class="success"><?php echo $appointment->success;?></span>
         <span class="error"><?php echo $appointment->error;?></span>
