@@ -65,7 +65,7 @@ if(empty($_SESSION['user'])) {
 
     <form action="advanced_search.php" method="GET" >
         <?php
-        if (isset($_GET['search'])) {
+        if (isset($_GET['search']) && $_GET['search'] != "") {
             echo "<input type=\"text\" name=\"search\" placeholder=\"" . $_GET['search'] . "\" >";
         } else {
             echo "<input type=\"text\" name=\"search\" placeholder=\"" . "Doctor's Name" . "\" >";
