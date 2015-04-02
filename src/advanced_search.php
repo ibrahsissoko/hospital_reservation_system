@@ -117,11 +117,13 @@ if(empty($_SESSION['user'])) {
                 CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
                 CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
                 email LIKE '%" . $_GET['search'] . "%') AND
-                (department_id = :department_id)
+                (department_id = :department_id) AND
+                (user_type_id = :type_id)
         ";
 
         $query_params = array(
-            ':department_id' => $_GET['department_id']
+            ':department_id' => $_GET['department_id'],
+            ':type_id' => '2'
         );
 
         try {
