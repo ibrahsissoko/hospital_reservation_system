@@ -291,11 +291,11 @@
         <script>
         function doctorNameUpdated() {
             document.getElementById("mainForm").submit();
-            window.alert("DocName: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'];?>");
+            <?php $_POST['date'] = ""; $_POST['time'] = "";?>
         }
         function dateUpdated() {
             document.getElementById("mainForm").submit();
-            window.alert("Date: <?php echo $_POST['doctor_name'] . ", " . $docInfo['shift_id'] . ", " . $_POST['date'];?>");
+            <?php $_POST['time'] = "";?>
         }
     </script>
         <span class="success"><?php echo $appointment->success;?></span>
