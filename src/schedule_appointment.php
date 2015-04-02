@@ -55,7 +55,7 @@
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
         Which Doctor Would You Like?<br/>
-        <select name="doctor_name" onchange="doctorNameUpdated()">
+        <select name="doctor_name" id="doctor_name" onchange="doctorNameUpdated()">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
@@ -249,18 +249,21 @@
                     }
                 }
                 echo "</select><br/><br/>";
-                echo '<input type="button" name ="submitButton" id="winner" class="btn btn-info" value="Submit" onclick="submitButtonClicked(event)"/><br/><br/>';
+                echo '<input type="button" name ="submitButton" id="winner" class="btn btn-info" value="Submit" onclick="submitButtonClicked()"/><br/><br/>';
             }
         ?>
         <script>
         function doctorNameUpdated() {
-                document.getElementById("mainForm").submit();  
+            var time = $('#time').val();
+            if(time != "") {
+                $('#time').val('');
+            }
+            document.getElementById("mainForm").submit();  
         }
         function dateUpdated() {
             document.getElementById("mainForm").submit();
         }
-        function submitButtonClicked(event) {
-            if(event.target.name === "submitButton") {
+        function submitButtonClicked() {
                 <?php    
                 if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time'])) {
                     $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
@@ -297,7 +300,6 @@
                         }
                     }
                 }?>
-            }
         }
     </script>
         <span class="success"><?php echo $appointment->success;?></span>
