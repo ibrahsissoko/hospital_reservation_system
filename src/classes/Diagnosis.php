@@ -6,18 +6,20 @@ class ForgotPassword {
     public $patientEmail;
     private $doctorName;
     private $patientName;
+    public $patientInfo;
     private $diagnosis;
+    private $observations;
     private $amount_due = 500;
     public error;
 
-  function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $db) {
+  function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
 
-        if (!empty($diagnosis)) {
+        if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
-
+            $this->observations = $observations;
             $query = "SELECT * FROM users WHERE user_type_id=1";
             try {
                 $stmt = $db->prepare($query);

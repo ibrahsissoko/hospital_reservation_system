@@ -12,17 +12,17 @@
         die("Redirecting to index.php");
     } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
         !empty($_POST['patient_first_name']) &&!empty($_POST['patient_last_name']) && 
-        !empty($_POST['observations']) && !empty($_POST['diagnosis'])) {
-         echo '************* '. $_POST['doctor_first_name']. $_POST['patient_first_name'].
-            $_SESSION["user"]["email"].$_POST['diagnosis'];
+        !empty($_POST['observations']) && !empty($_POST['diagnosis'])&& !empty($_POST['observations'])) {
     
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($_POST['doctor_first_name'],$_POST['patient_first_name'],
-            $_SESSION["user"]["email"],$_POST['diagnosis'], $db);
+        $d = new Diagnosis($_POST['doctor_name'],$_POST['patient_name'],
+            $_SESSION["user"]["email"],$_POST['diagnosis'], $_POST['observations'], $db);
         
-       
-        $d->sendEmailToPatient();
-        $d->sendEmailToDoctor();
+       if($d->sendEmailToPatient() && $d->sendEmailToDoctor()) {
+            $d->updateBillTable($db);
+        
+        }
+
     }
     
 ?>
