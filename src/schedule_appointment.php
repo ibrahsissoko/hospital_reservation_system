@@ -288,11 +288,9 @@
         ?>
         <script>
         function doctorNameUpdated() {
-            window.alert("DoctorName");
             document.getElementById("mainForm").submit();  
         }
         function dateUpdated() {
-            window.alert("Date updated.");
             document.getElementById("mainForm").submit();
         }
     </script>
