@@ -13,13 +13,14 @@
     } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
         !empty($_POST['patient_first_name']) &&!empty($_POST['patient_last_name']) && 
         !empty($_POST['observations']) && !empty($_POST['diagnosis'])) {
+         echo '************* '. $_POST['doctor_first_name']. $_POST['patient_first_name'].
+            $_SESSION["user"]["email"].$_POST['diagnosis'];
+    
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis($_POST['doctor_first_name'],$_POST['patient_first_name'],
             $_SESSION["user"]["email"],$_POST['diagnosis'], $db);
         
-        echo '************* '. $_POST['doctor_first_name']. $_POST['patient_first_name'].
-            $_SESSION["user"]["email"].$_POST['diagnosis'];
-    
+       
         $d->sendEmailToPatient();
         $d->sendEmailToDoctor();
     }
