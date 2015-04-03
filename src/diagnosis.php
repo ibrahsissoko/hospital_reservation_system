@@ -10,15 +10,11 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
-        !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && 
-        !empty($_POST['observations']) && !empty($_POST['diagnosis'])&& isset($_POST['submitButton'])) {
-        $doctor_name = $_SESSION["user"]["first_name"]
-            . " " . $_SESSION["user"]["last_name"];
-        $patient_name = $_POST['patient_first_name'] . ' ' . $_POST['patient_last_name'];
+    } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && isset($_POST['submitButton'])) {
+        $patient_name = $_POST['patient_first_name'] . $_POST['patient_last_name'];
 
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($doctor_name ,$patient_name ,$_SESSION["user"]["email"],
+        $d = new Diagnosis($_SESSION["user"]["first_name"] . $_SESSION["user"]["last_name"] ,$patient_name ,$_SESSION["user"]["email"],
             $_POST['diagnosis'], $_POST['observations'], $db);
         if(empty($d->error)){
             if($d->sendEmailToPatient() && $d->sendEmailToDoctor($_SESSION["user"]["email"])) {
