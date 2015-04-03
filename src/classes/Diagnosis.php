@@ -44,7 +44,7 @@ class Diagnosis {
         }
   }
 
-    function sendEmailToPatient()) {
+    function sendEmailToPatient() {
     
         $mail = new PHPMailer();
         $mail->isSMTP();                  
