@@ -10,19 +10,15 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
-        !empty($_POST['patient_first_name']) &&!empty($_POST['patient_last_name']) && 
-        !empty($_POST['observations']) && !empty($_POST['diagnosis'])&& isset($_POST['submit'])) {
-        $doctor_name = $_SESSION["user"]["first_name"]
-            . " " . $_SESSION["user"]["last_name"];
-        $patient_name = $_POST['patient_first_name'] . ' ' . $_POST['patient_last_name'];
+    } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && isset($_POST['submitButton'])) {
+        $patient_name = $_POST['patient_first_name'] . $_POST['patient_last_name'];
 
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($doctor_name ,$patient_name ,$_SESSION["user"]["email"],
-            $_POST['diagnosis'], $_POST['observations'], $db);
+        $d = new Diagnosis($_SESSION["user"]["first_name"] . $_SESSION["user"]["last_name"] ,$patient_name ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'], $db);
         if(empty($d->error)){
-            if($d->sendEmailToPatient() && $d->sendEmailToDoctor()) {
+            if($d->sendEmailToPatient() && $d->sendEmailToDoctor($_SESSION["user"]["email"])) {
                 $d->updateBillTable($db);
+                $d->success = "Diagnosis emails were sent to you and the patient you named!";
         
             }else {
                 $d->error = "An error occurred sending confirmation emails. Try again soon.";
@@ -36,6 +32,7 @@
 <html lang="en">
 <head>
     <style>.error {color: #FF0000;}</style>
+    <style>.success {color: #00FF00;</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -83,8 +80,9 @@
         Diagnosis:<br/>
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_POST["diagnosis"]);?>" /><br/>
         <br/><br/>
-        <input type="submit" name = "submit" class="btn btn-info" value="Save" />
+        <input type="submit" name = "submitButton" class="btn btn-info" value="Save" />
     
+        <span class="success"><?php echo $d->success;?></span>
         <span class="error"><?php echo $d->error;?></span>
         
     </form>
