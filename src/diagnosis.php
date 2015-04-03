@@ -21,7 +21,7 @@
         $d = new Diagnosis($doctor_name ,$patient_name ,$_SESSION["user"]["email"],
             $_POST['diagnosis'], $_POST['observations'], $db);
         if(empty($d->error)){
-            if($d->sendEmailToPatient() && $d->sendEmailToDoctor()) {
+            if($d->sendEmailToPatient() && $d->sendEmailToDoctor($_SESSION["user"]["email"])) {
                 $d->updateBillTable($db);
                 $d->success = "Diagnosis emails were sent to you and the patient you named!";
         

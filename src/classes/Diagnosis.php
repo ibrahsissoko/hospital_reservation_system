@@ -65,7 +65,7 @@ class Diagnosis {
         return $mail->send();
     }
     
-    function sendEmailToDoctor() {
+    function sendEmailToDoctor($email) {
     
         $mail = new PHPMailer();
         $mail->isSMTP();                  
@@ -75,7 +75,7 @@ class Diagnosis {
         $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
         $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
         $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->doctorEmail);
+        $mail->addAddress($email);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
