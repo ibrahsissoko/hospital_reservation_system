@@ -9,14 +9,14 @@ class Diagnosis {
     public $patientInfo;
     private $diagnosis;
     private $observations;
-    private $amount_due = 500;
+    private $amount_due;
     public $error;
 
   function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
-
+        $this->amount_due = 500;
         if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
             $this->observations = $observations;

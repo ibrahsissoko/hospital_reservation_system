@@ -12,7 +12,7 @@
         die("Redirecting to index.php");
     } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
         !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && 
-        !empty($_POST['observations']) && !empty($_POST['diagnosis'])&& isset($_POST['submit'])) {
+        !empty($_POST['observations']) && !empty($_POST['diagnosis'])&& isset($_POST['submitButton'])) {
         $doctor_name = $_SESSION["user"]["first_name"]
             . " " . $_SESSION["user"]["last_name"];
         $patient_name = $_POST['patient_first_name'] . ' ' . $_POST['patient_last_name'];
@@ -84,7 +84,7 @@
         Diagnosis:<br/>
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_POST["diagnosis"]);?>" /><br/>
         <br/><br/>
-        <input type="submit" name = "submit" class="btn btn-info" value="Save" />
+        <input type="submit" name = "submitButton" class="btn btn-info" value="Save" />
     
         <span class="error"><?php echo $d->error;?></span>
         
