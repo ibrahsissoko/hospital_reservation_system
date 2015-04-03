@@ -11,7 +11,7 @@
         header("Location: ../index.php");
         die("Redirecting to index.php");
     } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['doctor_last_name']) && 
-        !empty($_POST['patient_first_name']) &&!empty($_POST['patient_last_name']) && 
+        !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && 
         !empty($_POST['observations']) && !empty($_POST['diagnosis'])&& isset($_POST['submit'])) {
         $doctor_name = $_SESSION["user"]["first_name"]
             . " " . $_SESSION["user"]["last_name"];
@@ -23,6 +23,7 @@
         if(empty($d->error)){
             if($d->sendEmailToPatient() && $d->sendEmailToDoctor()) {
                 $d->updateBillTable($db);
+                $d->success = "Diagnosis emails were sent to you and the patient you named!";
         
             }else {
                 $d->error = "An error occurred sending confirmation emails. Try again soon.";
