@@ -45,6 +45,39 @@ class ScheduleAppointment {
             $this->error = "Please fill out all fields.";
         }
     }
+    function begin($_SESSION, $db) {
+        if (empty($this->error)) {
+            if($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL) {
+                if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
+                    if($this->sendEmailToPatient() && $this->sendEmailToDoctor()) {
+                        $this->updateAppointmentTable($db);
+                        $this->success = "Confirmation emails were sent to you and the doctor you requested!";
+                    } else {
+                        $this->error = "An error occurred sending confirmation emails. Try again soon.";
+                    } 
+                } else {
+                    if($this->sendEmailToPatient()) {
+                        $this->updateAppointmentTable($db);
+                        $this->success = "A confirmation email was sent to you regarding your appointment.";
+                    } else {
+                        $this->error = "An error occurred sending you a confirmation email. Try again soon.";
+                    }
+                }
+            } else {
+                if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
+                    if($this->sendEmailToDoctor()) {
+                        $this->updateAppointmentTable($db);
+                        $this->success = "Appointment booked!";
+                    } else {
+                        $this->error = "Appointment could not be booked. Try again soon.";
+                    }
+                } else {
+                    $this->updateAppointmentTable($db);
+                    $this->success = "Appointment booked!";
+                }
+            }
+        }
+    }
     
     function sendEmailToPatient() {
         $mail = new PHPMailer();

@@ -12,37 +12,7 @@
     } else if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time']) && isset($_POST['submitButton'])) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
             . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
-        if (empty($appointment->error)) {
-            if($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL) {
-                if($appointment->doctorInfo['appointment_confirm_email'] == "Yes" || $appointment->doctorInfo['appointment_confirm_email'] == NULL) {
-                    if($appointment->sendEmailToPatient() && $appointment->sendEmailToDoctor()) {
-                        $appointment->updateAppointmentTable($db);
-                        $appointment->success = "Confirmation emails were sent to you and the doctor you requested!";
-                    } else {
-                        $appointment->error = "An error occurred sending confirmation emails. Try again soon.";
-                    } 
-                } else {
-                    if($appointment->sendEmailToPatient()) {
-                        $appointment->updateAppointmentTable($db);
-                        $appointment->success = "A confirmation email was sent to you regarding your appointment.";
-                    } else {
-                        $appointment->error = "An error occurred sending you a confirmation email. Try again soon.";
-                    }
-                }
-            } else {
-                if($appointment->doctorInfo['appointment_confirm_email'] == "Yes" || $appointment->doctorInfo['appointment_confirm_email'] == NULL) {
-                    if($appointment->sendEmailToDoctor()) {
-                        $appointment->updateAppointmentTable($db);
-                        $appointment->success = "Appointment booked!";
-                    } else {
-                        $appointment->error = "Appointment could not be booked. Try again soon.";
-                    }
-                } else {
-                    $appointment->updateAppointmentTable($db);
-                    $appointment->success = "Appointment booked!";
-                }
-            }
-        }
+        $appointment->begin($_SESSION, $db);
     }?>
 ?>
 
