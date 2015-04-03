@@ -14,8 +14,7 @@
         $patient_name = $_POST['patient_first_name'] . $_POST['patient_last_name'];
 
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($_SESSION["user"]["first_name"] . $_SESSION["user"]["last_name"] ,$patient_name ,$_SESSION["user"]["email"],
-            $_POST['diagnosis'], $_POST['observations'], $db);
+        $d = new Diagnosis($_SESSION["user"]["first_name"] . $_SESSION["user"]["last_name"] ,$patient_name ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'], $db);
         if(empty($d->error)){
             if($d->sendEmailToPatient() && $d->sendEmailToDoctor($_SESSION["user"]["email"])) {
                 $d->updateBillTable($db);
