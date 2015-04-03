@@ -37,6 +37,7 @@
 <html lang="en">
 <head>
     <style>.error {color: #FF0000;}</style>
+    <style>.success {color: #00FF00;</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -86,6 +87,7 @@
         <br/><br/>
         <input type="submit" name = "submitButton" class="btn btn-info" value="Save" />
     
+        <span class="success"><?php echo $d->success;?></span>
         <span class="error"><?php echo $d->error;?></span>
         
     </form>
