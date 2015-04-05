@@ -125,8 +125,8 @@ class ScheduleAppointment {
                                 SELECT *
                                 FROM appointment
                                 WHERE
-                                    nurse_email = $this->nurseEmail
-                                AND
+                                    nurse_email = " . $row['email'] .
+                                "AND
                                     date = $this->date
                                 AND
                                     time = $this->time
@@ -238,7 +238,7 @@ class ScheduleAppointment {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute($query_params);
         } catch(PDOException $e) {
-            die("Failed to update tables.");
+            die("Failed to update tables. " + $e->getMessage());
         }
     }
 }
