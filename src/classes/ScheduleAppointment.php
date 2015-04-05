@@ -91,13 +91,12 @@ class ScheduleAppointment {
                 SELECT *
                 FROM users
                 WHERE
-                    email = $this->doctorEmail                
-                ";
+                    email =" . $this->doctorEmail;
         try {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
         } catch(PDOException $e) {
-            die("Failed to update tables. " . $e->getMessage());
+            die("Failed to update tables. (1) " . $e->getMessage());
         }
         $row = $stmt->fetch();
         $query = "
@@ -114,7 +113,7 @@ class ScheduleAppointment {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
         } catch(PDOException $e) {
-            die("Failed to update tables. " . $e->getMessage());
+            die("Failed to update tables. (2) " . $e->getMessage());
         }
         if ($stmt->rowCount() != 0) {
             while(empty($this->nurseInfo)){
@@ -136,7 +135,7 @@ class ScheduleAppointment {
                             $stmt2 = $this->db->prepare($query2);
                             $result = $stmt2->execute();
                         } catch(PDOException $e) {
-                            die("Failed to update tables. " . $e->getMessage());
+                            die("Failed to update tables. (3) " . $e->getMessage());
                         }
                         if ($stmt2->rowCount() > 0) {
                             $nurseAlreadyScheduled = true;
