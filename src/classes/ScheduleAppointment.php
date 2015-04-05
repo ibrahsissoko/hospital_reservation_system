@@ -53,8 +53,8 @@ class ScheduleAppointment {
     
     function initiate($_SESSION) {
         if (empty($this->error)) {
+            $this->assignNurse();
             if($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL) {
-                $this->assignNurse();
                 if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor()) {
                         $this->updateAppointmentTable();
