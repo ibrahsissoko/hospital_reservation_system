@@ -91,10 +91,14 @@ class ScheduleAppointment {
                 SELECT *
                 FROM users
                 WHERE
-                    email = " . $this->doctorEmail;
+                    email = :email
+                ";
+        $query_params = array(
+            ':email' => $this->doctorInfo["email"]
+        );
         try {
             $stmt = $this->db->prepare($query);
-            $result = $stmt->execute();
+            $result = $stmt->execute($query_params);
         } catch(PDOException $e) {
             die("Failed to update tables. (1) " . $query . "      " . $e->getMessage());
         }
