@@ -87,7 +87,7 @@ class ScheduleAppointment {
     }
     
     function assignNurse() {
-        //die("Called Assign Nurse.");
+        die("Called Assign Nurse.");
         $query = "
                 SELECT *
                 FROM users
