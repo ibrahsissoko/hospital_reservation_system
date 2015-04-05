@@ -129,17 +129,22 @@ class ScheduleAppointment {
                                 SELECT *
                                 FROM appointment
                                 WHERE
-                                    nurse_email = " . $row['email'] .
-                                " AND
-                                    date = $this->date
+                                    nurse_email = :nurse_email
                                 AND
-                                    time = $this->time
+                                    date = :date
+                                AND
+                                    time = :time
                                 ";
+                        $query_params2 = array(
+                            ':nurse_email' => $row['email'],
+                            ':date' => $this->date,
+                            ':time' => $this->time
+                        );
                         try {
                             $stmt2 = $this->db->prepare($query2);
-                            $result = $stmt2->execute();
+                            $result = $stmt2->execute($query_params2);
                         } catch(PDOException $e) {
-                            die("Failed to update tables. (3) " . $e->getMessage());
+                            die("Failed to update tables. " . $e->getMessage());
                         }
                         if ($stmt2->rowCount() > 0) {
                             $nurseAlreadyScheduled = true;
