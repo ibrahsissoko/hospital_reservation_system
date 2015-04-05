@@ -12,8 +12,8 @@
     } else if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time']) && isset($_POST['submitButton'])) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
             . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
-        $appointment->begin($_SESSION, $db);
-    }?>
+        $appointment->initiate($_SESSION, $db);
+    }
 ?>
 
 <!doctype html>
@@ -257,7 +257,7 @@
                     }
                     echo "</select><br/><br/>";
                 } else {
-                    echo '<input type="text" value="No appointments available" readonly="readonly"/><br/><br/>';
+                    echo '</br><p>No appointments available</p><br/><br/>';
                 }
                 echo '<input type="submit" name ="submitButton" class="btn btn-info" value="Submit"/><br/><br/>';
             }

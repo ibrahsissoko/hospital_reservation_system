@@ -7,8 +7,12 @@ class ScheduleAppointment {
     private $doctorName;
     private $patientName;
     public $doctorInfo;
+    private $nurseEmail;
+    private $nurseName;
+    private $nurseInfo;
     private $date;
     private $time;
+    private $db;
     public $success;
     public $error;
     
@@ -16,13 +20,14 @@ class ScheduleAppointment {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->patientEmail = $patientEmail;
+        $this->db  = $db;
         if (!empty($date) || !empty($time)) {
             $this->time = $time;
             $this->date = $date;
 
             $query = "SELECT * FROM users WHERE user_type_id=2";
             try {
-                $stmt = $db->prepare($query);
+                $stmt = $this->db->prepare($query);
                 $result = $stmt->execute();
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     // Currently assuming no doctors will have the same first name, last
@@ -45,19 +50,21 @@ class ScheduleAppointment {
             $this->error = "Please fill out all fields.";
         }
     }
-    function begin($_SESSION, $db) {
+    
+    function initiate($_SESSION) {
         if (empty($this->error)) {
             if($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL) {
+                $this->assignNurse();
                 if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor()) {
-                        $this->updateAppointmentTable($db);
+                        $this->updateAppointmentTable();
                         $this->success = "Confirmation emails were sent to you and the doctor you requested!";
                     } else {
                         $this->error = "An error occurred sending confirmation emails. Try again soon.";
                     } 
                 } else {
                     if($this->sendEmailToPatient()) {
-                        $this->updateAppointmentTable($db);
+                        $this->updateAppointmentTable();
                         $this->success = "A confirmation email was sent to you regarding your appointment.";
                     } else {
                         $this->error = "An error occurred sending you a confirmation email. Try again soon.";
@@ -66,17 +73,75 @@ class ScheduleAppointment {
             } else {
                 if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
                     if($this->sendEmailToDoctor()) {
-                        $this->updateAppointmentTable($db);
+                        $this->updateAppointmentTable();
                         $this->success = "Appointment booked!";
                     } else {
                         $this->error = "Appointment could not be booked. Try again soon.";
                     }
                 } else {
-                    $this->updateAppointmentTable($db);
+                    $this->updateAppointmentTable();
                     $this->success = "Appointment booked!";
                 }
             }
         }
+    }
+    
+    function assignNurse() {
+        $query = "
+                SELECT *
+                FROM users
+                WHERE
+                    email = $this->doctorEmail
+                
+                ";
+        try {
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute();
+        } catch(PDOException $e) {
+            die("Failed to update tables.");
+        }
+        $row = $stmt->fetch();
+        $query = "
+                SELECT *
+                FROM users
+                WHERE
+                    shift_id =" . $row["shift_id"] .
+                "AND
+                    user_type_id = 3
+            ";
+        try {
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute();
+        } catch(PDOException $e) {
+            die("Failed to update tables.");
+        }
+        while(empty($this->nurseInfo)){
+            if ($stmt->rowCount() != 0) { 
+                $i = rand(0,1000) % $stmt->rowcount();
+                $rowCount = 0;
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    if($i == $rowCount) {
+                        $query = "
+                                SELECT *
+                                FROM appointment
+                                WHERE
+                                    email = $this->doctorEmail
+                                ";
+                        try {
+                            $stmt = $this->db->prepare($query);
+                            $result = $stmt->execute();
+                        } catch(PDOException $e) {
+                            die("Failed to update tables.");
+                        }
+                        $this->nurseInfo = $row;
+                        break;
+                    }
+                    $rowCount++;
+                }
+            }
+        }
+        $this->nurseEmail = $this->nurseInfo['email'];
+        $this->nurseEmail = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
     }
     
     function sendEmailToPatient() {
@@ -94,8 +159,10 @@ class ScheduleAppointment {
         $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName
-                . ' on ' . $this->date . ' at ' . $this->time . '. The doctor will confirm that this time will'
-                . ' work as well.<br/><br/>Thank you,<br/>Wal Consulting';
+                . ' on ' . $this->date . ' at ' . $this->time . '. The nurse assigned for '
+                . 'this apointment is ' . $this->nurseName . '. If you need to reschedule'
+                . ' or cancle your appointment, login to your account, view your appointments, '
+                . 'and click "cancle appointment".<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
@@ -115,12 +182,16 @@ class ScheduleAppointment {
         $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello!<br/><br/>'
                 . $this->patientName . ' requested an appointment with you on '
-                . $this->date . ' at ' . $this->time . '. Hopefully this time can work for you...' 
-                . '<br/><br/>Thank you,<br/>Wal Consulting';
+                . $this->date . ' at ' . $this->time . '. Your nuse will be ' . $this->nurseName 
+                . '.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
-    function updateAppointmentTable($db) {
+    function sendEmailToNurse() {
+        
+    }
+    
+    function updateAppointmentTable() {
         $query = "
                     INSERT INTO appointment (
                         date,
@@ -128,14 +199,18 @@ class ScheduleAppointment {
                         patient_name,
                         patient_email,
                         doctor_name,
-                        doctor_email
+                        doctor_email,
+                        nurse_name,
+                        nurse_email
                     ) VALUES (
                         :date,
                         :time,
                         :patient_name,
                         :patient_email,
                         :doctor_name,
-                        :doctor_email
+                        :doctor_email,
+                        :nurse_name,
+                        :nurse_email
                     )
                     ";
         $query_params = array(
@@ -144,13 +219,15 @@ class ScheduleAppointment {
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
             ':doctor_name' => $this->doctorName,
-            ':doctor_email' => $this->doctorEmail
+            ':doctor_email' => $this->doctorEmail,
+            ':nurse_name' => $this->nurseName,
+            ':nurse_email' => $this->nurseEmail
         );
         try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute($query_params);
-            } catch(PDOException $e) {
-                die("Failed to update tables.");
-            }
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $e) {
+            die("Failed to update tables.");
+        }
     }
 }
