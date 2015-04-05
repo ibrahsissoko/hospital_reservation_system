@@ -91,23 +91,23 @@ class ScheduleAppointment {
                 SELECT *
                 FROM users
                 WHERE
-                    email =" . $this->doctorEmail;
+                    email = " . $this->doctorEmail;
         try {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
         } catch(PDOException $e) {
-            die("Failed to update tables. (1) " . $e->getMessage());
+            die("Failed to update tables. (1) " . $query . "      " . $e->getMessage());
         }
         $row = $stmt->fetch();
         $query = "
                 SELECT *
                 FROM users
                 WHERE
-                    shift_id =" . $row["shift_id"] .
-                "AND
+                    shift_id = " . $row["shift_id"] .
+                " AND
                     user_type_id = 3
                 AND
-                    department_id =" . $row["department_id"]
+                    department_id = " . $row["department_id"]
             ;
         try {
             $stmt = $this->db->prepare($query);
