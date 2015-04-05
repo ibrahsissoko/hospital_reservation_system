@@ -87,6 +87,7 @@ class ScheduleAppointment {
     }
     
     function assignNurse() {
+        die("Called Assign Nurse.");
         $query = "
                 SELECT *
                 FROM users
@@ -107,7 +108,9 @@ class ScheduleAppointment {
                     shift_id =" . $row["shift_id"] .
                 "AND
                     user_type_id = 3
-            ";
+                AND
+                    department_id =" . $row["department_id"]
+            ;
         try {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
