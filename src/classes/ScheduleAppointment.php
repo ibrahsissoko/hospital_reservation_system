@@ -87,7 +87,6 @@ class ScheduleAppointment {
     }
     
     function assignNurse() {
-        die("Called Assign Nurse.");
         $query = "
                 SELECT *
                 FROM users
@@ -155,6 +154,7 @@ class ScheduleAppointment {
         }
         $this->nurseEmail = $this->nurseInfo['email'];
         $this->nurseName = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
+        die("End of assignNurse: " . $this->nurseEmail . ", " . $this->nurseName);
     }
     
     function sendEmailToPatient() {
