@@ -91,8 +91,7 @@ class ScheduleAppointment {
                 SELECT *
                 FROM users
                 WHERE
-                    email = $this->doctorEmail
-                
+                    email = $this->doctorEmail                
                 ";
         try {
             $stmt = $this->db->prepare($query);
@@ -115,9 +114,9 @@ class ScheduleAppointment {
         } catch(PDOException $e) {
             die("Failed to update tables.");
         }
-        while(empty($this->nurseInfo)){
-            if ($stmt->rowCount() != 0) { 
-                $i = rand(0,1000) % $stmt->rowcount();
+        if ($stmt->rowCount() != 0) {
+            while(empty($this->nurseInfo)){
+                $i = rand(0,10000) % $stmt->rowcount();
                 $rowCount = 0;
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if($i == $rowCount) {
@@ -152,7 +151,7 @@ class ScheduleAppointment {
             }
         }
         $this->nurseEmail = $this->nurseInfo['email'];
-        $this->nurseEmail = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
+        $this->nurseName = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
     }
     
     function sendEmailToPatient() {
@@ -196,10 +195,6 @@ class ScheduleAppointment {
                 . $this->date . ' at ' . $this->time . '. Your nuse will be ' . $this->nurseName 
                 . '.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
-    }
-    
-    function sendEmailToNurse() {
-        
     }
     
     function updateAppointmentTable() {
