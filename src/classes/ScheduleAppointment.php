@@ -100,7 +100,7 @@ class ScheduleAppointment {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute($query_params);
         } catch(PDOException $e) {
-            die("Failed to update tables. (1) " . $query . "      " . $e->getMessage());
+            die("Failed to update tables. " . $e->getMessage());
         }
         $row = $stmt->fetch();
         $query = "
@@ -117,7 +117,7 @@ class ScheduleAppointment {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
         } catch(PDOException $e) {
-            die("Failed to update tables. (2) " . $e->getMessage());
+            die("Failed to update tables. " . $e->getMessage());
         }
         if ($stmt->rowCount() != 0) {
             while(empty($this->nurseInfo)){
@@ -130,7 +130,7 @@ class ScheduleAppointment {
                                 FROM appointment
                                 WHERE
                                     nurse_email = " . $row['email'] .
-                                "AND
+                                " AND
                                     date = $this->date
                                 AND
                                     time = $this->time
