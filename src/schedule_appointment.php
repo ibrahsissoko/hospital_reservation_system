@@ -163,8 +163,6 @@
                 } catch(PDOException $e) {
                     die("Failed to run query: " . $e->getMessage());
                 }
-                echo "Time:<br/>";
-                echo '<select name="time" id="time">';
                 $beginTime = intval($shift['start_time']);
                 $endTime = intval($shift['end_time']);
                 if ($endTime < $beginTime) {
@@ -195,65 +193,72 @@
                     $times = explode(":", $alreadyBookedTimes["time"]);
                     array_push($preBookedTimes, intval($times[0]));
                 }
-                // Determine which days go in the select field.
-                for($i = $beginTime; $i < $endTime; $i++) {
-                    $alreadyBooked = false;
-                    if ($i < 12) {
-                        foreach($preBookedTimes as $hour) {
-                            if($i == $hour) {
-                                $alreadyBooked = true;
-                                break;
+                // Check if all appointment times have been booked for this day.
+                if (sizeof($preBookedTimes) != 8) {
+                    echo "Time:<br/>";
+                    echo '<select name="time" id="time">';
+                    // Determine which days go in the select field.
+                    for($i = $beginTime; $i < $endTime; $i++) {
+                        $alreadyBooked = false;
+                        if ($i < 12) {
+                            foreach($preBookedTimes as $hour) {
+                                if($i == $hour) {
+                                    $alreadyBooked = true;
+                                    break;
+                                }
                             }
-                        }
-                        if (!$alreadyBooked) {
-                            echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
-                        }
-                    } else if ($i == 12) {
-                        foreach($preBookedTimes as $hour) {
-                            if($i == $hour) {
-                                $alreadyBooked = true;
-                                break;
+                            if (!$alreadyBooked) {
+                                echo "<option value =\"" . $i . ":00 am\">" . $i . ":00 am</option>";
                             }
-                        }
-                        if(!$alreadyBooked) {
-                            echo "<option value =\"" . $i . ":00 pm\">" . $i . ":00 pm</option>";
-                        }
-                    } else if ($i > 12 && $i < 24) {
-                        $val = $i - 12;
-                        foreach($preBookedTimes as $hour) {
-                            if($val == $hour) {
-                                $alreadyBooked = true;
-                                break;
+                        } else if ($i == 12) {
+                            foreach($preBookedTimes as $hour) {
+                                if($i == $hour) {
+                                    $alreadyBooked = true;
+                                    break;
+                                }
                             }
-                        }
-                        if(!$alreadyBooked) {
-                            echo "<option value =\"" . $val . ":00 pm\">" . $val . ":00 pm</option>";
-                        }
-                    } else if ($i == 24) {
-                        $val = $i - 12;
-                        foreach($preBookedTimes as $hour) {
-                            if($val == $hour) {
-                                $alreadyBooked = true;
-                                break;
+                            if(!$alreadyBooked) {
+                                echo "<option value =\"" . $i . ":00 pm\">" . $i . ":00 pm</option>";
                             }
-                        }
-                        if(!$alreadyBooked) {
-                            echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
-                        }
-                    } else {
-                        $val = $i - 24;
-                        foreach($preBookedTimes as $hour) {
-                            if($val == $hour) {
-                                $alreadyBooked = true;
-                                break;
+                        } else if ($i > 12 && $i < 24) {
+                            $val = $i - 12;
+                            foreach($preBookedTimes as $hour) {
+                                if($val == $hour) {
+                                    $alreadyBooked = true;
+                                    break;
+                                }
                             }
-                        }
-                        if(!$alreadyBooked) {
-                            echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
+                            if(!$alreadyBooked) {
+                                echo "<option value =\"" . $val . ":00 pm\">" . $val . ":00 pm</option>";
+                            }
+                        } else if ($i == 24) {
+                            $val = $i - 12;
+                            foreach($preBookedTimes as $hour) {
+                                if($val == $hour) {
+                                    $alreadyBooked = true;
+                                    break;
+                                }
+                            }
+                            if(!$alreadyBooked) {
+                                echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
+                            }
+                        } else {
+                            $val = $i - 24;
+                            foreach($preBookedTimes as $hour) {
+                                if($val == $hour) {
+                                    $alreadyBooked = true;
+                                    break;
+                                }
+                            }
+                            if(!$alreadyBooked) {
+                                echo "<option value =\"" . $val . ":00 am\">" . $val . ":00 am</option>";
+                            }
                         }
                     }
+                    echo "</select><br/><br/>";
+                } else {
+                    echo '<input type="text" value="No appointments available" readonly="readonly"/><br/><br/>';
                 }
-                echo "</select><br/><br/>";
                 echo '<input type="submit" name ="submitButton" class="btn btn-info" value="Submit"/><br/><br/>';
             }
         ?>
