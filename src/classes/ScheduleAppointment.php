@@ -121,20 +121,31 @@ class ScheduleAppointment {
                 $rowCount = 0;
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if($i == $rowCount) {
-                        $query = "
+                        $query2 = "
                                 SELECT *
                                 FROM appointment
                                 WHERE
-                                    email = $this->doctorEmail
+                                    nurse_email = $this->nurseEmail
+                                AND
+                                    date = $this->date
+                                AND
+                                    time = $this->time
                                 ";
                         try {
-                            $stmt = $this->db->prepare($query);
-                            $result = $stmt->execute();
+                            $stmt2 = $this->db->prepare($query2);
+                            $result = $stmt2->execute();
                         } catch(PDOException $e) {
                             die("Failed to update tables.");
                         }
-                        $this->nurseInfo = $row;
-                        break;
+                        if ($stmt2->rowCount() > 0) {
+                            $nurseAlreadyScheduled = true;
+                        } else {
+                            $nurseAlreadyScheduled = false;
+                        }
+                        if(!$nurseAlreadyScheduled) {
+                            $this->nurseInfo = $row;
+                            break;
+                        }
                     }
                     $rowCount++;
                 }
