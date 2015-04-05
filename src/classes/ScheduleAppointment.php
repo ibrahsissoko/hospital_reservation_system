@@ -97,7 +97,7 @@ class ScheduleAppointment {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
         } catch(PDOException $e) {
-            die("Failed to update tables.");
+            die("Failed to update tables. " . $e->getMessage());
         }
         $row = $stmt->fetch();
         $query = "
@@ -114,7 +114,7 @@ class ScheduleAppointment {
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute();
         } catch(PDOException $e) {
-            die("Failed to update tables.");
+            die("Failed to update tables. " . $e->getMessage());
         }
         if ($stmt->rowCount() != 0) {
             while(empty($this->nurseInfo)){
@@ -136,7 +136,7 @@ class ScheduleAppointment {
                             $stmt2 = $this->db->prepare($query2);
                             $result = $stmt2->execute();
                         } catch(PDOException $e) {
-                            die("Failed to update tables.");
+                            die("Failed to update tables. " . $e->getMessage());
                         }
                         if ($stmt2->rowCount() > 0) {
                             $nurseAlreadyScheduled = true;
@@ -154,7 +154,6 @@ class ScheduleAppointment {
         }
         $this->nurseEmail = $this->nurseInfo['email'];
         $this->nurseName = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
-        die("End of assignNurse: " . $this->nurseEmail . ", " . $this->nurseName);
     }
     
     function sendEmailToPatient() {
