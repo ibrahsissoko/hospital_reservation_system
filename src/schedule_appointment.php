@@ -12,7 +12,7 @@
     } else if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time']) && isset($_POST['submitButton'])) {
         $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
             . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
-        $appointment->initiate($_SESSION, $db);
+        $appointment->initiate($_SESSION);
     }
 ?>
 
