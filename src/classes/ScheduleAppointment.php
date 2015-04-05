@@ -181,8 +181,8 @@ class ScheduleAppointment {
                 . 'You recently scheduled an appointment with ' . $this->doctorName
                 . ' on ' . $this->date . ' at ' . $this->time . '. The nurse assigned for '
                 . 'this apointment is ' . $this->nurseName . '. If you need to reschedule'
-                . ' or cancle your appointment, login to your account, view your appointments, '
-                . 'and click "cancle appointment".<br/><br/>Thank you,<br/>Wal Consulting';
+                . ' or cancel your appointment, login to your account, view your appointments, '
+                . 'and click "cancel appointment".<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
