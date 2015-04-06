@@ -90,7 +90,7 @@
 
         echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";
     ?>
-    <br>User Type:      <?php echo $_SESSION['user']['department'];
+    <br>User Type:      <?php echo $_SESSION['user']['id'];
                             $query = "
                                     SELECT *
                                     FROM user_types
