@@ -9,7 +9,7 @@
         header("Location: ../index.php");
         die("Redirecting to index.php");
     }
-    
+
     $doctor = new DoctorInfo();
     $doctor->saveInfo($_POST, $_SESSION, $db);
 ?>
@@ -49,6 +49,7 @@
 </div>
 
 <div class="container hero-unit">
+    <?php echo htmlspecialchars($_SESSION['user']['department_id']) ?>
     <h1>Doctor Info:</h1> <br />
     <form action="doctor_info.php" method="post">
         First Name:<br/>
@@ -84,7 +85,8 @@
 
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($i == 0) {
+                    echo $row['id'] . " " . $_SESSION['user']['department_id'];
+                    if ($row['id'] == $_SESSION['user']['department_id']) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
