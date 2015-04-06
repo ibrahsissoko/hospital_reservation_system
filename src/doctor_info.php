@@ -9,7 +9,7 @@
         header("Location: ../index.php");
         die("Redirecting to index.php");
     }
-    
+
     $doctor = new DoctorInfo();
     $doctor->saveInfo($_POST, $_SESSION, $db);
 ?>
@@ -49,6 +49,7 @@
 </div>
 
 <div class="container hero-unit">
+    <?php echo $_SESSION['user']['department_id'] ?>
     <h1>Doctor Info:</h1> <br />
     <form action="doctor_info.php" method="post">
         First Name:<br/>
