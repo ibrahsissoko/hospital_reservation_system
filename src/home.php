@@ -79,29 +79,6 @@
 <div class="container hero-unit">
     <h2>Welcome!</h2>
     <?php
-
-    $query = "
-                                    SELECT department_id
-                                    FROM users
-                                    WHERE
-                                        id = 40
-                                    ";
-    $query_params = array(
-
-    );
-
-    try {
-        $stmt = $db->prepare($query);
-        $result = $stmt->execute($query_params);
-    } catch(PDOException $ex) {
-        die("Failed to run query: " . $ex->getMessage());
-    }
-
-    $row = $stmt->fetch();
-    if ($row) {
-        echo $row['department_id'];
-    }
-
         if ($userType == "patient") {
             echo "<a href=\"advanced_doctor_search.php\">Advanced Doctor Search</a><br/>";
             echo "<a href=\"schedule_appointment.php\">Schedule an Appointment</a><br/>";

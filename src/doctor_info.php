@@ -66,10 +66,25 @@
         <select name="department_id">
             <?php
 
-            /**
-             * This code is used to fill the spinner from the database user_types.
-             * This database holds the different types of users, including: patient, doctor, nurse, administrator
-             */
+            $query = "
+                SELECT department_id
+                FROM users
+                WHERE
+                    id = :id
+                ";
+            $query_params = array(
+                ':id' => $_SESSION['user']['id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+
+            $row = $stmt->fetch();
+            $departmentId = $row['department_id'];
 
             $query = "
                 SELECT *
@@ -86,7 +101,7 @@
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo $row['id'] . " " . $_SESSION['user']['department_id'];
-                    if ($row['id'] == $_SESSION['user']['department_id']) {
+                    if ($row['id'] == $departmentId) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
@@ -107,11 +122,6 @@
         Shift:
         <select name="shift_id">
             <?php
-
-            /**
-             * This code is used to fill the spinner from the database user_types.
-             * This database holds the different types of users, including: patient, doctor, nurse, administrator
-             */
 
             $query = "
                 SELECT *
