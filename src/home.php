@@ -69,7 +69,7 @@
           </form>
         <ul class="nav pull-right">
             <li class="dropdown">
-                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account<strong class="caret"></strong></a>
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Account  <strong class="caret"></strong></a>
                 <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
                     <a href="change_password.php">Change Password</a><br/>
                     <a href="email_preferences.php">Email Preferences</a><br/>
