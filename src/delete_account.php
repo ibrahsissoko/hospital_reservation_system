@@ -1,4 +1,8 @@
 <?php
+
+    include_once('../AutoLoader.php');
+    AutoLoader::registerDirectory('../src/classes');
+
     require("config.php");
     
     if(!empty($_POST)) {
@@ -90,7 +94,7 @@
     <h1><center>Delete Account</center></h1><br/>
     <form action="delete_account.php" method="post">
         Password:<br/>
-        <input type="password" name="password" value=""><br/>
+        <input type="password" name="password" value=""><br/><br/>
         <input type="submit" name="submit" class="btn btn-info" value="Submit"/><br/><br/>
         <span class="success"><?php echo $appointment->success;?></span>
         <span class="error"><?php echo $appointment->error;?></span>
