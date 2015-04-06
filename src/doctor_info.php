@@ -49,7 +49,6 @@
 </div>
 
 <div class="container hero-unit">
-    <?php echo htmlspecialchars($_SESSION['user']['department_id']) ?>
     <h1>Doctor Info:</h1> <br />
     <form action="doctor_info.php" method="post">
         First Name:<br/>
