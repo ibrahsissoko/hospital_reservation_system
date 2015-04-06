@@ -54,6 +54,91 @@ class ScheduleAppointment {
     function initiate($_SESSION) {
         if (empty($this->error)) {
             $this->assignNurse();
+            $emailPatient = ($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL);
+            $emailDoctor = ($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL);
+            $emailNurse = ($this->nurseInfo['appointment_confirm_email'] == "Yes" || $this->nurseInfo['appointment_confirm_email'] == NULL);
+            if ($emailPatient && $emailDoctor && $emailNurse) {          
+                $option = 1;
+            } else if ($emailPatient && $emailDoctor && !$emailNurse) {
+                $option = 2;
+            } else if ($emailPatient && !$emailDoctor && !$emailNurse) {
+                $option = 3;
+            } else if (!$emailPatient && !$emailDoctor && !$emailNurse) {
+                $option = 4;
+            } else if (!$emailPatient && $emailDoctor && !$emailNurse) {
+                $option = 5;
+            } else if (!$emailPatient && !$emailDoctor && $emailNurse) {
+                $option = 6;
+            } else if (!$emailPatient && $emailDoctor && $emailNurse) {
+                $option = 7;
+            } else if ($emailPatient && !$emailDoctor && $emailNurse) {
+                $option = 8;
+            }
+            switch($option) {
+                case 1:
+                    if($this->sendEmailToPatient() && $this->sendEmailToDoctor() && $this->sendEmailToNurse()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "You have been sent a confirmation email for your appointment.";
+                    } else {
+                        $this->error = "An error occurred sending confirmation emails. Try again soon.";
+                    }
+                    break;
+                case 2:
+                    if($this->sendEmailToPatient() && $this->sendEmailToDoctor()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "You have been sent a confirmation email for your appointment.";
+                    } else {
+                        $this->error = "An error occurred sending confirmation emails. Try again soon.";
+                    }
+                    break;
+                case 3:
+                    if($this->sendEmailToPatient()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "You have been sent a confirmation email for your appointment.";
+                    } else {
+                        $this->error = "An error occurred sending your confirmation email. Try again soon.";
+                    }
+                    break;
+                case 4:
+                    $this->updateAppointmentTable();
+                    $this->success = "Appointment booked.";
+                    break;
+                case 5:
+                    if($this->sendEmailToDoctor()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "Appointment booked.";
+                    } else {
+                        $this->error = "An error occurred. Try again soon.";
+                    }
+                    break;
+                case 6:
+                    if($this->sendEmailToNurse()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "Appointment booked.";
+                    } else {
+                        $this->error = "An error occurred. Try again soon.";
+                    }
+                    break;
+                case 7:
+                    if($this->sendEmailToDoctor() && $this->sendEmailToNurse()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "Appointment booked.";
+                    } else {
+                        $this->error = "An error occurred. Try again soon.";
+                    }
+                    break;
+                case 8:
+                    if($this->sendEmailToPatient() && $this->sendEmailToNurse()) {
+                        $this->updateAppointmentTable();
+                        $this->success = "You have been sent a confirmation email for your appointment.";
+                    } else {
+                        $this->error = "An error occurred sending confirmation emails. Try again soon.";
+                    }
+                    break;
+                default:
+                    die("An internal error occurred.");
+            }
+            
             if($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL) {
                 if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor()) {

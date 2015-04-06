@@ -8,7 +8,7 @@
     require("src/config.php");
     
     if(!empty($_POST)) {
-      $email = $_POST['email'];
+      $email = htmlspecialchars($_POST['email']);
 
       $query = "
             SELECT *
@@ -30,7 +30,7 @@
         $row = $stmt->fetch();
         if ($row) {
             $check_password = PasswordUtils::hashPassword($_POST['password'], $row['salt']);
-
+            
             if($check_password == $row['password']) {
                 if ($row['active_user'] == 0) {
                     $message = "You must activate your account first.";
@@ -111,9 +111,9 @@
 <div class="container hero-unit">
     <h1>Login</h1> <br />
     <form action="index.php" method="post">
-        <label>Email:</label>
-        <input type="text" name="email" value="<?php echo $email?>" />
-        <label>Password:</label>
+        Email:<br/>
+        <input type="text" name="email" value="<?php echo $email?>" /><br/>
+        Password:<br/>
         <input type="password" name="password" value="" /><br/>
         <span class="error"><?php echo $message;?></span>
         <br/> 

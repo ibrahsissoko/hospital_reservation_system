@@ -1,22 +1,54 @@
 <?php
     require("config.php");
     
-    $query = "
-            DELETE
+    if(!empty($_POST)) {
+        $email = $_SESSION['user']['email'];
+        $query = "
+            SELECT *
             FROM users
             WHERE
-              email = :email
+                email = :email
         ";
-    $query_params = array(
-        ':email' => $_SESSION['user']['email']
-    );
-    try {
-        $stmt = $db->prepare($query);
-        $result = $stmt->execute($query_params);
-    } catch(PDOException $ex) {
+        $query_params = array(
+            ':email' => $email
+        );
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
-    }   
-    unset($_SESSION['user']);
+        }
+        $row = $stmt->fetch();
+        if ($row) {
+            $check_password = PasswordUtils::hashPassword(htmlspecialchars($_POST['password']), $row['salt']);
+            if($check_password == $row['password']) {
+                $query = "
+                        DELETE
+                        FROM users
+                        WHERE
+                          email = :email
+                    ";
+                $query_params = array(
+                    ':email' => $_SESSION['user']['email']
+                );
+                try {
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute($query_params);
+                } catch(PDOException $ex) {
+                        die("Failed to run query: " . $ex->getMessage());
+                }   
+                unset($_SESSION['user']);
+                $success = "Account deleted.";
+            } else {
+                $error = "Incorrect password.";
+            }
+        } else {
+            $error = "Error fetching user information. Try again soon.";
+        }
+    } else {
+        $error = "Please enter your password.";
+    }       
+    
 ?>
 
 <!doctype html>
@@ -55,7 +87,14 @@
 </div>
  
 <div class="container hero-unit">
-    <h3><center>Account Deleted</center></h3>
+    <h1><center>Delete Account</center></h1><br/>
+    <form action="delete_account.php" method="post">
+        Password:<br/>
+        <input type="password" name="password" value=""><br/>
+        <input type="submit" name="submit" class="btn btn-info" value="Submit"/><br/><br/>
+        <span class="success"><?php echo $appointment->success;?></span>
+        <span class="error"><?php echo $appointment->error;?></span>
+    </form>
 </div>
 
 </body>
