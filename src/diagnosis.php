@@ -15,15 +15,7 @@
 
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis($_SESSION["user"]["first_name"] . $_SESSION["user"]["last_name"] ,$patient_name ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'], $db);
-        if(empty($d->error)){
-            if($d->sendEmailToPatient() && $d->sendEmailToDoctor($_SESSION["user"]["email"])) {
-                $d->updateBillTable($db);
-                $d->success = "Diagnosis emails were sent to you and the patient you named!";
-        
-            }else {
-                $d->error = "An error occurred sending confirmation emails. Try again soon.";
-            } 
-        }
+        $d->initiate($_SESSION);
     }
     
 ?>

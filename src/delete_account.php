@@ -96,8 +96,8 @@
         Password:<br/>
         <input type="password" name="password" value=""><br/><br/>
         <input type="submit" name="submit" class="btn btn-info" value="Submit"/><br/><br/>
-        <span class="success"><?php echo $appointment->success;?></span>
-        <span class="error"><?php echo $appointment->error;?></span>
+        <span class="success"><?php echo $success;?></span>
+        <span class="error"><?php echo $error;?></span>
     </form>
 </div>
 

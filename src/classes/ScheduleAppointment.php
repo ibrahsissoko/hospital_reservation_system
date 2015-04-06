@@ -57,7 +57,7 @@ class ScheduleAppointment {
             $emailPatient = ($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL);
             $emailDoctor = ($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL);
             $emailNurse = ($this->nurseInfo['appointment_confirm_email'] == "Yes" || $this->nurseInfo['appointment_confirm_email'] == NULL);
-            if ($emailPatient && $emailDoctor && $emailNurse) {          
+            if ($emailPatient && $emailDoctor && $emailNurse) {
                 $option = 1;
             } else if ($emailPatient && $emailDoctor && !$emailNurse) {
                 $option = 2;
@@ -74,6 +74,7 @@ class ScheduleAppointment {
             } else if ($emailPatient && !$emailDoctor && $emailNurse) {
                 $option = 8;
             }
+
             switch($option) {
                 case 1:
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor() && $this->sendEmailToNurse()) {

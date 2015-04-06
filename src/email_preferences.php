@@ -94,6 +94,9 @@
         <input type="radio" name="appointment_deleted_email" value="Yes" <?php echo ($_SESSION['user']['appointment_deleted_email'] == 'Yes'  || $_SESSION['user']['appointment_deleted_email'] == NULL) ? 'checked="checked"' : ''; ?> />Yes
         <input type="radio" name="appointment_deleted_email" value="No" <?php echo ($_SESSION['user']['appointment_deleted_email'] == 'No') ? 'checked="checked"' : ''; ?> /> No<br/><br/>
         <input type="submit" name = "submit" class="btn btn-info" value="Submit" /><br/><br/>
+        Diagnosis Confirmation:&nbsp;
+        <input type="radio" name="diagnosis_confirm_email" value="Yes" <?php echo ($_SESSION['user']['diagnosis_confirm_email'] == 'Yes' || $_SESSION['user']['diagnosis_confirm_email'] == NULL) ? 'checked="checked"' : ''; ?> />Yes
+        <input type="radio" name="diagnosis_confirm_email" value="No" <?php echo ($_SESSION['user']['diagnosis_confirm_email'] == 'No') ? 'checked="checked"' : ''; ?> /> No<br/><br/>
     </form>
     <span class="success"><?php echo $success;?></span>
     <span class="error"><?php echo $error;?></span>
