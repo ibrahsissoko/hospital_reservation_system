@@ -84,6 +84,7 @@
 
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo $row['id'] . " " . $_SESSION['user']['department_id'];
                     if ($row['id'] == $_SESSION['user']['department_id']) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
                     } else {
