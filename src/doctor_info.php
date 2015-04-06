@@ -124,6 +124,26 @@
             <?php
 
             $query = "
+                SELECT shift_id
+                FROM users
+                WHERE
+                    id = :id
+                ";
+            $query_params = array(
+                ':id' => $_SESSION['user']['id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+
+            $row = $stmt->fetch();
+            $shiftId = $row['shift_id'];
+
+            $query = "
                 SELECT *
                 FROM shift
             ";
@@ -138,7 +158,7 @@
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $text = $row['name'] . " (" . $row['start_time'] . ":00-" . $row['end_time'] . ":00)";
-                    if ($i == 0) {
+                    if ($row['id'] == $shiftId) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $text . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $text . "</option>";
