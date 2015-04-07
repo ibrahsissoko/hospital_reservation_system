@@ -52,7 +52,6 @@
 <div class="container hero-unit">
     <h1>Administrator Info:</h1> <br />
     <form action="patient_info.php" method="post">
-        <!-- TODO: add form here to enter the info. -->
 	First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>
 	Last Name:<br/>
@@ -73,6 +72,43 @@
         <input type="text" name="zip" value="<?php echo htmlspecialchars($_SESSION['user']['zip']);?>" pattern="[0-9]{5}"><br/>
         Phone:<br/>
         <input type="text" name="phone" value="<?php echo htmlspecialchars($_SESSION['user']['phone']);?>" pattern="[0-9]{10}"><br/>
+        Challenge question:
+        <select name="challenge_question_id">
+            <?php
+                $query = "
+                    SELECT *
+                    FROM challenge_question
+                ";
+                try {
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute();
+                    if (empty($_SESSION['user']['challenge_question_id'])) {
+                        $i = 1;
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            if ($i == 1) {
+                                echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["question"] . "</option>";
+                                $i++;
+                            } else {
+                                echo "<option value=\"" . $row["id"] . "\">" . $row["question"] . "</option>";
+                            }
+                        }
+                    } else {
+                        $i = 1;
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            if ($i == $_SESSION['user']['challenge_question_id']) {
+                                echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["question"] . "</option>";
+                            } else {
+                                echo "<option value=\"" . $row["id"] . "\">" . $row["question"] . "</option>";
+                            }
+                            $i++;
+                        }
+                    }
+                } catch(Exception $e) {
+                    die("Failed to gather challenge questions. " . $e->getMessage());
+                }
+            ?>
+        </select><br/>
+        <input type="text" name="challenge_question_answer" value="<?php echo $_SESSION['user']['challenge_question_answer']?>" /><br/>
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
 </div>

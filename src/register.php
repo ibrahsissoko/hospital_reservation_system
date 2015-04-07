@@ -102,7 +102,7 @@
                     $i = $i + 1;
                 }
             } catch(Exception $e) {
-
+                die("Failed to gather user type information. " . $e->getMessage());
             }
 
             ?>

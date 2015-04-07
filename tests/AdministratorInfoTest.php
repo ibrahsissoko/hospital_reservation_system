@@ -6,6 +6,6 @@ class AdministratorInfoTest extends PHPUnit_Framework_TestCase {
         $admin = new AdministratorInfo();
 
         $queryParams = $admin->getQueryParams(null, null);
-        $this->assertEquals(count($queryParams), 10);
+        $this->assertEquals(count($queryParams), 12);
     }
 }

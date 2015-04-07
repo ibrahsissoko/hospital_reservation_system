@@ -17,6 +17,8 @@ class AdministratorInfo extends UserInfo {
                 state = :state,
                 zip = :zip,
                 phone = :phone
+                challege_question_id = :challenge_question_id
+                challenge_question_answer = :challenge_question_answer
             WHERE
                 id = :id
         ";
@@ -47,7 +49,9 @@ class AdministratorInfo extends UserInfo {
             ':city' => $post['city'],
             ':state' => $post['state'],
             ':zip' => $post['zip'],
-            ':phone' => $post['phone']
+            ':phone' => $post['phone'],
+            ':challenge_question_id' => $post['challenge_question_id'],
+            ':challenge_question_answer' => $post['challenge_question_answer']
         );
     }
 }
