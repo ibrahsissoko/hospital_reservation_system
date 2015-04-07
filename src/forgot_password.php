@@ -8,23 +8,24 @@
     
     $fp = new ForgotPassword();
   
-    if(!empty($_POST)) {
+    if(empty($_POST)) {
         // Check if the email is recognized.
         $fp->checkEmail($_POST['email'], $db);
         // If the email was recognized, generate a new password and send an email.
-        if(empty($fp->noEmail)) {
-            $newPassword = PasswordUtils::generateNewPassword();
-            if($fp->sendNewPassword($newPassword)) {
-                $fp->success = "An email has been sent to the address that you provided. "
-                    . "Use the password included in the email to log in.";
-                // Hash the new password and update the tables.
-                $newSalt = PasswordUtils::generatePasswordSalt();
-                $newPassword = PasswordUtils::hashPassword($newPassword, $newSalt);
-                $fp->updateTables($newPassword, $newSalt, $db);
-            } else {
-                $fp->registrationFailure = "Verification email could not be sent. Please try again later.";
+        if(empty($fp->noEmail) && !empty($_POST['challenge_question_answer'])) {
+            if($fp->checkAnswer(htmlspecialchars($_POST['challenge_question_answer']))) {
+                $newPassword = PasswordUtils::generateNewPassword();
+                if($fp->sendNewPassword($newPassword)) {
+                    $fp->success = "An email has been sent to the address that you provided. "
+                        . "Use the password included in the email to log in.";
+                    // Hash the new password and update the tables.
+                    $newSalt = PasswordUtils::generatePasswordSalt();
+                    $newPassword = PasswordUtils::hashPassword($newPassword, $newSalt);
+                    $fp->updateTables($newPassword, $newSalt, $db);
+                } else {
+                    $fp->registrationFailure = "Verification email could not be sent. Please try again later.";
+                }
             }
-            
         }
     }
 ?>
@@ -68,13 +69,40 @@
 
 <div class="container hero-unit">
     <h1>Password Retrieval</h1> <br />
-    <form action="forgot_password.php" method="post">
+    <form action="forgot_password.php" method="post" id="mainForm">
         <label>Email:</label>
-        <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
-        <span class="error"><?php echo $fp->noEmail;?></span><br/><br/>
+        <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" onchange="update()" /><br/>
+        <span class="error"><?php echo $fp->noEmail;?></span><br/>
+        <?php
+            if(!empty($_POST['email'])) {
+                $entry = $fp->checkEmail($_POST['email'], $db);
+                if ($entry != NULL) {
+                    $query = "
+                        SELCET *
+                        FROM challenge_question
+                        WHERE
+                            id = " . $entry['challenge_question_id'];
+                        try {
+                            $stmt = $db->prepare($query);
+                            $stmt->execute();
+                        } catch(PDOException $ex) {
+                            die("Failed to run query: " . $ex->getMessage());
+                        }
+                        $row = $stmt->fetch();
+                        echo $row['question'] . "<br/>";
+                        echo '<input type="text" name="challenge_question_answer" "value="<?php echo htmlspecialchars(' . $_POST['challenge_question_answer'] . ')?>"/><br/><br/>';
+                }
+            }
+        ?>
+        <span class="error"><?php echo $fp->wrongAnswer;?></span><br/>
         <input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>
         <span class = "success"><?php echo $fp->success;?></span>
         <span class = "error"><?php echo $fp->regisrationFailure;?></span>
+        <script>
+        function update() {
+            document.getElementById("mainForm").submit();  
+        }
+        </script>
     </form>
 </div>
 

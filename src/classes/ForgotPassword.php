@@ -3,8 +3,12 @@
 class ForgotPassword {
 
     public $noEmail;
+    public $wrongAnswer;
     public $success;
     public $email;
+    private $email;
+    private $db;
+    private $userInfo;
     
     function _construct() {
         $this->noEmail =
@@ -13,6 +17,7 @@ class ForgotPassword {
     }
     
     function checkEmail($email, $db) {
+        $this->db = $db;
         // Check if the email is in the database.
         $query = "
             SELECT *
@@ -33,9 +38,21 @@ class ForgotPassword {
 
         if($stmt->rowCount() == 0){
             $this->noEmail = "This email is not recognized.";
+            return NULL;
         } else {
             // Set the email if it was recognized.
             $this->email = $email;
+            $userInfo = $stmt->fetch();
+            return $userInfo;
+        }
+    }
+    
+    function checkAnswer($answer) {
+        if(strtolower($answer) == strtolower($userInfo['challenge_question_answer'])) {
+            return true;
+        } else {
+            $this->wrongAnswer = "Incorrect answer.";
+            return false;
         }
     }
     
@@ -60,7 +77,7 @@ class ForgotPassword {
         return $mail->send();
     }
     
-    function updateTables($password, $salt, $db) {
+    function updateTables($password, $salt) {
         $query = "
             UPDATE users
             SET 
@@ -77,7 +94,7 @@ class ForgotPassword {
         );
 
         try {
-            $stmt = $db->prepare($query);
+            $stmt = $this->db->prepare($query);
             $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
