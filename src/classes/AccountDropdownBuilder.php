@@ -21,6 +21,7 @@ class AccountDropdownBuilder {
         echo "<li class=\"dropdown\">";
         echo "<a class=\"dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">Account  <strong class=\"caret\"></strong></a>";
         echo "<div class=\"dropdown-menu\" style=\"padding: 15px; padding-bottom: 0px;\">";
+        echo $session['user']['first_name'] . " " . $session['user']['last_name'];
         echo "<a href=\"change_password.php\">Change Password</a><br/>";
         echo "<a href=\"email_preferences.php\">Email Preferences</a><br/>";
         echo "<a href=\"" . $type . "_info.php\">Update information</a><br/>";
