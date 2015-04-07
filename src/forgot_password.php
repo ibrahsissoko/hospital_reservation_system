@@ -90,7 +90,7 @@
                         }
                         $row = $stmt->fetch();
                         echo $row['question'] . "<br/>";
-                        echo '<input type="text" name="challenge_question_answer" "value="<?php echo htmlspecialchars(' . $_POST['challenge_question_answer'] . ')?>"/><br/><br/>';
+                        echo '<input type="password" name="challenge_question_answer" "value="<?php echo htmlspecialchars(' . $_POST['challenge_question_answer'] . ')?>"/><br/><br/>';
                 }
             }
         ?>

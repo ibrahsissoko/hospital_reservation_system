@@ -212,7 +212,7 @@
                 }
             ?>
         </select><br/>
-        <input type="text" name="challenge_question_answer" value="<?php echo htmlspecialchars($_SESSION['user']['challenge_question_answer'])?>" /><br/>
+        <input type="password" name="challenge_question_answer" value="<?php echo htmlspecialchars($_SESSION['user']['challenge_question_answer'])?>" /><br/>
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
 </div>
