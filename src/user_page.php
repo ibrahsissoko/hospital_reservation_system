@@ -61,7 +61,7 @@ if(empty($_SESSION['user'])) {
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <li><a href="my_account.php">Account</a></li>
+                    <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div>

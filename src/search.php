@@ -56,7 +56,7 @@
                     <input type="text" class="search-query" name="search" placeholder="<?php echo $_GET['search'] ?>" >
                 </form>
                 <ul class="nav pull-right">
-                    <li><a href="my_account.php">Account</a></li>
+                    <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div>
