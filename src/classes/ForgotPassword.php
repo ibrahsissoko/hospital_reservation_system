@@ -6,7 +6,6 @@ class ForgotPassword {
     public $wrongAnswer;
     public $success;
     public $email;
-    private $email;
     private $db;
     private $userInfo;
     

@@ -112,7 +112,7 @@
             ?>
         </select>
         <br/>
-        Years Of Experience:<br/>
+        Years of Experience:<br/>
         <input type="text" name="years_of_experience" value="<?php echo htmlspecialchars($_SESSION['user']['years_of_experience']);?>" />
         <br/>
         Shift:
