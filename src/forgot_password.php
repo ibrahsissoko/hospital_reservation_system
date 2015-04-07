@@ -89,10 +89,10 @@
                             die("Failed to run query: " . $ex->getMessage());
                         }
                         $row = $stmt->fetch();
-                        echo "Challenge question:<br/>";
-                        echo "<label>" . $row['question'] . "</label><br/>";
-                        echo '<input type="password" name="challenge_question_answer" "value="<?php echo htmlspecialchars(' . $_POST['challenge_question_answer'] . ')?>"/><br/><br/>';
-                        echo '<span class="error"><?php echo $fp->wrongAnswer;?></span><br/>';
+                        echo "Challenge question:<br/><br/>";
+                        echo "<label>" . $row['question'] . "</label>";
+                        echo '<input type="password" name="challenge_question_answer" "value="' . htmlspecialchars($_POST['challenge_question_answer']) . '"/><br/><br/>';
+                        echo '<span class="error">' . $fp->wrongAnswer . '</span><br/>';
                 }
                 echo '<input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>';
             }
