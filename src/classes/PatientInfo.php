@@ -25,7 +25,9 @@ class PatientInfo extends UserInfo {
                 allergies = :allergies,
                 diseases = :diseases,
                 previous_surgeries = :previous_surgeries,
-                other_medical_history = :other_medical_history
+                other_medical_history = :other_medical_history,
+                challege_question_id = :challenge_question_id,
+                challenge_question_answer = :challenge_question_answer
             WHERE
                 id = :id
         ";
@@ -66,7 +68,9 @@ class PatientInfo extends UserInfo {
             ':allergies' => $post['allergies'],
             ':diseases' => $post['diseases'],
             ':previous_surgeries' => $post['previous_surgeries'],
-            ':other_medical_history' => $post['other_medical_history']
+            ':other_medical_history' => $post['other_medical_history'],
+            ':challenge_question_id' => $post['challenge_question_id'],
+            ':challenge_question_answer' => $post['challenge_question_answer']
         );
     }
 }

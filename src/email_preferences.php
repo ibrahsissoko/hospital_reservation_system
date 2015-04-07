@@ -12,12 +12,14 @@
         // Reset the session variables.
         $_SESSION['user']['appointment_confirm_email'] = $_POST['appointment_confirm_email'];
         $_SESSION['user']['appointment_deleted_email'] = $_POST['appointment_deleted_email'];
+        $_SESSION['user']['diagnosis_confirm_email'] = $_POST['diagnosis_confirm_email'];
         
         $query = "
             UPDATE users
             SET
                 appointment_confirm_email = :appointment_confirm_email,
-                appointment_deleted_email = :appointment_deleted_email
+                appointment_deleted_email = :appointment_deleted_email,
+                diagnosis_confirm_email = :diagnosis_confirm_email
             WHERE
                 id = :id
         ";
@@ -25,6 +27,7 @@
         $query_params = array(
             ":appointment_confirm_email" => $_POST['appointment_confirm_email'],
             ":appointment_deleted_email" => $_POST['appointment_deleted_email'],
+            ":diagnosis_confirm_email" => $_POST['diagnosis_confirm_email'],
             ":id" => $_SESSION['user']['id']
         );
 

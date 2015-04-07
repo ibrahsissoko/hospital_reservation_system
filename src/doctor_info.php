@@ -96,8 +96,6 @@
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
 
-                $i = 0;
-
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo $row['id'] . " " . $_SESSION['user']['department_id'];
@@ -106,13 +104,10 @@
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
                     }
-
-                    $i = $i + 1;
                 }
             } catch(Exception $e) {
-
+                die("Failed to get department information. " . $e->getMessage());
             }
-
             ?>
         </select>
         <br/>
@@ -152,9 +147,7 @@
             try {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
-
-                $i = 0;
-
+                
                 // loop through, adding the options to the spinner
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $text = $row['name'] . " (" . $row['start_time'] . ":00-" . $row['end_time'] . ":00)";
@@ -163,11 +156,9 @@
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $text . "</option>";
                     }
-
-                    $i = $i + 1;
                 }
             } catch(Exception $e) {
-
+                die("Failed to get shift information. " . $e->getMessage());
             }
 
             ?>
@@ -185,7 +176,43 @@
         <input type="text" name="zip" value="<?php echo htmlspecialchars($_SESSION['user']['zip']);?>" pattern="[0-9]{5}"><br/>
         Phone:<br/>
         <input type="text" name="phone" value="<?php echo htmlspecialchars($_SESSION['user']['phone']);?>" pattern="[0-9]{10}"><br/>
-
+                Challenge question:
+        <select name="challenge_question_id">
+            <?php
+                $query = "
+                    SELECT *
+                    FROM challenge_question
+                ";
+                try {
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute();
+                    if (empty($_SESSION['user']['challenge_question_id'])) {
+                        $i = 1;
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            if ($i == 1) {
+                                echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["question"] . "</option>";
+                                $i++;
+                            } else {
+                                echo "<option value=\"" . $row["id"] . "\">" . $row["question"] . "</option>";
+                            }
+                        }
+                    } else {
+                        $i = 1;
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            if ($i == $_SESSION['user']['challenge_question_id']) {
+                                echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["question"] . "</option>";
+                            } else {
+                                echo "<option value=\"" . $row["id"] . "\">" . $row["question"] . "</option>";
+                            }
+                            $i++;
+                        }
+                    }
+                } catch(Exception $e) {
+                    die("Failed to gather challenge questions. " . $e->getMessage());
+                }
+            ?>
+        </select><br/>
+        <input type="text" name="challenge_question_answer" value="<?php echo htmlspecialchars($_SESSION['user']['challenge_question_answer'])?>" /><br/>
         <input type="submit" class="btn btn-info" value="Save" />
     </form>
 </div>

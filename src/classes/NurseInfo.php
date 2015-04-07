@@ -11,14 +11,16 @@ class NurseInfo extends UserInfo {
                 first_name = :first_name,
                 last_name = :last_name,
                 sex = :sex,
-				department_id = :department_id,
-				years_of_experience = :years_of_experience,
-				shift_id = :shift_id,
+		department_id = :department_id,
+		years_of_experience = :years_of_experience,
+		shift_id = :shift_id,
                 address = :address,
                 city = :city,
                 state = :state,
                 zip = :zip,
-                phone = :phone
+                phone = :phone,
+                challege_question_id = :challenge_question_id,
+                challenge_question_answer = :challenge_question_answer
             WHERE
                 id = :id
         ";
@@ -52,8 +54,9 @@ class NurseInfo extends UserInfo {
             ':city' => $post['city'],
             ':state' => $post['state'],
             ':zip' => $post['zip'],
-            ':phone' => $post['phone']
-         
+            ':phone' => $post['phone'],
+            ':challenge_question_id' => $post['challenge_question_id'],
+            ':challenge_question_answer' => $post['challenge_question_answer']
         );
     }
 }
