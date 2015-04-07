@@ -8,7 +8,7 @@
     
     $fp = new ForgotPassword();
   
-    if(empty($_POST)) {
+    if(!empty($_POST)) {
         // Check if the email is recognized.
         $fp->checkEmail($_POST['email'], $db);
         // If the email was recognized, generate a new password and send an email.
@@ -71,14 +71,14 @@
     <h1>Password Retrieval</h1> <br />
     <form action="forgot_password.php" method="post" id="mainForm">
         <label>Email:</label>
-        <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" onchange="update()" /><br/>
+        <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" onblur="update()" /><br/>
         <span class="error"><?php echo $fp->noEmail;?></span><br/>
         <?php
             if(!empty($_POST['email'])) {
                 $entry = $fp->checkEmail($_POST['email'], $db);
                 if ($entry != NULL) {
                     $query = "
-                        SELCET *
+                        SELECT *
                         FROM challenge_question
                         WHERE
                             id = " . $entry['challenge_question_id'];
