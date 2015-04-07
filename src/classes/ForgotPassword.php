@@ -41,13 +41,13 @@ class ForgotPassword {
         } else {
             // Set the email if it was recognized.
             $this->email = $email;
-            $userInfo = $stmt->fetch();
-            return $userInfo;
+            $this->userInfo = $stmt->fetch();
+            return $this->userInfo;
         }
     }
     
     function checkAnswer($answer) {
-        if(strtolower($answer) == strtolower($userInfo['challenge_question_answer'])) {
+        if(strtolower($answer) == strtolower($this->userInfo['challenge_question_answer'])) {
             return true;
         } else {
             $this->wrongAnswer = "Incorrect answer.";
