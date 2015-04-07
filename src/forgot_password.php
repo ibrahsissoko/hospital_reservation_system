@@ -76,7 +76,7 @@
         <?php
             if(!empty($_POST['email'])) {
                 $entry = $fp->checkEmail($_POST['email'], $db);
-                if ($entry != NULL) {
+                if ($entry != NULL && $entry['challenge_question_answer'] != NULL) {
                     $query = "
                         SELECT *
                         FROM challenge_question
@@ -89,13 +89,14 @@
                             die("Failed to run query: " . $ex->getMessage());
                         }
                         $row = $stmt->fetch();
-                        echo $row['question'] . "<br/>";
+                        echo "Challenge question:<br/>";
+                        echo "<label>" . $row['question'] . "</label><br/>";
                         echo '<input type="password" name="challenge_question_answer" "value="<?php echo htmlspecialchars(' . $_POST['challenge_question_answer'] . ')?>"/><br/><br/>';
+                        echo '<span class="error"><?php echo $fp->wrongAnswer;?></span><br/>';
                 }
+                echo '<input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>';
             }
         ?>
-        <span class="error"><?php echo $fp->wrongAnswer;?></span><br/>
-        <input type="submit" class="btn btn-info" value="Retrieve Password" /><br/><br/>
         <span class = "success"><?php echo $fp->success;?></span>
         <span class = "error"><?php echo $fp->regisrationFailure;?></span>
         <script>
