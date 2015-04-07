@@ -17,7 +17,7 @@ class AdministratorInfo extends UserInfo {
                 state = :state,
                 zip = :zip,
                 phone = :phone,
-                challege_question_id = :challenge_question_id,
+                challenge_question_id = :challenge_question_id,
                 challenge_question_answer = :challenge_question_answer
             WHERE
                 id = :id

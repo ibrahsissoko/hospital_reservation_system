@@ -181,7 +181,7 @@
         <input type="text" name="zip" value="<?php echo htmlspecialchars($_SESSION['user']['zip']);?>" pattern="[0-9]{5}"><br/>
         Phone:<br/>
         <input type="text" name="phone" value="<?php echo htmlspecialchars($_SESSION['user']['phone']);?>" pattern="[0-9]{10}"><br/>
-                Challenge question:
+        Challenge question:<br/>
         <select name="challenge_question_id">
             <?php
                 $query = "

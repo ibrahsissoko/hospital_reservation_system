@@ -104,7 +104,7 @@
         <br/>
         Other Medical History:<br/>
         <textarea name="other_medical_history" value = "<?php echo htmlspecialchars($_SESSION['user']['other_medical_history']);?>" cols="40" rows="5"></textarea><br/>
-                Challenge question:
+        Challenge question:<br/>
         <select name="challenge_question_id">
             <?php
                 $query = "

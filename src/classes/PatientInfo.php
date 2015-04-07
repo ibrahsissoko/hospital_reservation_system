@@ -26,7 +26,7 @@ class PatientInfo extends UserInfo {
                 diseases = :diseases,
                 previous_surgeries = :previous_surgeries,
                 other_medical_history = :other_medical_history,
-                challege_question_id = :challenge_question_id,
+                challenge_question_id = :challenge_question_id,
                 challenge_question_answer = :challenge_question_answer
             WHERE
                 id = :id
