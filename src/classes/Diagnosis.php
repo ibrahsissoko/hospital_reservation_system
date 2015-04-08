@@ -139,16 +139,25 @@ class Diagnosis {
     }
 
     function updateBillTable() {
-        $query1 = "UPDATE amount_due FROM bill WHERE patient_email = :patient_email";
+        $query1 = " SELECT * FROM bill WHERE patient_email = :patient_email";
+        $query_params1 = array(':patient_email'  => $this->patientEmail);
+        try{
         $stmt1 = $this->db->prepare($query1);
-        if(!empty($query1)){
+        $result1 = $stmt1->execute($query_params1);
+        } catch(PDOException $e) {
+            die("Failed to update bill table. " . $e->getMessage());
+        }
+        if(!empty($result1)){
             try {
             while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
             $this->patientInfo = $row;
             $this->amount_due = ($this->patientInfo["amount_due"]) + ($this->amount_due);
+            $query2 = "UPDATE bill SET amount_due = :amount_due WHERE patient_email = :patient_email";
+            $query_params2 = array(':patient_email'  => $this->patientEmail,
+                                    ':amount_due'=>$this->amount_due);
+            $stmt2 = $this->db->prepare($query2);
+            $result2 = $stmt2->execute($query_params2);
             
-            $query_params = array(':amount_due'  => $this->amount_due);
-            $result = $stmt1->execute($query_params);
             }}catch(PDOException $e) {
                 die("Failed to gather patient's amount due.");
            }
