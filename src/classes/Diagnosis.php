@@ -133,12 +133,27 @@ class Diagnosis {
         $mail->Body    = 'Hello!<br/><br/>'
                 . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is'
                 . $this->patientEmail . '. Here is'
-                . ' the receipt of the diagnosis form that you submitted: ' . $this->amount_due
+                . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
 
     function updateBillTable() {
+        
+        $query2 = "SELECT * FROM bill WHERE patient_email = :patient_email ";
+            try {
+                $stmt = $this->db->prepare($query2);
+                $result = $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        $this->patientInfo = $row;
+                        $this->amount_due = $this->patientInfo["amount_due"]+$this->amount_due;
+                        break;
+                    }
+                }
+            } catch(PDOException $e) {
+                die("Failed to gather patient's amount due.");
+            }
+
         $query = "
                     INSERT INTO bill (
                         amount_due,
@@ -153,7 +168,7 @@ class Diagnosis {
                         :doctor_name,
                         :doctor_email
                     )
-                    ";
+                    ";    
         $query_params = array(
             ':amount_due' => $this->amount_due,
             ':patient_name' => $this->patientName,
