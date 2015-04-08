@@ -161,7 +161,34 @@ class Diagnosis {
     
     }
         function updateDiagnosisTable(){
-
+            $query = "
+                    INSERT INTO diagnosis (
+                        amount_due,
+                        patient_name,
+                        patient_email,
+                        doctor_name,
+                        doctor_email
+                    ) VALUES (
+                        :amount_due,
+                        :patient_name,
+                        :patient_email,
+                        :doctor_name,
+                        :doctor_email
+                    )
+                    ";    
+            $query_params = array(
+            ':amount_due' => 500,
+            ':patient_name' => $this->patientName,
+            ':patient_email' => $this->patientEmail,
+            ':doctor_name' => $this->doctorName,
+            ':doctor_email' => $this->doctorEmail
+        );
+        try {
+                $stmt = $this->db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $e) {
+                die("Failed to update tables.");
+            }
         }
        function sendEmailToPatient() {
     
@@ -199,7 +226,7 @@ class Diagnosis {
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
         $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is'
+                . 'You recently had an appointment with ' . $this->patientName .'. Patient email: '.$this->patientEmail. 'Email of patient is'
                 . $this->patientEmail . '. Here is'
                 . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
