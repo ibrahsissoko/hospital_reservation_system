@@ -19,7 +19,7 @@ class Diagnosis {
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
         $this->db = $db;
-        $this->amount_due = 500;
+        $this->amount_due = 500.00;
         if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
             $this->observations = $observations;
@@ -141,20 +141,23 @@ class Diagnosis {
     function updateBillTable() {
         
         $query2 = "SELECT * FROM bill WHERE patient_email = :patient_email ";
-            try {
-                $stmt = $this->db->prepare($query2);
-                $result = $stmt->execute();
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $this->patientInfo = $row;
-                        $this->amount_due = $this->patientInfo["amount_due"]+$this->amount_due;
-                        break;
-                    }
-                }
-            } catch(PDOException $e) {
-                die("Failed to gather patient's amount due.");
+            //try {
+        if($stmt = $this->db->prepare($query2)){
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->patientInfo = $row;
+                $this->amount_due = ($this->patientInfo["amount_due"]) + ($this->amount_due);
+                break;
             }
+            $query_params = array(':amount_due'  => $this->amount_due);
+            $result = $stmt->execute($query_params );
 
-        $query = "
+                
+        }else{
+           // } catch(PDOException $e) {
+           //     die("Failed to gather patient's amount due.");
+           // }
+
+            $query = "
                     INSERT INTO bill (
                         amount_due,
                         patient_name,
@@ -169,7 +172,7 @@ class Diagnosis {
                         :doctor_email
                     )
                     ";    
-        $query_params = array(
+            $query_params = array(
             ':amount_due' => $this->amount_due,
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
@@ -182,5 +185,6 @@ class Diagnosis {
             } catch(PDOException $e) {
                 die("Failed to update tables.");
             }
+        }
     }
 }
