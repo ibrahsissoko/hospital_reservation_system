@@ -64,7 +64,7 @@ class Diagnosis {
                 case 1:
                     $this->updateBillTable();
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor($session["user"]["email"])) {
-                        
+                        $this->updateDiagnosisTable();
                         $this->success = "Diagnosis emails were sent to you and the patient you named!";
                     } else {
                         $this->error = "An error occurred sending confirmation emails. Try again soon.";
@@ -73,7 +73,7 @@ class Diagnosis {
                 case 2:
                     $this->updateBillTable();
                     if($this->sendEmailToPatient()) {
-                        
+                        $this->updateDiagnosisTable();
                         $this->success = "A diagnosis confirmation email was sent to the patient!";
                     } else {
                         $this->error = "An error occurred sending the patient's confirmation email. Try again soon.";
@@ -82,7 +82,7 @@ class Diagnosis {
                 case 3:
                     $this->updateBillTable();
                     if($this->sendEmailToDoctor($session["user"]["email"])) {
-                        
+                        $this->updateDiagnosisTable();
                         $this->success = "You were sent a confirmation email regarding this diagnosis!";
                     } else {
                         $this->error = "An error occurred sending your confirmation email. Try again soon.";
@@ -90,6 +90,7 @@ class Diagnosis {
                     break;
                 case 4:
                     $this->updateBillTable();
+                    $this->updateDiagnosisTable();
                     $this->error = "Diagnosis emails were NOT sent to you and the patient you named!";
                     break;
                 default:
@@ -163,13 +164,15 @@ class Diagnosis {
         function updateDiagnosisTable(){
             $query = "
                     INSERT INTO diagnosis (
-                        amount_due,
+                        observations,
+                        diagnosis,
                         patient_name,
                         patient_email,
                         doctor_name,
                         doctor_email
                     ) VALUES (
-                        :amount_due,
+                        :observations,
+                        :diagnosis,
                         :patient_name,
                         :patient_email,
                         :doctor_name,
@@ -177,7 +180,8 @@ class Diagnosis {
                     )
                     ";    
             $query_params = array(
-            ':amount_due' => 500,
+            ':observations' => $this->observations,
+            ':diagnosis' => $this->diagnosis,
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
             ':doctor_name' => $this->doctorName,
@@ -207,7 +211,9 @@ class Diagnosis {
         $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName
                 . '. Here are some details of your appointment:'
-                . 'Your total is $'. $this->amount_due . '<br/><br/>Thank you,<br/>Wal Consulting';
+                . '. Your observations by the doctor are: '. $this->observations
+                . '. Your diagnosis by the doctor is: ' . $this->diagnosis
+                . '. Your total is $'. $this->amount_due . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
@@ -226,7 +232,7 @@ class Diagnosis {
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
         $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with ' . $this->patientName .'. Patient email: '.$this->patientEmail. 'Email of patient is'
+                . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is: '
                 . $this->patientEmail . '. Here is'
                 . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
