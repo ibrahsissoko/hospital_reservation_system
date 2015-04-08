@@ -110,7 +110,7 @@ class Diagnosis {
             try {
             while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
             $this->patientInfo = $row;
-            $this->amount_due = ($this->patientInfo["amount_due"]) + ($this->amount_due);
+            $this->amount_due = ($this->patientInfo["amount_due"]) + (500);
             $query2 = "UPDATE bill SET amount_due = :amount_due WHERE patient_email = :patient_email";
             $query_params2 = array(':patient_email'  => $this->patientEmail,
                                     ':amount_due'=>$this->amount_due);
@@ -142,7 +142,7 @@ class Diagnosis {
                     )
                     ";    
             $query_params = array(
-            ':amount_due' => $this->amount_due,
+            ':amount_due' => 500,
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
             ':doctor_name' => $this->doctorName,
