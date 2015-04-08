@@ -140,16 +140,16 @@ class Diagnosis {
 
     function updateBillTable() {
         
-        $query2 = "SELECT * FROM bill WHERE patient_email = :patient_email ";
-    
-        if($stmt = $this->db->prepare($query2)){
+        $query1 = "SELECT * FROM bill WHERE patient_email = :patient_email ";
+        $stmt1 = $this->db->prepare($query1);
+        if($stmt1->rowCount() != 0){
             try {
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $row = $stmt1->fetch(PDO::FETCH_ASSOC);
             $this->patientInfo = $row;
             $this->amount_due = ($this->patientInfo["amount_due"]) + ($this->amount_due);
             
             $query_params = array(':amount_due'  => $this->amount_due);
-            $result = $stmt->execute($query_params );
+            $result = $stmt1->execute($query_params);
             }catch(PDOException $e) {
                 die("Failed to gather patient's amount due.");
            }
