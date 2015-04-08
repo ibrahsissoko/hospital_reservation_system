@@ -139,10 +139,9 @@ class Diagnosis {
     }
 
     function updateBillTable() {
-        
-        $query1 = "SELECT * FROM bill WHERE patient_email = :patient_email ";
+        $query1 = "UPDATE amount_due FROM bill WHERE patient_email = :patient_email";
         $stmt1 = $this->db->prepare($query1);
-        if($stmt1->rowCount() != 0){
+        if(!empty($query1)){
             try {
             while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
             $this->patientInfo = $row;
