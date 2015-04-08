@@ -187,4 +187,5 @@ class Diagnosis {
     catch(PDOException $e) {
                 die("Failed to gather patient's amount due.");
            }
+       }
 }
