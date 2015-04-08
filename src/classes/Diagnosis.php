@@ -152,7 +152,12 @@ class Diagnosis {
             $result = $stmt->execute($query_params );
 
                 
-        }else{      
+        }
+}
+    catch(PDOException $e) {
+                die("Failed to gather patient's amount due.");
+           }
+        else{      
 
             $query = "
                     INSERT INTO bill (
@@ -183,9 +188,6 @@ class Diagnosis {
                 die("Failed to update tables.");
             }
         }
-    }
-    catch(PDOException $e) {
-                die("Failed to gather patient's amount due.");
-           }
+    
        }
 }
