@@ -144,13 +144,13 @@ class Diagnosis {
         $stmt1 = $this->db->prepare($query1);
         if($stmt1->rowCount() != 0){
             try {
-            $row = $stmt1->fetch(PDO::FETCH_ASSOC);
+            while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
             $this->patientInfo = $row;
             $this->amount_due = ($this->patientInfo["amount_due"]) + ($this->amount_due);
             
             $query_params = array(':amount_due'  => $this->amount_due);
             $result = $stmt1->execute($query_params);
-            }catch(PDOException $e) {
+            }}catch(PDOException $e) {
                 die("Failed to gather patient's amount due.");
            }
                 
