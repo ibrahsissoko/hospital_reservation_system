@@ -141,7 +141,7 @@ class Diagnosis {
     function updateBillTable() {
         
         $query2 = "SELECT * FROM bill WHERE patient_email = :patient_email ";
-            //try {
+        try {
         if($stmt = $this->db->prepare($query2)){
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $this->patientInfo = $row;
@@ -152,10 +152,12 @@ class Diagnosis {
             $result = $stmt->execute($query_params );
 
                 
-        }else{
-           // } catch(PDOException $e) {
-           //     die("Failed to gather patient's amount due.");
-           // }
+        }
+        } catch(PDOException $e) {
+                die("Failed to gather patient's amount due.");
+           }
+        else{
+           
 
             $query = "
                     INSERT INTO bill (
