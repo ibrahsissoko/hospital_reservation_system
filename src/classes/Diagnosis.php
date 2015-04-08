@@ -62,24 +62,27 @@ class Diagnosis {
             }
             switch($option) {
                 case 1:
+                    $this->updateBillTable();
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor($session["user"]["email"])) {
-                        $this->updateBillTable();
+                        
                         $this->success = "Diagnosis emails were sent to you and the patient you named!";
                     } else {
                         $this->error = "An error occurred sending confirmation emails. Try again soon.";
                     } 
                     break;
                 case 2:
+                    $this->updateBillTable();
                     if($this->sendEmailToPatient()) {
-                        $this->updateBillTable();
+                        
                         $this->success = "A diagnosis confirmation email was sent to the patient!";
                     } else {
                         $this->error = "An error occurred sending the patient's confirmation email. Try again soon.";
                     } 
                     break;
                 case 3:
+                    $this->updateBillTable();
                     if($this->sendEmailToDoctor($session["user"]["email"])) {
-                        $this->updateBillTable();
+                        
                         $this->success = "You were sent a confirmation email regarding this diagnosis!";
                     } else {
                         $this->error = "An error occurred sending your confirmation email. Try again soon.";
@@ -110,7 +113,7 @@ class Diagnosis {
             try {
             while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
             $this->patientInfo = $row;
-            $this->amount_due = ($this->patientInfo["amount_due"]) + (500);
+            $this->amount_due = ($this->patientInfo["amount_due"]) + $this->amount_due;
             $query2 = "UPDATE bill SET amount_due = :amount_due WHERE patient_email = :patient_email";
             $query_params2 = array(':patient_email'  => $this->patientEmail,
                                     ':amount_due'=>$this->amount_due);
@@ -156,7 +159,10 @@ class Diagnosis {
             }
         }
     
-       }
+    }
+        function updateDiagnosisTable(){
+
+        }
        function sendEmailToPatient() {
     
         $mail = new PHPMailer();
