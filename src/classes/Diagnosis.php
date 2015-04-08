@@ -95,48 +95,7 @@ class Diagnosis {
         }
     }
 
-    function sendEmailToPatient() {
     
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->patientEmail);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis and Billing";
-        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
-                . 'You recently scheduled an appointment with ' . $this->doctorName
-                . '. Here are some details of your appointment:'
-                . 'Your total is $'. $this->amount_due . '<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
-    }
-    
-    function sendEmailToDoctor($email) {
-    
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($email);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis and Billing";
-        $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is'
-                . $this->patientEmail . '. Here is'
-                . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
-                . '<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
-    }
 
     function updateBillTable() {
         $query1 = " SELECT * FROM bill WHERE patient_email = :patient_email";
@@ -198,4 +157,46 @@ class Diagnosis {
         }
     
        }
+       function sendEmailToPatient() {
+    
+        $mail = new PHPMailer();
+        $mail->isSMTP();                  
+        $mail->Host = 'smtp.mailgun.org'; 
+        $mail->SMTPAuth = true;                               
+        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
+        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->FromName = 'No-reply Wal Consulting';
+        $mail->addAddress($this->patientEmail);
+        $mail->isHTML(true);
+        $mail->WordWrap = 70;
+        $mail->Subject = "Diagnosis and Billing";
+        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
+                . 'You recently scheduled an appointment with ' . $this->doctorName
+                . '. Here are some details of your appointment:'
+                . 'Your total is $'. $this->amount_due . '<br/><br/>Thank you,<br/>Wal Consulting';
+        return $mail->send();
+    }
+    
+    function sendEmailToDoctor($email) {
+    
+        $mail = new PHPMailer();
+        $mail->isSMTP();                  
+        $mail->Host = 'smtp.mailgun.org'; 
+        $mail->SMTPAuth = true;                               
+        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
+        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->FromName = 'No-reply Wal Consulting';
+        $mail->addAddress($email);
+        $mail->isHTML(true);
+        $mail->WordWrap = 70;
+        $mail->Subject = "Diagnosis and Billing";
+        $mail->Body    = 'Hello!<br/><br/>'
+                . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is'
+                . $this->patientEmail . '. Here is'
+                . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
+                . '<br/><br/>Thank you,<br/>Wal Consulting';
+        return $mail->send();
+    }
 }
