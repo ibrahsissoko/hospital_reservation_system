@@ -87,7 +87,7 @@ class Diagnosis {
                     break;
                 case 4:
                     $this->updateBillTable();
-                    $this->success = "Diagnosis emails were sent to you and the patient you named!";
+                    $this->error = "Diagnosis emails were NOT sent to you and the patient you named!";
                     break;
                 default:
                     die("An internal error occurred.");
@@ -131,7 +131,8 @@ class Diagnosis {
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
         $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with ' . $this->patientName . '. Here is'
+                . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is'
+                . $this->patientEmail . '. Here is'
                 . ' the receipt of the diagnosis form that you submitted: ' . $this->amount_due
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
