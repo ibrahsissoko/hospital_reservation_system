@@ -116,7 +116,7 @@ class Diagnosis {
                                     ':amount_due'=>$this->amount_due);
             $stmt2 = $this->db->prepare($query2);
             $result2 = $stmt2->execute($query_params2);
-            
+            break;
             }}catch(PDOException $e) {
                 die("Failed to gather patient's amount due.");
            }
