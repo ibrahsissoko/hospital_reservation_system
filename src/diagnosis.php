@@ -69,7 +69,7 @@
         Patient Last Name:<br/>
         <input type="text" name="patient_last_name" value="<?php echo htmlspecialchars($_POST["patient_last_name"]);?>" /><br/>
         Observations:<br/>
-        <textarea name="Observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_POST["observations"]);?>" ></textarea><br/>
+        <textarea name="observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_POST["observations"]);?>" ></textarea><br/>
         Diagnosis:<br/>
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_POST["diagnosis"]);?>" /><br/>
         <br/><br/>
