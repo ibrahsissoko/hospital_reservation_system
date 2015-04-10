@@ -139,36 +139,6 @@ class ScheduleAppointment {
                 default:
                     die("An internal error occurred.");
             }
-            
-            if($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL) {
-                if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
-                    if($this->sendEmailToPatient() && $this->sendEmailToDoctor()) {
-                        $this->updateAppointmentTable();
-                        $this->success = "Confirmation emails were sent to you and the doctor you requested!";
-                    } else {
-                        $this->error = "An error occurred sending confirmation emails. Try again soon.";
-                    } 
-                } else {
-                    if($this->sendEmailToPatient()) {
-                        $this->updateAppointmentTable();
-                        $this->success = "A confirmation email was sent to you regarding your appointment.";
-                    } else {
-                        $this->error = "An error occurred sending you a confirmation email. Try again soon.";
-                    }
-                }
-            } else {
-                if($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL) {
-                    if($this->sendEmailToDoctor()) {
-                        $this->updateAppointmentTable();
-                        $this->success = "Appointment booked!";
-                    } else {
-                        $this->error = "Appointment could not be booked. Try again soon.";
-                    }
-                } else {
-                    $this->updateAppointmentTable();
-                    $this->success = "Appointment booked!";
-                }
-            }
         }
     }
     
