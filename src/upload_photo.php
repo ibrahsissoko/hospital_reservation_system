@@ -80,10 +80,8 @@
         //retreive post variables
         $fileName = $_FILES['theFile']['name'];
         $fileTempName = $_FILES['theFile']['tmp_name'];
-        //echo " fileTempName is: " . $fileTempName .".   ";
         //create a new bucket
         $result = $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
-        echo "New Bucket created *********** " . $result;
         //move the file
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
