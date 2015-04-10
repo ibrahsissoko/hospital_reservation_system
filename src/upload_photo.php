@@ -75,17 +75,14 @@
  
     //instantiate the class
     $s3 = new S3(awsAccessKey, awsSecretKey);
-    echo "instantiated class **********";
     //check whether a form was submitted
     if(isset($_POST['Submit'])){
-        echo "submit button **************";
         //retreive post variables
         $fileName = $_FILES['theFile']['name'];
         $fileTempName = $_FILES['theFile']['tmp_name'];
-        echo "FIle name is : ". $fileName . ". fileTempName is: " . $fileTempName .". ";
+        echo " fileTempName is: " . $fileTempName .".   ";
         //create a new bucket
         $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
-        echo "put Bucket ***************";
         //move the file
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
