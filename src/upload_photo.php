@@ -80,9 +80,10 @@
         //retreive post variables
         $fileName = $_FILES['theFile']['name'];
         $fileTempName = $_FILES['theFile']['tmp_name'];
-        echo " fileTempName is: " . $fileTempName .".   ";
+        //echo " fileTempName is: " . $fileTempName .".   ";
         //create a new bucket
-        $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
+        $result = $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
+        echo "New Bucket created *********** " . $result;
         //move the file
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
@@ -90,7 +91,7 @@
             echo "Something went wrong while uploading your file... sorry.";
         }
     }
-    ?>   
+?>   
 <h1>Upload a file</h1>
 <p>Please select a file by clicking the 'Browse' button and press 'Upload' to start uploading your file.</p>
     <form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
