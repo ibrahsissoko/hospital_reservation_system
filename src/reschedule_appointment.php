@@ -59,72 +59,30 @@
 <div class="container hero-unit">
     <h1>Reschedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
-        Which Doctor Would You Like?<br/>
-        <select name="doctor_name" id="doctor_name" onchange="doctorNameUpdated()">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
                         SELECT *
-                        FROM users
+                        FROM appointment
                         WHERE
                             id = " . $_GET['id']
                         ;
                 try {
                     $stmt = $db->prepare($query);
                     $result = $stmt->execute();
-                    $docInfo = $stmt->fetch();
+                    $appointmentInfo = $stmt->fetch();
                 } catch(PDOException $e) {
                     die("Failed to run query: " . $e->getMessage());
                 }
             }
-            // Only select doctors.
-            $query = "SELECT * FROM users WHERE user_type_id=2";
-            try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute();
-                
-                if (!$docInfo && empty($_POST['doctor_name'])) {
-                    // Create a blank entry and select it.
-                    echo "<option value=\"\" selected=\"selected\"></option>";
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
-                                    . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
-                                    . $row["last_name"] . " " . $row["degree"] . "</option>";
-                    }
-                } else {
-                    // Create a blank entry.
-                    echo "<option value=\"\"></option>";
-                    $docName = $docInfo['first_name'] . " " . $docInfo['last_name'];
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        // If it is the doctor's name, select them in the drop down menu.
-                        if ($_POST['doctor_name'] == $row["first_name"] . " " . $row["last_name"] . " " . $row["degree"]) {
-                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
-                                    . " " . $row["degree"] . "\" selected=\"selected\">" 
-                                    . $row["first_name"] . " " . $row["last_name"] . " " 
-                                    . $row["degree"] . "</option>";
-                        } else if ($docName == $row["first_name"] . " " . $row["last_name"]) {
-                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"]
-                                    . " " . $row["degree"] . "\" selected=\"selected\">" 
-                                    . $row["first_name"] . " " . $row["last_name"] . " " 
-                                    . $row["degree"] . "</option>";
-                        } else {
-                            echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
-                                    . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
-                                    . $row["last_name"] . " " . $row["degree"] . "</option>";
-                        }
-                    }
-                }
-            } catch(PDOException $e) {
-                die("Failed to gather doctor's names.");
-            }
-            echo "</select><br/>";
+            echo "You are currently scheduled with " . $appointmentInfo['doctor_name'];
 
             $doctorName = !empty($_POST['doctor_name']) || !empty($_GET['id']);
-            if($doctorName) {
-                echo "Date:<br/>";
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
-            }
-            if ($doctorName && !empty($_POST['date'])) {
+            
+            echo "Date:<br/>";
+            echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
+            
+            if (!empty($_POST['date'])) {
                 $query2 = "
                        SELECT *
                        FROM users
@@ -135,7 +93,7 @@
                            AND
                            last_name = :doctorLastName
                         ";
-                $name = explode(" ", $_POST['doctor_name']);
+                $name = explode(" ", $appointmentInfo['doctor_name']);
                 $query_params2 = array(
                     ":id" => 2,
                     ":doctorFirstName" => $name[0],
@@ -196,7 +154,7 @@
                 }
                 // Check if all appointment times have been booked for this day.
                 if (sizeof($preBookedTimes) != 8) {
-                    echo "Time:<br/>";
+                    echo "Other times available:<br/>";
                     echo '<select name="time" id="time">';
                     // Determine which days go in the select field.
                     for($i = $beginTime; $i < $endTime; $i++) {
@@ -264,9 +222,6 @@
             }
         ?>
         <script>
-        function doctorNameUpdated() {
-            document.getElementById("mainForm").submit();  
-        }
         function dateUpdated() {
             document.getElementById("mainForm").submit();
         }

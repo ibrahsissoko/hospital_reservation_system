@@ -118,8 +118,8 @@
                     ";
             $name = explode(" ", $row["nurse_name"]);
             $query_params3 = array(
-                ":appointmentWithFirstName" => $name[0],
-                ":appointmentWithLastName" => $name[1],
+                ":nurseFirstName" => $name[0],
+                ":nurseLastName" => $name[1],
                 ":user_type" => "3"
             );
             try {
@@ -134,8 +134,8 @@
             echo "<li>You have an appointment with <a href=\"" . $link2 . "\">"
             . $row[$appointmentWith . "_name"] . "</a> on " . $row["date"] . " at " 
             . $row["time"] . ". The nurse will be <a href=\"" . $link3 . "\">"
-            . $row["nurse_name"] . ".  <a href=\"reschedule_appointment.php\">"
-            . "Reschedule appointment</a> <a href=\"cancel_appointment.php?id=". $row['id'] 
+            . $row["nurse_name"] . ".  <a href=\"reschedule_appointment.php?id=" . $row['id'] 
+            . "\">Reschedule appointment</a> <a href=\"cancel_appointment.php?id=". $row['id'] 
             . "\">Cancel this appointment</a></li>";
         }
         echo "<br/><br/>";
