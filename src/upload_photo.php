@@ -102,11 +102,11 @@
 <h1>All uploaded files</h1>
 <?php
     // Get the contents of our bucket
-    $contents = $s3->getBucket("yourbucket");
+    $contents = $s3->getBucket("walphotobucket");
     foreach ($contents as $file){
     
         $fname = $file['name'];
-        $furl = "http://yourbucket.s3.amazonaws.com/".$fname;
+        $furl = "http://walphotobucket.s3.amazonaws.com/".$fname;
         
         //output a link to the file
         echo "<a href=\"$furl\">$fname</a><br />";
