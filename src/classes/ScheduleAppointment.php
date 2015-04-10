@@ -272,7 +272,29 @@ class ScheduleAppointment {
         return $mail->send();
     }
     
-    function sendEmailToDoctor() {
+    function sendEmailToPatient() {
+        $mail = new PHPMailer();
+        $mail->isSMTP();                  
+        $mail->Host = 'smtp.mailgun.org'; 
+        $mail->SMTPAuth = true;                               
+        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
+        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->FromName = 'No-reply Wal Consulting';
+        $mail->addAddress($this->patientEmail);
+        $mail->isHTML(true);
+        $mail->WordWrap = 70;
+        $mail->Subject = "Appointment Confirmation";
+        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
+                . 'You recently scheduled an appointment with ' . $this->doctorName
+                . ' on ' . $this->date . ' at ' . $this->time . '. The nurse assigned for '
+                . 'this apointment is ' . $this->nurseName . '. If you need to reschedule'
+                . ' or cancel your appointment, login to your account, view your appointments, '
+                . 'and click "cancel appointment".<br/><br/>Thank you,<br/>Wal Consulting';
+        return $mail->send();
+    }
+    
+    function sendEmailToNurse() {
     
         $mail = new PHPMailer();
         $mail->isSMTP();                  
@@ -288,7 +310,7 @@ class ScheduleAppointment {
         $mail->Subject = "Appointment Confirmation";
         $mail->Body    = 'Hello!<br/><br/>'
                 . $this->patientName . ' requested an appointment with you on '
-                . $this->date . ' at ' . $this->time . '. Your nuse will be ' . $this->nurseName 
+                . $this->date . ' at ' . $this->time . '. The doctor will be ' . $this->doctorName 
                 . '.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
