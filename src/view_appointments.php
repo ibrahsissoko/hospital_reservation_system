@@ -105,11 +105,38 @@
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
-            $entry = $stmt2->fetch();
-            $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry['id'];
-            echo "<p>You have an appointment with <a href=\"" . $link . "\">"
+            $entry2 = $stmt2->fetch();
+            $query3 = "
+                   SELECT *
+                   FROM users
+                   WHERE
+                       first_name = :nurseFirstName
+                       AND
+                       last_name = :nurseLastName
+                       AND
+                       user_type_id = :user_type
+                    ";
+            $name = explode(" ", $row["nurse_name"]);
+            $query_params3 = array(
+                ":appointmentWithFirstName" => $name[0],
+                ":appointmentWithLastName" => $name[1],
+                ":user_type" => "3"
+            );
+            try {
+                $stmt3 = $db->prepare($query3);
+                $result3 = $stmt2->execute($query_params3);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $entry3 = $stmt3->fetch();
+            $link2 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry2['id'];
+            $link3 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry3['id'];
+            echo "<li>You have an appointment with <a href=\"" . $link2 . "\">"
             . $row[$appointmentWith . "_name"] . "</a> on " . $row["date"] . " at " 
-            . $row["time"] . ". The nurse will be " . $row["nurse_name"] . ". <a href=\"cancel_appointment.php?id=" . $row['id'] . "\">Cancel this appointment</a> </p>";
+            . $row["time"] . ". The nurse will be <a href=\"" . $link3 . "\">"
+            . $row["nurse_name"] . ".  <a href=\"reschedule_appointment.php\">"
+            . "Reschedule appointment</a> <a href=\"cancel_appointment.php?id=". $row['id'] 
+            . "\">Cancel this appointment</a></li>";
         }
         echo "<br/><br/>";
         if($stmt->rowCount() == 1) {
