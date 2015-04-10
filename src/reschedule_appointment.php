@@ -58,7 +58,7 @@
  
 <div class="container hero-unit">
     <h1>Reschedule an Appointment</h1> <br />
-    <form action="schedule_appointment.php" method="post" id="mainForm">
+    <form action="reschedule_appointment.php" method="post" id="mainForm">
             <?php
             if(!empty($_GET['id'])) {
                 $query = "
@@ -75,9 +75,7 @@
                     die("Failed to run query: " . $e->getMessage());
                 }
             }
-            echo "You are currently scheduled with " . $appointmentInfo['doctor_name'];
-
-            $doctorName = !empty($_POST['doctor_name']) || !empty($_GET['id']);
+            echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ".<br/>";
             
             echo "Date:<br/>";
             echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
