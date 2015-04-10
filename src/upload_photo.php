@@ -40,7 +40,7 @@
         $fileTempName = $_FILES['theFile']['tmp_name'];
      
         //create a new bucket
-        $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);<br /><br />
+        $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
 
         //move the file
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
