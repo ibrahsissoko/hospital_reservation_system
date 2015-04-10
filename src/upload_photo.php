@@ -82,9 +82,9 @@
         $fileTempName = $_FILES['theFile']['tmp_name'];
         echo " fileTempName is: " . $fileTempName .".   ";
         //create a new bucket
-        $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
+        $s3->putBucket("walphotobucket1", S3::ACL_PUBLIC_READ);
         //move the file
-        if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
+        if ($s3->putObjectFile($fileTempName, "walphotobucket1", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
         }else{
             echo "Something went wrong while uploading your file... sorry.";
@@ -100,11 +100,11 @@
 <h1>All uploaded files</h1>
 <?php
     // Get the contents of our bucket
-    $contents = $s3->getBucket("walphotobucket");
+    $contents = $s3->getBucket("walphotobucket1");
     foreach ($contents as $file){
     
         $fname = $file['name'];
-        $furl = "http://walphotobucket.s3.amazonaws.com/".$fname;
+        $furl = "http://walphotobucket1.s3.amazonaws.com/".$fname;
         
         //output a link to the file
         echo "<a href=\"$furl\">$fname</a><br />";
