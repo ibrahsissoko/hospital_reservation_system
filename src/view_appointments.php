@@ -126,7 +126,7 @@
                 $stmt3 = $db->prepare($query3);
                 $result3 = $stmt2->execute($query_params3);
             } catch(PDOException $ex) {
-                die("Failed to run query: " . $ex->getMessage());
+                die("Failed to run query: " . $ex->getMessage() . " Nurse name: " . $row["nurse_name"] . " ");
             }
             $entry3 = $stmt3->fetch();
             $link2 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry2['id'];
