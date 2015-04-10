@@ -23,6 +23,25 @@
                 break;
         }
     }
+
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hospital Management</title>
+    <meta name="description" content="Hospital management system for Intro to Software Engineering">
+    <meta name="author" content="WAL Consulting">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../assets/bootstrap.min.js"></script>
+    <link href="../assets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../assets/styles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<?php
     //include the S3 class              
     if (!class_exists('S3'))require_once('S3.php');
  
@@ -49,24 +68,7 @@
             echo "Something went wrong while uploading your file... sorry.";
         }
     }
-?>
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Hospital Management</title>
-    <meta name="description" content="Hospital management system for Intro to Software Engineering">
-    <meta name="author" content="WAL Consulting">
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="../assets/bootstrap.min.js"></script>
-    <link href="../assets/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../assets/styles.css" rel="stylesheet" type="text/css">
-</head>
-
-<body>
-
+    ?>
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <div class="container">
@@ -90,12 +92,26 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Upload Photo:</h1> <br />
-        <form action="" method="post" enctype="multipart/form-data">
-            <input name="theFile" type="file" />
-            <input name="Submit" type="submit" value="Upload">
-        </form>
-
+    
+<h1>Upload a file</h1>
+<p>Please select a file by clicking the 'Browse' button and press 'Upload' to start uploading your file.</p>
+    <form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
+      <input name="theFile" type="file" />
+      <input name="Submit" type="submit" value="Upload">
+    </form>
+<h1>All uploaded files</h1>
+<?php
+    // Get the contents of our bucket
+    $contents = $s3->getBucket("yourbucket");
+    foreach ($contents as $file){
+    
+        $fname = $file['name'];
+        $furl = "http://yourbucket.s3.amazonaws.com/".$fname;
+        
+        //output a link to the file
+        echo "<a href=\"$furl\">$fname</a><br />";
+    }
+?>
 </div>
 
 </body>
