@@ -272,7 +272,8 @@ class ScheduleAppointment {
         return $mail->send();
     }
     
-    function sendEmailToPatient() {
+    function sendEmailToDoctor() {
+    
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 
@@ -281,16 +282,14 @@ class ScheduleAppointment {
         $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
         $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
         $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->patientEmail);
+        $mail->addAddress($this->doctorEmail);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
         $mail->Subject = "Appointment Confirmation";
-        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
-                . 'You recently scheduled an appointment with ' . $this->doctorName
-                . ' on ' . $this->date . ' at ' . $this->time . '. The nurse assigned for '
-                . 'this apointment is ' . $this->nurseName . '. If you need to reschedule'
-                . ' or cancel your appointment, login to your account, view your appointments, '
-                . 'and click "cancel appointment".<br/><br/>Thank you,<br/>Wal Consulting';
+        $mail->Body    = 'Hello!<br/><br/>'
+                . $this->patientName . ' requested an appointment with you on '
+                . $this->date . ' at ' . $this->time . '. Your nurse will be ' . $this->nurseName 
+                . '.<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
