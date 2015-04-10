@@ -41,7 +41,31 @@
 </head>
 
 <body>
-<?php
+
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a href="home.php" class="brand">Hospital Management</a>
+            <div class="nav-collapse">
+                <form class="navbar-search pull-left" action="search.php" method="GET" >
+                    <input type="text" class="search-query" name="search" placeholder="<?php echo $_GET['search'] ?>" >
+                </form>
+                <ul class="nav pull-right">
+                    <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
+                    <li><a href="logout.php">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container hero-unit">
+ <?php
     //include the S3 class              
     if (!class_exists('S3'))require_once('S3.php');
  
@@ -69,31 +93,7 @@
             echo "Something went wrong while uploading your file... sorry.";
         }
     }
-    ?>
-<div class="navbar navbar-fixed-top navbar-inverse">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a href="home.php" class="brand">Hospital Management</a>
-            <div class="nav-collapse">
-                <form class="navbar-search pull-left" action="search.php" method="GET" >
-                    <input type="text" class="search-query" name="search" placeholder="<?php echo $_GET['search'] ?>" >
-                </form>
-                <ul class="nav pull-right">
-                    <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
-                    <li><a href="logout.php">Log Out</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container hero-unit">
-    
+    ?>   
 <h1>Upload a file</h1>
 <p>Please select a file by clicking the 'Browse' button and press 'Upload' to start uploading your file.</p>
     <form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
