@@ -1,5 +1,4 @@
 <?php
-
     include_once('../AutoLoader.php');
     AutoLoader::registerDirectory('../src/classes');
 
@@ -23,6 +22,26 @@
                 $userType = "patient";
                 break;
         }
+    }
+    //include the S3 class              
+    if (!class_exists('S3'))require_once('S3.php');
+ 
+    //AWS access info
+    if (!defined('awsAccessKey')) define('awsAccessKey', 'AKIAJQX5I545NDU35UBA
+');
+    if (!defined('awsSecretKey')) define('awsSecretKey', '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
+');
+ 
+    //instantiate the class
+    $s3 = new S3(awsAccessKey, awsSecretKey);
+    //check whether a form was submitted
+    if(isset($_POST['Submit'])){
+ 
+    //retreive post variables
+        $fileName = $_FILES['theFile']['name'];
+        $fileTempName = $_FILES['theFile']['tmp_name'];
+     
+    //we'll continue our script from here in the next step!
     }
 ?>
 
@@ -66,19 +85,10 @@
 
 <div class="container hero-unit">
     <h1>Upload Photo:</h1> <br />
-    <form action="https://s3-bucket.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="key" value="uploads/${filename}">
-        <input type="hidden" name="AWSAccessKeyId" value="YOUR_AWS_ACCESS_KEY"> 
-        <input type="hidden" name="acl" value="private"> 
-        <input type="hidden" name="success_action_redirect" value="http://localhost/">
-        <input type="hidden" name="policy" value="YOUR_POLICY_DOCUMENT_BASE64_ENCODED">
-        <input type="hidden" name="signature" value="YOUR_CALCULATED_SIGNATURE">
-        <input type="hidden" name="Content-Type" value="image/jpeg">
-        File to upload to S3: 
-        <input name="file" type="file"> 
-        <br> 
-        <input type="submit" value="Upload File to S3"> 
-    </form> 
+        <form action="" method="post" enctype="multipart/form-data">
+            <input name="theFile" type="file" />
+            <input name="Submit" type="submit" value="Upload">
+        </form>
 
 </div>
 
