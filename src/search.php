@@ -11,7 +11,7 @@
     } else {
         switch($_SESSION['user']['user_type_id']) {
             case 3: // nurse
-                $type_id = "nurse";
+                $userType = "nurse";
                 break;
             case 2: // doctor
                 $userType = "doctor";

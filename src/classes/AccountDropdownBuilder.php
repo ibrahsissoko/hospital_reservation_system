@@ -26,6 +26,7 @@ class AccountDropdownBuilder {
         echo "<a href=\"email_preferences.php\">Email Preferences</a><br/>";
         echo "<a href=\"" . $type . "_info.php\">Update information</a><br/>";
         echo "<a href=\"delete_account.php\">Delete Account</a><br/><br/>";
+        echo "<a href=\"upload_photo.php\">Upload Photo</a><br/><br/>";
         echo "</div>";
         echo "</li>";
     }
