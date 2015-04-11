@@ -78,7 +78,11 @@
         <?php
             echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ".<br/>";
             echo "Date:<br/>";
-            echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . (empty($_POST['date'])) ? $date : $_POST['date'] . '" onchange="dateUpdated()"/><br/>';
+            if (empty($_POST['date'])) {
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $date . '" onchange="dateUpdated()"/><br/>';
+            } else {
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $date . '" onchange="dateUpdated()"/><br/>';
+            }
             $query2 = "
                    SELECT *
                    FROM users
