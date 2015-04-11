@@ -72,7 +72,7 @@
  
 <div class="container hero-unit">
     <h1>Reschedule an Appointment</h1> <br />
-    <form action="reschedule_appointment.php" method="post" id="mainForm">
+    <form action="" method="post" id="mainForm">
             <?php
             echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ".<br/>";
             echo "Date:<br/>";
