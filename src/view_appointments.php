@@ -135,7 +135,7 @@
             . $row[$appointmentWith . "_name"] . "</a> on " . $row["date"] . " at " 
             . $row["time"] . ". The nurse will be <a href=\"" . $link3 . "\">"
             . $row["nurse_name"] . ".  <a href=\"reschedule_appointment.php?id=" . $row['id'] 
-            . "\">Reschedule appointment</a> <a href=\"cancel_appointment.php?id=". $row['id'] 
+            . "&date=" . $row['date'] . "\">Reschedule appointment</a> <a href=\"cancel_appointment.php?id=". $row['id'] 
             . "\">Cancel this appointment</a></li>";
         }
         echo "<br/><br/>";

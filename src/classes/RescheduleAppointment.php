@@ -20,6 +20,7 @@ class RescheduleAppointment {
     function __construct($appointmentInfo, $db) {
         $this->id = $appointmentInfo['id'];
         $this->doctorName = $appointmentInfo['doctor_name'];
+        $this->doctorEmail = $appointmentInfo['doctor_email'];
         $this->patientName = $appointmentInfo['patient_name'];
         $this->patientEmail = $appointmentInfo['patient_email'];
         $this->nurseName = $appointmentInfo['nurse_name'];
@@ -63,7 +64,7 @@ class RescheduleAppointment {
             die("Failed to gather doctor's email address.");
         }
         if (empty($this->doctorEmail) || empty($this->nurseEmail)) {
-            $this->error = "An internal error occurred acquiring hospitat staff information.";
+            $this->error = "An internal error occurred acquiring hospital staff information.";
         }
     }
     

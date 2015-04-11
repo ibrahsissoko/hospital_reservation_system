@@ -9,13 +9,15 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_GET['id'])) {
+    } else if(!empty($_GET['id']) && !empty($_GET['date'])) {
+        $date = $_GET['date'];
         $query = "
                 SELECT *
                 FROM appointment
                 WHERE
                     id = " . $_GET['id']
                 ;
+        
         try {
             $stmt = $db->prepare($query);
             $result = $stmt->execute();
@@ -76,7 +78,7 @@
             <?php
             echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ".<br/>";
             echo "Date:<br/>";
-            echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
+            echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $date . '" onchange="dateUpdated()"/><br/>';
             
             if (!empty($_POST['date'])) {
                 $query2 = "
