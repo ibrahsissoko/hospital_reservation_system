@@ -134,7 +134,7 @@
                             date = :date
                         ';
                 $query_params = array(
-                    ':doctorName' => $_POST['doctor_name'],
+                    ':doctorName' => $appointmentInfo['doctor_name'],
                     ':date' => $_POST['date']
                 );
                 try {

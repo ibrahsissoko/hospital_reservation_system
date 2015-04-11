@@ -25,49 +25,45 @@ class RescheduleAppointment {
         $this->nurseName = $appointmentInfo['nurse_name'];
         $this->nurseEmail = $appointmentInfo['nurse_email'];
         $this->db  = $db;
-        if (!empty($date) || !empty($time)) {
-            $this->time = $appointmentInfo['time'];
-            $this->date = $appointmentInfo['date'];
+        $this->time = $appointmentInfo['time'];
+        $this->date = $appointmentInfo['date'];
 
-            $query = "SELECT * FROM users WHERE user_type_id=2";
-            try {
-                $stmt = $this->db->prepare($query);
-                $result = $stmt->execute();
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    // Currently assuming no doctors will have the same first name, last
-                    // name, and degree.
-                    $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
-                    $string2 = str_replace(' ', '', $this->doctorName);
-                    if(strcmp($string1, $string2) == 0) {
-                        $this->doctorInfo = $row;
-                        break;
-                    }
+        $query = "SELECT * FROM users WHERE user_type_id=2";
+        try {
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Currently assuming no doctors will have the same first name, last
+                // name, and degree.
+                $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
+                $string2 = str_replace(' ', '', $this->doctorName);
+                if(strcmp($string1, $string2) == 0) {
+                    $this->doctorInfo = $row;
+                    break;
                 }
-            } catch(PDOException $e) {
-                die("Failed to gather doctor's email address.");
             }
-            $query = "SELECT * FROM users WHERE user_type_id=3";
-            try {
-                $stmt = $this->db->prepare($query);
-                $result = $stmt->execute();
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    // Currently assuming no doctors will have the same first name, last
-                    // name, and degree.
-                    $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"]);
-                    $string2 = str_replace(' ', '', $this->nurseName);
-                    if(strcmp($string1, $string2) == 0) {
-                        $this->nurseInfo = $row;
-                        break;
-                    }
+        } catch(PDOException $e) {
+            die("Failed to gather doctor's email address.");
+        }
+        $query = "SELECT * FROM users WHERE user_type_id=3";
+        try {
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Currently assuming no doctors will have the same first name, last
+                // name, and degree.
+                $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"]);
+                $string2 = str_replace(' ', '', $this->nurseName);
+                if(strcmp($string1, $string2) == 0) {
+                    $this->nurseInfo = $row;
+                    break;
                 }
-            } catch(PDOException $e) {
-                die("Failed to gather doctor's email address.");
             }
-            if (empty($this->doctorEmail) || empty($this->nurseEmail)) {
-                $this->error = "An internal error occurred acquiring hospitat staff information.";
-            }
-        } else {
-            $this->error = "Please fill out all fields.";
+        } catch(PDOException $e) {
+            die("Failed to gather doctor's email address.");
+        }
+        if (empty($this->doctorEmail) || empty($this->nurseEmail)) {
+            $this->error = "An internal error occurred acquiring hospitat staff information.";
         }
     }
     
