@@ -26,7 +26,7 @@
             die("Failed to run query: " . $e->getMessage());
         }
         if(!empty($_POST['date']) && !empty($_POST['time']) && isset($_POST['submitButton'])) {
-            $appointment = new RescheduleAppointment($appointmentInfo, $db);
+            $appointment = new RescheduleAppointment($appointmentInfo, $_POST['time'], $_POST['date'], $db);
             $appointment->initiate($_SESSION);
         }
     }

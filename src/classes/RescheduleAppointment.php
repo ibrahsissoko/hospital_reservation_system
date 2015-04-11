@@ -17,7 +17,7 @@ class RescheduleAppointment {
     public $success;
     public $error;
     
-    function __construct($appointmentInfo, $db) {
+    function __construct($appointmentInfo, $time, $date, $db) {
         $this->id = $appointmentInfo['id'];
         $this->doctorName = $appointmentInfo['doctor_name'];
         $this->doctorEmail = $appointmentInfo['doctor_email'];
@@ -25,9 +25,9 @@ class RescheduleAppointment {
         $this->patientEmail = $appointmentInfo['patient_email'];
         $this->nurseName = $appointmentInfo['nurse_name'];
         $this->nurseEmail = $appointmentInfo['nurse_email'];
+        $this->time = $time;
+        $this->date = $date;
         $this->db  = $db;
-        $this->time = $appointmentInfo['time'];
-        $this->date = $appointmentInfo['date'];
 
         $query = "SELECT * FROM users WHERE user_type_id=2";
         try {
