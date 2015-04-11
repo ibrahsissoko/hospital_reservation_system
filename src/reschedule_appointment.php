@@ -9,10 +9,24 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_POST['doctor_name']) && !empty($_POST['date']) && !empty($_POST['time']) && isset($_POST['submitButton'])) {
-        $appointment = new ScheduleAppointment($_POST["doctor_name"], $_SESSION["user"]["first_name"]
-            . " " . $_SESSION["user"]["last_name"], $_SESSION["user"]["email"], $_POST["date"], $_POST["time"], $db);
-        $appointment->initiate($_SESSION);
+    } else if(!empty($_GET['id'])) {
+        $query = "
+                SELECT *
+                FROM appointment
+                WHERE
+                    id = " . $_GET['id']
+                ;
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute();
+            $appointmentInfo = $stmt->fetch();
+        } catch(PDOException $e) {
+            die("Failed to run query: " . $e->getMessage());
+        }
+        if(!empty($_POST['date']) && !empty($_POST['time']) && isset($_POST['submitButton'])) {
+            $appointment = new RescheduleAppointment($appointmentInfo, $db);
+            $appointment->initiate($_SESSION);
+        }
     }
 ?>
 
@@ -60,23 +74,7 @@
     <h1>Reschedule an Appointment</h1> <br />
     <form action="reschedule_appointment.php" method="post" id="mainForm">
             <?php
-            if(!empty($_GET['id'])) {
-                $query = "
-                        SELECT *
-                        FROM appointment
-                        WHERE
-                            id = " . $_GET['id']
-                        ;
-                try {
-                    $stmt = $db->prepare($query);
-                    $result = $stmt->execute();
-                    $appointmentInfo = $stmt->fetch();
-                } catch(PDOException $e) {
-                    die("Failed to run query: " . $e->getMessage());
-                }
-            }
             echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ".<br/>";
-            
             echo "Date:<br/>";
             echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $_POST["date"] . '" onchange="dateUpdated()"/><br/>';
             
@@ -216,7 +214,7 @@
                 } else {
                     echo '</br><p>No appointments available</p><br/><br/>';
                 }
-                echo '<input type="submit" name ="submitButton" class="btn btn-info" value="Submit"/><br/><br/>';
+                echo '<input type="submit" name ="submitButton" class="btn btn-info" value="Update"/><br/><br/>';
             }
         ?>
         <script>
