@@ -19,9 +19,12 @@ body {
 	margin: 0 auto; 
 }
 
-.center-cropped {
+.center_image {
     width: 200px;
-    height: 800px;
-    background-position: center center;
-    background-repeat: no-repeat;
+    height: 200px;
+    overflow: hidden;
+}
+
+.center_image img {
+    width: 200px;
 }

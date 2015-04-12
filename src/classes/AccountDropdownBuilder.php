@@ -41,7 +41,7 @@ class AccountDropdownBuilder {
         echo "<li class=\"dropdown\">";
         echo "<a class=\"dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">Account  <strong class=\"caret\"></strong></a>";
         echo "<div class=\"dropdown-menu\" style=\"padding: 15px; padding-bottom: 0px;\">";
-        echo "<div style=\"background-image: url('" . $pictureUrl . "');\"></div>";
+        echo "<div class=\"center_image\"><img src=\"" . $pictureUrl . "\" /></div>";
         echo "<b>" . $session['user']['first_name'] . " " . $session['user']['last_name'] . "</b><br/>";
         echo "<a href=\"change_password.php\">Change Password</a><br/>";
         echo "<a href=\"email_preferences.php\">Email Preferences</a><br/>";
