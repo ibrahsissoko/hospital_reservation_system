@@ -18,3 +18,10 @@ body {
 	display: block; 
 	margin: 0 auto; 
 }
+
+.center-cropped {
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
