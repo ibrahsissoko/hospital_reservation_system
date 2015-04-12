@@ -83,8 +83,31 @@
         //create a new bucket
         $result = $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
         //move the file
+        
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
+
+            $image_url = "http://walphotobucket.s3.amazonaws.com/" . $fileName;
+
+            $query = "
+            UPDATE users
+            SET
+                picture_url = :url
+            WHERE
+                id = :id
+        ";
+
+            $query_params = array(
+                ':url' => $image_url,
+                ':id' => $session['user']['id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
         }else{
             echo "Something went wrong while uploading your file... sorry.";
         }
