@@ -65,6 +65,7 @@
 </div>
 
 <div class="container hero-unit">
+    <h1>Search</h1>
     <ul>
     <?php
         if ($userType == "patient") {
@@ -103,8 +104,8 @@
 
             if ($stmt->rowCount() > 0 ) {
                 echo '<table border="1" style="width:100%">';
-                echo '<tr><td>Name</td><td>Age</td><td>Sex</td><td>Specialty</td>'
-                    . '<td>Years of Experience</td></tr>';
+                echo '<tr><td>Name</td><td>Age</td><td>Sex</td><td>Department</td>'
+                    . '<td>Years of Experience</td><td>Availability</td></tr>';
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
                     $query = "
@@ -125,10 +126,27 @@
                     } catch(Exception $ex) {
                         $name = $row['first_name'] . " " . $row['last_name'];
                     }
+                    $query2 = "
+                    SELECT *
+                    FROM department
+                    WHERE
+                      id = :department_id
+                    ";
+
+                    $query_params2 = array(
+                        ':department_id' => $row['department_id']
+                    );
+                    try {
+                        $stmt2 = $db->prepare($query2);
+                        $result2 = $stmt2->execute($query_params2);
+                        $department = $stmt1->fetch(PDO::FETCH_ASSOC);
+                    } catch(Exception $ex) {
+                        die("Failed to gather department information. " . $ex->getMessage());
+                    }
 
                     $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
                     echo "<tr><td><a href=\"". $link . "\">" . $name . "</a></td><td>" . $row['age'] . "</td><td>" . $row['sex'] 
-                            . "</td><td>" . $row['specialty'] . "</td><td>" . $row['years_of_experience'] . "</td></tr>";
+                            . "</td><td>" . $department . "</td><td>" . $row['years_of_experience'] . "</td><td>MTWRF</td></tr>";
                 }
                 echo '</table><br/><br/>';
             } else {
