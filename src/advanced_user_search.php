@@ -195,13 +195,10 @@ if(empty($_SESSION['user'])) {
                     }
 
                     $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
-                    echo "<li>" . "<a href=\"". $link . "\">" . $name . "</a>" . "</li>";
-                    $i = $i + 1;
                     echo "<tr><td><a href=\"". $link . "\">" . $name . "</a></td><td>" . $row['age'] . "</td><td>" . $row['sex'] 
                             . "</td></tr>";
                 }
                 echo '</table><br/><br/>';
-                echo "* M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday";
             } else if (isset($_GET['search'])) {
                 echo "<li>" . "No search results!" . "</li>";
             }
