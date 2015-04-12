@@ -73,7 +73,7 @@ if(empty($_SESSION['user'])) {
     <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?></h1> <br/>
 
     <div class="center_image_profile">
-        <img src="<?php $userProfile['picture_url'] ?>" />
+        <img src="<?php echo $userProfile['picture_url'] ?>" />
     </div><br/><br/>
 
     <h2>Contact Info:</h2>
