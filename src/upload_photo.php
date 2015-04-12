@@ -83,7 +83,7 @@
         //create a new bucket
         $result = $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
         //move the file
-        
+
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
 
@@ -99,7 +99,7 @@
 
             $query_params = array(
                 ':url' => $image_url,
-                ':id' => $session['user']['id']
+                ':id' => $_SESSION['user']['id']
             );
 
             try {
