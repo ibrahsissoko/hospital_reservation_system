@@ -106,8 +106,8 @@ if(empty($_SESSION['user'])) {
         </select>
         <select name="sex">
             <option value="Gender" selected="selected">Gender</option>
-            <option value="Male" selected="" >Male</option>
-            <option value="Female" selected="" >Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
         </select>
         <input type="submit" class="btn btn-info" value="Search" />
     </form>
@@ -148,19 +148,19 @@ if(empty($_SESSION['user'])) {
             $i = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                $query = "
+                $query1 = "
                 SELECT *
                 FROM user_types
                 WHERE
                   id = :type_id
                 ";
 
-                $query_params = array(
+                $query_params1 = array(
                     ':type_id' => $row['user_type_id']
                 );
                 try {
-                    $stmt1 = $db->prepare($query);
-                    $result1 = $stmt1->execute($query_params);
+                    $stmt1 = $db->prepare($query1);
+                    $result1 = $stmt1->execute($query_params1);
                     $type = $stmt1->fetch(PDO::FETCH_ASSOC);
                     $name = $row['first_name'] . " " . $row['last_name'] . " (" . $type['type_name'] . ")";
                 } catch(Exception $ex) {
@@ -176,7 +176,7 @@ if(empty($_SESSION['user'])) {
                 echo "<li>" . "No search results!" . "</li>";
             }
         } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
+            die("Failed to run query: " . $ex->getMessage() . " Query: " . $query . " Query Params: " . $query_params);
         }
 
         ?>

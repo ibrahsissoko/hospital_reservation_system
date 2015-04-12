@@ -148,9 +148,9 @@
             }
             echo '</table><br/><br/>';
             if($stmt->rowCount() == 1) {
-                echo "Click on the " . $appointmentWith . "'s name to learn more information.";
+                echo "Click on the " . $appointmentWith . "'s  or nurse's name to learn more information about them.";
             } else if ($stmt->rowCount() > 1) {
-                echo "Click on the " . $appointmentWith . "s' name to learn more information.";
+                echo "Click on the " . $appointmentWith . "s'  or nurses' name to learn more information about them.";
             }
         } else {
             echo "You currently have no current appointments scheduled.";
