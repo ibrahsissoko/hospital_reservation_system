@@ -105,7 +105,7 @@
             if ($stmt->rowCount() > 0 ) {
                 echo '<table border="1" style="width:100%">';
                 echo '<tr><td>Name</td><td>Age</td><td>Sex</td><td>Department</td>'
-                    . '<td>Years of Experience</td><td>Availability</td></tr>';
+                    . '<td>Years of Experience</td><td>Availability*</td></tr>';
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
                     $query = "
@@ -155,7 +155,7 @@
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
-
+        echo "* M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday"
     ?>
     </ul>
 
