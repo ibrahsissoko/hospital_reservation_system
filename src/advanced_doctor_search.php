@@ -144,34 +144,56 @@ if(empty($_SESSION['user'])) {
             $stmt = $db->prepare($query);
             $result = $stmt->execute($query_params);
 
-            $i = 0;
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($stmt->rowCount() > 0 && isset($_GET['search'])) {
+                echo '<table border="1" style="width:100%">';
+                echo '<tr><td>Name</td><td>Age</td><td>Sex</td><td>Department</td>'
+                    . '<td>Years of Experience</td><td>Availability*</td></tr>';
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    
+                    $query1 = "
+                    SELECT *
+                    FROM user_types
+                    WHERE
+                      id = :type_id
+                    ";
 
-                $query1 = "
-                SELECT *
-                FROM user_types
-                WHERE
-                  id = :type_id
-                ";
+                    $query_params1 = array(
+                        ':type_id' => $row['user_type_id']
+                    );
+                    try {
+                        $stmt1 = $db->prepare($query1);
+                        $result1 = $stmt1->execute($query_params1);
+                        $type = $stmt1->fetch(PDO::FETCH_ASSOC);
+                        $name = $row['first_name'] . " " . $row['last_name'] . " (" . $type['type_name'] . ")";
+                    } catch(Exception $ex) {
+                        $name = $row['first_name'] . " " . $row['last_name'];
+                    }
+                    
+                    $query2 = "
+                    SELECT *
+                    FROM department
+                    WHERE
+                      id = :department_id
+                    ";
 
-                $query_params1 = array(
-                    ':type_id' => $row['user_type_id']
-                );
-                try {
-                    $stmt1 = $db->prepare($query1);
-                    $result1 = $stmt1->execute($query_params1);
-                    $type = $stmt1->fetch(PDO::FETCH_ASSOC);
-                    $name = $row['first_name'] . " " . $row['last_name'] . " (" . $type['type_name'] . ")";
-                } catch(Exception $ex) {
-                    $name = $row['first_name'] . " " . $row['last_name'];
+                    $query_params2 = array(
+                        ':department_id' => $row['department_id']
+                    );
+                    try {
+                        $stmt2 = $db->prepare($query2);
+                        $result2 = $stmt2->execute($query_params2);
+                        $departmentInfo = $stmt2->fetch();
+                    } catch(Exception $ex) {
+                        die("Failed to gather department information. " . $ex->getMessage());
+                    }
+
+                    $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
+                    echo "<tr><td><a href=\"". $link . "\">" . $name . "</a></td><td>" . $row['age'] . "</td><td>" . $row['sex'] 
+                            . "</td><td>" . $departmentInfo['name'] . "</td><td>" . $row['years_of_experience'] . "</td><td>MTWRF</td></tr>";
                 }
-
-                $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
-                echo "<li>" . "<a href=\"". $link . "\">" . $name . "</a>" . "</li>";
-                $i = $i + 1;
-            }
-
-            if ($i == 0 && isset($_GET['search'])) {
+                echo '</table><br/><br/>';
+                echo "* M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday";
+            } else if (isset($_GET['search'])) {
                 echo "<li>" . "No search results!" . "</li>";
             }
         } catch(PDOException $ex) {

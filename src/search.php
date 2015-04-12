@@ -126,6 +126,7 @@
                     } catch(Exception $ex) {
                         $name = $row['first_name'] . " " . $row['last_name'];
                     }
+                    
                     $query2 = "
                     SELECT *
                     FROM department
@@ -139,23 +140,23 @@
                     try {
                         $stmt2 = $db->prepare($query2);
                         $result2 = $stmt2->execute($query_params2);
-                        $department = $stmt2->fetch(PDO::FETCH_ASSOC);
+                        $departmentInfo = $stmt2->fetch();
                     } catch(Exception $ex) {
                         die("Failed to gather department information. " . $ex->getMessage());
                     }
 
                     $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
                     echo "<tr><td><a href=\"". $link . "\">" . $name . "</a></td><td>" . $row['age'] . "</td><td>" . $row['sex'] 
-                            . "</td><td>" . $department . "</td><td>" . $row['years_of_experience'] . "</td><td>MTWRF</td></tr>";
+                            . "</td><td>" . $departmentInfo['name'] . "</td><td>" . $row['years_of_experience'] . "</td><td>MTWRF</td></tr>";
                 }
                 echo '</table><br/><br/>';
+                echo "* M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday";
             } else {
                 echo "<li>" . "No search results!" . "</li>";
             }
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
-        echo "* M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday"
     ?>
     </ul>
 
