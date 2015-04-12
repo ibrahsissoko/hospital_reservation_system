@@ -88,8 +88,9 @@ if(empty($_SESSION['user'])) {
                 $i = 1;
 
                 // loop through, adding the options to the spinner
+                echo "<option value=\"Department\" selected=\"selected\">Department</option>";;
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($i == $_GET['department_id']) {
+                    if ($row['id'] == $_GET['department_id']) {
                         echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
@@ -113,40 +114,31 @@ if(empty($_SESSION['user'])) {
 
     <ul>
         <?php
-        if (!empty($_GET['sex']) && $_GET['sex'] != "Gender") {
-            $query = "
-            SELECT *
-            FROM users
-            WHERE (first_name LIKE '%" . $_GET['search'] . "%' OR
+        $queryVals = array();
+        if(!empty($_GET['department_id']) && $_GET['department_id'] != "Department") {
+            array_push($queryVals, "department_id");
+        }
+        if(!empty($_GET['sex']) && $_GET['sex'] != "Gender") {
+            array_push($queryVals, "sex");
+        }
+        array_push($queryVals, "user_type_id");
+        
+        $query = "SELECT * FROM users WEHRE
+                (first_name LIKE '%" . $_GET['search'] . "%' OR
                     last_name LIKE '%" . $_GET['search'] . "%' OR
                     CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
                     CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
-                    email LIKE '%" . $_GET['search'] . "%') AND
-                    (department_id = :department_id) AND
-                    (sex = :sex) AND
-                    (user_type_id = :type_id)
-            ";
-            $query_params = array(
-                ':department_id' => $_GET['department_id'],
-                ':sex' => $_GET['sex'],
-                ':type_id' => '2'
-            );
-        } else {
-           $query = "
-            SELECT *
-            FROM users
-            WHERE (first_name LIKE '%" . $_GET['search'] . "%' OR
-                    last_name LIKE '%" . $_GET['search'] . "%' OR
-                    CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
-                    CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
-                    email LIKE '%" . $_GET['search'] . "%') AND
-                    (department_id = :department_id) AND
-                    (user_type_id = :type_id)
-            ";
-            $query_params = array(
-                ':department_id' => $_GET['department_id'],
-                ':type_id' => '2'
-            ); 
+                    email LIKE '%" . $_GET['search'] . "%')";
+        
+        $query_params = array();
+        foreach($queryVals as $param) {
+            $query .= " AND (" . $param . "= :" . $param . ")";
+            array_push($query_params, ": " . $param);
+            if ($param != "user_type_id") {
+                $query_params[":" . $param] = $_GET[$param];
+            } else {
+                $query_params[":" . $param] = '2';
+            }
         }
 
         try {

@@ -65,7 +65,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Search</h1>
+    <h1>Search</h1><br/>
     <ul>
     <?php
         if ($userType == "patient") {
@@ -139,7 +139,7 @@
                     try {
                         $stmt2 = $db->prepare($query2);
                         $result2 = $stmt2->execute($query_params2);
-                        $department = $stmt1->fetch(PDO::FETCH_ASSOC);
+                        $department = $stmt2->fetch(PDO::FETCH_ASSOC);
                     } catch(Exception $ex) {
                         die("Failed to gather department information. " . $ex->getMessage());
                     }
