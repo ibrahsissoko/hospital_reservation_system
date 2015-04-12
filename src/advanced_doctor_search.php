@@ -176,7 +176,7 @@ if(empty($_SESSION['user'])) {
                 echo "<li>" . "No search results!" . "</li>";
             }
         } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage() . " Query: " . $query . " Query Params: " . $query_params);
+            die("Failed to run query: " . $ex->getMessage() . " Query: " . $query . " Query Params count: " . count($query_params));
         }
 
         ?>
