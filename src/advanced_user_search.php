@@ -62,7 +62,7 @@ if(empty($_SESSION['user'])) {
 </div>
 
 <div class="container hero-unit">
-    <h1>Advanced Search</h1>
+    <h1>Advanced Search</h1><br/>
     <form action="advanced_user_search.php" method="GET" >
         <?php
         if (isset($_GET['search']) && $_GET['search'] != "") {
