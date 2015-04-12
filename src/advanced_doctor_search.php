@@ -129,7 +129,7 @@ if(empty($_SESSION['user'])) {
         if(!empty($_GET['sex']) && $_GET['sex'] != "Gender") {
             array_push($queryVals, "sex");
         }
-        if(!empty($_GET['age'] && $_GET['age'] != "Age")) {
+        if(!empty($_GET['age']) && $_GET['age'] != "Age") {
             array_push($queryVals, "age");
         }
         array_push($queryVals, "user_type_id");
