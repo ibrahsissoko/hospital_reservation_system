@@ -19,12 +19,22 @@ body {
 	margin: 0 auto; 
 }
 
-.center_image {
+.center_image_dropdown {
     width: 150px;
     height: 150px;
     overflow: hidden;
 }
 
-.center_image img {
+.center_image_dropdown img {
     width: 200px;
+}
+
+.center_image_profile {
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.center_image_profile img {
+    width: 300px;
 }

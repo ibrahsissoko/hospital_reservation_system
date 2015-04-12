@@ -38,10 +38,14 @@ class AccountDropdownBuilder {
         $row = $stmt->fetch();
         $pictureUrl = $row['picture_url'];
 
+        $profileLink = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $session['id'];
+
         echo "<li class=\"dropdown\">";
         echo "<a class=\"dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">Account  <strong class=\"caret\"></strong></a>";
         echo "<div class=\"dropdown-menu\" style=\"padding: 15px; padding-bottom: 0px;\">";
-        echo "<div class=\"center_image\"><img src=\"" . $pictureUrl . "\" /></div>";
+        echo "<a href=\"" . $profileLink . "\">";
+        echo "<div class=\"center_image_dropdown\"><img src=\"" . $pictureUrl . "\" /></div>";
+        echo "</a>";
         echo "<b>" . $session['user']['first_name'] . " " . $session['user']['last_name'] . "</b><br/><br/>";
         echo "<a href=\"change_password.php\">Change Password</a><br/>";
         echo "<a href=\"email_preferences.php\">Email Preferences</a><br/>";
