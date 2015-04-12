@@ -72,6 +72,10 @@ if(empty($_SESSION['user'])) {
 <div class="container hero-unit">
     <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?></h1> <br/>
 
+    <div class="center_image_profile">
+        <img src="<?php $userProfile['picture_url'] ?>" />
+    </div><br/><br/>
+
     <h2>Contact Info:</h2>
     <?php
     echo "<b>Email:</b> " . $userProfile['email'] . "<br/>";
