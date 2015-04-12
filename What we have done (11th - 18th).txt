@@ -1,0 +1,10 @@
+Luke:
+    - Save uploaded pictures to database
+    - Apply pictures to user account dropdown and user pages
+    - Link to users own information page from account dropdown
+
+
+Will:
+
+
+Anu:
