@@ -133,7 +133,6 @@ if(empty($_SESSION['user'])) {
         $query_params = array();
         foreach($queryVals as $param) {
             $query .= " AND (" . $param . "= :" . $param . ")";
-            array_push($query_params, ": " . $param);
             if ($param != "user_type_id") {
                 $query_params[":" . $param] = $_GET[$param];
             } else {
