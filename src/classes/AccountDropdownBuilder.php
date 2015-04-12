@@ -2,7 +2,7 @@
 
 class AccountDropdownBuilder {
 
-    public static function buildDropdown($session) {
+    public static function buildDropdown($db, $session) {
         switch($session['user']['user_type_id']) {
             case 1:
                 $type = "patient";
@@ -18,11 +18,30 @@ class AccountDropdownBuilder {
                 break;
         }
 
+        $query = "
+                SELECT picture_url
+                FROM users
+                WHERE
+                    id = :id
+                ";
+        $query_params = array(
+            ':id' => $session['user']['id']
+        );
+
+        try {
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+
+        $row = $stmt->fetch();
+        $pictureUrl = $row['picture_url'];
+
         echo "<li class=\"dropdown\">";
         echo "<a class=\"dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">Account  <strong class=\"caret\"></strong></a>";
         echo "<div class=\"dropdown-menu\" style=\"padding: 15px; padding-bottom: 0px;\">";
-        echo $session['user']['picture_url'];
-        echo "<img border=\"0\" src=\"" . $session['user']['picture_url'] . "\" width=\"100\" height=\"100\"><br/>";
+        echo "<img border=\"0\" src=\"" . $pictureUrl . "\" width=\"100\" height=\"100\"><br/>";
         echo "<b>" . $session['user']['first_name'] . " " . $session['user']['last_name'] . "</b><br/>";
         echo "<a href=\"change_password.php\">Change Password</a><br/>";
         echo "<a href=\"email_preferences.php\">Email Preferences</a><br/>";
