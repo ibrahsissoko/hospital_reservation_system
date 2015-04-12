@@ -103,28 +103,51 @@ if(empty($_SESSION['user'])) {
 
             ?>
         </select>
+        <select name="sex">
+            <option value="Gender" selected="selected">Gender</option>
+            <option value="Male" selected="" >Male</option>
+            <option value="Female" selected="" >Female</option>
+        </select>
         <input type="submit" class="btn btn-info" value="Search" />
     </form>
 
     <ul>
         <?php
-
-        $query = "
-        SELECT *
-        FROM users
-        WHERE (first_name LIKE '%" . $_GET['search'] . "%' OR
-                last_name LIKE '%" . $_GET['search'] . "%' OR
-                CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
-                CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
-                email LIKE '%" . $_GET['search'] . "%') AND
-                (department_id = :department_id) AND
-                (user_type_id = :type_id)
-        ";
-
-        $query_params = array(
-            ':department_id' => $_GET['department_id'],
-            ':type_id' => '2'
-        );
+        if (!empty($_GET['sex']) && $_GET['sex'] != "Gender") {
+            $query = "
+            SELECT *
+            FROM users
+            WHERE (first_name LIKE '%" . $_GET['search'] . "%' OR
+                    last_name LIKE '%" . $_GET['search'] . "%' OR
+                    CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
+                    CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
+                    email LIKE '%" . $_GET['search'] . "%') AND
+                    (department_id = :department_id) AND
+                    (sex = :sex) AND
+                    (user_type_id = :type_id)
+            ";
+            $query_params = array(
+                ':department_id' => $_GET['department_id'],
+                ':sex' => $_GET['sex'],
+                ':type_id' => '2'
+            );
+        } else {
+           $query = "
+            SELECT *
+            FROM users
+            WHERE (first_name LIKE '%" . $_GET['search'] . "%' OR
+                    last_name LIKE '%" . $_GET['search'] . "%' OR
+                    CONCAT(first_name, ' ', last_name) LIKE '%" . $_GET['search'] . "%' OR
+                    CONCAT(last_name, ' ', first_name) LIKE '%" . $_GET['search'] . "%' OR
+                    email LIKE '%" . $_GET['search'] . "%') AND
+                    (department_id = :department_id) AND
+                    (user_type_id = :type_id)
+            ";
+            $query_params = array(
+                ':department_id' => $_GET['department_id'],
+                ':type_id' => '2'
+            ); 
+        }
 
         try {
             $stmt = $db->prepare($query);

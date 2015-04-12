@@ -81,7 +81,12 @@
         }
         if ($stmt->rowCount() > 0) { 
             echo '<table border="1" style="width:100%">';
-            echo '<tr><td>' . $appointmentWith . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
+            if ($appointmentWith == "doctor") {
+                $upCase = "Doctor";
+            } else {
+                $upCase = "Patient";
+            }
+            echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
             . '<td>Reschedule</td><td>Cancel</td></tr>';
             // Loop over query from appointment table.
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
