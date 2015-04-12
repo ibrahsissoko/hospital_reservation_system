@@ -66,9 +66,9 @@ if(empty($_SESSION['user'])) {
     <form action="advanced_doctor_search.php" method="GET" >
         <?php
         if (isset($_GET['search']) && $_GET['search'] != "") {
-            echo "<input type=\"text\" name=\"search\" placeholder=\"" . $_GET['search'] . "\" >";
+            echo "<input type=\"text\" name=\"search\" placeholder=\"" . $_GET['search'] . "\" ><br/>";
         } else {
-            echo "<input type=\"text\" name=\"search\" placeholder=\"" . "Doctor's Name" . "\" >";
+            echo "<input type=\"text\" name=\"search\" placeholder=\"" . "Doctor's Name" . "\" ><br/>";
         }
         ?>
 
@@ -103,11 +103,19 @@ if(empty($_SESSION['user'])) {
             }
 
             ?>
-        </select>
+        </select><br/>
         <select name="sex">
             <option value="Gender" selected="selected">Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
+        </select><br/>
+        <select name="age">
+            <option value="Age" selected="selected">Age</option>
+            <option value="1">&lt;30</option>
+            <option value="2">30-39</option>
+            <option value="3">40-49</option>
+            <option value="4">50-59</option>
+            <option value="5">&gt;59</option>
         </select>
         <input type="submit" class="btn btn-info" value="Search" />
     </form>
@@ -121,6 +129,9 @@ if(empty($_SESSION['user'])) {
         if(!empty($_GET['sex']) && $_GET['sex'] != "Gender") {
             array_push($queryVals, "sex");
         }
+        if(!empty($_GET['age'] && $_GET['age'] != "Age")) {
+            array_push($queryVals, "age");
+        }
         array_push($queryVals, "user_type_id");
         
         $query = "SELECT * FROM users WHERE
@@ -132,7 +143,27 @@ if(empty($_SESSION['user'])) {
         
         $query_params = array();
         foreach($queryVals as $param) {
-            $query .= " AND (" . $param . "= :" . $param . ")";
+            if ($param == "age") {
+                switch($_GET['age']) {
+                case "1":
+                    $query .= " AND (age < 30) ";
+                    break;
+                case "2":
+                    $query .= " AND (age >= 30) AND (age < 40) ";
+                    break;
+                case "3":
+                    $query .= " AND (age >= 40) AND (age < 50) ";
+                    break;
+                case "4":
+                    $query .= " AND (age >= 50) AND (age < 60) ";
+                    break;
+                case "5":
+                    $query .= " AND (age >= 60) ";
+                }
+                continue;
+            } else {
+                $query .= " AND (" . $param . "= :" . $param . ")";
+            }
             if ($param != "user_type_id") {
                 $query_params[":" . $param] = $_GET[$param];
             } else {
