@@ -62,7 +62,7 @@ if(empty($_SESSION['user'])) {
 </div>
 
 <div class="container hero-unit">
-
+    <h1>Advanced Search</h1><br/>
     <form action="advanced_doctor_search.php" method="GET" >
         <?php
         if (isset($_GET['search']) && $_GET['search'] != "") {
@@ -85,8 +85,6 @@ if(empty($_SESSION['user'])) {
                 $stmt = $db->prepare($query);
                 $result = $stmt->execute();
 
-                $i = 1;
-
                 // loop through, adding the options to the spinner
                 echo "<option value=\"Department\" selected=\"selected\">Department</option>";;
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -95,8 +93,6 @@ if(empty($_SESSION['user'])) {
                     } else {
                         echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
                     }
-
-                    $i = $i + 1;
                 }
             } catch(Exception $e) {
 
@@ -105,17 +101,17 @@ if(empty($_SESSION['user'])) {
             ?>
         </select><br/>
         <select name="sex">
-            <option value="Gender" selected="selected">Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Gender" <?php if(empty($_GET['sex'])||$_GET['sex']=="Gender"){echo 'selected=selected';}?> >Gender</option>
+            <option value="Male" <?php if($_GET['sex']=="Male"){echo 'selected=selected';}?>>Male</option>
+            <option value="Female" <?php if($_GET['sex']=="Female"){echo 'selected=selected';}?>>Female</option>
         </select><br/>
         <select name="age">
-            <option value="Age" selected="selected">Age</option>
-            <option value="1">&lt;30</option>
-            <option value="2">30-39</option>
-            <option value="3">40-49</option>
-            <option value="4">50-59</option>
-            <option value="5">&gt;59</option>
+            <option value="Age" <?php if(empty($_GET['age'])||$_GET['age']=="Age"){echo 'selected=selected';}?> >Age</option>
+            <option value="1" <?php if($_GET['age']=="1"){echo 'selected=selected';}?> >&lt;30</option>
+            <option value="2" <?php if($_GET['age']=="2"){echo 'selected=selected';}?> >30-39</option>
+            <option value="3" <?php if($_GET['age']=="3"){echo 'selected=selected';}?> >40-49</option>
+            <option value="4" <?php if($_GET['age']=="4"){echo 'selected=selected';}?> >50-59</option>
+            <option value="5" <?php if($_GET['age']=="5"){echo 'selected=selected';}?> >&gt;59</option>
         </select>
         <input type="submit" class="btn btn-info" value="Search" />
     </form>
