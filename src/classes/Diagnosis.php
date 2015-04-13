@@ -14,7 +14,7 @@ class Diagnosis {
     public $success;
     public $error;
 
-  function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
+    function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
         $this->doctorName = $doctorName;
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
@@ -99,8 +99,6 @@ class Diagnosis {
         }
     }
 
-    
-
     function updateBillTable() {
         $query1 = " SELECT * FROM bill WHERE patient_email = :patient_email";
         $query_params1 = array(':patient_email'  => $this->patientEmail);
@@ -161,41 +159,74 @@ class Diagnosis {
         }
     
     }
-        function updateDiagnosisTable(){
-            $query = "
-                    INSERT INTO diagnosis (
-                        observations,
-                        diagnosis,
-                        patient_name,
-                        patient_email,
-                        doctor_name,
-                        doctor_email
-                    ) VALUES (
-                        :observations,
-                        :diagnosis,
-                        :patient_name,
-                        :patient_email,
-                        :doctor_name,
-                        :doctor_email
-                    )
-                    ";    
-            $query_params = array(
-            ':observations' => $this->observations,
-            ':diagnosis' => $this->diagnosis,
-            ':patient_name' => $this->patientName,
-            ':patient_email' => $this->patientEmail,
-            ':doctor_name' => $this->doctorName,
-            ':doctor_email' => $this->doctorEmail
-        );
-        try {
-                $stmt = $this->db->prepare($query);
-                $result = $stmt->execute($query_params);
-            } catch(PDOException $e) {
-                die("Failed to update tables.");
-            }
-        }
-       function sendEmailToPatient() {
+
     
+    function updateDiagnosisTable(){
+        $query = "
+                INSERT INTO diagnosis (
+                    observations,
+                    diagnosis,
+                    patient_name,
+                    patient_email,
+                    doctor_name,
+                    doctor_email
+                ) VALUES (
+                    :observations,
+                    :diagnosis,
+                    :patient_name,
+                    :patient_email,
+                    :doctor_name,
+                    :doctor_email
+                )
+                ";    
+        $query_params = array(
+        ':observations' => $this->observations,
+        ':diagnosis' => $this->diagnosis,
+        ':patient_name' => $this->patientName,
+        ':patient_email' => $this->patientEmail,
+        ':doctor_name' => $this->doctorName,
+        ':doctor_email' => $this->doctorEmail
+    );
+    try {
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(PDOException $e) {
+            die("Failed to update tables.");
+        }
+    }
+       
+    function sendEmailToPatient() {
+        // Generate the pdf attachment.
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',22);
+        $pdf->Cell($pdf->w,40,'Billing Information',0,1,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf->MultiCell($pdf->w-20,10,'Thank you ' . $this->patientName . 'for scheduling and attending your appointment with ' . $this->doctorName
+                . '. The doctor had the following observations:',0,1);
+        $pdf->MultiCell(100,10,$this->observations,0,1);
+        $pdf->Write(10,'These observations led to the following diagnosis: ');
+        $pdf->SetFont('Arial','B');
+        $pdf->Cell(30,10,$this->diagnosis,0,1);
+        $pdf->SetFont('Arial','');
+        $pdf->MultiCell($pdf->w-20,10,'You have therefore been given this medication: ');
+        $pdf->SetFont('Arial','B');
+        $pdf->Cell(30,10,'SOME MEDICATION',0,1);
+        $pdf->SetFont('Arial','');
+        $pdf->MultiCell($pdf->w-20,10,'Please submit you payment soon by clicking on the Pay Bills link on the home page of your'
+                . ' account or by clicking HERE.',0,1);
+        $pdf->Cell(50,20,'',0,1);
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(30,10,'Billing Information:',0,1,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf->Cell(50,10,'Doctor Services: $500',0,1,'C');
+        $pdf->Cell(50,10,'Prescription: $200','B',1,'C');
+        $pdf->SetFont('Arial','B');
+        $pdf->Cell(50,10,'Total: $700',0,1);
+        $firstLastName = explode(" ", $this->patientName);
+        $fileName = $firstLastName[1] . "_Bill.pdf";
+        $pdf->Output($fileName,'F');
+        // Generate the email.
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 
@@ -205,6 +236,7 @@ class Diagnosis {
         $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
         $mail->FromName = 'No-reply Wal Consulting';
         $mail->addAddress($this->patientEmail);
+        $mail->AddAttachment($fileName);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
@@ -218,7 +250,37 @@ class Diagnosis {
     }
     
     function sendEmailToDoctor($email) {
-    
+        // Generate the pdf attachment.
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',22);
+        $pdf->Cell($pdf->w,40,'Billing Information',0,1,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf->MultiCell($pdf->w-20,10,'Thank you ' . $this->patientName . 'for scheduling and attending your appointment with ' . $this->doctorName
+                . '. The doctor had the following observations:',0,1);
+        $pdf->MultiCell(100,10,$this->observations,0,1);
+        $pdf->Write(10,'These observations led to the following diagnosis: ');
+        $pdf->SetFont('Arial','B');
+        $pdf->Cell(30,10,$this->diagnosis,0,1);
+        $pdf->SetFont('Arial','');
+        $pdf->MultiCell($pdf->w-20,10,'You have therefore been given this medication: ');
+        $pdf->SetFont('Arial','B');
+        $pdf->Cell(30,10,'SOME MEDICATION',0,1);
+        $pdf->SetFont('Arial','');
+        $pdf->MultiCell($pdf->w-20,10,'Please submit you payment soon by clicking on the Pay Bills link on the home page of your'
+                . ' account or by clicking HERE.',0,1);
+        $pdf->Cell(50,20,'',0,1);
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(30,10,'Billing Information:',0,1,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf->Cell(50,10,'Doctor Services: $500',0,1,'C');
+        $pdf->Cell(50,10,'Prescription: $200','B',1,'C');
+        $pdf->SetFont('Arial','B');
+        $pdf->Cell(50,10,'Total: $700',0,1);
+        $firstLastName = explode(" ", $this->patientName);
+        $fileName = $firstLastName[1] . "_Bill.pdf";
+        $pdf->Output($fileName,'F');
+        // Generate the email.
         $mail = new PHPMailer();
         $mail->isSMTP();                  
         $mail->Host = 'smtp.mailgun.org'; 
@@ -228,6 +290,7 @@ class Diagnosis {
         $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
         $mail->FromName = 'No-reply Wal Consulting';
         $mail->addAddress($email);
+        $mail->AddAttachment($fileName);
         $mail->isHTML(true);
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
