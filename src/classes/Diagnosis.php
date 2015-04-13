@@ -202,14 +202,14 @@ class Diagnosis {
         $pdf->SetFont('Arial','B',22);
         $pdf->Cell($pdf->w,40,'Billing Information',0,1,'C');
         $pdf->SetFont('Arial','',12);
-        $pdf->MultiCell($pdf->w-20,10,'Thank you ' . $this->patientName . 'for scheduling and attending your appointment with ' . $this->doctorName
+        $pdf->MultiCell($pdf->w-20,10,'Thank you ' . $this->patientName . ' for scheduling and attending your appointment with ' . $this->doctorName
                 . '. The doctor had the following observations:',0,1);
         $pdf->MultiCell(100,10,$this->observations,0,1);
         $pdf->Write(10,'These observations led to the following diagnosis: ');
         $pdf->SetFont('Arial','B');
         $pdf->Cell(30,10,$this->diagnosis,0,1);
         $pdf->SetFont('Arial','');
-        $pdf->MultiCell($pdf->w-20,10,'You have therefore been given this medication: ');
+        $pdf->Write($pdf->w-20,10,'You have therefore been given this medication: ');
         $pdf->SetFont('Arial','B');
         $pdf->Cell(30,10,'SOME MEDICATION',0,1);
         $pdf->SetFont('Arial','');
@@ -217,10 +217,10 @@ class Diagnosis {
                 . ' account or by clicking HERE.',0,1);
         $pdf->Cell(50,20,'',0,1);
         $pdf->SetFont('Arial','B',16);
-        $pdf->Cell(30,10,'Billing Information:',0,1,'C');
+        $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
         $pdf->SetFont('Arial','',12);
-        $pdf->Cell(50,10,'Doctor Services: $500',0,1,'C');
-        $pdf->Cell(50,10,'Prescription: $200','B',1,'C');
+        $pdf->Cell($pdf->w-20,10,'Doctor Services: $500',0,1,'C');
+        $pdf->Cell($pdf->w-20,10,'Prescription: $200','B',1,'C');
         $pdf->SetFont('Arial','B');
         $pdf->Cell(50,10,'Total: $700',0,1);
         $firstLastName = explode(" ", $this->patientName);
@@ -256,14 +256,14 @@ class Diagnosis {
         $pdf->SetFont('Arial','B',22);
         $pdf->Cell($pdf->w,40,'Billing Information',0,1,'C');
         $pdf->SetFont('Arial','',12);
-        $pdf->MultiCell($pdf->w-20,10,'Thank you ' . $this->patientName . 'for scheduling and attending your appointment with ' . $this->doctorName
+        $pdf->MultiCell($pdf->w-20,10,'Thank you ' . $this->patientName . ' for scheduling and attending your appointment with ' . $this->doctorName
                 . '. The doctor had the following observations:',0,1);
         $pdf->MultiCell(100,10,$this->observations,0,1);
         $pdf->Write(10,'These observations led to the following diagnosis: ');
         $pdf->SetFont('Arial','B');
         $pdf->Cell(30,10,$this->diagnosis,0,1);
         $pdf->SetFont('Arial','');
-        $pdf->MultiCell($pdf->w-20,10,'You have therefore been given this medication: ');
+        $pdf->Write($pdf->w-20,10,'You have therefore been given this medication: ');
         $pdf->SetFont('Arial','B');
         $pdf->Cell(30,10,'SOME MEDICATION',0,1);
         $pdf->SetFont('Arial','');
@@ -271,10 +271,10 @@ class Diagnosis {
                 . ' account or by clicking HERE.',0,1);
         $pdf->Cell(50,20,'',0,1);
         $pdf->SetFont('Arial','B',16);
-        $pdf->Cell(30,10,'Billing Information:',0,1,'C');
+        $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
         $pdf->SetFont('Arial','',12);
-        $pdf->Cell(50,10,'Doctor Services: $500',0,1,'C');
-        $pdf->Cell(50,10,'Prescription: $200','B',1,'C');
+        $pdf->Cell($pdf->w-20,10,'Doctor Services: $500',0,1,'C');
+        $pdf->Cell($pdf->w-20,10,'Prescription: $200','B',1,'C');
         $pdf->SetFont('Arial','B');
         $pdf->Cell(50,10,'Total: $700',0,1);
         $firstLastName = explode(" ", $this->patientName);
