@@ -5,6 +5,6 @@ Luke:
 
 
 Will:
-
+    - Send a pdf attachment in an email after receiving a diagnosis 
 
 Anu:
