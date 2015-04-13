@@ -15,7 +15,7 @@ class Diagnosis {
     public $error;
 
     function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
-        $this->doctorName = $doctorName;
+        $this->doctorName = $session['user']['first_name'] . ' ' . $session['user']['last_name'];
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
         $this->db = $db;
