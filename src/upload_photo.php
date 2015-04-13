@@ -56,7 +56,7 @@
                     <input type="text" class="search-query" name="search" placeholder="<?php echo $_GET['search'] ?>" >
                 </form>
                 <ul class="nav pull-right">
-                    <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
+                    <?php AccountDropdownBuilder::buildDropdown($db, $_SESSION) ?>
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div>
@@ -83,8 +83,31 @@
         //create a new bucket
         $result = $s3->putBucket("walphotobucket", S3::ACL_PUBLIC_READ);
         //move the file
+
         if ($s3->putObjectFile($fileTempName, "walphotobucket", $fileName, S3::ACL_PUBLIC_READ)) {
             echo "We successfully uploaded your file.";
+
+            $image_url = "http://walphotobucket.s3.amazonaws.com/" . $fileName;
+
+            $query = "
+            UPDATE users
+            SET
+                picture_url = :url
+            WHERE
+                id = :id
+        ";
+
+            $query_params = array(
+                ':url' => $image_url,
+                ':id' => $_SESSION['user']['id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
         }else{
             echo "Something went wrong while uploading your file... sorry.";
         }
@@ -96,19 +119,7 @@
       <input name="theFile" type="file" />
       <input name="Submit" type="submit" value="Upload">
     </form>
-<h1>All uploaded files</h1>
-<?php
-    // Get the contents of our bucket
-    $contents = $s3->getBucket("walphotobucket");
-    foreach ($contents as $file){
-    
-        $fname = $file['name'];
-        $furl = "http://walphotobucket.s3.amazonaws.com/".$fname;
-        
-        //output a link to the file
-        echo "<a href=\"$furl\">$fname</a><br />";
-    }
-?>
+
 </div>
 
 </body>

@@ -64,7 +64,7 @@
       <a href="home.php" class="brand">Hospital Management</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-            <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
+            <?php AccountDropdownBuilder::buildDropdown($db, $_SESSION) ?>
           <li><a href="home.php">Home</a></li>
         </ul>
       </div>

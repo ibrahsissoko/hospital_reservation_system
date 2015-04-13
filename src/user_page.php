@@ -61,7 +61,7 @@ if(empty($_SESSION['user'])) {
             <a href="home.php" class="brand">Hospital Management</a>
             <div class="nav-collapse">
                 <ul class="nav pull-right">
-                    <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
+                    <?php AccountDropdownBuilder::buildDropdown($db, $_SESSION) ?>
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div>
@@ -71,6 +71,10 @@ if(empty($_SESSION['user'])) {
 
 <div class="container hero-unit">
     <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?></h1> <br/>
+
+    <div class="center_image_profile">
+        <img src="<?php echo $userProfile['picture_url'] ?>" />
+    </div><br/><br/>
 
     <h2>Contact Info:</h2>
     <?php

@@ -68,7 +68,7 @@
               <input type="text" class="search-query" name="search" placeholder="<?php echo $searchText ?>" >
           </form>
         <ul class="nav pull-right">
-            <?php AccountDropdownBuilder::buildDropdown($_SESSION) ?>
+            <?php AccountDropdownBuilder::buildDropdown($db, $_SESSION) ?>
             <li><a href="logout.php">Log Out</a></li>
         </ul>
       </div>
