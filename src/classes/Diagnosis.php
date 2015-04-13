@@ -245,7 +245,9 @@ class Diagnosis {
                 . '. Here are some details of your appointment:'
                 . '. Your observations by the doctor are: '. $this->observations
                 . '. Your diagnosis by the doctor is: ' . $this->diagnosis
-                . '. Your total is $'. $this->amount_due . '<br/><br/>Thank you,<br/>Wal Consulting';
+                . '. Your total is $'. $this->amount_due 
+                . '. Attached is the official bill for the service'
+                . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
     
@@ -295,9 +297,10 @@ class Diagnosis {
         $mail->WordWrap = 70;
         $mail->Subject = "Diagnosis and Billing";
         $mail->Body    = 'Hello!<br/><br/>'
-                . 'You recently had an appointment with ' . $this->patientName . 'Email of patient is: '
+                . 'You recently had an appointment with ' . $this->patientName . '. Email of patient is: '
                 . $this->patientEmail . '. Here is'
                 . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
+                . '. Attached is the official bill for the service'
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
     }
