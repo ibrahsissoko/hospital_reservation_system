@@ -30,8 +30,8 @@
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], htmlspecialchars($_GET['diagnosis']), 
                 htmlspecialchars($_GET['observations']),$row['date'],$row['time'],$db, htmlspecialchars($_GET['medication']));
-        if($d->initiate($_SESSION)) {
-            $d->deleteAppointment($_GET['id']);
+        if ($d->initiate($_SESSION)) {
+            $d->updateAppointment();
         }
     }
     

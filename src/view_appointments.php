@@ -68,8 +68,10 @@
                 SELECT *
                 FROM appointment
                 WHERE "
-                    . $userType . "_email = :" . $userType . "Email"
-                ;
+                    . $userType . "_email = :" . $userType . "Email
+                AND
+                    completed = 0
+                ";
         $query_params = array(
             ":" . $userType . "Email" => $_SESSION["user"]["email"]
         );

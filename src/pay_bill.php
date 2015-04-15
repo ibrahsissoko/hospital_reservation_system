@@ -88,8 +88,9 @@
             if ($currentTotal == 0) {
                 echo "Thank you for paying off this bill!";
                 $query = "
-                        DELETE
-                        FROM diagnosis
+                        UPDATE diagnosis
+                        SET
+                            completed = 1
                         WHERE
                             id = :id
                        ";

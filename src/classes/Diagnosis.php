@@ -345,10 +345,11 @@ class Diagnosis {
         return $mail->send();
     }
     
-    function deleteAppointment($appointmentID) {
+    function updateAppointment($appointmentID) {
         $query = "
-                DELETE
-                FROM appointment
+                UPDATE appointment
+                SET
+                    completed = 1
                 WHERE
                     id = :id
                 ";    

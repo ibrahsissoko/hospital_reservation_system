@@ -55,6 +55,8 @@
                 FROM diagnosis
                 WHERE
                     patient_email = :email
+                AND
+                    completed = 0
                ";
         $query_params = array(
             ':email' => $_SESSION['user']['email']
