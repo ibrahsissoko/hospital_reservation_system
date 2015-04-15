@@ -216,7 +216,8 @@ if(empty($_SESSION['user'])) {
 
                     $link = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $row['id'];
                     echo "<tr><td><a href=\"". $link . "\">" . $name . "</a></td><td>" . $row['age'] . "</td><td>" . $row['sex'] 
-                            . "</td><td>" . $departmentInfo['name'] . "</td><td>" . $row['years_of_experience'] . "</td><td>MTWRF</td></tr>";
+                            . "</td><td>" . $departmentInfo['name'] . "</td><td>" . $row['years_of_experience'] . "</td><td>" 
+                            . $row['availability'] . "</td></tr>";
                 }
                 echo '</table><br/><br/>';
                 echo "* M = Monday, T = Tuesday, W = Wednesday, R = Thursday, F = Friday";

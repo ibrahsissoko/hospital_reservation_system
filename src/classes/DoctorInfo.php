@@ -20,12 +20,17 @@ class DoctorInfo extends UserInfo {
                 zip = :zip,
                 phone = :phone,
                 challenge_question_id = :challenge_question_id,
-                challenge_question_answer = :challenge_question_answer
+                challenge_question_answer = :challenge_question_answer,
+                avilability = :availability
             WHERE
                 id = :id
         ";
+        
+        foreach($post['availability'] as $day) {
+            $availability .= $day;
+        }
 
-        $query_params = $this->getQueryParams($post, $session);
+        $query_params = $this->getQueryParams($post, $session, $availability);
 
         try {
             $stmt = $db->prepare($query);
@@ -40,7 +45,7 @@ class DoctorInfo extends UserInfo {
         }
     }
 
-    function getQueryParams($post, $session) {
+    function getQueryParams($post, $session, $avilability) {
         return array(
             ':info_added' => 1,
             ':id' => $session['user']['id'],
@@ -57,7 +62,8 @@ class DoctorInfo extends UserInfo {
             ':zip' => $post['zip'],
             ':phone' => $post['phone'],
             ':challenge_question_id' => $post['challenge_question_id'],
-            ':challenge_question_answer' => $post['challenge_question_answer']
+            ':challenge_question_answer' => $post['challenge_question_answer'],
+            ':availability' => $avilability
         );
     }
 }
