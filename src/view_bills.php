@@ -48,7 +48,7 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Pay Bills:</h1> <br/><br/>
+    <h1>View Bills:</h1> <br/><br/>
     <?php
         $query = "
                 SELECT *
@@ -67,15 +67,16 @@
         }
         if ($stmt->rowCount() > 0) {
             echo '<table border="1" style="width:100%">';
-            echo '<tr><td>Doctor</td><td>Date</td><td>Time</td><td>Bill</td><td>Receipt</td></tr>';
+            echo '<tr><td>Doctor</td><td>Date</td><td>Time</td><td>Bill</td><td>Receipt</td><td>Pay</td></tr>';
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr><td>' . $row['doctor_name']. '</td><td>' . $row['date'] . '</td><td>' . $row['time'] . '</td><td>$' . $row['amount_due'] . '</td>';
-                $link = "http://wal-engproject.rhcloud.com/src/bill_receipt.php?id=" . $row['id'];
-                echo '<td><a href="' . $link . '">Receipt</a></td></tr>';
+                $link1 = "http://wal-engproject.rhcloud.com/src/bill_receipt.php?id=" . $row['id'];
+                $link2 = "http://wal-engproject.rhcloud.com/src/pay_bill.php?id=" . $row['id'];
+                echo '<td><a href="' . $link1 . '">Receipt</a></td><td><a href="' . $link2 . '">Pay</a></td></tr>';
             }
             echo '</table><br/><br/>';
         } else {
-            echo "Currently no bills to pay.";
+            echo "You have no bills to view right now.";
         }
     ?>
 </div>

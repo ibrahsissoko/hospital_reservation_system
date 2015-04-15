@@ -6,5 +6,7 @@ Luke:
 
 Will:
     - Send a pdf attachment in an email after receiving a diagnosis 
+    - Refactored diagnosis so that you click on the appointment to begin the diagnosis
+    - Listed bills to be paid in a tabular format, with the pdf receipt linked to each instance
 
 Anu:
