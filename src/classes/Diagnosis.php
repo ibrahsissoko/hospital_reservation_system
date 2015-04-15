@@ -175,7 +175,8 @@ class Diagnosis {
                     doctor_name,
                     doctor_email,
                     date,
-                    time
+                    time,
+                    diagnosis
                 ) VALUES (
                     :observations,
                     :diagnosis,
@@ -184,7 +185,8 @@ class Diagnosis {
                     :doctor_name,
                     :doctor_email,
                     :date,
-                    :time
+                    :time,
+                    :diagnosis
                 )
                 ";    
         $query_params = array(
@@ -195,13 +197,14 @@ class Diagnosis {
         ':doctor_name' => $this->doctorName,
         ':doctor_email' => $this->doctorEmail,
         ':date' => $this->date,
-        ':time' => $this->time
+        ':time' => $this->time,
+        ':diagnosis' => $this->diagnosis
     );
     try {
             $stmt = $this->db->prepare($query);
             $stmt->execute($query_params);
         } catch(PDOException $e) {
-            die("Failed to update diagnosis table. " . $e->getMessage());
+            die("Failed to update diagnosis table. " . $e->getMessage() . " Patient name: " . $this->patientName . " Doctor Name: " . $this->doctorName);
         }
     }
        
