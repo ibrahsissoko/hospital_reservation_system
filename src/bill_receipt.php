@@ -8,7 +8,7 @@ require('fpdf17/fpdf.php');
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',22);
-$pdf->Cell($pdf->w,40,'Billing Receipt',0,1,'C');
+$pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
 $pdf->SetFont('Arial','',12);
 
 $query = '
@@ -47,7 +47,9 @@ $prescriptionInfo = $stmt->fetch();
 
 $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $diagnosisInfo['patient_name'] . ', for scheduling and attending your appointment with ' . $diagnosisInfo['doctor_name']
         . '. The doctor had the following observations:',0);
-$pdf->MultiCell($pdf->w-60,10,$diagnosisInfo['observations'],0,'C');
+$pdf->SetFont('Arial','B');
+$pdf->MultiCell($pdf->w-60,8,$diagnosisInfo['observations'],0,'C');
+$pdf->SetFont('Arial','',12);
 $pdf->Write(10,'These observations led to the following diagnosis: ');
 $pdf->SetFont('Arial','B');
 $pdf->Cell(30,10,$diagnosisInfo['diagnosis'],0,1);
@@ -59,11 +61,11 @@ if (!empty($prescriptionInfo)) {
     $pdf->SetFont('Arial','');
     $pdf->Write(10,'General information: ');
     $pdf->SetFont('Arial','B');
-    $pdf->MultiCell(30,10,$prescriptionInfo['property'],0);
+    $pdf->MultiCell(60,8,$prescriptionInfo['property'],0);
     $pdf->SetFont('Arial','');
     $pdf->Write(10,'Directions of usage: ');
     $pdf->SetFont('Arial','B');
-    $pdf->MultiCell(30,10,$prescriptionInfo['usage_directions'],0);
+    $pdf->MultiCell(60,8,$prescriptionInfo['usage_directions'],0);
     $pdf->SetFont('Arial','');
 }
 $pdf->Write(10,'Please submit you payment soon by clicking on the Pay link next to your bill on the view bills page'
@@ -77,10 +79,11 @@ $pdf->SetFont('Arial','B',16);
 $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
 $pdf->SetFont('Arial','',12);
 if (!empty($prescriptionInfo)) {
-    $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $diagnosisInfo['amount_due'],0,1,'C');
+    $doctorServices = intval($diagnosisInfo['amount_due']) - intval($prescriptionInfo['price']);
+    $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $doctorServices,0,1,'C');
     $pdf->Cell($pdf->w-20,10,'Prescription: $' . $prescriptionInfo['price'],'B',1,'C');
     $pdf->SetFont('Arial','B');
-    $pdf->Cell($pdf->w-20,10,'Total: $' . $diagnosisInfo['amount_due'] + $prescriptionInfo['price'],0,1,'C');
+    $pdf->Cell($pdf->w-20,10,'Total: $' . $diagnosisInfo['amount_due'],0,1,'C');
 } else {
     $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $diagnosisInfo['amount_due'],'B',1,'C');
     $pdf->SetFont('Arial','B');
