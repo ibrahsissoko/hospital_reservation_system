@@ -30,7 +30,7 @@
         $patient_name = $_POST['patient_first_name'] . " " . $_POST['patient_last_name'];
         $doctor_name = $_SESSION["user"]["first_name"] . " " . $_SESSION["user"]["last_name"] . " " . $_SESSION['user']['degree'];
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis(row['doctor_name'] ,$row['patient_name'] ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
+        $d = new Diagnosis($row['doctor_name'] ,$row['patient_name'] ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
         $d->initiate($_SESSION);
     }
     
