@@ -12,9 +12,28 @@
         die("Redirecting to index.php");
     } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && isset($_POST['submitButton'])) {
         $patient_name = $_POST['patient_first_name'] . " " . $_POST['patient_last_name'];
-
+        $doctor_name = $_SESSION["user"]["first_name"] . " " . $_SESSION["user"]["last_name"] . " " . $_SESSION['user']['degree'];
+        $query = "
+                SELECT *
+                FROM appointment
+                WHERE
+                    doctor_name = $doctor_name
+                AND
+                    patient_name = $patient_name
+                 ";
+        try {
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+        /* 
+         * Currently just getting the first one in the list, even though the patient might
+         * have more than one appointment with the same doctor.
+         */
+        $row = $stmt->fetch();
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($_SESSION["user"]["first_name"] . $_SESSION["user"]["last_name"] ,$patient_name ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'], $db);
+        $d = new Diagnosis($doctor_name ,$patient_name ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
         $d->initiate($_SESSION);
     }
     

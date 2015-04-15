@@ -6,6 +6,8 @@ class Diagnosis {
     public $patientEmail;
     private $doctorName;
     private $patientName;
+    private $date;
+    private $time;
     private $db;
     public $patientInfo;
     private $diagnosis;
@@ -14,11 +16,13 @@ class Diagnosis {
     public $success;
     public $error;
 
-    function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$db) {
+    function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$date,$time,$db) {
         $this->doctorName = preg_replace('/([a-z])([A-Z])/s','$1 $2', $doctorName);
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
         $this->db = $db;
+        $this->date = $date;
+        $this->time = $time;
         $this->amount_due = 500.00;
         if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
@@ -169,14 +173,18 @@ class Diagnosis {
                     patient_name,
                     patient_email,
                     doctor_name,
-                    doctor_email
+                    doctor_email,
+                    date,
+                    time
                 ) VALUES (
                     :observations,
                     :diagnosis,
                     :patient_name,
                     :patient_email,
                     :doctor_name,
-                    :doctor_email
+                    :doctor_email,
+                    :date,
+                    :time
                 )
                 ";    
         $query_params = array(
@@ -185,7 +193,9 @@ class Diagnosis {
         ':patient_name' => $this->patientName,
         ':patient_email' => $this->patientEmail,
         ':doctor_name' => $this->doctorName,
-        ':doctor_email' => $this->doctorEmail
+        ':doctor_email' => $this->doctorEmail,
+        ':date' => $this->date,
+        ':time' => $this->time
     );
     try {
             $stmt = $this->db->prepare($query);

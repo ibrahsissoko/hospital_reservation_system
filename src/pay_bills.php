@@ -49,7 +49,35 @@
 
 <div class="container hero-unit">
     <h1>Pay Bills:</h1> <br/><br/>
-    <p>Currently no bills to pay.</p>
+    <?php
+        $query = "
+                SELECT *
+                FROM diagnosis
+                WHERE
+                    patient_email = :email
+               ";
+        $query_params = array(
+            ':email' => $_SESSION['user']['email']
+        );
+        try {
+            $stmt = $db->prepare($query);
+            $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+        if ($stmt->rowCount() > 0) {
+            echo '<table border="1" style="width:100%">';
+            echo '<tr><td>Doctor</td><td>Date</td><td>Time</td><td>Bill</td><td>Receipt</td></tr>';
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '<tr><td>' . $row['doctor_name']. '</td><td>' . $row['date'] . '</td><td>' . $row['time'] . '</td><td>$' . $row['amount_due'] . '</td>';
+                $link = "http://wal-engproject.rhcloud.com/src/bill_receipt.php?id=" . $row['id'];
+                echo '<td><a href="' . $link . '">Receipt</a></td></tr>';
+            }
+            echo '</table><br/><br/>';
+        } else {
+            echo "Currently no bills to pay.";
+        }
+    ?>
 </div>
 
 </body>
