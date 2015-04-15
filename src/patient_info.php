@@ -87,7 +87,53 @@
         Phone:<br/>
         <input type="text" name="phone" value = "<?php echo htmlspecialchars($_SESSION['user']['phone']);?>" pattern="[0-9]{10}"><br/>
         Insurance Provider:<br/>
-        <input type="text" name="insurance_provider" value="<?php echo htmlspecialchars($_SESSION['user']['insurance_provider']);?>" />
+        <select name="insurance_id">
+            <?php
+
+            $query = "
+                SELECT insurance_id
+                FROM users
+                WHERE
+                    id = :id
+                ";
+            $query_params = array(
+                ':id' => $_SESSION['user']['id']
+            );
+
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+
+            $row = $stmt->fetch();
+            $insuranceId = $row['insurance_id'];
+
+            $query = "
+                SELECT *
+                FROM insurance
+            ";
+
+            // execute the statement
+            try {
+                $stmt = $db->prepare($query);
+                $result = $stmt->execute();
+
+                // loop through, adding the options to the spinner
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo $row['id'] . " " . $_SESSION['user']['insurance_id'];
+                    if ($row['id'] == $insuranceId) {
+                        echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
+                    } else {
+                        echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
+                    }
+                }
+            } catch(Exception $e) {
+                die("Failed to get department information. " . $e->getMessage());
+            }
+            ?>
+        </select>
         <br/>
         Insurance Beginning Date(mm/dd/yyyy):<br/>
         <input type="text" id="datepicker2" name="insurance_begin" pattern="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" value="<?php echo $_SESSION['user']['insurance_begin'];?>"><br/>
