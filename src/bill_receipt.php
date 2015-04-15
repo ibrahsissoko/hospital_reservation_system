@@ -29,8 +29,8 @@ try {
 $diagnosisInfo = $stmt->fetch();
 
 $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $diagnosisInfo['patient_name'] . ', for scheduling and attending your appointment with ' . $diagnosisInfo['doctor_name']
-        . '. The doctor had the following observations:',0,1);
-$pdf->MultiCell($pdf->w-60,10,$diagnosisInfo['observations'],0,1,'C');
+        . '. The doctor had the following observations:',0);
+$pdf->MultiCell($pdf->w-60,10,$diagnosisInfo['observations'],0,'C');
 $pdf->Write(10,'These observations led to the following diagnosis: ');
 $pdf->SetFont('Arial','B');
 $pdf->Cell(30,10,$diagnosisInfo['diagnosis'],0,1);
