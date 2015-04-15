@@ -102,7 +102,7 @@
             }
             $insuranceInfo = $stmt1->fetch();
             //If Insurance company is other than None, deduct 90% from $currentTotal
-            if($insuranceInfo[insurance_id]!=1){
+            if($insuranceInfo['insurance_id']!=1){
                 $currentTotal *= (.10);
             }
             if ($currentTotal == 0) {
@@ -135,8 +135,10 @@
                 echo "<option value=$currentTotal>$$currentTotal</option></select><br/>";
                 echo 'Current Bill:<br/>';
                 echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
-                echo 'Current Bill with Insurance coverage of 90% :<br/>';
-                echo '<input type="text" name="current_bill_insurance" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
+                if($insuranceInfo['insurance_id']!=1){
+                    echo 'Current Bill with Insurance coverage of 90% :<br/>';
+                    echo '<input type="text" name="current_bill_insurance" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
+                }
                 echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
             }
         ?>
