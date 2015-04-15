@@ -29,7 +29,9 @@
         $row = $stmt->fetch();
         // Send an email to the doctor and/or patient about the diagnosis.
         $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], $_GET['diagnosis'], $_GET['observations'],$row['date'],$row['time'],$db);
-        $d->initiate($_SESSION);
+        if($d->initiate($_SESSION)) {
+            $d->deleteAppointment($_GET['id']);
+        }
     }
     
 ?>

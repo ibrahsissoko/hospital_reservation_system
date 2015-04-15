@@ -70,33 +70,36 @@ class Diagnosis {
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor($session["user"]["email"])) {
                         $this->updateDiagnosisTable();
                         $this->success = "Diagnosis emails were sent to you and the patient you named!";
+                        return true;
                     } else {
                         $this->error = "An error occurred sending confirmation emails. Try again soon.";
-                    } 
-                    break;
+                        return false;
+                    }
                 case 2:
                     $this->updateBillTable();
                     if($this->sendEmailToPatient()) {
                         $this->updateDiagnosisTable();
                         $this->success = "A diagnosis confirmation email was sent to the patient!";
+                        return true;
                     } else {
                         $this->error = "An error occurred sending the patient's confirmation email. Try again soon.";
-                    } 
-                    break;
+                        return false;
+                    }
                 case 3:
                     $this->updateBillTable();
                     if($this->sendEmailToDoctor($session["user"]["email"])) {
                         $this->updateDiagnosisTable();
                         $this->success = "You were sent a confirmation email regarding this diagnosis!";
+                        return true;
                     } else {
                         $this->error = "An error occurred sending your confirmation email. Try again soon.";
-                    } 
-                    break;
+                        return false;
+                    }
                 case 4:
                     $this->updateBillTable();
                     $this->updateDiagnosisTable();
                     $this->error = "Diagnosis emails were NOT sent to you and the patient you named!";
-                    break;
+                    return true;
                 default:
                     die("An internal error occurred.");
             }
@@ -313,5 +316,23 @@ class Diagnosis {
                 . '. Attached is the official bill for the service'
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
         return $mail->send();
+    }
+    
+    function deleteAppointment($appointmentID) {
+        $query = "
+                DELETE
+                FROM appointment
+                WHERE
+                    id = :id
+                ";    
+        $query_params = array(
+            ':id' => $appointmentID
+        );
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute($query_params);
+        } catch(PDOException $e) {
+            die("Failed to delete appointment. " . $e->getMessage());
+        }
     }
 }
