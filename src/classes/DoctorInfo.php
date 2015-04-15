@@ -2,6 +2,8 @@
 
 class DoctorInfo extends UserInfo {
 
+    private $availability;
+    
     protected function insertIntoDatabase($post, $session, $db) {
         $query = "
             UPDATE users
@@ -27,10 +29,10 @@ class DoctorInfo extends UserInfo {
         ";
         
         foreach($post['availability'] as $day) {
-            $availability .= $day;
+            $this->availability .= $day;
         }
 
-        $query_params = $this->getQueryParams($post, $session, $availability);
+        $query_params = $this->getQueryParams($post, $session);
 
         try {
             $stmt = $db->prepare($query);
@@ -45,7 +47,7 @@ class DoctorInfo extends UserInfo {
         }
     }
 
-    function getQueryParams($post, $session, $avilability) {
+    function getQueryParams($post, $session) {
         return array(
             ':info_added' => 1,
             ':id' => $session['user']['id'],
@@ -63,7 +65,7 @@ class DoctorInfo extends UserInfo {
             ':phone' => $post['phone'],
             ':challenge_question_id' => $post['challenge_question_id'],
             ':challenge_question_answer' => $post['challenge_question_answer'],
-            ':availability' => $avilability
+            ':availability' => $this->availability
         );
     }
 }
