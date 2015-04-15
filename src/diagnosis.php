@@ -28,7 +28,7 @@
         }
         $row = $stmt->fetch();
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
+        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], $_GET['diagnosis'], $_GET['observations'],$row['date'],$row['time'],$db);
         $d->initiate($_SESSION);
     }
     
@@ -94,14 +94,15 @@
         $patientFLName = explode(" ", $appointmentInfo["patient_name"]);
     ?>
     <form action="diagnosis.php" method="get">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']);?>" />
         Doctor First Name:<br/>
         <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["user"]["first_name"];?>" readonly="readonly" /><br/>
         Doctor Last Name:<br/>
         <input type="text" name="doctor_last_name" value="<?php echo $_SESSION["user"]["last_name"];?>" readonly="readonly" /><br/>
         Patient First Name:<br/>
-        <input type="text" name="patient_first_name" value="<?php echo $patientFLName[0];?>" readonly="readonly" /><br/>
+        <input type="text" name="patient_first_name" value="<?php echo (!empty($patientFLName[0])) ? $patientFLName[0] : htmlspecialchars($_GET['patient_first_name']);?>" readonly="readonly" /><br/>
         Patient Last Name:<br/>
-        <input type="text" name="patient_last_name" value="<?php echo $patientFLName[1];?>" readonly="readonly" /><br/>
+        <input type="text" name="patient_last_name" value="<?php echo (!empty($patientFLName[1])) ? $patientFLName[1] : htmlspecialchars($_GET['patient_last_name']);?>" readonly="readonly" /><br/>
         Observations:<br/>
         <textarea name="observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_GET["observations"]);?>" ></textarea><br/>
         Diagnosis:<br/>
