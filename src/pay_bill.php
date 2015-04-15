@@ -17,7 +17,7 @@
                     id = :id
                ";
         $query_params = array(
-            ':newTotal' => intval($_GET['current_bill_insurance']) - intval($_GET['amount_paying']),
+            ':newTotal' => intval($_GET['current_bill']) - intval($_GET['amount_paying']),
             ':id' => $_GET['id']
         );
         try {
@@ -137,7 +137,7 @@
                 echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
                 if($insuranceInfo['insurance_id']!=1){
                     echo 'Current Bill with Insurance coverage of 90% :<br/>';
-                    echo '<input type="text" name="current_bill_insurance" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
+                    echo '<input type="text" name="current_bill" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
                 }
                 echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
             }
