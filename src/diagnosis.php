@@ -110,14 +110,34 @@
         Diagnosis:<br/>
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_GET["diagnosis"]);?>" /><br/>
         <br/><br/>
+        <input type="submit" name="prescibe" class="btn btn-info" value="Prescribe Medication" /><br/>
+        <?php
+            if (isset($_GET['prescribe'])) {
+                echo '<select name="medication">';            
+                echo '<option value="Medication" selected="selected" >Medication</option>';
+                $query = '
+                        SELECT *
+                        FROM prescription
+                        ';
+                try {
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
+                } catch(PDOException $ex) {
+                    die("Failed to run query: " . $ex->getMessage());
+                }
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value=\"" . $row['drug_name'] . "\">" . $row['drug_name'] . "</option>";
+                }
+                echo "</select><br/><br/>";
+            }
+        ?>
         <input type="submit" name = "submitButton" class="btn btn-info" value="Save" />
-    
+        
         <span class="success"><?php echo $d->success;?></span>
         <span class="error"><?php echo $d->error;?></span>
         
     </form>
     <br/>
-    <a href="prescription.php">Prescribe Medication</a>
 </div>
 
 </body>
