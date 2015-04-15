@@ -78,15 +78,35 @@
 
 <div class="container hero-unit">
     <h1>Diagnosis Form:</h1> <br />
+    
+    <?php 
+        $query = '
+                SELECT *
+                FROM appointment
+                WHERE
+                    id = :id
+                ';
+        $query_params = array(
+            ':id' => $_GET['id']
+        );
+        try {
+            $stmt = $db->prepare($query);
+            $stmt->execute($query_params);
+        } catch(PDOException $ex) {
+            die("Failed to run query: " . $ex->getMessage());
+        }
+        $appointmentInfo = $stmt->fetch();
+        $patientFLName = explode(" ", $appointmentInfo["patient_name"]);
+    ?>
     <form action="diagnosis.php" method="post">
         Doctor First Name:<br/>
-        <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["user"]["first_name"];?>" /><br/>
+        <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["user"]["first_name"];?>" readonly="readonly" /><br/>
         Doctor Last Name:<br/>
-        <input type="text" name="doctor_last_name" value="<?php echo $_SESSION["user"]["last_name"];?>" /><br/>
+        <input type="text" name="doctor_last_name" value="<?php echo $_SESSION["user"]["last_name"];?>" readonly="readonly" /><br/>
         Patient First Name:<br/>
-        <input type="text" name="patient_first_name" value="<?php echo htmlspecialchars($_POST["patient_first_name"]);?>" /><br/>
+        <input type="text" name="patient_first_name" value="<?php echo $patientFLName[0];?>" readonly="readonly" /><br/>
         Patient Last Name:<br/>
-        <input type="text" name="patient_last_name" value="<?php echo htmlspecialchars($_POST["patient_last_name"]);?>" /><br/>
+        <input type="text" name="patient_last_name" value="<?php echo $patientFLName[1];?>" readonly="readonly" /><br/>
         Observations:<br/>
         <textarea name="observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_POST["observations"]);?>" ></textarea><br/>
         Diagnosis:<br/>

@@ -86,8 +86,13 @@
             } else {
                 $upCase = "Patient";
             }
-            echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
-            . '<td>Reschedule</td><td>Cancel</td></tr>';
+            if ($userType == "doctor") {
+                echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
+                    . '<td>Diagnose</td><td>Cancel</td></tr>';
+            } else {
+                echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
+                    . '<td>Reschedule</td><td>Cancel</td></tr>';
+            }
             // Loop over query from appointment table.
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Need to query the users table to get the user ID we are looking for
@@ -140,11 +145,20 @@
                 $entry3 = $stmt3->fetch();
                 $link2 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry2['id'];
                 $link3 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry3['id'];
-                echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
-                        . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
-                        . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"reschedule_appointment.php?id=" . $row['id'] 
-                        . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id'] 
-                        . "\">Cancel</a></td></tr>";
+                
+                if ($userType == "doctor") {
+                    echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
+                            . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
+                            . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"diagnosis.php?id=" . $row['id'] 
+                            . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id'] 
+                            . "\">Cancel</a></td></tr>";
+                } else {
+                    echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
+                            . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
+                            . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"reschedule_appointment.php?id=" . $row['id'] 
+                            . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id'] 
+                            . "\">Cancel</a></td></tr>";
+                }
             }
             echo '</table><br/><br/>';
             if($stmt->rowCount() == 1) {

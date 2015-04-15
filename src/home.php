@@ -85,7 +85,6 @@
             echo "<a href=\"pay_bills.php\">Pay Bills</a><br/>";
         } else if ($userType == "doctor") {
             echo "<a href=\"advanced_user_search.php\">Advanced User Search</a><br/>";
-            echo "<a href=\"diagnosis.php\">Diagnosis Form</a><br/>";
         }
 
         echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";
