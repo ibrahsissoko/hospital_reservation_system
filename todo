@@ -1,2 +1,14 @@
-- Image uploading
-    - (http://code.tutsplus.com/tutorials/how-to-use-amazon-s3-php-to-dynamically-store-and-manage-files-with-ease--net-31)
+Will:
+- code days available into doctor info page. 
+	- Tie that into the searching and scheduling appointments
+- Don’t delete the appointments in the database, just filter the past ones out of the appointment viewing
+
+Luke:
+- Find out what we need to do for admins
+	- what actions trigger email notifications?
+	- What type of history do we need to show on the user pages
+- SRS document updates
+
+Anu:
+- insurance and applying it to billing
+- Logo on the PDF to spice it up a bit
