@@ -92,7 +92,7 @@
                         id = :id
                    ";
             $query_params1 = array(
-                ':id' => $_SESSION['user']['insurance_id']
+                ':id' => $_SESSION['user']['id']
             );
             try {
                 $stmt1 = $db->prepare($query1);
