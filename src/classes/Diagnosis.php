@@ -98,7 +98,7 @@ class Diagnosis {
                 case 4:
                     $this->updateBillTable();
                     $this->updateDiagnosisTable();
-                    $this->error = "Diagnosis emails were NOT sent to you and the patient you named!";
+                    $this->success = "Diagnosis saved!";
                     return true;
                 default:
                     die("An internal error occurred.");

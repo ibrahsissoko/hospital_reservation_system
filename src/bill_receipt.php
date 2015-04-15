@@ -1,4 +1,8 @@
 <?php
+include_once('../AutoLoader.php');
+AutoLoader::registerDirectory('../src/classes');
+
+require("config.php");
 require('fpdf17/fpdf.php');
 
 $pdf = new FPDF();
