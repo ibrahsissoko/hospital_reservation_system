@@ -5,6 +5,7 @@ AutoLoader::registerDirectory('../src/classes');
 require("config.php");
 require('fpdf17/fpdf.php');
 
+$logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',22);
@@ -44,7 +45,7 @@ try {
     die("Failed to run query: " . $ex->getMessage());
 }
 $prescriptionInfo = $stmt->fetch();
-
+$pdf->Image($logo, 5, 70, 33.78);
 $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $diagnosisInfo['patient_name'] . ', for scheduling and attending your appointment with ' . $diagnosisInfo['doctor_name']
         . '. The doctor had the following observations:',0);
 $pdf->SetFont('Arial','B');
