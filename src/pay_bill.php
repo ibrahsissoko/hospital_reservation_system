@@ -16,6 +16,7 @@
                 WHERE
                     id = :id
                ";
+        die("Amount due: " . intval($_GET['amount_due']) . " Amount paying: " . intval($_GET['amount_paying']));
         $query_params = array(
             ':newTotal' => intval($_GET['amount_due']) - intval($_GET['amount_paying']),
             ':id' => $_GET['id']
@@ -86,7 +87,7 @@
             $billInfo = $stmt->fetch();
             $currentTotal = intval($billInfo['amount_due']);
             if ($currentTotal == 0) {
-                echo "Thank for paying off this bill!";
+                echo "Thank you for paying off this bill!";
                 $query = "
                         DELETE
                         FROM diagnosis

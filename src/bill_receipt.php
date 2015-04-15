@@ -43,7 +43,7 @@ $pdf->Write(10,'Please submit you payment soon by clicking on the Pay Bills link
         . ' account or by clicking ',0,1);
 $pdf->SetTextColor(0,0,255);
 $pdf->SetFont('','U');
-$pdf->Write(30,10,'here','http://wal-engproject.rhcloud.com/src/pay_bill.php?id=' . $_GET['id']);
+$pdf->Write(10,'here','http://wal-engproject.rhcloud.com/src/pay_bill.php?id=' . $_GET['id']);
 $pdf->SetTextColor(0,0,0);
 $pdf->Cell(50,20,'',0,1);
 $pdf->SetFont('Arial','B',16);
@@ -52,6 +52,6 @@ $pdf->SetFont('Arial','',12);
 $pdf->Cell($pdf->w-20,10,'Doctor Services: ' . $diagnosisInfo['amount_due'],0,1,'C');
 $pdf->Cell($pdf->w-20,10,'Prescription: $0','B',1,'C');
 $pdf->SetFont('Arial','B');
-$pdf->Cell(50,10,'Total: ' . $diagnosisInfo['amount_due'],0,1);
+$pdf->Cell(50,10,'Total: ' . $diagnosisInfo['amount_due'],0,1,'C');
 $pdf->Output();
 ?>
