@@ -70,10 +70,11 @@
                 WHERE "
                     . $userType . "_email = :" . $userType . "Email
                 AND
-                    completed = 0
+                    completed = :completed
                 ";
         $query_params = array(
-            ":" . $userType . "Email" => $_SESSION["user"]["email"]
+            ":" . $userType . "Email" => $_SESSION["user"]["email"],
+            ":completed" => "1"
         );
         try {
             $stmt = $db->prepare($query);
