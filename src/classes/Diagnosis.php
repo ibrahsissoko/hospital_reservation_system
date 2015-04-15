@@ -9,6 +9,7 @@ class Diagnosis {
     private $date;
     private $time;
     private $db;
+    private $prescriptionID;
     public $patientInfo;
     private $diagnosis;
     private $observations;
@@ -16,7 +17,7 @@ class Diagnosis {
     public $success;
     public $error;
 
-    function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$date,$time,$db) {
+    function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$date,$time,$db,$medication) {
         $this->doctorName = preg_replace('/([a-z])([A-Z])/s','$1 $2', $doctorName);
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
@@ -45,6 +46,20 @@ class Diagnosis {
             }
             if (empty($this->patientEmail)) {
                 $this->error = "An internal error occurred acquiring the doctor's information.";
+            }
+            if ($medication != "Medication") {
+                $query = "SELECT * FROM prescription WHERE drug_name=$medication";
+                try {
+                    $stmt = $this->db->prepare($query);
+                    $stmt->execute();
+                } catch(PDOException $e) {
+                    die("Failed to gather patient's email address.");
+                }
+                $row = $stmt->fetch();
+                $this->prescriptionID = $row['id'];
+                $this->amount_due += intval($row['price']);
+            } else {
+                $this->prescriptionID = 0;
             }
         } else {
             $this->error = "Please fill out all fields.";
@@ -151,7 +166,7 @@ class Diagnosis {
                     )
                     ";    
             $query_params = array(
-            ':amount_due' => 500,
+            ':amount_due' => $this->amount_due,
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
             ':doctor_name' => $this->doctorName,
@@ -169,6 +184,9 @@ class Diagnosis {
 
     
     function updateDiagnosisTable(){
+        
+        
+        
         $query = "
                 INSERT INTO diagnosis (
                     observations,
@@ -177,8 +195,10 @@ class Diagnosis {
                     patient_email,
                     doctor_name,
                     doctor_email,
+                    prescription_id,
                     date,
-                    time
+                    time,
+                    amount_due
                 ) VALUES (
                     :observations,
                     :diagnosis,
@@ -186,8 +206,10 @@ class Diagnosis {
                     :patient_email,
                     :doctor_name,
                     :doctor_email,
+                    :prescription_id,
                     :date,
-                    :time
+                    :time,
+                    :amount_due
                 )
                 ";    
         $query_params = array(
@@ -197,8 +219,10 @@ class Diagnosis {
         ':patient_email' => $this->patientEmail,
         ':doctor_name' => $this->doctorName,
         ':doctor_email' => $this->doctorEmail,
+        ':prescription_id' => $this->prescriptionID,
         ':date' => $this->date,
         ':time' => $this->time,
+        ':amount_due' => $this->amount_due
     );
     try {
             $stmt = $this->db->prepare($query);

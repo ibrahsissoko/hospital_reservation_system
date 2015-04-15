@@ -28,7 +28,8 @@
         }
         $row = $stmt->fetch();
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], htmlspecialchars($_GET['diagnosis']), htmlspecialchars($_GET['observations']),$row['date'],$row['time'],$db);
+        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], htmlspecialchars($_GET['diagnosis']), 
+                htmlspecialchars($_GET['observations']),$row['date'],$row['time'],$db, htmlspecialchars($_GET['medication']));
         if($d->initiate($_SESSION)) {
             $d->deleteAppointment($_GET['id']);
         }
@@ -110,7 +111,7 @@
         Diagnosis:<br/>
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_GET["diagnosis"]);?>" /><br/>
         <br/><br/>
-        <input type="submit" name="prescibe" class="btn btn-info" value="Prescribe Medication" /><br/>
+        <input type="submit" name="prescribe" class="btn btn-info" value="Prescribe Medication" /><br/><br/>
         <?php
             if (isset($_GET['prescribe'])) {
                 echo '<select name="medication">';            
