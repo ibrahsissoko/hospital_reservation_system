@@ -48,12 +48,15 @@ class Diagnosis {
                 $this->error = "An internal error occurred acquiring the doctor's information.";
             }
             if (!empty($medication) && $medication != "Medication") {
-                $query = "SELECT * FROM prescription WHERE drug_name=$medication";
+                $query = "SELECT * FROM prescription WHERE drug_name = :drug_name";
+                $query_params = array(
+                    ':drug_name' => $medication
+                );
                 try {
                     $stmt = $this->db->prepare($query);
-                    $stmt->execute();
+                    $stmt->execute($query_params);
                 } catch(PDOException $e) {
-                    die("Failed to gather patient's email address. " . $e->getMessage());
+                    die("Failed to gather prescription information. " . $e->getMessage());
                 }
                 $row = $stmt->fetch();
                 $this->prescriptionID = $row['id'];
