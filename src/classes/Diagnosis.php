@@ -20,6 +20,7 @@ class Diagnosis {
         $this->doctorName = preg_replace('/([a-z])([A-Z])/s','$1 $2', $doctorName);
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
+        die("In constructor. Patient name: " . $patientName . " Doctor Name: " . $doctorName);
         $this->db = $db;
         $this->date = $date;
         $this->time = $time;
@@ -175,8 +176,7 @@ class Diagnosis {
                     doctor_name,
                     doctor_email,
                     date,
-                    time,
-                    diagnosis
+                    time
                 ) VALUES (
                     :observations,
                     :diagnosis,
@@ -185,8 +185,7 @@ class Diagnosis {
                     :doctor_name,
                     :doctor_email,
                     :date,
-                    :time,
-                    :diagnosis
+                    :time
                 )
                 ";    
         $query_params = array(
@@ -198,13 +197,12 @@ class Diagnosis {
         ':doctor_email' => $this->doctorEmail,
         ':date' => $this->date,
         ':time' => $this->time,
-        ':diagnosis' => $this->diagnosis
     );
     try {
             $stmt = $this->db->prepare($query);
             $stmt->execute($query_params);
         } catch(PDOException $e) {
-            die("Failed to update diagnosis table. " . $e->getMessage() . " Patient name: " . $this->patientName . " Doctor Name: " . $this->doctorName);
+            die("Failed to update diagnosis table. " . $e->getMessage());
         }
     }
        
