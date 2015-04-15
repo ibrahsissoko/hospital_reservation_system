@@ -16,7 +16,7 @@
                 WHERE
                     id = :id
                ";
-        die("Amount due: " . intval($_GET['amount_due']) . " Amount paying: " . intval($_GET['amount_paying']));
+        die($_GET['amount_due'] . ": " . intval($_GET['amount_due']) . " " . $_GET['amount_paying'] . ": " . intval($_GET['amount_paying']));
         $query_params = array(
             ':newTotal' => intval($_GET['amount_due']) - intval($_GET['amount_paying']),
             ':id' => $_GET['id']
