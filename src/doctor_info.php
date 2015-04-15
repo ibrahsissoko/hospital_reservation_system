@@ -115,11 +115,11 @@
         <input type="text" name="years_of_experience" value="<?php echo htmlspecialchars($_SESSION['user']['years_of_experience']);?>" />
         <br/>
         Availability:<br/>
-        <input type="checkbox" name="availability[]" value="M" <?php (strpos($_SESSION['user']['availability'],'M') !== false) ? 'checked' : '' ?> />Monday<br/>
-        <input type="checkbox" name="availability[]" value="T" <?php (strpos($_SESSION['user']['availability'],'T') !== false) ? 'checked' : '' ?> />Tuesday<br/>
-        <input type="checkbox" name="availability[]" value="W" <?php (strpos($_SESSION['user']['availability'],'W') !== false) ? 'checked' : '' ?> />Wednesday<br/>
-        <input type="checkbox" name="availability[]" value="R" <?php (strpos($_SESSION['user']['availability'],'R') !== false) ? 'checked' : '' ?> />Thursday<br/>
-        <input type="checkbox" name="availability[]" value="F" <?php (strpos($_SESSION['user']['availability'],'F') !== false) ? 'checked' : '' ?> />Friday<br/><br/>
+        <input type="checkbox" name="availability[]" value="M" <?php (strpos($_SESSION['user']['availability'],'M') !== false) ? 'checked=checked' : '' ?> /> Monday<br/>
+        <input type="checkbox" name="availability[]" value="T" <?php (strpos($_SESSION['user']['availability'],'T') !== false) ? 'checked=checked' : '' ?> /> Tuesday<br/>
+        <input type="checkbox" name="availability[]" value="W" <?php (strpos($_SESSION['user']['availability'],'W') !== false) ? 'checked=checked' : '' ?> /> Wednesday<br/>
+        <input type="checkbox" name="availability[]" value="R" <?php (strpos($_SESSION['user']['availability'],'R') !== false) ? 'checked=checked' : '' ?> /> Thursday<br/>
+        <input type="checkbox" name="availability[]" value="F" <?php (strpos($_SESSION['user']['availability'],'F') !== false) ? 'checked=checked' : '' ?> /> Friday<br/><br/>
         Shift:
         <select name="shift_id">
             <?php
