@@ -124,13 +124,13 @@
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo $row['id'] . " " . $_SESSION['user']['insurance_id'];
                     if ($row['id'] == $insuranceId) {
-                        echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["name"] . "</option>";
+                        echo "<option value=\"" . $row["id"] . "\" selected=\"selected\">" . $row["insurance_company"] . "</option>";
                     } else {
-                        echo "<option value=\"" . $row["id"] . "\">" . $row["name"] . "</option>";
+                        echo "<option value=\"" . $row["id"] . "\">" . $row["insurance_company"] . "</option>";
                     }
                 }
             } catch(Exception $e) {
-                die("Failed to get department information. " . $e->getMessage());
+                die("Failed to get insurance information. " . $e->getMessage());
             }
             ?>
         </select>
