@@ -10,7 +10,7 @@
         die("Redirecting to index.php");
     } else if (isset($_GET['submitButton']) && $_GET['amount_paying'] != "Pay") {
         $query = "
-                UPDATE users
+                UPDATE diagnosis
                 SET
                     amount_due = :newTotal
                 WHERE
@@ -67,13 +67,28 @@
 <div class="container hero-unit">
     <h1>Pay Bill:</h1> <br/><br/>
     <form action="pay_bill.php" method="get">
-        <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']);?>" />
-        Enter how much you would like to pay:
-        <select name="amount_paying">
-            <option value="Pay" selected="selected" >Pay</option> 
-            <?php
+        <?php
+            $query = "
+                    SELECT *
+                    FROM diagnosis
+                    WHERE
+                        id = :id
+                   ";
+            $query_params = array(
+                ':id' => $_GET['id']
+            );
+            try {
+                $stmt = $db->prepare($query);
+                $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $billInfo = $stmt->fetch();
+            $currentTotal = intval($billInfo['amount_due']);
+            if ($currentTotal == 0) {
+                echo "Thank for paying off this bill!";
                 $query = "
-                        SELECT *
+                        DELETE
                         FROM diagnosis
                         WHERE
                             id = :id
@@ -87,18 +102,21 @@
                 } catch(PDOException $ex) {
                     die("Failed to run query: " . $ex->getMessage());
                 }
-                $billInfo = $stmt->fetch();
-                $currentTotal = intval($billInfo['amount_due']);
+            } else {
+                echo '<input type="hidden" name="id" value="' . $_GET['id'] . '" />';
+                echo 'Enter how much you would like to pay:<br/>';
+                echo '<select name="amount_paying">';            
+                echo '<option value="Pay" selected="selected" >Pay</option>';
                 while($currentTotal > 100) {
                     echo "<option value=$$currentTotal>$$currentTotal</option>";
                     $currentTotal -= 100;
                 }
-                echo "<option value=$$currentTotal>$$currentTotal</option>";
-            ?>
-        </select><br/>
-        Current Bill:
-        <input type="text" name="current_bill" value="<?php echo $billInfo['amount_due'];?>" readonly="readonly" /><br/><br/>
-        <input type="submit" name="submitButton" value="Submit"/>
+                echo "<option value=$$currentTotal>$$currentTotal</option></select><br/>";
+                echo 'Current Bill:<br/>';
+                echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
+                echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
+            }
+        ?>
     </form>
 </div>
 
