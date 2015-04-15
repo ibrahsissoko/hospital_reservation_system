@@ -117,7 +117,8 @@
                 echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
             }
         ?>
-    </form>
+    </form><br/>
+    <a href="view_bills.php">Back to bill viewing</a>
 </div>
 
 </body>
