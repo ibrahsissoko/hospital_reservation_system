@@ -16,9 +16,8 @@
                 WHERE
                     id = :id
                ";
-        die($_GET['amount_due'] . ": " . intval($_GET['amount_due']) . " " . $_GET['amount_paying'] . ": " . intval($_GET['amount_paying']));
         $query_params = array(
-            ':newTotal' => intval($_GET['amount_due']) - intval($_GET['amount_paying']),
+            ':newTotal' => intval($_GET['current_bill']) - intval($_GET['amount_paying']),
             ':id' => $_GET['id']
         );
         try {
@@ -109,10 +108,10 @@
                 echo '<select name="amount_paying">';            
                 echo '<option value="Pay" selected="selected" >Pay</option>';
                 while($currentTotal > 100) {
-                    echo "<option value=$$currentTotal>$$currentTotal</option>";
+                    echo "<option value=$currentTotal>$$currentTotal</option>";
                     $currentTotal -= 100;
                 }
-                echo "<option value=$$currentTotal>$$currentTotal</option></select><br/>";
+                echo "<option value=$currentTotal>$$currentTotal</option></select><br/>";
                 echo 'Current Bill:<br/>';
                 echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
                 echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
