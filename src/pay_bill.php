@@ -85,6 +85,26 @@
             }
             $billInfo = $stmt->fetch();
             $currentTotal = intval($billInfo['amount_due']);
+            $query1 = "
+                    SELECT *
+                    FROM users
+                    WHERE
+                        id = :id
+                   ";
+            $query_params1 = array(
+                ':id' => $_SESSION['user']['insurance_id']
+            );
+            try {
+                $stmt1 = $db->prepare($query1);
+                $stmt1->execute($query_params1);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $insuranceInfo = $stmt1->fetch();
+            //If Insurance company is other than None, deduct 90% from $currentTotal
+            if($insuranceInfo[insurance_id]!=1){
+                $currentTotal *= (.10);
+            }
             if ($currentTotal == 0) {
                 echo "Thank you for paying off this bill!";
                 $query = "
