@@ -20,7 +20,6 @@ class Diagnosis {
         $this->doctorName = preg_replace('/([a-z])([A-Z])/s','$1 $2', $doctorName);
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
-        die("In constructor. Patient name: " . $patientName . " Doctor Name: " . $doctorName);
         $this->db = $db;
         $this->date = $date;
         $this->time = $time;

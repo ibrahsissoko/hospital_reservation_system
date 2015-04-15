@@ -10,7 +10,7 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_POST['diagnosis']) && isset($_POST['submitButton'])) {
+    } else if(!empty($_GET['diagnosis']) && isset($_GET['submitButton'])) {
         $query = "
                 SELECT *
                 FROM appointment
@@ -27,10 +27,8 @@
             die("Failed to run query: " . $ex->getMessage());
         }
         $row = $stmt->fetch();
-        $patient_name = $_POST['patient_first_name'] . " " . $_POST['patient_last_name'];
-        $doctor_name = $_SESSION["user"]["first_name"] . " " . $_SESSION["user"]["last_name"] . " " . $_SESSION['user']['degree'];
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($row['doctor_name'] ,$row['patient_name'] ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
+        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
         $d->initiate($_SESSION);
     }
     
@@ -95,7 +93,7 @@
         $appointmentInfo = $stmt->fetch();
         $patientFLName = explode(" ", $appointmentInfo["patient_name"]);
     ?>
-    <form action="diagnosis.php" method="post">
+    <form action="diagnosis.php" method="get">
         Doctor First Name:<br/>
         <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["user"]["first_name"];?>" readonly="readonly" /><br/>
         Doctor Last Name:<br/>
@@ -105,9 +103,9 @@
         Patient Last Name:<br/>
         <input type="text" name="patient_last_name" value="<?php echo $patientFLName[1];?>" readonly="readonly" /><br/>
         Observations:<br/>
-        <textarea name="observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_POST["observations"]);?>" ></textarea><br/>
+        <textarea name="observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_GET["observations"]);?>" ></textarea><br/>
         Diagnosis:<br/>
-        <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_POST["diagnosis"]);?>" /><br/>
+        <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_GET["diagnosis"]);?>" /><br/>
         <br/><br/>
         <input type="submit" name = "submitButton" class="btn btn-info" value="Save" />
     
