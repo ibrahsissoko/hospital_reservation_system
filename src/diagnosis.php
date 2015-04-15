@@ -10,30 +10,27 @@
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
         die("Redirecting to index.php");
-    } else if(!empty($_POST['doctor_first_name']) && !empty($_POST['patient_first_name']) && !empty($_POST['patient_last_name']) && isset($_POST['submitButton'])) {
-        $patient_name = $_POST['patient_first_name'] . " " . $_POST['patient_last_name'];
-        $doctor_name = $_SESSION["user"]["first_name"] . " " . $_SESSION["user"]["last_name"] . " " . $_SESSION['user']['degree'];
+    } else if(!empty($_POST['diagnosis']) && isset($_POST['submitButton'])) {
         $query = "
                 SELECT *
                 FROM appointment
                 WHERE
-                    doctor_name = $doctor_name
-                AND
-                    patient_name = $patient_name
+                    id = :id
                  ";
+        $query_params = array(
+            ':id' => $_GET['id']
+        );
         try {
             $stmt = $db->prepare($query);
-            $stmt->execute();
+            $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
-        /* 
-         * Currently just getting the first one in the list, even though the patient might
-         * have more than one appointment with the same doctor.
-         */
         $row = $stmt->fetch();
+        $patient_name = $_POST['patient_first_name'] . " " . $_POST['patient_last_name'];
+        $doctor_name = $_SESSION["user"]["first_name"] . " " . $_SESSION["user"]["last_name"] . " " . $_SESSION['user']['degree'];
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($doctor_name ,$patient_name ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
+        $d = new Diagnosis(row['doctor_name'] ,$row['patient_name'] ,$_SESSION["user"]["email"], $_POST['diagnosis'], $_POST['observations'],$row['date'],$row['time'],$db);
         $d->initiate($_SESSION);
     }
     

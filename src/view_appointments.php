@@ -150,7 +150,7 @@
                     echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
                             . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
                             . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"diagnosis.php?id=" . $row['id'] 
-                            . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id'] 
+                            . "\">Diagnose</a></td><td><a href=\"cancel_appointment.php?id=". $row['id'] 
                             . "\">Cancel</a></td></tr>";
                 } else {
                     echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
