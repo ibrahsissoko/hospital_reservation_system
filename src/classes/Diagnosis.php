@@ -31,7 +31,7 @@ class Diagnosis {
             $query = "SELECT * FROM users WHERE user_type_id=1";
             try {
                 $stmt = $this->db->prepare($query);
-                $result = $stmt->execute();
+                $stmt->execute();
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"]);
                     $string2 = str_replace(' ', '', $patientName);
@@ -42,18 +42,18 @@ class Diagnosis {
                     }
                 }
             } catch(PDOException $e) {
-                die("Failed to gather patient's email address.");
+                die("Failed to gather patient's email address. " . $e->getMessage());
             }
             if (empty($this->patientEmail)) {
                 $this->error = "An internal error occurred acquiring the doctor's information.";
             }
-            if ($medication != "Medication") {
+            if (!empty($medication) && $medication != "Medication") {
                 $query = "SELECT * FROM prescription WHERE drug_name=$medication";
                 try {
                     $stmt = $this->db->prepare($query);
                     $stmt->execute();
                 } catch(PDOException $e) {
-                    die("Failed to gather patient's email address.");
+                    die("Failed to gather patient's email address. " . $e->getMessage());
                 }
                 $row = $stmt->fetch();
                 $this->prescriptionID = $row['id'];
