@@ -159,7 +159,9 @@ if(empty($_SESSION['user'])) {
                 echo "<b>" . $key . ":</b> " . $userProfile[$value] . "<br/>";
             }
         }
+        if(!empty($insurance_company)){
         echo "<b>" . 'Insurance Provider' . ":</b> " . $insurance_company . "<br/>";
+        }
         // Only patients can schedule appointments with doctors.
         if($userProfile['user_type_id'] == 2 && $_SESSION['user']['user_type_id'] == 1) {
             $link = "http://wal-engproject.rhcloud.com/src/schedule_appointment.php?id=" . $userProfile['id'];
