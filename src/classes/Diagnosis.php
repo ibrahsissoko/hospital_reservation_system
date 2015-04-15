@@ -158,7 +158,7 @@ class Diagnosis {
                 $stmt = $this->db->prepare($query);
                 $result = $stmt->execute($query_params);
             } catch(PDOException $e) {
-                die("Failed to update tables.");
+                die("Failed to update bill table. " . $e->getMessage());
             }
         }
     
@@ -199,9 +199,9 @@ class Diagnosis {
     );
     try {
             $stmt = $this->db->prepare($query);
-            $result = $stmt->execute($query_params);
+            $stmt->execute($query_params);
         } catch(PDOException $e) {
-            die("Failed to update tables.");
+            die("Failed to update diagnosis table. " . $e->getMessage());
         }
     }
        
