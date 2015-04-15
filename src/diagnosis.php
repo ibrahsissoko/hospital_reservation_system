@@ -28,7 +28,7 @@
         }
         $row = $stmt->fetch();
         // Send an email to the doctor and/or patient about the diagnosis.
-        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], $_GET['diagnosis'], $_GET['observations'],$row['date'],$row['time'],$db);
+        $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], htmlspecialchars($_GET['diagnosis']), htmlspecialchars($_GET['observations']),$row['date'],$row['time'],$db);
         if($d->initiate($_SESSION)) {
             $d->deleteAppointment($_GET['id']);
         }
@@ -106,7 +106,7 @@
         Patient Last Name:<br/>
         <input type="text" name="patient_last_name" value="<?php echo (!empty($patientFLName[1])) ? $patientFLName[1] : htmlspecialchars($_GET['patient_last_name']);?>" readonly="readonly" /><br/>
         Observations:<br/>
-        <textarea name="observations" cols="40" rows="5" value ="<?php echo htmlspecialchars($_GET["observations"]);?>" ></textarea><br/>
+        <textarea name="observations" cols="40" rows="5" ><?php echo htmlspecialchars($_GET["observations"]);?></textarea><br/>
         Diagnosis:<br/>
         <input type="text" name="diagnosis" value="<?php echo htmlspecialchars($_GET["diagnosis"]);?>" /><br/>
         <br/><br/>
