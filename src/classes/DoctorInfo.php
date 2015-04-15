@@ -23,7 +23,7 @@ class DoctorInfo extends UserInfo {
                 phone = :phone,
                 challenge_question_id = :challenge_question_id,
                 challenge_question_answer = :challenge_question_answer,
-                avilability = :availability
+                availability = :availability
             WHERE
                 id = :id
         ";
