@@ -2,6 +2,8 @@ Luke:
     - Save uploaded pictures to database
     - Apply pictures to user account dropdown and user pages
     - Link to users own information page from account dropdown
+    - Admins can view the appointments for any user
+    - Refactored and cleaned up scheduled appointments table
 
 
 Will:

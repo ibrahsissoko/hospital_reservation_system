@@ -92,7 +92,7 @@
                         id = :id
                    ";
             $query_params1 = array(
-                ':id' => $_SESSION['user']['insurance_id']
+                ':id' => $_SESSION['user']['id']
             );
             try {
                 $stmt1 = $db->prepare($query1);
@@ -102,7 +102,7 @@
             }
             $insuranceInfo = $stmt1->fetch();
             //If Insurance company is other than None, deduct 90% from $currentTotal
-            if($insuranceInfo[insurance_id]!=1){
+            if($insuranceInfo['insurance_id']!=1){
                 $currentTotal *= (.10);
             }
             if ($currentTotal == 0) {
@@ -133,8 +133,12 @@
                     $currentTotal -= 100;
                 }
                 echo "<option value=$currentTotal>$$currentTotal</option></select><br/>";
-                echo 'Current Bill:<br/>';
+                echo 'Current Bill Without Insurance:<br/>';
                 echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
+                if($insuranceInfo['insurance_id']!=1){
+                    echo 'Current Bill With Insurance Coverage Of 90% :<br/>';
+                    echo '<input type="text" name="current_bill" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
+                }
                 echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
             }
         ?>

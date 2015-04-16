@@ -75,6 +75,30 @@ if(empty($_SESSION['user'])) {
     <div class="center_image_profile">
         <img src="<?php echo $userProfile['picture_url'] ?>" />
     </div><br/><br/>
+    <?php
+    $query = "
+        SELECT *
+        FROM insurance
+        WHERE
+          id = :id
+    ";
+    $query_params = array(
+        ':id' => $userProfile['insurance_id']
+    );
+
+    try {
+        $stmt = $db->prepare($query);
+        $result = $stmt->execute($query_params);
+
+        $row = $stmt->fetch();
+        if ($row) {
+            $insurance_company = $row['insurance_company'];
+        }
+
+    } catch(PDOException $ex) {
+        die("Failed to run query: " . $ex->getMessage());
+    }
+    ?>
 
     <h2>Contact Info:</h2>
     <?php
@@ -96,7 +120,7 @@ if(empty($_SESSION['user'])) {
                     "Age" => "age",
                     "Date of Birth" => "dob",
                     "Marital Status" => "marital_status",
-                    "Insurance Provider" => "insurance_provider",
+                   // "Insurance Provider" => $insurance_company,
                     "Insurance Begin Date" => "insurance_begin",
                     "Insurance End Date" => "insurance_end",
                     "Allergies" => "allergies",
@@ -134,6 +158,18 @@ if(empty($_SESSION['user'])) {
             if(!empty($userProfile[$value])) {     
                 echo "<b>" . $key . ":</b> " . $userProfile[$value] . "<br/>";
             }
+        }
+        if(!empty($insurance_company)){
+        echo "<b>" . 'Insurance Provider' . ":</b> " . $insurance_company . "<br/>";
+        }
+
+        if ($_SESSION['user']['user_type_id'] == 4 && $userProfile['user_type_id'] != 4) {
+            // admins should be able to the users past appointments
+            echo "<h2>Appointments:</h2>";
+            $tableBuilder = new AppointmentTableBuilder();
+            $tableBuilder->showAppointments($userProfile, $db, true);
+        } else {
+
         }
         // Only patients can schedule appointments with doctors.
         if($userProfile['user_type_id'] == 2 && $_SESSION['user']['user_type_id'] == 1) {
