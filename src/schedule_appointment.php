@@ -59,6 +59,7 @@
                                 }
                                 
                                 $returnVal = "return [(";
+                                /*
                                 if (strpos($availability,'M') === false) {
                                     $returnVal .= "day != 1 && ";
                                 }
@@ -73,7 +74,7 @@
                                 }
                                 if (strpos($availability,'F') === false) {
                                     $returnVal .= "day != 5 && ";
-                                }
+                                }*/
                                 $returnVal .= "day != 6 && day != 0)];";
 
                                 echo $returnVal;
