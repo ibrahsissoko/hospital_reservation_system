@@ -167,7 +167,7 @@ if(empty($_SESSION['user'])) {
             // admins should be able to the users past appointments
             echo "<h2>Appointments:</h2>";
             $tableBuilder = new AppointmentTableBuilder();
-            $tableBuilder->showAppointments($userProfile, $db);
+            $tableBuilder->showAppointments($userProfile, $db, true);
         } else {
 
         }

@@ -50,8 +50,10 @@
 <div class="container hero-unit">
     <h1>View Appointments:</h1>  <br/><br/>
     <?php
+
         $tableBuilder = new AppointmentTableBuilder();
-        $tableBuilder->showAppointments($_SESSION['user'], $db);
+        $tableBuilder->showAppointments($_SESSION['user'], $db, false);
+    
     ?>
 </div>
 

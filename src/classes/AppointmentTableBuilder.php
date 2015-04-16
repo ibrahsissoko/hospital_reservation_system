@@ -2,7 +2,7 @@
 
 class AppointmentTableBuilder {
 
-    function showAppointments($userProfile, $db) {
+    function showAppointments($userProfile, $db, $showFinishedAppointments) {
         switch($userProfile['user_type_id']) {
             case 3: // nurse, therefore having appointment with patient
                 $userType = "nurse";
@@ -17,14 +17,31 @@ class AppointmentTableBuilder {
                 $appointmentWith = "doctor";
                 break;
         }
-        $query = "
+
+        if ($showFinishedAppointments) {
+            $query = "
+                    SELECT *
+                    FROM appointment
+                    WHERE "
+                . $userType . "_email = :" . $userType . "Email";
+            $query_params = array(
+                ":" . $userType . "Email" => $userProfile["email"]
+            );
+        } else {
+            $query = "
                 SELECT *
                 FROM appointment
                 WHERE "
-            . $userType . "_email = :" . $userType . "Email";
-        $query_params = array(
-            ":" . $userType . "Email" => $userProfile["email"]
-        );
+                . $userType . "_email = :" . $userType . "Email
+                AND
+                    completed = :completed
+                ";
+            $query_params = array(
+                ":" . $userType . "Email" => $_SESSION["user"]["email"],
+                ":completed" => "0"
+            );
+        }
+
         try {
             $stmt = $db->prepare($query);
             $result = $stmt->execute($query_params);
