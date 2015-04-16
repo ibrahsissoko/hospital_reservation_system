@@ -167,6 +167,8 @@ if(empty($_SESSION['user'])) {
             // admins should be able to the users past appointments
             echo "<h2>Appointments</h2>";
             showAppointments($userProfile, $db);
+        } else {
+
         }
         // Only patients can schedule appointments with doctors.
         if($userProfile['user_type_id'] == 2 && $_SESSION['user']['user_type_id'] == 1) {
@@ -184,7 +186,7 @@ if(empty($_SESSION['user'])) {
 <?php
 
 function showAppointments($userProfile, $db) {
-    switch($userProfile['user']['user_type_id']) {
+    switch($userProfile['user_type_id']) {
         case 3: // nurse, therefore having appointment with patient
             $userType = "nurse";
             $appointmentWith = "patient";
