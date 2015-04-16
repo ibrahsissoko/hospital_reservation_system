@@ -108,6 +108,7 @@
 <div class="container hero-unit">
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
+        <?php echo "Availability: " . $availability . " Returning: " . $returnVal;?>
         Which Doctor Would You Like?<br/>
         <select name="doctor_name" id="doctor_name" onchange="doctorNameUpdated()">
             <?php
@@ -134,7 +135,7 @@
                 
                 if (!$docInfo && empty($_POST['doctor_name'])) {
                     // Create a blank entry and select it.
-                    echo "<option value=\"\" selected=\"selected\">" . $availability . " " . $returnVal .  "</option>";
+                    echo "<option value=\"\" selected=\"selected\"></option>";
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
