@@ -39,8 +39,23 @@
             beforeShowDay: function(date) {
                         var day = date.getDay();
                         <?php
+                            if(!empty($_GET['id'])) {
+                                $query = "
+                                        SELECT *
+                                        FROM users
+                                        WHERE
+                                            id = " . $_GET['id']
+                                        ;
+                                try {
+                                    $stmt = $db->prepare($query);
+                                    $result = $stmt->execute();
+                                    $docInfo = $stmt->fetch();
+                                } catch(PDOException $e) {
+                                    die("Failed to run query: " . $e->getMessage());
+                                }
+                            }
                             $availability = "Dummy value";
-                            if (!empty($_POST['doctor_name'])) {
+                            if (!empty($_POST['doctor_name']) || !empty($docInfo)) {
                                 $query = "SELECT * FROM users WHERE user_type_id=2";
                                 try {
                                     $stmt = $db->prepare($query);
@@ -49,7 +64,11 @@
                                         // Currently assuming no doctors will have the same first name, last
                                         // name, and degree.
                                         $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
-                                        $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctor_name']));
+                                        if (!empty($_POST['doctor_name'])) {
+                                            $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctor_name']));
+                                        } else {
+                                            $string2 = str_replace(' ', '', htmlspecialchars($docInfo['doctor_name']));
+                                        }
                                         if(strcmp($string1, $string2) == 0) {
                                             $availability = $row['availability'];
                                             break;
@@ -112,21 +131,6 @@
         Which Doctor Would You Like?<br/>
         <select name="doctor_name" id="doctor_name" onchange="doctorNameUpdated()">
             <?php
-            if(!empty($_GET['id'])) {
-                $query = "
-                        SELECT *
-                        FROM users
-                        WHERE
-                            id = " . $_GET['id']
-                        ;
-                try {
-                    $stmt = $db->prepare($query);
-                    $result = $stmt->execute();
-                    $docInfo = $stmt->fetch();
-                } catch(PDOException $e) {
-                    die("Failed to run query: " . $e->getMessage());
-                }
-            }
             // Only select doctors.
             $query = "SELECT * FROM users WHERE user_type_id=2";
             try {
