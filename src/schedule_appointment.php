@@ -39,7 +39,6 @@
             beforeShowDay: function(date) {
                         var day = date.getDay();
                         <?php
-                        /*
                             if (!empty($_POST['doctor_name'])) {
                                 $query = "SELECT * FROM users WHERE user_type_id=2";
                                 try {
@@ -56,7 +55,7 @@
                                         }
                                     }
                                 } catch(PDOException $e) {
-                                    die("Failed to gather doctor's email address.");
+                                    die("Failed to gather doctor availability. " . $e->getMessage());
                                 }
                                 
                                 // Do something here with availability.
@@ -91,12 +90,11 @@
                                 if (strlen($returnVal) > 10) {
                                     $returnVal .= " && ";
                                 }
-                                $returnVal .= "day != 6 && day != 7), ''];";
+                                $returnVal = "[(day != 6 && day != 7)];";
 
-                                echo "return [(day != 6 && day != 7), ''];";
-                            }*/
-                        ?>
-                        return [(day != 1 && day != 2)];       
+                                echo $returnVal;
+                            }
+                        ?>    
                     }});});
     </script>
 </head>
