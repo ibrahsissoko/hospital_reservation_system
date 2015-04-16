@@ -206,7 +206,7 @@ function showAppointments($userProfile, $db) {
                 WHERE "
         . $userType . "_email = :" . $userType . "Email";
     $query_params = array(
-        ":" . $userType . "Email" => $_SESSION["user"]["email"]
+        ":" . $userType . "Email" => $userProfile["email"]
     );
     try {
         $stmt = $db->prepare($query);
