@@ -73,9 +73,9 @@
                                 } catch(PDOException $e) {
                                     die("Failed to gather doctor availability. " . $e->getMessage());
                                 }
-                                
+                            }
+                            if (!empty($availability)) {
                                 $returnVal = "return [(";
-                                
                                 if (strpos($availability,'M') === false) {
                                     $returnVal .= "day != 1 && ";
                                 }
@@ -92,7 +92,6 @@
                                     $returnVal .= "day != 5 && ";
                                 }
                                 $returnVal .= "day != 6 && day != 0)];";
-
                                 echo $returnVal;
                             }
                         ?>    
