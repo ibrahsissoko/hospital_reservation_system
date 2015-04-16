@@ -53,7 +53,7 @@
 
         $tableBuilder = new AppointmentTableBuilder();
         $tableBuilder->showAppointments($_SESSION['user'], $db, false);
-    
+
     ?>
 </div>
 
