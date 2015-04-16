@@ -90,7 +90,7 @@
                                 if (strlen($returnVal) > 10) {
                                     $returnVal .= " && ";
                                 }
-                                $returnVal = "return [(day != 6 && day != 7)];";
+                                $returnVal .= "day != 6 && day != 0)];";
 
                                 echo $returnVal;
                             }
