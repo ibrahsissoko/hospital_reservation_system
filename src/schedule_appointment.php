@@ -39,6 +39,7 @@
             beforeShowDay: function(date) {
                         var day = date.getDay();
                         <?php
+                            $availability = "Dummy value";
                             if (!empty($_POST['doctor_name'])) {
                                 $query = "SELECT * FROM users WHERE user_type_id=2";
                                 try {
@@ -48,7 +49,7 @@
                                         // Currently assuming no doctors will have the same first name, last
                                         // name, and degree.
                                         $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
-                                        $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctorName']));
+                                        $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctor_name']));
                                         if(strcmp($string1, $string2) == 0) {
                                             $availability = $row['availability'];
                                             break;
