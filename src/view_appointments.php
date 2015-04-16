@@ -74,7 +74,7 @@
                 ";
         $query_params = array(
             ":" . $userType . "Email" => $_SESSION["user"]["email"],
-            ":completed" => "1"
+            ":completed" => "0"
         );
         try {
             $stmt = $db->prepare($query);

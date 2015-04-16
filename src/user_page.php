@@ -204,13 +204,9 @@ function showAppointments($userProfile, $db) {
                 SELECT *
                 FROM appointment
                 WHERE "
-        . $userType . "_email = :" . $userType . "Email
-                AND
-                    completed = :completed
-                ";
+        . $userType . "_email = :" . $userType . "Email";
     $query_params = array(
-        ":" . $userType . "Email" => $_SESSION["user"]["email"],
-        ":completed" => "1"
+        ":" . $userType . "Email" => $_SESSION["user"]["email"]
     );
     try {
         $stmt = $db->prepare($query);
