@@ -32,10 +32,14 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: 
-                    function(date) {
+    <script>$(function() {
+        $( "#datepicker" ).datepicker( {
+            minDate: "+1D", 
+            maxDate: "+6M", 
+            beforeShowDay: function(date) {
                         var day = date.getDay();
                         <?php
+                        /*
                             if (!empty($_POST['doctor_name'])) {
                                 $query = "SELECT * FROM users WHERE user_type_id=2";
                                 try {
@@ -90,9 +94,9 @@
                                 $returnVal .= "day != 6 && day != 7), ''];";
 
                                 echo "return [(day != 6 && day != 7), ''];";
-                            }
+                            }*/
                         ?>
-                        alert("returnVal = " . <?php echo $returnVal?>);        
+                        return [(day != 1 && day != 2)];       
                     }});});
     </script>
 </head>
