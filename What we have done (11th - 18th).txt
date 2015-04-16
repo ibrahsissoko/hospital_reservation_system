@@ -11,5 +11,7 @@ Will:
     - Refactored diagnosis so that you click on the appointment to begin the diagnosis
     - Listed bills to be paid in a tabular format, with the pdf receipt linked to each instance
     - Basic bill paying scheme
+    - Allow a doctor to indicate which days of the week they are available for appointments
+    - Patients can only schedule appointments on days that the doctor is available during the week
 
 Anu:
