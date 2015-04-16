@@ -112,7 +112,7 @@ class AppointmentTableBuilder {
                         . "\">Cancel</a></td></tr>";
                 }
             }
-            echo '</table><br/><br/>';
+            echo '</table><br/>';
             if($stmt->rowCount() == 1) {
                 echo "Click on the " . $appointmentWith . "'s  or nurse's name to learn more information about them.";
             } else if ($stmt->rowCount() > 1) {
