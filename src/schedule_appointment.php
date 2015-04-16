@@ -88,12 +88,11 @@
                                     $returnVal .= " && ";
                                 }
                                 $returnVal .= "day != 6 && day != 7), ''];";
-                                
-                                die("Return val = " . $returnVal);
 
                                 echo "return [(day != 6 && day != 7), ''];";
                             }
                         ?>
+                        alert("returnVal = " . <?php echo $returnVal?>);        
                     }});});
     </script>
 </head>
