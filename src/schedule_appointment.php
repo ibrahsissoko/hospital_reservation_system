@@ -58,37 +58,21 @@
                                     die("Failed to gather doctor availability. " . $e->getMessage());
                                 }
                                 
-                                // Do something here with availability.
-                                $availability;
                                 $returnVal = "return [(";
-                                
-                                for ($i = 0; $i<strlen($availability); $i++)  {
-                                    if($i != 0) {
-                                        $returnVal .= " && ";
-                                    }
-                                    $character = substr($availability, $i,1);
-                                    switch($character) {
-                                    case "M":
-                                        $returnVal .= "day != 1";
-                                        break;
-                                    case "T":
-                                        $returnVal .= "day != 2";
-                                        break;
-                                    case "W":
-                                        $returnVal .= "day != 3";
-                                        break;
-                                    case "R":
-                                        $returnVal .= "day != 4";
-                                        break;
-                                    case "F":
-                                        $returnVal .= "day != 5";
-                                        break;
-                                    default:
-                                        die("An error occurred determining doctor availability.");
-                                    }
+                                if (strpos($availability,'M') === false) {
+                                    $returnVal .= "day != 1 && ";
                                 }
-                                if (strlen($returnVal) > 10) {
-                                    $returnVal .= " && ";
+                                if (strpos($availability,'T') === false) {
+                                    $returnVal .= "day != 2 && ";
+                                }
+                                if (strpos($availability,'W') === false) {
+                                    $returnVal .= "day != 3 && ";
+                                }
+                                if (strpos($availability,'R') === false) {
+                                    $returnVal .= "day != 4 && ";
+                                }
+                                if (strpos($availability,'F') === false) {
+                                    $returnVal .= "day != 5 && ";
                                 }
                                 $returnVal .= "day != 6 && day != 0)];";
 
@@ -149,7 +133,7 @@
                 
                 if (!$docInfo && empty($_POST['doctor_name'])) {
                     // Create a blank entry and select it.
-                    echo "<option value=\"\" selected=\"selected\"></option>";
+                    echo "<option value=\"\" selected=\"selected\">" . $availability . " " . $returnVal .  "</option>";
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo "<option value=\"" . $row["first_name"] . " " . $row["last_name"] 
                                     . " " . $row["degree"] . "\">" . $row["first_name"] . " " 
