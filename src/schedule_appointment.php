@@ -32,7 +32,68 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: $.datepicker.noWeekends});});</script>
+    <script>$(function() {$( "#datepicker" ).datepicker({minDate: "+1D", maxDate: "+6M", beforeShowDay: 
+                    function(date) {
+                        var day = date.getDay();
+                        <?php
+                            if (!empty($_POST['doctor_name'])) {
+                                $query = "SELECT * FROM users WHERE user_type_id=2";
+                                try {
+                                    $stmt = $db->prepare($query);
+                                    $result = $stmt->execute();
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        // Currently assuming no doctors will have the same first name, last
+                                        // name, and degree.
+                                        $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
+                                        $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctorName']));
+                                        if(strcmp($string1, $string2) == 0) {
+                                            $availability = $row['availability'];
+                                            break;
+                                        }
+                                    }
+                                } catch(PDOException $e) {
+                                    die("Failed to gather doctor's email address.");
+                                }
+                                
+                                // Do something here with availability.
+                                $availability;
+                                $returnVal = "return [(";
+                                
+                                for ($i = 0; $i<strlen($availability); $i++)  {
+                                    if($i != 0) {
+                                        $returnVal .= " && ";
+                                    }
+                                    $character = substr($availability, $i,1);
+                                    switch($character) {
+                                    case "M":
+                                        $returnVal .= "day != 1";
+                                        break;
+                                    case "T":
+                                        $returnVal .= "day != 2";
+                                        break;
+                                    case "W":
+                                        $returnVal .= "day != 3";
+                                        break;
+                                    case "R":
+                                        $returnVal .= "day != 4";
+                                        break;
+                                    case "F":
+                                        $returnVal .= "day != 5";
+                                        break;
+                                    default:
+                                        die("An error occurred determining doctor availability.");
+                                    }
+                                }
+                                if (strlen($returnVal) > 10) {
+                                    $returnVal .= " && ";
+                                }
+                                $returnVal .= "day != 6 && day != 7), ''];";
+
+                                echo "return [(day != 6 && day != 7), ''];";
+                            }
+                        ?>
+                    }});});
+    </script>
 </head>
 
 <body>
