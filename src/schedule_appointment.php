@@ -60,7 +60,7 @@
                                 }
                                 
                                 $returnVal = "return [(";
-                                /*
+                                
                                 if (strpos($availability,'M') === false) {
                                     $returnVal .= "day != 1 && ";
                                 }
@@ -75,7 +75,7 @@
                                 }
                                 if (strpos($availability,'F') === false) {
                                     $returnVal .= "day != 5 && ";
-                                }*/
+                                }
                                 $returnVal .= "day != 6 && day != 0)];";
 
                                 echo $returnVal;
@@ -109,7 +109,6 @@
 <div class="container hero-unit">
     <h1>Schedule an Appointment</h1> <br />
     <form action="schedule_appointment.php" method="post" id="mainForm">
-        <?php echo "Availability: " . $availability . " Returning: " . $returnVal;?>
         Which Doctor Would You Like?<br/>
         <select name="doctor_name" id="doctor_name" onchange="doctorNameUpdated()">
             <?php
