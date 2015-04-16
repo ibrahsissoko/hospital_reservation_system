@@ -48,14 +48,14 @@
                                         ;
                                 try {
                                     $stmt = $db->prepare($query);
-                                    $result = $stmt->execute();
+                                    $stmt->execute();
                                     $docInfo = $stmt->fetch();
                                 } catch(PDOException $e) {
                                     die("Failed to run query: " . $e->getMessage());
                                 }
                             }
-                            $availability = "Dummy value";
-                            if (!empty($_POST['doctor_name']) || !empty($docInfo)) {
+                            $availability = $docInfo['availability'];
+                            if (!empty($_POST['doctor_name'])) {
                                 $query = "SELECT * FROM users WHERE user_type_id=2";
                                 try {
                                     $stmt = $db->prepare($query);
@@ -64,11 +64,7 @@
                                         // Currently assuming no doctors will have the same first name, last
                                         // name, and degree.
                                         $string1 = str_replace(' ', '', $row["first_name"] . $row["last_name"] . $row["degree"]);
-                                        if (!empty($_POST['doctor_name'])) {
-                                            $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctor_name']));
-                                        } else {
-                                            $string2 = str_replace(' ', '', htmlspecialchars($docInfo['doctor_name']));
-                                        }
+                                        $string2 = str_replace(' ', '', htmlspecialchars($_POST['doctor_name']));
                                         if(strcmp($string1, $string2) == 0) {
                                             $availability = $row['availability'];
                                             break;
