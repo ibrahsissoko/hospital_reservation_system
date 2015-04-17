@@ -11,8 +11,6 @@ $pdf->AddPage();
 $pdf->Image($logo, 5, $pdf->GetY(), 33.78);
 $pdf->SetFont('Arial','B',22);
 $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
-//$pdf->Cell(0, 0, $pdf->Image($logo,$pdf->GetX(), $pdf->GetY(),33.78), 0, 0, 'L', false);
-
 $pdf->SetFont('Arial','',12);
 
 $query = '
