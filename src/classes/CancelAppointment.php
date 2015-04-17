@@ -5,23 +5,11 @@ class CancelAppointment {
     public $success;
     public $error;
     
-    function sendEmailToUser($email, $name) {
-    
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($email);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Appointment Deleted";
-        $mail->Body    = 'Hello, ' . $name . '!<br/><br/>'
+    function sendEmailToUser($userEmail, $name) {
+        $message = 'Hello, ' . $name . '!<br/><br/>'
                 . 'You recently deleted an appointment.<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmail($userEmail,"Appointment Deleted",$message,false);
     }
 
     function updateAppointmentTable($db, $id) {             
