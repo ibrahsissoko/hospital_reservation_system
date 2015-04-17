@@ -124,6 +124,12 @@
                     die("Failed to run query: " . $ex->getMessage());
                 }
             } else {
+                echo 'Current Bill Without Insurance:<br/>';
+                echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
+                if($insuranceInfo['insurance_id']!=1){
+                    echo 'Current Bill With Insurance Coverage Of 90% :<br/>';
+                    echo '<input type="text" name="current_bill" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
+                }
                 echo '<input type="hidden" name="id" value="' . $_GET['id'] . '" />';
                 echo 'Enter how much you would like to pay:<br/>';
                 echo '<select name="amount_paying">';            
@@ -133,12 +139,7 @@
                     $currentTotal -= 100;
                 }
                 echo "<option value=$currentTotal>$$currentTotal</option></select><br/>";
-                echo 'Current Bill Without Insurance:<br/>';
-                echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
-                if($insuranceInfo['insurance_id']!=1){
-                    echo 'Current Bill With Insurance Coverage Of 90% :<br/>';
-                    echo '<input type="text" name="current_bill" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
-                }
+                
                 echo '<input type="submit" name="submitButton" class="btn btn-info" value="Submit"/>';
             }
         ?>
