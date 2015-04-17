@@ -240,9 +240,9 @@ class Diagnosis {
     function sendEmailToPatient() {
         // Generate the pdf attachment.
         $pdf = new FPDF();
-        //$logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
+        $logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
         $pdf->AddPage();
-        //$pdf->Image($logo, 5, $pdf->GetY(), 33.78);
+        $pdf->Image($logo, 5, $pdf->GetY(), 33.78);
         $pdf->SetFont('Arial','B',22);
         $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
         $pdf->SetFont('Arial','',12);
@@ -339,9 +339,9 @@ class Diagnosis {
     function sendEmailToDoctor($email) {
         // Generate the pdf attachment.
         $pdf = new FPDF();
-        //$logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
+        $logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
         $pdf->AddPage();
-        //$pdf->Image($logo, 5, $pdf->GetY(), 33.78);
+        $pdf->Image($logo, 5, $pdf->GetY(), 33.78);
         $pdf->SetFont('Arial','B',22);
         $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
         $pdf->SetFont('Arial','',12);
