@@ -10,7 +10,7 @@ $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',22);
 $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
-$pdf->Cell($pdf->w-20,40,$pdf->Image($logo, $pdf->GetX(), $pdf->GetY(), 33.78),0,1,'L');
+$pdf->Cell(40, 40, $pdf->Image($logo, $pdf->GetX(), $pdf->GetY(), 33.78),0,0,'L', false);
 
 $pdf->SetFont('Arial','',12);
 
