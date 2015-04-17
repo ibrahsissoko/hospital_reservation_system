@@ -8,10 +8,10 @@ require('fpdf17/fpdf.php');
 $logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
 $pdf = new FPDF();
 $pdf->AddPage();
+$pdf->Image($logo, 5, $pdf->GetY(), 33.78);
 $pdf->SetFont('Arial','B',22);
 $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
-$pdf->Cell(0, 0, $pdf->Image($logo,$pdf->GetX(), $pdf->GetY(),33.78), 0, 0, 'L', false);
-//$pdf->Image($logo, 5, 70, 33.78);
+//$pdf->Cell(0, 0, $pdf->Image($logo,$pdf->GetX(), $pdf->GetY(),33.78), 0, 0, 'L', false);
 
 $pdf->SetFont('Arial','',12);
 
