@@ -100,9 +100,14 @@
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
+            date_default_timezone_set('America/Chicago');
+            $date = date('m/d/Y');
             $insuranceInfo = $stmt1->fetch();
-            //If Insurance company is other than None, deduct 90% from $currentTotal
-            if($insuranceInfo['insurance_id']!=1){
+            $now = time();
+            $begin = strtotime($insuranceInfo['insurance_begin']);
+            $end = strtotime($insuranceInfo['insurance_end']);  
+            //If Insurance company is other than None & current date falls in given begin-end range        
+            if($insuranceInfo['insurance_id']!=1 && ($now > $begin && $now < $end)){
                 $currentTotal *= (.10);
             }
             if ($currentTotal == 0) {
@@ -126,7 +131,7 @@
             } else {
                 echo 'Current Bill Without Insurance:<br/>';
                 echo '<input type="text" name="current_bill" value="' . $billInfo['amount_due'] . '" readonly="readonly" /><br/><br/>';
-                if($insuranceInfo['insurance_id']!=1){
+                if($insuranceInfo['insurance_id']!=1 && ($now > $begin && $now < $end)){
                     echo 'Current Bill With Insurance Coverage Of 90% :<br/>';
                     echo '<input type="text" name="current_bill" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
                 }
