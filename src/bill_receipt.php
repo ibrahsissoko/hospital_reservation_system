@@ -10,6 +10,8 @@ $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',22);
 $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
+$pdf->Cell($pdf->w-20,40,$pdf->Image($logo, $pdf->GetX(), $pdf->GetY(), 33.78),0,1,'L');
+
 $pdf->SetFont('Arial','',12);
 
 $query = '
@@ -45,7 +47,6 @@ try {
     die("Failed to run query: " . $ex->getMessage());
 }
 $prescriptionInfo = $stmt->fetch();
-$pdf->Image($logo, 5, 70, 33.78);
 $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $diagnosisInfo['patient_name'] . ', for scheduling and attending your appointment with ' . $diagnosisInfo['doctor_name']
         . '. The doctor had the following observations:',0);
 $pdf->SetFont('Arial','B');
