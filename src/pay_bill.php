@@ -136,7 +136,7 @@
                         echo 'Current Bill With Insurance Coverage Of 90% :<br/>';
                         echo '<input type="text" name="current_bill" value="' . $currentTotal . '" readonly="readonly" /><br/><br/>';
                     }else{
-                        echo 'Your Insurance is expired! <br/>';
+                        echo 'Your Insurance is expired! <br/><br/>';
                     }
                 }
                 echo '<input type="hidden" name="id" value="' . $_GET['id'] . '" />';
