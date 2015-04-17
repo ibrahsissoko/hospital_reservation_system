@@ -47,7 +47,7 @@ try {
 }
 $prescriptionInfo = $stmt->fetch();
 $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $diagnosisInfo['patient_name'] . ', for scheduling and attending your appointment with ' . $diagnosisInfo['doctor_name']
-        . '. The doctor had the following observations:',0);
+        . ' at ' . $diagnosisInfo['time'] . ' on ' . $diagnosisInfo['date'] . '. The doctor had the following observations:',0);
 $pdf->SetFont('Arial','B');
 $pdf->MultiCell($pdf->w-60,8,$diagnosisInfo['observations'],0,'C');
 $pdf->SetFont('Arial','',12);
@@ -62,11 +62,11 @@ if (!empty($prescriptionInfo)) {
     $pdf->SetFont('Arial','');
     $pdf->Write(10,'General information: ');
     $pdf->SetFont('Arial','B');
-    $pdf->MultiCell(60,8,$prescriptionInfo['property'],0);
+    $pdf->MultiCell(80,8,$prescriptionInfo['property'],0);
     $pdf->SetFont('Arial','');
     $pdf->Write(10,'Directions of usage: ');
     $pdf->SetFont('Arial','B');
-    $pdf->MultiCell(60,8,$prescriptionInfo['usage_directions'],0);
+    $pdf->MultiCell(80,8,$prescriptionInfo['usage_directions'],0);
     $pdf->SetFont('Arial','');
 }
 $pdf->Write(10,'Please submit you payment soon by clicking on the Pay link next to your bill on the view bills page'
