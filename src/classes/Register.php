@@ -157,25 +157,14 @@ class Register {
         }
     }
 
-    function sendRegistrationEmail($email, $link) {
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = 'smtp.mailgun.org';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';                 // SMTP username
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($email);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Account verification request";
-        $mail->Body    = 'Hello!<br/><br/>'
+    function sendRegistrationEmail($userEmail, $link) {
+        $message = 'Hello!<br/><br/>'
             . 'Thanks for registering for an account through our Hospital'
             . ' Management System! Please click <a href='.$link.'>here</a> to verify your account.'
             . '<p>If you are having trouble with the link, paste the link below directly into your'
             . ' browser:<br/><br/>'.$link.'<br/><br/>Thank you,<br/>Wal Consulting';
 
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmail($userEmail,"Account verification request",$message,false);
     }
 }

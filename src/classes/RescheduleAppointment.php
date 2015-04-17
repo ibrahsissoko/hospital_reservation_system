@@ -159,67 +159,32 @@ class RescheduleAppointment {
     }
     
     function sendEmailToPatient() {
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->patientEmail);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Appointment Confirmation";
-        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
+        $message = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently rescheduled an appointment with ' . $this->doctorName
                 . ' to ' . $this->date . ' at ' . $this->time . '. The nurse assigned for '
                 . 'this apointment is ' . $this->nurseName . '. If you need to further reschedule'
                 . ' or cancel your appointment, login to your account, view your appointments, '
                 . 'and click "cancel appointment".<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmail($this->patientEmail,"Appointment Confirmation",$message,false);
     }
     
     function sendEmailToDoctor() {
-    
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->doctorEmail);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Appointment Confirmation";
-        $mail->Body    = 'Hello!<br/><br/>'
+        $message = 'Hello!<br/><br/>'
                 . $this->patientName . ' requested an appointment reschedule with you on '
                 . $this->date . ' at ' . $this->time . '. Your nurse will be ' . $this->nurseName 
                 . '.<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmail($this->doctorEmail,"Appointment Confirmation",$message,false);
     }
     
     function sendEmailToNurse() {
-    
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->doctorEmail);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Appointment Confirmation";
-        $mail->Body    = 'Hello!<br/><br/>'
+        $message = 'Hello!<br/><br/>'
                 . $this->patientName . ' requested an appointment reschedule with you on '
                 . $this->date . ' at ' . $this->time . '. The doctor will be ' . $this->doctorName 
                 . '.<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmail($this->nurseEmail,"Appointment Confirmation",$message,false);
     }
     
     function updateAppointmentTable() {

@@ -238,94 +238,7 @@ class Diagnosis {
     }
        
     function sendEmailToPatient() {
-        // Generate the pdf attachment.
-        $pdf = new FPDF();
-        //$logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
-        $pdf->AddPage();
-        //$pdf->Image($logo, 5, $pdf->GetY(), 33.78);
-        $pdf->SetFont('Arial','B',22);
-        $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
-        $pdf->SetFont('Arial','',12);
-        
-        $query = '
-                SELECT *
-                FROM prescription
-                WHERE
-                    id = :id
-                  ';
-        $query_params = array(
-            ':id' => $this->prescriptionID
-        );
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-        }
-        $prescriptionInfo = $stmt->fetch();
-
-        $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $this->patientName . ', for scheduling and attending your appointment with ' . $this->doctorName
-                . '. The doctor had the following observations:',0);
-        $pdf->SetFont('Arial','B');
-        $pdf->MultiCell($pdf->w-60,8,$this->observations,0,'C');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Write(10,'These observations led to the following diagnosis: ');
-        $pdf->SetFont('Arial','B');
-        $pdf->Cell(30,10,$this->diagnosis,0,1);
-        $pdf->SetFont('Arial','');
-        if (!empty($prescriptionInfo)) {
-            $pdf->Write(10,'You have therefore been given this medication: ');
-            $pdf->SetFont('Arial','B');
-            $pdf->Cell(30,10,$this->medication,0,1);
-            $pdf->SetFont('Arial','');
-            $pdf->Write(10,'General information: ');
-            $pdf->SetFont('Arial','B');
-            $pdf->MultiCell(60,8,$prescriptionInfo['property'],0);
-            $pdf->SetFont('Arial','');
-            $pdf->Write(10,'Directions of usage: ');
-            $pdf->SetFont('Arial','B');
-            $pdf->MultiCell(60,8,$prescriptionInfo['usage_directions'],0);
-            $pdf->SetFont('Arial','');
-        }
-        $pdf->Write(10,'Please submit you payment soon by clicking on the Pay link next to your bill on the view bills page'
-                . ' or by clicking ',0,1);
-        $pdf->SetTextColor(0,0,255);
-        $pdf->SetFont('','U');
-        $pdf->Write(10,'here','http://wal-engproject.rhcloud.com/src/pay_bill.php?id=' . $_GET['id']);
-        $pdf->SetTextColor(0,0,0);
-        $pdf->Cell(50,20,'',0,1);
-        $pdf->SetFont('Arial','B',16);
-        $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
-        $pdf->SetFont('Arial','',12);
-        if (!empty($prescriptionInfo)) {
-            $doctorServices = intval($this->amount_due) - intval($prescriptionInfo['price']);
-            $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $doctorServices,0,1,'C');
-            $pdf->Cell($pdf->w-20,10,'Prescription: $' . $prescriptionInfo['price'],'B',1,'C');
-            $pdf->SetFont('Arial','B');
-            $pdf->Cell($pdf->w-20,10,'Total: $' . $this->amount_due,0,1,'C');
-        } else {
-            $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $this->amount_due,'B',1,'C');
-            $pdf->SetFont('Arial','B');
-            $pdf->Cell($pdf->w-20,10,'Total: $' . $this->amount_due,0,1,'C');
-        }
-        $firstLastName = explode(" ", $this->patientName);
-        $fileName = $firstLastName[1] . "_Bill.pdf";
-        $pdf->Output($fileName,'F');
-        // Generate the email.
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($this->patientEmail);
-        $mail->AddAttachment($fileName);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis and Billing";
-        $mail->Body    = 'Hello, ' . $this->patientName . '!<br/><br/>'
+        $message = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName
                 . '. Here are some details of your appointment:'
                 . '. Your observations by the doctor are: '. $this->observations
@@ -333,104 +246,21 @@ class Diagnosis {
                 . '. Your total is $'. $this->amount_due 
                 . '. Attached is the official bill for the service'
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmailWithAttachment($this->prescriptionID,$this->db,$this->patientName,$this->doctorName,$this->observations,
+                $this->diagnosis,$this->medication,$this->amount_due,$this->patientEmail,"Diagnosis and Billing",$message);
     }
     
-    function sendEmailToDoctor($email) {
-        // Generate the pdf attachment.
-        $pdf = new FPDF();
-        //$logo = 'http://walphotobucket.s3.amazonaws.com/logo.jpg';
-        $pdf->AddPage();
-        //$pdf->Image($logo, 5, $pdf->GetY(), 33.78);
-        $pdf->SetFont('Arial','B',22);
-        $pdf->Cell($pdf->w-20,40,'Billing Receipt',0,1,'C');
-        $pdf->SetFont('Arial','',12);
-        
-        $query = '
-                SELECT *
-                FROM prescription
-                WHERE
-                    id = :id
-                  ';
-        $query_params = array(
-            ':id' => $this->prescriptionID
-        );
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute($query_params);
-        } catch(PDOException $ex) {
-            die("Failed to run query: " . $ex->getMessage());
-        }
-        $prescriptionInfo = $stmt->fetch();
-
-        $pdf->MultiCell($pdf->w-20,10,'Thank you, ' . $this->patientName . ', for scheduling and attending your appointment with ' . $this->doctorName
-                . '. The doctor had the following observations:',0);
-        $pdf->SetFont('Arial','B');
-        $pdf->MultiCell($pdf->w-60,8,$this->observations,0,'C');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Write(10,'These observations led to the following diagnosis: ');
-        $pdf->SetFont('Arial','B');
-        $pdf->Cell(30,10,$this->diagnosis,0,1);
-        $pdf->SetFont('Arial','');
-        if (!empty($prescriptionInfo)) {
-            $pdf->Write(10,'You have therefore been given this medication: ');
-            $pdf->SetFont('Arial','B');
-            $pdf->Cell(30,10,$this->medication,0,1);
-            $pdf->SetFont('Arial','');
-            $pdf->Write(10,'General information: ');
-            $pdf->SetFont('Arial','B');
-            $pdf->MultiCell(60,8,$prescriptionInfo['property'],0);
-            $pdf->SetFont('Arial','');
-            $pdf->Write(10,'Directions of usage: ');
-            $pdf->SetFont('Arial','B');
-            $pdf->MultiCell(60,8,$prescriptionInfo['usage_directions'],0);
-            $pdf->SetFont('Arial','');
-        }
-        $pdf->Write(10,'Please submit you payment soon by clicking on the Pay link next to your bill on the view bills page'
-                . ' or by clicking ',0,1);
-        $pdf->SetTextColor(0,0,255);
-        $pdf->SetFont('','U');
-        $pdf->Write(10,'here','http://wal-engproject.rhcloud.com/src/pay_bill.php?id=' . $_GET['id']);
-        $pdf->SetTextColor(0,0,0);
-        $pdf->Cell(50,20,'',0,1);
-        $pdf->SetFont('Arial','B',16);
-        $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
-        $pdf->SetFont('Arial','',12);
-        if (!empty($prescriptionInfo)) {
-            $doctorServices = intval($this->amount_due) - intval($prescriptionInfo['price']);
-            $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $doctorServices,0,1,'C');
-            $pdf->Cell($pdf->w-20,10,'Prescription: $' . $prescriptionInfo['price'],'B',1,'C');
-            $pdf->SetFont('Arial','B');
-            $pdf->Cell($pdf->w-20,10,'Total: $' . $this->amount_due,0,1,'C');
-        } else {
-            $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $this->amount_due,'B',1,'C');
-            $pdf->SetFont('Arial','B');
-            $pdf->Cell($pdf->w-20,10,'Total: $' . $this->amount_due,0,1,'C');
-        }
-        $firstLastName = explode(" ", $this->patientName);
-        $fileName = $firstLastName[1] . "_Bill.pdf";
-        $pdf->Output($fileName,'F');
-        // Generate the email.
-        $mail = new PHPMailer();
-        $mail->isSMTP();                  
-        $mail->Host = 'smtp.mailgun.org'; 
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';                           
-        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
-        $mail->FromName = 'No-reply Wal Consulting';
-        $mail->addAddress($email);
-        $mail->AddAttachment($fileName);
-        $mail->isHTML(true);
-        $mail->WordWrap = 70;
-        $mail->Subject = "Diagnosis and Billing";
-        $mail->Body    = 'Hello!<br/><br/>'
+    function sendEmailToDoctor($doctorEmail) {
+        $message = 'Hello!<br/><br/>'
                 . 'You recently had an appointment with ' . $this->patientName . '. Email of patient is: '
                 . $this->patientEmail . '. Here is'
                 . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
                 . '. Attached is the official bill for the service'
                 . '<br/><br/>Thank you,<br/>Wal Consulting';
-        return $mail->send();
+        $email = new SendEmail();
+        return $email->SendEmailWithAttachment($this->prescriptionID,$this->db,$this->patientName,$this->doctorName,$this->observations,
+                $this->diagnosis,$this->medication,$this->amount_due,$doctorEmail,"Diagnosis and Billing",$message);
     }
     
     function updateAppointment($appointmentID) {
