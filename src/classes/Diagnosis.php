@@ -257,7 +257,7 @@ class Diagnosis {
             ':id' => $this->prescriptionID
         );
         try {
-            $stmt = $db->prepare($query);
+            $stmt = $this->db->prepare($query);
             $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
@@ -356,7 +356,7 @@ class Diagnosis {
             ':id' => $this->prescriptionID
         );
         try {
-            $stmt = $db->prepare($query);
+            $stmt = $this->db->prepare($query);
             $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
