@@ -158,12 +158,14 @@ class Diagnosis {
             $query = "
                     INSERT INTO bill (
                         amount_due,
+                        original_due,
                         patient_name,
                         patient_email,
                         doctor_name,
                         doctor_email
                     ) VALUES (
                         :amount_due,
+                        :original_due,
                         :patient_name,
                         :patient_email,
                         :doctor_name,
@@ -172,6 +174,7 @@ class Diagnosis {
                     ";    
             $query_params = array(
             ':amount_due' => $this->amount_due,
+            ':original_due' => $this->amount_due,
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
             ':doctor_name' => $this->doctorName,

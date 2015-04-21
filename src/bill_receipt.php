@@ -80,15 +80,15 @@ $pdf->SetFont('Arial','B',16);
 $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
 $pdf->SetFont('Arial','',12);
 if (!empty($prescriptionInfo)) {
-    $doctorServices = intval($diagnosisInfo['amount_due']) - intval($prescriptionInfo['price']);
+    $doctorServices = intval($diagnosisInfo['original_due']) - intval($prescriptionInfo['price']);
     $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $doctorServices,0,1,'C');
     $pdf->Cell($pdf->w-20,10,'Prescription: $' . $prescriptionInfo['price'],'B',1,'C');
     $pdf->SetFont('Arial','B');
-    $pdf->Cell($pdf->w-20,10,'Total: $' . $diagnosisInfo['amount_due'],0,1,'C');
+    $pdf->Cell($pdf->w-20,10,'Total: $' . $diagnosisInfo['original_due'],0,1,'C');
 } else {
-    $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $diagnosisInfo['amount_due'],'B',1,'C');
+    $pdf->Cell($pdf->w-20,10,'Doctor Services: $' . $diagnosisInfo['original_due'],'B',1,'C');
     $pdf->SetFont('Arial','B');
-    $pdf->Cell($pdf->w-20,10,'Total: $' . $diagnosisInfo['amount_due'],0,1,'C');
+    $pdf->Cell($pdf->w-20,10,'Total: $' . $diagnosisInfo['original_due'],0,1,'C');
 }
 $pdf->Output();
 ?>

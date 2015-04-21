@@ -1,5 +1,7 @@
 Luke:
     - Updated SRS document
+    - Admins get email notifications of rescheduled appointments
+    - Bill receipts should always display the original amount due on a bill, not the amount due after they paid part of it
 
 Will:
 Anu:
