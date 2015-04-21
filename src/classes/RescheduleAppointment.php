@@ -216,7 +216,7 @@ class RescheduleAppointment {
             array_push($to, $row['email']);
         }
 
-        return $email->SendEmailToMultipleUsers($to,"Appointment Confirmation",$message,false);
+        return $email->SendEmailToMultipleUsers($to,"Appointment Rescheduled",$message,false);
     }
     
     function updateAppointmentTable() {
