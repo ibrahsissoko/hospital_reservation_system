@@ -55,12 +55,17 @@ class AppointmentTableBuilder {
             } else {
                 $upCase = "Patient";
             }
-            if ($userType == "doctor") {
+            if ($showFinishedAppointments) { // dont worry about doctor case, this will be an admin
                 echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
-                    . '<td>Diagnose</td><td>Cancel</td></tr>';
+                    . '<td>Reschedule</td><td>Cancel</td><td>Bill/Diagnosis</td></tr>';
             } else {
-                echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
-                    . '<td>Reschedule</td><td>Cancel</td></tr>';
+                if ($userType == "doctor") {
+                    echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
+                        . '<td>Diagnose</td><td>Cancel</td></tr>';
+                } else {
+                    echo '<tr><td>' . $upCase . ' Name</td><td>Date</td><td>Time</td><td>Nurse Name</td>'
+                        . '<td>Reschedule</td><td>Cancel</td></tr>';
+                }
             }
             // Loop over query from appointment table.
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -115,18 +120,45 @@ class AppointmentTableBuilder {
                 $link2 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry2['id'];
                 $link3 = "http://wal-engproject.rhcloud.com/src/user_page.php?id=" . $entry3['id'];
 
-                if ($userType == "doctor") {
-                    echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
-                        . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
-                        . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"diagnosis.php?id=" . $row['id']
-                        . "\">Diagnose</a></td><td><a href=\"cancel_appointment.php?id=". $row['id']
-                        . "\">Cancel</a></td></tr>";
-                } else {
+                if ($showFinishedAppointments) {
+                    // show the diagnosis button
+                    $diagnosisQuery = "
+                       SELECT *
+                       FROM diagnosis
+                       WHERE
+                           appointment_id = :app_id
+                        ";
+                    $diagnosisQueryParams = array(
+                        ":app_id" => $row['id']
+                    );
+                    try {
+                        $diag = $db->prepare($diagnosisQuery);
+                        $diag->execute($diagnosisQueryParams);
+                    } catch(PDOException $ex) {
+                        die("Failed to run query: " . $ex->getMessage());
+                    }
+                    $diagnosis= $diag->fetch();
+
                     echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
                         . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
                         . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"reschedule_appointment.php?id=" . $row['id']
                         . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id']
-                        . "\">Cancel</a></td></tr>";
+                        . "\">Cancel</a><td><a href=\"bill_receipt.php?id=". $diagnosis['id']
+                        . "\">Bill/Diagnosis</a></td></tr>";
+                } else {
+                    if ($userType == "doctor") {
+                        echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
+                            . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
+                            . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"diagnosis.php?id=" . $row['id']
+                            . "\">Diagnose</a></td><td><a href=\"cancel_appointment.php?id=". $row['id']
+                            . "\">Cancel</a></td></tr>";
+                    } else {
+                        echo "<tr><td><a href=\"" . $link2 . "\">" . $row[$appointmentWith . "_name"] . "</a></td>"
+                            . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
+                            . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"reschedule_appointment.php?id=" . $row['id']
+                            . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id']
+                            . "\">Cancel</a></td></tr>";
+                    }
                 }
             }
             echo '</table><br/>';
