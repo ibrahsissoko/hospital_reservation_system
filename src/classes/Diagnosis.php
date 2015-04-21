@@ -71,7 +71,7 @@ class Diagnosis {
         }
     }
     
-    function initiate($session) {
+    function initiate($session, $appointmentId) {
         if(empty($this->error)){
             $emailPatient = ($this->patientInfo['diagnosis_confirm_email'] == "Yes" || $this->patientInfo['diagnosis_confirm_email'] == NULL);
             $emailDoctor = ($session['user']['diagnosis_confirm_email'] == "Yes" || $session['user']['diagnosis_confirm_email'] == NULL);
@@ -86,7 +86,7 @@ class Diagnosis {
             }
             switch($option) {
                 case 1:
-                    $this->updateBillTable();
+                    $this->updateBillTable($appointmentId);
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor($session["user"]["email"])) {
                         $this->updateDiagnosisTable();
                         $this->success = "Diagnosis emails were sent to you and the patient you named!";
@@ -96,7 +96,7 @@ class Diagnosis {
                         return false;
                     }
                 case 2:
-                    $this->updateBillTable();
+                    $this->updateBillTable($appointmentId);
                     if($this->sendEmailToPatient()) {
                         $this->updateDiagnosisTable();
                         $this->success = "A diagnosis confirmation email was sent to the patient!";
@@ -106,7 +106,7 @@ class Diagnosis {
                         return false;
                     }
                 case 3:
-                    $this->updateBillTable();
+                    $this->updateBillTable($appointmentId);
                     if($this->sendEmailToDoctor($session["user"]["email"])) {
                         $this->updateDiagnosisTable();
                         $this->success = "You were sent a confirmation email regarding this diagnosis!";
@@ -116,7 +116,7 @@ class Diagnosis {
                         return false;
                     }
                 case 4:
-                    $this->updateBillTable();
+                    $this->updateBillTable($appointmentId);
                     $this->updateDiagnosisTable();
                     $this->success = "Diagnosis saved!";
                     return true;
@@ -126,7 +126,7 @@ class Diagnosis {
         }
     }
 
-    function updateBillTable() {
+    function updateBillTable($appId) {
         $query1 = " SELECT * FROM bill WHERE patient_email = :patient_email";
         $query_params1 = array(':patient_email'  => $this->patientEmail);
         try{
@@ -140,8 +140,9 @@ class Diagnosis {
             while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
             $this->patientInfo = $row;
             $this->amount_due = ($this->patientInfo["amount_due"]) + $this->amount_due;
-            $query2 = "UPDATE bill SET amount_due = :amount_due WHERE patient_email = :patient_email";
+            $query2 = "UPDATE bill SET amount_due = :amount_due, original_due = :original_due WHERE patient_email = :patient_email";
             $query_params2 = array(':patient_email'  => $this->patientEmail,
+                                    ':original_due' => $this->amount_due,
                                     ':amount_due'=>$this->amount_due);
             $stmt2 = $this->db->prepare($query2);
             $result2 = $stmt2->execute($query_params2);
@@ -162,14 +163,16 @@ class Diagnosis {
                         patient_name,
                         patient_email,
                         doctor_name,
-                        doctor_email
+                        doctor_email,
+                        appointment_id
                     ) VALUES (
                         :amount_due,
                         :original_due,
                         :patient_name,
                         :patient_email,
                         :doctor_name,
-                        :doctor_email
+                        :doctor_email,
+                        :app_id
                     )
                     ";    
             $query_params = array(
@@ -178,7 +181,8 @@ class Diagnosis {
             ':patient_name' => $this->patientName,
             ':patient_email' => $this->patientEmail,
             ':doctor_name' => $this->doctorName,
-            ':doctor_email' => $this->doctorEmail
+            ':doctor_email' => $this->doctorEmail,
+            ':app_id' => $appId
         );
         try {
                 $stmt = $this->db->prepare($query);
