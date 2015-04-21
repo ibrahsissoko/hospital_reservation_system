@@ -60,7 +60,7 @@
                 AND
                     released_by_admin = 1
                ";
-    
+
         $query_params = array(
             ':email' => $_SESSION['user']['email']
         );
