@@ -1,14 +1,12 @@
 Will:
-- code days available into doctor info page. 
-	- Tie that into the searching and scheduling appointments
-- Don’t delete the appointments in the database, just filter the past ones out of the appointment viewing
 
 Luke:
-- Find out what we need to do for admins
-	- what actions trigger email notifications?
-	- What type of history do we need to show on the user pages
-- SRS document updates
+    - Try to fix the check boxes not being filled correctly on the doctor info for days available
 
 Anu:
-- insurance and applying it to billing
-- Logo on the PDF to spice it up a bit
+
+
+
+
+Anyone:
+    - We should send the bill notification email to the patient after the admin releases the bill instead of after the diagnosis is completed.

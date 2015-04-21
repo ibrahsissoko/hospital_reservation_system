@@ -5,6 +5,7 @@ Luke:
     - connect diagnosis to an appointment with a foreign key
     - admins can view the bill receipts for any appointment on a user, which means they can see the diagnosis, prescription, and result of that appointment
     - added a page to release bills to the patients after the doctor completes the diagnosis
+    - implement allowing the administrator to release bills to the patient to pay
 
 Will:
 Anu:
