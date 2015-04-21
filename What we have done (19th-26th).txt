@@ -3,6 +3,8 @@ Luke:
     - Admins get email notifications of rescheduled appointments
     - Bill receipts should always display the original amount due on a bill, not the amount due after they paid part of it
     - connect diagnosis to an appointment with a foreign key
+    - admins can view the bill receipts for any appointment on a user, which means they can see the diagnosis, prescription, and result of that appointment
+    - added a page to release bills to the patients after the doctor completes the diagnosis
 
 Will:
 Anu:
