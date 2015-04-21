@@ -196,7 +196,7 @@ class RescheduleAppointment {
 
         $query = "
                     SELECT *
-                    FROM user
+                    FROM users
                     WHERE
                       user_type_id = :type_id
                     ";
