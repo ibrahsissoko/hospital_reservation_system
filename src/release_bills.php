@@ -50,6 +50,9 @@ if(empty($_SESSION['user'])) {
 <div class="container hero-unit">
     <h1>View Bills:</h1> <br/><br/>
     <?php
+    
+    echo "Click the 'Release' button to allow the patient to pay their outstanding bills.<br/><br/>";
+
     $query = "
                 SELECT *
                 FROM diagnosis
