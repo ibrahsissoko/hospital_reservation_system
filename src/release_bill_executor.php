@@ -63,6 +63,9 @@ require("config.php");
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
+
+
+            // todo: send the email of the bill notification here instead of after the doctor submits the diagnosis
         }
 
 
