@@ -23,6 +23,28 @@ class SendEmail {
         $mail->Body    = $msg;
         return $mail->send();
     }
+
+    function SendEmailToMultipleUsers($to,$subject,$msg,$attachment) {
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'smtp.mailgun.org';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->Password = 'f285bbdde02a408823b9283cdd8d6958';
+        $mail->From = 'postmaster@sandboxb958ed499fee4346ba3efcec39208a74.mailgun.org';
+        $mail->FromName = 'No-reply Wal Consulting';
+        foreach ($to as $value) {
+            $mail->addAddress($value);
+        }
+        if ($attachment) {
+            $mail->AddAttachment($this->attachmentPath);
+        }
+        $mail->isHTML(true);
+        $mail->WordWrap = 70;
+        $mail->Subject = $subject;
+        $mail->Body    = $msg;
+        return $mail->send();
+    }
     
     function SendEmailWithAttachment($prescriptionID,$db,$patientName,$doctorName,
             $observations,$diagnosis,$medication,$amount_due,$to,$subject,$msg) {

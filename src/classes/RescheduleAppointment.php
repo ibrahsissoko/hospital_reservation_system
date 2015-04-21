@@ -155,6 +155,8 @@ class RescheduleAppointment {
                 default:
                     die("An internal error occurred.");
             }
+
+            $this->sendEmailToAdmins();
         }
     }
     
@@ -185,6 +187,36 @@ class RescheduleAppointment {
                 . '.<br/><br/>Thank you,<br/>Wal Consulting';
         $email = new SendEmail();
         return $email->SendEmail($this->nurseEmail,"Appointment Confirmation",$message,false);
+    }
+
+    function sendEmailToAdmins() {
+        $message = $this->patientName . ' requested an appointment reschedule with ' . $this->doctorName . ' and ' . $this->nurseName . ' on '
+            . $this->date . ' at ' . $this->time . '.';
+        $email = new SendEmail();
+
+        $query = "
+                    SELECT *
+                    FROM user
+                    WHERE
+                      user_type_id = :type_id
+                    ";
+
+        $query_params = array(
+            ':type_id' => '4'
+        );
+        try {
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute($query_params);
+        } catch(Exception $ex) {
+
+        }
+
+        $to = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($to, $row['email']);
+        }
+
+        return $email->SendEmailToMultipleUsers($to,"Appointment Confirmation",$message,false);
     }
     
     function updateAppointmentTable() {
