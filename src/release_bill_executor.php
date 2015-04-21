@@ -58,16 +58,18 @@ require("config.php");
                 ':id' => $_GET['id']
             );
             try {
-                $stmt = $this->db->prepare($query);
+                $stmt = $db->prepare($query);
                 $stmt->execute($query_params);
             } catch(PDOException $ex) {
                 die("Failed to run query: " . $ex->getMessage());
             }
         }
 
+
+        echo "Released bill to patient.<br/><br/>";
+        echo "<a href=\"release_bills.php\">Back to bills page</a>";
+
     ?>
-    Released bill to patient.<br/><br/>
-    <a href="release_bills.php">Back to bills page</a>
 </div>
 
 </body>
