@@ -5,27 +5,6 @@ AutoLoader::registerDirectory('../src/classes');
 
 require("config.php");
 
-if (isset($_GET['id'])) {
-    $query = "
-            UPDATE diagnosis
-            SET
-                released_by_admin = 1
-            WHERE
-                id = :id
-            ";
-
-    $query_params = array(
-        ':id' => $_GET['id']
-    );
-    try {
-        $stmt = $this->db->prepare($query);
-        $stmt->execute($query_params);
-    } catch(PDOException $ex) {
-        die("Failed to run query: " . $ex->getMessage());
-    }
-}
-
-
 ?>
 
 <html lang="en">
@@ -63,8 +42,32 @@ if (isset($_GET['id'])) {
 </div>
 
 <div class="container hero-unit">
-    Released bill to user.<br/><br/>
-    <a href="release_bills.php">Back to bills page.</a>
+
+    <?php
+
+        if (isset($_GET['id'])) {
+            $query = "
+                UPDATE diagnosis
+                SET
+                    released_by_admin = 1
+                WHERE
+                    id = :id
+                ";
+
+            $query_params = array(
+                ':id' => $_GET['id']
+            );
+            try {
+                $stmt = $this->db->prepare($query);
+                $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+        }
+
+    ?>
+    Released bill to patient.<br/><br/>
+    <a href="release_bills.php">Back to bills page</a>
 </div>
 
 </body>
