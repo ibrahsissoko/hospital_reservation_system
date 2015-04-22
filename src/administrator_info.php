@@ -10,9 +10,15 @@
         die("Redirecting to index.php");
     }
     
-    $admin = new AdministratorInfo();
+    $admin = new AdministratorInfo();    
     if ($admin->validate($_POST)) {
         $admin->saveInfo($_POST, $_SESSION, $db);
+    }
+    // Update session variables to reflect post values.
+    $postParams = array('first_name','last_name','sex','address','city','state',
+        'zip','phone','challenge_question_id','challenge_question_answer');
+    foreach($postParams as $param) {
+        $_SESSION['user'][$param] = htmlspecialchars($_POST[$param]);
     }
 ?>
 

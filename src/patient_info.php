@@ -14,6 +14,15 @@
     if ($patient->validate($_POST)) {
         $patient->saveInfo($_POST, $_SESSION, $db);
     }
+    // Update session variables to reflect post values.
+    $postParams = array('first_name','last_name','sex','dob','age','marital_status',
+        'years_of_experience','availability','shift_id','address','city','state',
+        'zip','phone','insurance_id','insurance_begin','insurance_end','allergies',
+        'diseases','previous_surgeries','other_medical_history','challenge_question_id',
+        'challenge_question_answer');
+    foreach($postParams as $param) {
+        $_SESSION['user'][$param] = htmlspecialchars($_POST[$param]);
+    }
 ?>
 
 <!doctype html>
