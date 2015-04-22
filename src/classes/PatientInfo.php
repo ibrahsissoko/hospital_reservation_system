@@ -23,11 +23,11 @@ class PatientInfo extends UserInfo {
                 }
             }
         }
-        if(!empty($post['zip']) && !preg_match("[0-9]{5}", $post['zip'])) {
-            $this->error .= "Please enter a valid zip code. ";
+        if(!empty($post['zip']) && (strlen($post['zip']) != 5 || !ctype_digit($post['zip']))) {
+            $this->error = "Please enter a valid zip code. ";
             $valid = false;
         }
-        if (!empty($post['phone']) && !preg_match("[0-9]{10}", $post['phone'])) {
+        if (!empty($post['phone']) && (strlen($post['phone']) != 10 || !ctype_digit($post['phone']))) {
             $this->error .= "Please enter a valid phone number. ";
             $valid = false;
         }
