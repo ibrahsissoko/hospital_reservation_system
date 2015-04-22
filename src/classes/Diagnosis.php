@@ -155,6 +155,7 @@ class Diagnosis {
             $result2 = $stmt2->execute($query_params2);
             break;
             }}catch(PDOException $e) {
+                echo "Email of Patient is: ************** " . $this->patientEmail;
                 die("Failed to gather patient's amount due.");
            }
                 
