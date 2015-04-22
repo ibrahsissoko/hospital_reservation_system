@@ -12,15 +12,15 @@
     
     if (!empty($_POST)) {
         $nurse = new NurseInfo();
-        if ($nurse->validate($_POST)) {
+        // Update session variables to reflect post values.
+        $postParams = array('first_name','last_name','sex','department_id',
+            'years_of_experience','shift_id','address','city','state',
+            'zip','phone','challenge_question_id','challenge_question_answer');
+        foreach($postParams as $param) {
+            $_SESSION['user'][$param] = htmlspecialchars($_POST[$param]);
+        }           
+        if ($nurse->validate($_POST)) {         
             $nurse->saveInfo($_POST, $_SESSION, $db);
-            // Update session variables to reflect post values.
-            $postParams = array('first_name','last_name','sex','department_id',
-                'years_of_experience','shift_id','address','city','state',
-                'zip','phone','challenge_question_id','challenge_question_answer');
-            foreach($postParams as $param) {
-                $_SESSION['user'][$param] = htmlspecialchars($_POST[$param]);
-            }
         }
     }
 ?>
