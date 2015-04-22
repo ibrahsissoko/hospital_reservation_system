@@ -67,6 +67,31 @@ require("config.php");
 
 
             // todo: send the email of the bill notification here instead of after the doctor submits the diagnosis
+         if(empty($_SESSION['user'])) {
+            header("Location: ../index.php");
+            die("Redirecting to index.php");
+        } else {
+            $query = "
+            SELECT *
+            FROM diagnosis
+            WHERE
+            id = :id
+            ";
+            $query_params = array(
+                ':id' => $_GET['id']
+                );
+            try {
+                $stmt = $db->prepare($query);
+                $stmt->execute($query_params);
+            } catch(PDOException $ex) {
+                die("Failed to run query: " . $ex->getMessage());
+            }
+            $row = $stmt->fetch();
+        // Send an email to the doctor and/or patient about the diagnosis.
+            $d = new ReleaseBill($row['doctor_name'],$row['patient_name'],$row['doctor_email'], $row['diagnosis'], 
+                $row['observations'],$row['date'],$row['time'],$db, $row['medication']);
+            $d->initiate($_SESSION, $_GET['id']);
+        }
         }
 
 
