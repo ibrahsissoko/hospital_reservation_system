@@ -55,7 +55,7 @@ require("config.php");
                 ";
 
             $query_params = array(
-                ':relased_by_admin' => 1,
+                ':released_by_admin' => 1,
                 ':id' => $_GET['id']
             );
             try {
