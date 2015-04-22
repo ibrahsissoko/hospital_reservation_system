@@ -54,8 +54,8 @@
 
 <div class="container hero-unit">
     <h1>Administrator Info:</h1><br/>
-    <span class="error"><?php echo $admin->error;?></span><br/>
-    <form action="patient_info.php" method="post">
+    <form action="administrator_info.php" method="post">
+        <span class="error"><?php echo $admin->error;?></span><br/>
 	First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>
 	Last Name:<br/>
