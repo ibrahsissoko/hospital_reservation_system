@@ -49,12 +49,13 @@ require("config.php");
             $query = "
                 UPDATE diagnosis
                 SET
-                    released_by_admin = 1
+                    released_by_admin = :release
                 WHERE
                     id = :id
                 ";
 
             $query_params = array(
+                ':release' => 1,
                 ':id' => $_GET['id']
             );
             try {
@@ -69,7 +70,7 @@ require("config.php");
         }
 
 
-        echo "Released bill to patient.<br/><br/>";
+        echo "<h3>Released bill to patient.</h3><br/><br/>";
         echo "<a href=\"release_bills.php\">Back to bills page</a>";
 
     ?>
