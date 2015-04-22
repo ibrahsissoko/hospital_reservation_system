@@ -85,8 +85,10 @@
             echo "<a href=\"view_bills.php\">View Bills</a><br/>";
         } else if ($userType == "doctor") {
             echo "<a href=\"advanced_user_search.php\">Advanced User Search</a><br/>";
+            echo "<a href=\"view_checks.php\">View checks</a><br/>";              
         } else if ($userType == "administrator") {
             echo "<a href=\"release_bills.php\">Release Bills</a><br/>";
+            echo "<a href=\"release_checks.php\">Release Checks</a><br/>";
         }
 
         echo "<a href=\"view_appointments.php\">View Current Appointments Scheduled</a>";

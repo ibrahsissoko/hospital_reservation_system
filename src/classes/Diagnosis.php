@@ -2,6 +2,8 @@
 
 class Diagnosis {
 
+    
+    public $session;
     public $doctorEmail;
     public $patientEmail;
     private $doctorName;
@@ -72,6 +74,7 @@ class Diagnosis {
     }
     
     function initiate($session, $appointmentId) {
+        $this->session = $session;
         if(empty($this->error)){
             $emailPatient = ($this->patientInfo['diagnosis_confirm_email'] == "Yes" || $this->patientInfo['diagnosis_confirm_email'] == NULL);
             $emailDoctor = ($session['user']['diagnosis_confirm_email'] == "Yes" || $session['user']['diagnosis_confirm_email'] == NULL);
@@ -89,6 +92,7 @@ class Diagnosis {
                     $this->updateBillTable($appointmentId);
                     if($this->sendEmailToPatient() && $this->sendEmailToDoctor($session["user"]["email"])) {
                         $this->updateDiagnosisTable();
+                        $this->updatePayoutTable();
                         $this->success = "Diagnosis emails were sent to you and the patient you named!";
                         return true;
                     } else {
@@ -99,6 +103,7 @@ class Diagnosis {
                     $this->updateBillTable($appointmentId);
                     if($this->sendEmailToPatient()) {
                         $this->updateDiagnosisTable();
+                        $this->updatePayoutTable();
                         $this->success = "A diagnosis confirmation email was sent to the patient!";
                         return true;
                     } else {
@@ -109,6 +114,7 @@ class Diagnosis {
                     $this->updateBillTable($appointmentId);
                     if($this->sendEmailToDoctor($session["user"]["email"])) {
                         $this->updateDiagnosisTable();
+                        $this->updatePayoutTable();
                         $this->success = "You were sent a confirmation email regarding this diagnosis!";
                         return true;
                     } else {
@@ -118,6 +124,7 @@ class Diagnosis {
                 case 4:
                     $this->updateBillTable($appointmentId);
                     $this->updateDiagnosisTable();
+                    $this->updatePayoutTable();
                     $this->success = "Diagnosis saved!";
                     return true;
                 default:
@@ -193,11 +200,112 @@ class Diagnosis {
         }
     
     }
+    
+    function updatePayoutTable() {
+        // Determine if this doctor already has an entry in the payout table.
+        $query = "
+            SELECT * 
+            FROM payout
+            WHERE
+                doctor_id = :doctor_id
+            ";
+        $query_params = array (
+            ':doctor_id' => $this->session['user']['id']
+        );
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute($query_params);
+        } catch(PDOException $e) {
+            die("Failed to update payout table. " . $e->getMessage());
+        }
+        // Determine the amount due.
+        $query2 = "
+                SELECT *
+                FROM users
+                WHERE
+                    id = :doctor_id
+                ";
+        $query_params2 = array(
+            ':doctor_id' => $this->session['user']['id']
+        );
+        try {
+            $stmt2 = $this->db->prepare($query2);
+            $stmt2->execute($query_params2);
+        } catch(PDOException $e) {
+            die("Failed to gather doctor information. " . $e->getMessage());
+        }
+        $doctorInfo = $stmt2->fetch();
 
+        $query3 = "
+                SELECT *
+                FROM department
+                WHERE
+                    id = :department_id
+                ";
+        $query_params3 = array(
+            ':department_id' => $this->session['user']['department_id']
+        );
+        try {
+            $stmt3 = $this->db->prepare($query3);
+            $stmt3->execute($query_params3);
+        } catch(PDOException $e) {
+            die("Failed to gather department information. " . $e->getMessage());
+        }
+        $departmentInfo = $stmt3->fetch();
+        $amount_due = 500 + (intval($doctorInfo['years_of_experience'])/2)*25;
+        if ($amount_due > 1000) {
+            $amount_due = 1000;
+        }
+        $amount_due *= floatval($departmentInfo['pay_scaling_factor']);
+        if ($stmt->rowCont() > 0) {
+            $row = $stmt->fetch();
+            $amount_due += intval($row['amount_due']);
+            $query4 = "
+                    UPDATE payout
+                    SET
+                        amount_due = :amount_due
+                        date = :date
+                    WHERE
+                        doctor_id = :doctor_id
+                    ";    
+            $query_params4 = array(
+                ':amount_due' => $amount_due,
+                ':date' => date("m/d/y"),
+                ':doctor_id' => $this->session['user']['id']
+            );
+            try {
+                $stmt4 = $this->db->prepare($query4);
+                $stmt4->execute($query_params4);
+            } catch(PDOException $e) {
+                die("Failed to update payout table. " . $e->getMessage());
+            }      
+        } else {
+            // Insert into the database as opposed to updating.
+            $query4 = "
+                    INSERT INTO payout (
+                        doctor_id,
+                        date,
+                        amount_due
+                    ) VALUES (
+                        :doctor_id,
+                        :date,
+                        :amount_due
+                    )";    
+            $query_params4 = array(
+                ':doctor_id' => $this->session['user']['id'],
+                ':date' => date("m/d/y"),
+                ':amount_due' => $amount_due
+            );
+            try {
+                $stmt4 = $this->db->prepare($query4);
+                $stmt4->execute($query_params4);
+            } catch(PDOException $e) {
+                die("Failed to insert values into payout table. " . $e->getMessage());
+            }      
+        }  
+    }
     
     function updateDiagnosisTable(){
-        
-        
         
         $query = "
                 INSERT INTO diagnosis (
@@ -225,7 +333,7 @@ class Diagnosis {
                 )
                 ";    
         $query_params = array(
-        ':observations' => $this->observations,
+        ':doctor_id' => $session['user']['id'],
         ':diagnosis' => $this->diagnosis,
         ':patient_name' => $this->patientName,
         ':patient_email' => $this->patientEmail,
