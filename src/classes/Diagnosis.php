@@ -333,7 +333,7 @@ class Diagnosis {
                 )
                 ";    
         $query_params = array(
-        ':doctor_id' => $session['user']['id'],
+        ':observations' => $this->observations,
         ':diagnosis' => $this->diagnosis,
         ':patient_name' => $this->patientName,
         ':patient_email' => $this->patientEmail,

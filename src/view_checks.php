@@ -60,7 +60,7 @@
                ";
 
         $query_params = array(
-            ':email' => $_SESSION['user']['id'],
+            ':doctor_id' => $_SESSION['user']['id'],
             ':released_by_admin' => 1
         );
         try {
