@@ -2,6 +2,38 @@
 
 class PatientInfo extends UserInfo {
 
+    public $error;
+    
+    protected function validateInput($post) {
+        $valid = true;
+        $age = intval($post['age']);
+        if ($age < 1 || $age > 120) {
+            $this->error = "Please enter a valid age. ";
+            $valid = false;
+        }
+        if (!empty($post['dob'])) {
+            if (!preg_match("(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}", $post['dob'])) {
+                $this->error .= "Please enter a valid date of birth. ";
+                $valid = false;
+            } else {
+                $calcAge = intval(date("y")) - intval(substr($post['dob'],6,4));
+                if (!($calcAge == $age || $calcAge == $age + 1)) {
+                    $this->error .= "Please enter a date of birth that corresponds with your age. ";
+                    $valid = false;
+                }
+            }
+        }
+        if(!empty($post['zip']) && !preg_match("[0-9]{5}", $post['zip'])) {
+            $this->error .= "Please enter a valid zip code. ";
+            $valid = false;
+        }
+        if (!empty($post['phone']) && !preg_match("[0-9]{10}", $post['phone'])) {
+            $this->error .= "Please enter a valid phone number. ";
+            $valid = false;
+        }
+        return $valid;
+    }
+    
     protected function insertIntoDatabase($post, $session, $db) {
         // this will be called after they hit the submit button on the form.
         $query = "

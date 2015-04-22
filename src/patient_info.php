@@ -11,12 +11,15 @@
     }
     
     $patient = new PatientInfo();
-    $patient->saveInfo($_POST, $_SESSION, $db);
+    if ($patient->validateInput($_POST)) {
+        $patient->saveInfo($_POST, $_SESSION, $db);
+    }
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
+    <span class="error"><?php echo $patient->error;?></span><br/>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -54,7 +57,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Patient Info:</h1> <br />
+    <h1>Patient Info:</h1><br/>
+    <span class="error"><?php echo $patient->error;?></span><br/>
     <form action="patient_info.php" method="post">	
         First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>

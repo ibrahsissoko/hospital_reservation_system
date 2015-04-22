@@ -6,6 +6,6 @@ class NurseInfoTest extends PHPUnit_Framework_TestCase {
         $nurse = new NurseInfo();
 
         $queryParams = $nurse->getQueryParams(null, null);
-        $this->assertEquals(count($queryParams), 15);
+        $this->assertEquals(count($queryParams), 16);
     }
 }

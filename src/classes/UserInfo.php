@@ -12,7 +12,7 @@ abstract class UserInfo {
             $this->status = "failed";
         }
     }
-
+    protected abstract function validateInput($post);
     protected abstract function getQueryParams($post, $session);
     protected abstract function insertIntoDatabase($post, $session, $db);
 }

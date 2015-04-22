@@ -11,12 +11,15 @@
     }
 
     $doctor = new DoctorInfo();
-    $doctor->saveInfo($_POST, $_SESSION, $db);
+    if ($doctor->validateInput($_POST)) {
+        $doctor->saveInfo($_POST, $_SESSION, $db);
+    }
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
+    <style>.error {color: #FF0000;}</style>
     <meta charset="utf-8">
     <title>Hospital Management</title>
     <meta name="description" content="Hospital management system for Intro to Software Engineering">
@@ -50,7 +53,8 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Doctor Info:</h1> <br />
+    <h1>Doctor Info:</h1><br/>
+    <span class="error"><?php echo $doctor->error;?></span><br/>
     <form action="doctor_info.php" method="post">
         First Name:<br/>
         <input type="text" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name']);?>" /><br/>
@@ -59,6 +63,8 @@
         Sex:<br/>
         <input type="radio" name="sex" value="Female" <?php echo ($_SESSION['user']['sex'] == 'Female') ? 'checked="checked"' : ''; ?>/> Female<br/>
         <input type="radio" name="sex" value="Male" <?php echo ($_SESSION['user']['sex'] == 'Male') ? 'checked="checked"' : ''; ?> > Male<br/>
+        Age:<br/>
+        <input type="number" name="age" min="18" max="100" value="<?php echo htmlspecialchars($_SESSION['user']['age']);?>"><br>
         Degree(MBBS, MD, etc.):<br/>
         <input type="text" name="degree" value="<?php echo htmlspecialchars($_SESSION['user']['degree']);?>" />
         <br/>

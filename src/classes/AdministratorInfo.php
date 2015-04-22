@@ -2,6 +2,21 @@
 
 class AdministratorInfo extends UserInfo {
 
+    public $error;
+    
+    protected function validateInput($post) {
+        $valid = true;
+        if(!empty($post['zip']) && !preg_match("[0-9]{5}", $post['zip'])) {
+            $this->error = "Please enter a valid zip code. ";
+            $valid = false;
+        }
+        if (!empty($post['phone']) && !preg_match("[0-9]{10}", $post['phone'])) {
+            $this->error .= "Please enter a valid phone number. ";
+            $valid = false;
+        }
+        return $valid;
+    }
+    
     protected function insertIntoDatabase($post, $session, $db) {
         $query = "
             UPDATE users

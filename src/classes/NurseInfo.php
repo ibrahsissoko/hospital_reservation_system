@@ -2,6 +2,31 @@
 
 class NurseInfo extends UserInfo {
 
+    public $error;
+    
+    protected function validateInput($post) {
+        $valid = true;
+        $age = intval($post['age']);
+        if ($age < 18 || $age > 100) {
+            $this->error .= "Please enter a valid age. ";
+            $valid = false;
+        }
+        $yearsExperience = intval($post['years_of_experience']);
+        if ($age - $yearsExperience < 18) {
+            $this->error .= "Please enter a valid number of years of experience. ";
+            $valid = false;
+        } 
+        if(!empty($post['zip']) && !preg_match("[0-9]{5}", $post['zip'])) {
+            $this->error .= "Please enter a valid zip code. ";
+            $valid = false;
+        }
+        if (!empty($post['phone']) && !preg_match("[0-9]{10}", $post['phone'])) {
+            $this->error .= "Please enter a valid phone number. ";
+            $valid = false;
+        }
+        return $valid;
+    }
+    
     protected function insertIntoDatabase($post, $session, $db) {
 		 // this will be called after they hit the submit button on the form.
         $query = "
@@ -11,6 +36,7 @@ class NurseInfo extends UserInfo {
                 first_name = :first_name,
                 last_name = :last_name,
                 sex = :sex,
+                age = :age,
 		department_id = :department_id,
 		years_of_experience = :years_of_experience,
 		shift_id = :shift_id,
@@ -47,6 +73,7 @@ class NurseInfo extends UserInfo {
             ':first_name' => $post['first_name'],
             ':last_name' => $post['last_name'],
             ':sex' => $post['sex'],
+            ':age' => $post['age'],
             ':years_of_experience' => $post['years_of_experience'],
 			':shift_id' => $post['shift_id'],
             ':department_id' => $post['department_id'],

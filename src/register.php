@@ -107,16 +107,16 @@
 
             ?>
         </select>
-        <label>Access Code (not applicable for patients):</label>
+        Access Code (not applicable for patients):
         <input type="text" name="access_code" value="<?php echo htmlspecialchars($_POST['access_code'])?>" />
         <span class="error"><?php echo $r->noAccessCode; ?></span>
-        <label>Email:</label> 
+        Email:
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
         <span class="error"> * <?php echo $r->noEmail; echo $r->incorrectEmail; echo $r->registeredEmail;?></span>
-        <label>Password:</label> 
+        Password:
         <input type="password" name="password" value="" />
         <span class="error"> * <?php echo $r->noPassword; echo $r->badPassword; ?></span>
-        <label>Confirm Password:</label>
+        Confirm Password:
         <input type="password" name="confirmPassword" value="" />
         <span class="error"> * <?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>

@@ -50,9 +50,7 @@ if(empty($_SESSION['user'])) {
 <div class="container hero-unit">
     <h1>View Checks:</h1> <br/><br/>
     <?php
-
-    echo "Click the 'Release' button to have the doctor receive their payment.<br/><br/>";
-
+    
     $query = "
                 SELECT *
                 FROM payout
@@ -66,6 +64,7 @@ if(empty($_SESSION['user'])) {
         die("Failed to run query: " . $ex->getMessage());
     }
     if ($stmt->rowCount() > 0) {
+        echo "Click the 'Release' button to have the doctor receive their payment.<br/><br/>";
         echo '<table border="1" style="width:100%">';
         echo '<tr><td>Doctor</td><td>Last Paid</td><td>Total Payment Due</td><td>Receipt</td><td>Release</td></tr>';
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -92,7 +91,7 @@ if(empty($_SESSION['user'])) {
         }
         echo '</table><br/><br/>';
     } else {
-        echo "You have no bills to view right now.";
+        echo "You have no checks to view right now.";
     }
     ?>
 </div>
