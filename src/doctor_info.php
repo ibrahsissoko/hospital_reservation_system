@@ -11,7 +11,7 @@
     }
 
     $doctor = new DoctorInfo();
-    if ($doctor->validateInput($_POST)) {
+    if ($doctor->validate($_POST)) {
         $doctor->saveInfo($_POST, $_SESSION, $db);
     }
 ?>

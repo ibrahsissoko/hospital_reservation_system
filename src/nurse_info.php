@@ -11,7 +11,7 @@
     }
     
     $nurse = new NurseInfo();
-    if ($nurse->validateInput($_POST)) {
+    if ($nurse->validate($_POST)) {
         $nurse->saveInfo($_POST, $_SESSION, $db);
     }
 ?>

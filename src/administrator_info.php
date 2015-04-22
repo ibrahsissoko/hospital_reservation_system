@@ -11,7 +11,7 @@
     }
     
     $admin = new AdministratorInfo();
-    if ($admin->validateInput($_POST)) {
+    if ($admin->validate($_POST)) {
         $admin->saveInfo($_POST, $_SESSION, $db);
     }
 ?>

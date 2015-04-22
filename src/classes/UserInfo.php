@@ -3,6 +3,14 @@
 abstract class UserInfo {
 
     public $status;
+    
+    function validate($post) {
+        if ($this->validateInput($post)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     function saveInfo($post, $session, $db) {
         if (!empty($post)) {
