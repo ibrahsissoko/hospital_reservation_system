@@ -144,18 +144,18 @@ class Diagnosis {
         }
         if(!empty($result1)){
             try {
-            while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
-            $this->patientInfo = $row;
-            $this->amount_due = ($this->patientInfo["amount_due"]) + $this->amount_due;
-            $query2 = "UPDATE bill SET amount_due = :amount_due, original_due = :original_due WHERE patient_email = :patient_email";
-            $query_params2 = array(':patient_email'  => $this->patientEmail,
-                                    ':original_due' => $this->amount_due,
-                                    ':amount_due'=>$this->amount_due);
-            $stmt2 = $this->db->prepare($query2);
-            $result2 = $stmt2->execute($query_params2);
-            break;
+                while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
+                    $this->patientInfo = $row;
+                    $this->amount_due = ($this->patientInfo["amount_due"]) + $this->amount_due;
+                    $query2 = "UPDATE bill SET amount_due = :amount_due, original_due = :original_due WHERE patient_email = :patient_email";
+                    $query_params2 = array(':patient_email'  => $this->patientEmail,
+                        ':original_due' => $this->amount_due,
+                        ':amount_due'=>$this->amount_due);
+                    $stmt2 = $this->db->prepare($query2);
+                    $result2 = $stmt2->execute($query_params2);
+                    break;
             }}catch(PDOException $e) {
-                echo "Amt Due of Patient is: ************** " . $this->amount_due;
+                //echo "Amt Due of Patient is: ************** " . $this->amount_due;
                 die("Failed to gather patient's amount due.");
            }
                 
