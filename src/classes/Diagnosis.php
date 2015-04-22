@@ -257,7 +257,7 @@ class Diagnosis {
             $amount_due = 1000;
         }
         $amount_due *= floatval($departmentInfo['pay_scaling_factor']);
-        if ($stmt->rowCont() > 0) {
+        if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
             $amount_due += intval($row['amount_due']);
             $query4 = "
