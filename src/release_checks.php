@@ -56,8 +56,9 @@ if(empty($_SESSION['user'])) {
     $query = "
                 SELECT *
                 FROM payout
+                WHERE
+                    released_by_admin = 0
                ";
-
     try {
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -66,7 +67,7 @@ if(empty($_SESSION['user'])) {
     }
     if ($stmt->rowCount() > 0) {
         echo '<table border="1" style="width:100%">';
-        echo '<tr><td>Doctor</td><td>Last Paid</td><td>Total Payment Due</td><td>Receipt</td><td>Pay</td></tr>';
+        echo '<tr><td>Doctor</td><td>Last Paid</td><td>Total Payment Due</td><td>Receipt</td><td>Release</td></tr>';
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $query2 = "
                         SELECT *
@@ -87,7 +88,7 @@ if(empty($_SESSION['user'])) {
             echo '<tr><td>' . $doctorInfo['first_name'] . ' ' . $doctorInfo['last_name'] .'</td><td>' . $row['date'] . '</td><td>$' . $row['amount_due'] . '</td>';
             $link1 = "http://wal-engproject.rhcloud.com/src/check_receipt.php?id=" . $row['doctor_id'];
             $link2 = "http://wal-engproject.rhcloud.com/src/release_check_executor.php?id=" . $row['id'];
-            echo '<td><a href="' . $link1 . '">Receipt</a></td><td><a href="' . $link2 . '">Pay</a></td></tr>';
+            echo '<td><a href="' . $link1 . '">Receipt</a></td><td><a href="' . $link2 . '">Release</a></td></tr>';
         }
         echo '</table><br/><br/>';
     } else {
