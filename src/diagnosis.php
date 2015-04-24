@@ -4,8 +4,6 @@
     AutoLoader::registerDirectory('../src/classes');
 
     require("config.php");
-    require("MailFiles/PHPMailerAutoload.php");
-    require("fpdf17/fpdf.php");
       
     if(empty($_SESSION['user'])) {
         header("Location: ../index.php");
@@ -27,7 +25,7 @@
             die("Failed to run query: " . $ex->getMessage());
         }
         $row = $stmt->fetch();
-        // Send an email to the doctor and/or patient about the diagnosis.
+        // Only update the tables without sending email
         $d = new Diagnosis($row['doctor_name'],$row['patient_name'],$_SESSION["user"]["email"], htmlspecialchars($_GET['diagnosis']), 
                 htmlspecialchars($_GET['observations']),$row['date'],$row['time'],$db, htmlspecialchars($_GET['medication']));
         if ($d->initiate($_SESSION, $_GET['id'])) {
