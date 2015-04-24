@@ -90,37 +90,19 @@ class Diagnosis {
             switch($option) {
                 case 1:
                     $this->updateBillTable($appointmentId);
-                    // if($this->sendEmailToPatient() && $this->sendEmailToDoctor($session["user"]["email"])) {
                          $this->updateDiagnosisTable();
                          $this->updatePayoutTable();
-                    //     $this->success = "Diagnosis emails were sent to you and the patient you named!";
-                    //     return true;
-                    // } else {
-                    //     $this->error = "An error occurred sending confirmation emails. Try again soon.";
-                    //     return false;
-                    // }
+                    
                 case 2:
                     $this->updateBillTable($appointmentId);
-                    // if($this->sendEmailToPatient()) {
                          $this->updateDiagnosisTable();
                          $this->updatePayoutTable();
-                    //     $this->success = "A diagnosis confirmation email was sent to the patient!";
-                    //     return true;
-                    // } else {
-                    //     $this->error = "An error occurred sending the patient's confirmation email. Try again soon.";
-                    //     return false;
-                    // }
+                    
                 case 3:
                     $this->updateBillTable($appointmentId);
-                    // if($this->sendEmailToDoctor($session["user"]["email"])) {
                          $this->updateDiagnosisTable();
                          $this->updatePayoutTable();
-                    //     $this->success = "You were sent a confirmation email regarding this diagnosis!";
-                    //     return true;
-                    // } else {
-                    //     $this->error = "An error occurred sending your confirmation email. Try again soon.";
-                    //     return false;
-                    // }
+                    
                 case 4:
                     $this->updateBillTable($appointmentId);
                     $this->updateDiagnosisTable();
@@ -155,7 +137,6 @@ class Diagnosis {
                     $result2 = $stmt2->execute($query_params2);
                     break;
             }}catch(PDOException $e) {
-                //echo "Amt Due of Patient is: ************** " . $this->amount_due;
                 die("Failed to gather patient's amount due.");
            }
                 
@@ -356,31 +337,6 @@ class Diagnosis {
         }
     }
        
-    // function sendEmailToPatient() {
-    //     $message = 'Hello, ' . $this->patientName . '!<br/><br/>'
-    //             . 'You recently scheduled an appointment with ' . $this->doctorName
-    //             . '. Here are some details of your appointment:'
-    //             . '. Your observations by the doctor are: '. $this->observations
-    //             . '. Your diagnosis by the doctor is: ' . $this->diagnosis
-    //             . '. Your total is $'. $this->amount_due 
-    //             . '. Attached is the official bill for the service'
-    //             . '<br/><br/>Thank you,<br/>Wal Consulting';
-    //     $email = new SendEmail();
-    //     return $email->SendEmailWithAttachment($this->prescriptionID,$this->db,$this->patientName,$this->doctorName,$this->observations,
-    //             $this->diagnosis,$this->medication,$this->amount_due,$this->patientEmail,"Diagnosis and Billing",$message);
-    // }
-    
-    // function sendEmailToDoctor($doctorEmail) {
-    //     $message = 'Hello!<br/><br/>'
-    //             . 'You recently had an appointment with ' . $this->patientName . '. Email of patient is: '
-    //             . $this->patientEmail . '. Here is'
-    //             . ' the receipt of the diagnosis form that you submitted: $' . $this->amount_due
-    //             . '. Attached is the official bill for the service'
-    //             . '<br/><br/>Thank you,<br/>Wal Consulting';
-    //     $email = new SendEmail();
-    //     return $email->SendEmailWithAttachment($this->prescriptionID,$this->db,$this->patientName,$this->doctorName,$this->observations,
-    //             $this->diagnosis,$this->medication,$this->amount_due,$doctorEmail,"Diagnosis and Billing",$message);
-    // }
     
     function updateAppointment($appointmentID) {
         $query = "
