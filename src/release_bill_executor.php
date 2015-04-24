@@ -67,7 +67,7 @@ require("config.php");
 
 
             // todo: send the email of the bill notification here instead of after the doctor submits the diagnosis
-         if(empty($_SESSION['user'])) {
+         /*if(empty($_SESSION['user'])) {
             header("Location: ../index.php");
             die("Redirecting to index.php");
         } else {
@@ -92,7 +92,7 @@ require("config.php");
                 $row['observations'],$row['date'],$row['time'],$db, $row['medication']);
             $d->initiate($_SESSION, $_GET['id']);
         }
-        }
+        }*/
 
 
         echo "<h3>Released bill to patient.</h3><br/><br/>";
