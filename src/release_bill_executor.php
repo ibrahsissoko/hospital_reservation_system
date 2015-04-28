@@ -98,7 +98,7 @@ require("fpdf17/fpdf.php");
 
 
         echo "<h3>Released bill to patient.</h3><br/><br/>";
-        echo "<a href=\"release_bills.php\">Back to bills page</a>";
+        echo "<a href=\"release_bills.php\" onsubmit='return confirm('test')'>Back to bills page</a>";
 
     ?>
 </div>
