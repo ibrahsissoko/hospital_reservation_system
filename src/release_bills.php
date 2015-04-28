@@ -73,13 +73,23 @@ if(empty($_SESSION['user'])) {
             echo '<tr><td>' . $row['doctor_name']. '</td><td>' . $row['date'] . '</td><td>' . $row['time'] . '</td><td>$' . $row['amount_due'] . '</td>';
             $link1 = "http://wal-engproject.rhcloud.com/src/bill_receipt.php?id=" . $row['id'];
             $link2 = "http://wal-engproject.rhcloud.com/src/release_bill_executor.php?id=" . $row['id'];
-            echo '<td><a href="' . $link1 . '">Receipt</a></td><td><a href="' . $link2 . '" onsubmit=\"return confirm(\"Are you sure you want to submit this form?\");\">Release</a></td></tr>';
+            echo '<td><a href="' . $link1 . '">Receipt</a></td><td><a href="' . $link2 . '" class="confirmation">Release</a></td></tr>';
         }
         echo '</table><br/><br/>';
     } else {
         echo "You have no bills to view right now.";
     }
     ?>
+
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
 </div>
 
 </body>
