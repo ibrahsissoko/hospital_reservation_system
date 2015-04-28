@@ -256,7 +256,7 @@ class Diagnosis {
                     ";    
             $query_params4 = array(
                 ':amount_due' => $amount_due,
-                ':date_object' => date("m/d/y"),
+                ':date_object' => date("m/d/y") . "",
                 ':doctor_id' => $doctorInfo['id']
             );
             try {
