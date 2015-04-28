@@ -8,7 +8,28 @@ require("config.php");
 if(empty($_SESSION['user'])) {
     header("Location: ../index.php");
     die("Redirecting to index.php");
+} else if (isset($_GET['to_delete_id'])) {
+    $query = "
+        DELETE
+        FROM users
+        WHERE
+          id = :id
+    ";
+    $query_params = array(
+        ':id' => $_GET['to_delete_id']
+    );
+
+    try {
+        $stmt = $db->prepare($query);
+        $result = $stmt->execute($query_params);
+    } catch(PDOException $ex) {
+        die("Failed to run query: " . $ex->getMessage());
+    }
+
+    header("Location: ../index.php");
+    die("Redirecting to index.php");
 } else {
+
     $query = "
         SELECT *
         FROM users
@@ -72,6 +93,14 @@ if(empty($_SESSION['user'])) {
 <div class="container hero-unit">
     <h1><?php echo $userProfile['first_name'] . " " . $userProfile['last_name'] ?></h1> <br/>
 
+    <?php
+
+    if ($_SESSION['user']['user_type_id'] == 4) {
+        $link = "http://wal-engproject.rhcloud.com/src/schedule_appointment.php?to_delete_id=" . $userProfile['id'];
+        echo '<a href="' . $link . '" class="confirmation">Delete User</a>';
+    }
+
+    ?>
     <div class="center_image_profile">
         <img src="<?php echo $userProfile['picture_url'] ?>" />
     </div><br/><br/>
@@ -178,6 +207,16 @@ if(empty($_SESSION['user'])) {
         }
         
     ?>
+
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
 
 </div>
 
