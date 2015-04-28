@@ -249,14 +249,14 @@ class Diagnosis {
             $query4 = "
                     UPDATE payout
                     SET
-                        amount_due = :amount_due
+                        amount_due = :amount_due,
                         date = :date_object
                     WHERE
                         doctor_id = :doctor_id
                     ";
             $query_params4 = array(
                 ':amount_due' => $amount_due,
-                ':date_object' => date("m-d-y"),
+                ':date_object' => date("m/d/y"),
                 ':doctor_id' => $doctorInfo['id']
             );
             try {
