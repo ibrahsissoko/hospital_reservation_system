@@ -96,7 +96,7 @@ if(empty($_SESSION['user'])) {
     <?php
 
     if ($_SESSION['user']['user_type_id'] == 4) {
-        $link = "http://wal-engproject.rhcloud.com/src/schedule_appointment.php?to_delete_id=" . $userProfile['id'];
+        $link = "http://wal-engproject.rhcloud.com/src/user_page.php?to_delete_id=" . $userProfile['id'];
         echo '<a href="' . $link . '" class="confirmation">Delete User</a>';
     }
 
