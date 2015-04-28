@@ -250,13 +250,13 @@ class Diagnosis {
                     UPDATE payout
                     SET
                         amount_due = :amount_due
-                        last_date = :date_object
+                        date = :date_object
                     WHERE
                         doctor_id = :doctor_id
-                    ";    
+                    ";
             $query_params4 = array(
                 ':amount_due' => $amount_due,
-                ':date_object' => date("m/d/y") . "",
+                ':date_object' => date("m-d-y"),
                 ':doctor_id' => $doctorInfo['id']
             );
             try {
@@ -264,7 +264,7 @@ class Diagnosis {
                 $stmt4->execute($query_params4);
             } catch(PDOException $e) {
                 die("Failed to update payout table. " . $e->getMessage());
-            }      
+            }
         } else {
             // Insert into the database as opposed to updating.
             $query4 = "
