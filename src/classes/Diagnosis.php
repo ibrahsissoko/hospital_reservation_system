@@ -250,7 +250,7 @@ class Diagnosis {
                     UPDATE payout
                     SET
                         amount_due = :amount_due
-                        date = :date_object
+                        last_date = :date_object
                     WHERE
                         doctor_id = :doctor_id
                     ";    
