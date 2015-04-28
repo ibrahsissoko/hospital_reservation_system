@@ -14,6 +14,7 @@ class Diagnosis {
     private $time;
     private $db;
     private $prescriptionID;
+    private $medication;
     public $patientInfo;
     private $diagnosis;
     private $observations;
@@ -30,6 +31,7 @@ class Diagnosis {
         $this->date = $date;
         $this->time = $time;
         $this->amount_due = 500.00;
+        $this->medication = $medication;
         if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
             $this->observations = $observations;
@@ -194,7 +196,7 @@ class Diagnosis {
                 doctor_id = :doctor_id
             ";
         $query_params = array (
-            ':doctor_id' => $this->session['user']['id']
+            ':doctor_id' => $this->doctorId
         );
         try {
             $stmt = $this->db->prepare($query);
@@ -210,7 +212,7 @@ class Diagnosis {
                     id = :doctor_id
                 ";
         $query_params2 = array(
-            ':doctor_id' => $this->session['user']['id']
+            ':doctor_id' => $this->doctorId
         );
         try {
             $stmt2 = $this->db->prepare($query2);
@@ -255,7 +257,7 @@ class Diagnosis {
             $query_params4 = array(
                 ':amount_due' => $amount_due,
                 ':date' => date("m/d/y"),
-                ':doctor_id' => $this->session['user']['id']
+                ':doctor_id' => $this->doctorId
             );
             try {
                 $stmt4 = $this->db->prepare($query4);
@@ -276,7 +278,7 @@ class Diagnosis {
                         :amount_due
                     )";    
             $query_params4 = array(
-                ':doctor_id' => $this->session['user']['id'],
+                ':doctor_id' => $this->doctorId,
                 ':date' => date("m/d/y"),
                 ':amount_due' => $amount_due
             );
