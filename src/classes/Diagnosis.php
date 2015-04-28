@@ -6,6 +6,7 @@ class Diagnosis {
     public $session;
     public $doctorEmail;
     public $patientEmail;
+    private $doctorId;
     private $doctorName;
     private $patientName;
     private $drug_name;
@@ -20,7 +21,8 @@ class Diagnosis {
     public $success;
     public $error;
 
-    function __construct($doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$date,$time,$db,$medication) {
+    function __construct($doctorId, $doctorName, $patientName, $doctorEmail, $diagnosis, $observations,$date,$time,$db,$medication) {
+        $this->doctorId = $doctorId;
         $this->doctorName = preg_replace('/([a-z])([A-Z])/s','$1 $2', $doctorName);
         $this->patientName = $patientName;
         $this->doctorEmail = $doctorEmail;
