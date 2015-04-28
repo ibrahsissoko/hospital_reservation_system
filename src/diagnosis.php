@@ -94,7 +94,7 @@
         $appointmentInfo = $stmt->fetch();
         $patientFLName = explode(" ", $appointmentInfo["patient_name"]);
     ?>
-    <form action="diagnosis.php" method="get">
+    <form action="diagnosis.php" method="get" onsubmit="return confirm('Are you sure you want to submit this diagnosis?');">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']);?>" />
         Doctor First Name:<br/>
         <input type="text" name="doctor_first_name" value="<?php echo $_SESSION["user"]["first_name"];?>" readonly="readonly" /><br/>
