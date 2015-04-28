@@ -1,6 +1,9 @@
 Luke:
     - Admins can delete users
-    - Added confirmation dialog to releasing bills and removing user
+    - Added confirmation dialogs:
+        - releasing bills
+        - removing user
+        - release checks
 
 Will:
 
