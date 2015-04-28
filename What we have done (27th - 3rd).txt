@@ -1,0 +1,7 @@
+Luke:
+    - Admins can delete users
+    - Added confirmation dialog to releasing bills and removing user
+
+Will:
+
+Anu:

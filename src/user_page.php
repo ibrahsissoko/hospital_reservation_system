@@ -26,8 +26,8 @@ if(empty($_SESSION['user'])) {
         die("Failed to run query: " . $ex->getMessage());
     }
 
-    header("Location: ../index.php");
-    die("Redirecting to index.php");
+    header("Location: home.php");
+    die("Redirecting to home.php");
 } else {
 
     $query = "
