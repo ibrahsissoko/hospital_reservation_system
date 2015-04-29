@@ -305,6 +305,7 @@ class Diagnosis {
                     date,
                     time,
                     amount_due,
+                    original_due,
                     medication
                 ) VALUES (
                     :observations,
@@ -317,6 +318,7 @@ class Diagnosis {
                     :date,
                     :time,
                     :amount_due,
+                    :original_due,
                     :medication
                 )
                 ";    
@@ -331,6 +333,7 @@ class Diagnosis {
         ':date' => $this->date,
         ':time' => $this->time,
         ':amount_due' => $this->amount_due,
+        ':original_due' => $this->amount_due,
         ':medication' => $this->drug_name
     );
     try {

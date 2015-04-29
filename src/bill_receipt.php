@@ -69,12 +69,15 @@ if (!empty($prescriptionInfo)) {
     $pdf->MultiCell(80,8,$prescriptionInfo['usage_directions'],0);
     $pdf->SetFont('Arial','');
 }
-$pdf->Write(10,'Please submit you payment soon by clicking on the Pay link next to your bill on the view bills page'
-        . ' or by clicking ',0,1);
-$pdf->SetTextColor(0,0,255);
-$pdf->SetFont('','U');
-$pdf->Write(10,'here','http://wal-engproject.rhcloud.com/src/pay_bill.php?id=' . $_GET['id']);
-$pdf->SetTextColor(0,0,0);
+
+if(intval($diagnosisInfo['released_by_admin']) == 1) {
+    $pdf->Write(10,'Please submit you payment soon by clicking on the Pay link next to your bill on the view bills page'
+            . ' or by clicking ',0,1);
+    $pdf->SetTextColor(0,0,255);
+    $pdf->SetFont('','U');
+    $pdf->Write(10,'here','http://wal-engproject.rhcloud.com/src/pay_bill.php?id=' . $_GET['id']);
+    $pdf->SetTextColor(0,0,0);
+}
 $pdf->Cell(50,20,'',0,1);
 $pdf->SetFont('Arial','B',16);
 $pdf->Cell($pdf->w-20,10,'Billing Details:',0,1,'C');
