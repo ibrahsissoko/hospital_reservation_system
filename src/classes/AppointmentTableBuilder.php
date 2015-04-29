@@ -82,7 +82,7 @@ class AppointmentTableBuilder {
                            user_type_id = :user_type
                         ";
                 $name = explode(" ", $row[$appointmentWith . "_name"]);
-                if ($appointmentWith == "doctor") {
+                if ($appointmentWith == "patient") {
                     $userID = "1";
                 } else {
                     $userID = "2";
