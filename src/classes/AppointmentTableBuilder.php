@@ -37,14 +37,14 @@ class AppointmentTableBuilder {
                     completed = :completed
                 ";
             $query_params = array(
-                ":" . $userType . "Email" => $_SESSION["user"]["email"],
+                ":" . $userType . "Email" => $userProfile["email"],
                 ":completed" => "0"
             );
         }
 
         try {
             $stmt = $db->prepare($query);
-            $result = $stmt->execute($query_params);
+            $stmt->execute($query_params);
         } catch(PDOException $ex) {
             die("Failed to run query: " . $ex->getMessage());
         }
@@ -82,14 +82,19 @@ class AppointmentTableBuilder {
                            user_type_id = :user_type
                         ";
                 $name = explode(" ", $row[$appointmentWith . "_name"]);
+                if ($appointmentWith == "doctor") {
+                    $userID = "1";
+                } else {
+                    $userID = "2";
+                }
                 $query_params2 = array(
                     ":appointmentWithFirstName" => $name[0],
                     ":appointmentWithLastName" => $name[1],
-                    ":user_type" => "2"
+                    ":user_type" => $userID
                 );
                 try {
                     $stmt2 = $db->prepare($query2);
-                    $result2 = $stmt2->execute($query_params2);
+                    $stmt2->execute($query_params2);
                 } catch(PDOException $ex) {
                     die("Failed to run query: " . $ex->getMessage());
                 }
