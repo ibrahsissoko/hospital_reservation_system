@@ -68,9 +68,9 @@
 </div>
 
 <div class="container hero-unit">
-    <h1>Register</h1> <br />
+    <h1>Register</h1> <br/><br/>
     <form action="register.php" method="post">
-
+        User type:<br/>
         <select name="user_type_id">
             <?php
 
@@ -106,17 +106,17 @@
             }
 
             ?>
-        </select>
-        Access Code (not applicable for patients):
+        </select><br/>
+        Access Code (not applicable for patients):<br/>
         <input type="text" name="access_code" value="<?php echo htmlspecialchars($_POST['access_code'])?>" />
-        <span class="error"><?php echo $r->noAccessCode; ?></span>
-        Email:
+        <span class="error"><?php echo $r->noAccessCode; ?></span><br/>
+        Email:<br/>
         <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'])?>" />
-        <span class="error"> * <?php echo $r->noEmail; echo $r->incorrectEmail; echo $r->registeredEmail;?></span>
-        Password:
+        <span class="error"> * <?php echo $r->noEmail; echo $r->incorrectEmail; echo $r->registeredEmail;?></span><br/>
+        Password:<br/>
         <input type="password" name="password" value="" />
-        <span class="error"> * <?php echo $r->noPassword; echo $r->badPassword; ?></span>
-        Confirm Password:
+        <span class="error"> * <?php echo $r->noPassword; echo $r->badPassword; ?></span><br/>
+        Confirm Password:<br/>
         <input type="password" name="confirmPassword" value="" />
         <span class="error"> * <?php echo $r->noConfirmPassword;?></span><br/>
         <span class="error"><?php echo $r->noPasswordMatch;?></span><br/>
