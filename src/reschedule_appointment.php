@@ -76,12 +76,14 @@
     <h1>Reschedule an Appointment</h1> <br />
     <form action="" method="post" id="mainForm">
         <?php
-            echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ".<br/>";
-            echo "Date:<br/>";
             if (empty($_POST['date'])) {
+                echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ". On " . $date . "<br/>";
+                echo "Click below to change the date:<br/>";
                 echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $date . '" onchange="dateUpdated()"/><br/>';
             } else {
-                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . $date . '" onchange="dateUpdated()"/><br/>';
+                echo "You are currently scheduled with " . $appointmentInfo['doctor_name'] . ". On " . $date . "<br/>";
+                echo "New Date:<br/>";
+                echo '<input type="text" id="datepicker" name ="date" readonly="readonly" value="' . htmlspecialchars($_POST['date']) . '" onchange="dateUpdated()"/><br/>';
             }
             $query2 = "
                    SELECT *
