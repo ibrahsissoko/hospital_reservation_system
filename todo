@@ -1,21 +1,14 @@
 Will:
 
-    - Doctor paid by appointment
-    - Start at 500
-    - Up 50 every 2 years
-    - Max out at 800
-    - Payout table: id, doctor_id, date
-    - Document: number of appointments, total pay, thank you message
-    - Admin notification after cerain number of days that doctor hasn't been paid..and they have pay..
-    - Validations of user information
-
+    - Base salary
+    - Random polishing/debugging for presentation purposes
 
 Luke:
     - Try to fix the check boxes not being filled correctly on the doctor info for days available
 
 Anu:
 
-
+   - Nurse pay/salary
 
 
 Anyone:
