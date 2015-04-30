@@ -8,5 +8,9 @@ Luke:
         - release checks
 
 Will:
+    - Fix formatting of registration page
+    - Fix ability to change date on appointment rescheduling
+    - Modified links in building appointment viewing table from doctor perspective so that they can see patient info correctly
+
 
 Anu:
