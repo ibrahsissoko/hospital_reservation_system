@@ -74,7 +74,7 @@
             echo '<tr><td>Date</td><td>Amount</td><td>Receipt</td></tr>';
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr><td>' . $row['date'] . '</td><td>$' . $row['amount_due'] . '</td>';
-                $link = "http://wal-engproject.rhcloud.com/src/check_receipt.php?id=" . $row['id'];
+                $link = "http://wal-engproject.rhcloud.com/src/check_receipt.php?id=" . $row['doctor_id'];
                 echo '<td><a href="' . $link . '">Receipt</a></td></tr>';
             }
             echo '</table><br/><br/>';
