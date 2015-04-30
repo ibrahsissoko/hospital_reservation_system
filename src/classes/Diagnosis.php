@@ -32,6 +32,10 @@ class Diagnosis {
         $this->time = $time;
         $this->amount_due = 500.00;
         $this->medication = $medication;
+        if (empty($this->medication)) {
+            // Still considered empty, but at least it can't be null now.
+            $this->medication = "";
+        }
         if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
             $this->observations = $observations;

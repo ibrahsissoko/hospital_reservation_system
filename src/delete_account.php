@@ -5,7 +5,7 @@
 
     require("config.php");
     
-    if(!empty($_POST)) {
+    if(!empty($_POST) && isset($_POST['submitButton'])) {
         $email = $_SESSION['user']['email'];
         $query = "
             SELECT *
@@ -96,7 +96,7 @@
     <form action="delete_account.php" method="post">
         Password:<br/>
         <input type="password" name="password" value=""><br/><br/>
-        <input type="submit" name="submit" class="btn btn-info" value="Submit"/><br/><br/>
+        <input type="submit" name="submitButton" class="btn btn-info" value="Submit"/><br/><br/>
         <span class="success"><?php echo $success;?></span>
         <span class="error"><?php echo $error;?></span>
     </form>

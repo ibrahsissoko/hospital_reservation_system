@@ -12,15 +12,10 @@ class PatientInfo extends UserInfo {
             $valid = false;
         }
         if (!empty($post['dob'])) {
-            if (!preg_match("(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}", $post['dob'])) {
-                $this->error .= "Please enter a valid date of birth. ";
+            $calcAge = intval(date("y")) - intval(substr($post['dob'],6,4));
+            if (!($calcAge == $age || $calcAge == $age + 1)) {
+                $this->error .= "Please enter a date of birth that corresponds with your age. ";
                 $valid = false;
-            } else {
-                $calcAge = intval(date("y")) - intval(substr($post['dob'],6,4));
-                if (!($calcAge == $age || $calcAge == $age + 1)) {
-                    $this->error .= "Please enter a date of birth that corresponds with your age. ";
-                    $valid = false;
-                }
             }
         }
         if(!empty($post['zip']) && (strlen($post['zip']) != 5 || !ctype_digit($post['zip']))) {

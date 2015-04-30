@@ -11,6 +11,8 @@ Will:
     - Fix formatting of registration page
     - Fix ability to change date on appointment rescheduling
     - Modified links in building appointment viewing table from doctor perspective so that they can see patient info correctly
-
+    - Added patient name to view when admins release bills
+    - Fixed an issue with calculating proper age of user based on age field or date of birth
+    - Don't allow medication to be null-instead just make it an empty string
 
 Anu:

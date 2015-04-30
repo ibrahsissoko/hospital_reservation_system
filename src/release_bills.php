@@ -68,9 +68,9 @@ if(empty($_SESSION['user'])) {
     }
     if ($stmt->rowCount() > 0) {
         echo '<table border="1" style="width:100%">';
-        echo '<tr><td>Patient</td><td>Date</td><td>Time</td><td>Bill</td><td>Receipt</td><td>Release</td></tr>';
+        echo '<tr><td>Patient</td><td>Doctor</td><td>Date</td><td>Time</td><td>Bill</td><td>Receipt</td><td>Release</td></tr>';
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr><td>' . $row['doctor_name']. '</td><td>' . $row['date'] . '</td><td>' . $row['time'] . '</td><td>$' . $row['amount_due'] . '</td>';
+            echo '<tr><td>' . $row['patient_name'] . '</td><td>' . $row['doctor_name']. '</td><td>' . $row['date'] . '</td><td>' . $row['time'] . '</td><td>$' . $row['amount_due'] . '</td>';
             $link1 = "http://wal-engproject.rhcloud.com/src/bill_receipt.php?id=" . $row['id'];
             $link2 = "http://wal-engproject.rhcloud.com/src/release_bill_executor.php?id=" . $row['id'];
             echo '<td><a href="' . $link1 . '">Receipt</a></td><td><a href="' . $link2 . '" class="confirmation">Release</a></td></tr>';
