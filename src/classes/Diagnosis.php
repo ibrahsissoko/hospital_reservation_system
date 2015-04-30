@@ -70,7 +70,7 @@ class Diagnosis {
                 $this->prescriptionID = $row['id'];
                 $this->amount_due += intval($row['price']);
             } else {
-                $this->drugName = "dummy";
+                $this->drug_name = "dummy";
                 $this->prescriptionID = 0;
             }
         } else {
