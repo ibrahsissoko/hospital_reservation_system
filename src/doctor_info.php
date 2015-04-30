@@ -83,7 +83,7 @@
             <?php
 
             $query = "
-                SELECT department_id
+                SELECT *
                 FROM users
                 WHERE
                     id = :id
@@ -131,33 +131,15 @@
         <input type="text" name="years_of_experience" value="<?php echo htmlspecialchars($_SESSION['user']['years_of_experience']);?>" />
         <br/>
         Availability:<br/>
-        <input type="checkbox" name="availability[]" value="M" <?php (strpos($_SESSION['user']['availability'],'M') !== false) ? 'checked=checked' : '' ?> /> Monday<br/>
-        <input type="checkbox" name="availability[]" value="T" <?php (strpos($_SESSION['user']['availability'],'T') !== false) ? 'checked=checked' : '' ?> /> Tuesday<br/>
-        <input type="checkbox" name="availability[]" value="W" <?php (strpos($_SESSION['user']['availability'],'W') !== false) ? 'checked=checked' : '' ?> /> Wednesday<br/>
-        <input type="checkbox" name="availability[]" value="R" <?php (strpos($_SESSION['user']['availability'],'R') !== false) ? 'checked=checked' : '' ?> /> Thursday<br/>
-        <input type="checkbox" name="availability[]" value="F" <?php (strpos($_SESSION['user']['availability'],'F') !== false) ? 'checked=checked' : '' ?> /> Friday<br/><br/>
+        <input type="checkbox" name="availability[]" value="M" <?php (strpos($row['availability'],'M') !== false) ? 'checked=checked' : '' ?> /> Monday<br/>
+        <input type="checkbox" name="availability[]" value="T" <?php (strpos($row['availability'],'T') !== false) ? 'checked=checked' : '' ?> /> Tuesday<br/>
+        <input type="checkbox" name="availability[]" value="W" <?php (strpos($row['availability'],'W') !== false) ? 'checked=checked' : '' ?> /> Wednesday<br/>
+        <input type="checkbox" name="availability[]" value="R" <?php (strpos($row['availability'],'R') !== false) ? 'checked=checked' : '' ?> /> Thursday<br/>
+        <input type="checkbox" name="availability[]" value="F" <?php (strpos($row['availability'],'F') !== false) ? 'checked=checked' : '' ?> /> Friday<br/><br/>
         Shift:
         <select name="shift_id">
             <?php
 
-            $query = "
-                SELECT shift_id
-                FROM users
-                WHERE
-                    id = :id
-                ";
-            $query_params = array(
-                ':id' => $_SESSION['user']['id']
-            );
-
-            try {
-                $stmt = $db->prepare($query);
-                $result = $stmt->execute($query_params);
-            } catch(PDOException $ex) {
-                die("Failed to run query: " . $ex->getMessage());
-            }
-
-            $row = $stmt->fetch();
             $shiftId = $row['shift_id'];
 
             $query = "
