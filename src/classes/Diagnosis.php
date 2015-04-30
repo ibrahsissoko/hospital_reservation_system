@@ -32,10 +32,6 @@ class Diagnosis {
         $this->time = $time;
         $this->amount_due = 500.00;
         $this->medication = $medication;
-        if (empty($this->medication)) {
-            // Still dummy, but at least it can't be null now.
-            $this->medication = "dummy";
-        }
         if (!empty($diagnosis) || !empty($observations)) {
             $this->diagnosis = $diagnosis;
             $this->observations = $observations;
@@ -74,6 +70,7 @@ class Diagnosis {
                 $this->prescriptionID = $row['id'];
                 $this->amount_due += intval($row['price']);
             } else {
+                $this->drugName = "dummy";
                 $this->prescriptionID = 0;
             }
         } else {
