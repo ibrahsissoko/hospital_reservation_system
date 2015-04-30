@@ -127,13 +127,15 @@ class Register {
                         password,
                         salt,
                         user_type_id,
-                        hash
+                        hash,
+                        picture_url
                     ) VALUES (
                         :email,
                         :password,
                         :salt,
                         :user_type_id,
-                        :hash
+                        :hash,
+                        :picture_url
                     )
                     ";
 
@@ -146,7 +148,8 @@ class Register {
             ':password' => $password,
             ':salt' => $salt,
             ':user_type_id' => $post['user_type_id'],
-            ':hash' => $hash
+            ':hash' => $hash,
+            ':picture_url' => 'http://walphotobucket.s3.amazonaws.com/default.jpg'
         );
 
         try {

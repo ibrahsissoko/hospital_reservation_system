@@ -1,5 +1,7 @@
 Luke:
     - Admins can delete users
+    - Fix availability checkboxes on user info pages
+    - added default profile picture when a user registers
     - Added confirmation dialogs:
         - releasing bills
         - removing user
