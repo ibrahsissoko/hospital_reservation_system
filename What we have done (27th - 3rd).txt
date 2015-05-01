@@ -4,8 +4,8 @@ Luke:
     - added default profile picture when a user registers
     - Added confirmation dialogs:
         - releasing bills
-        - removing user
         - release checks
+        - removing user
 
 Will:
     - Fix formatting of registration page
