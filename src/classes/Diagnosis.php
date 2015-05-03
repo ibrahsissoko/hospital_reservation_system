@@ -81,42 +81,10 @@ class Diagnosis {
     function initiate($session, $appointmentId) {
         $this->session = $session;
         if(empty($this->error)){
-            $emailPatient = ($this->patientInfo['diagnosis_confirm_email'] == "Yes" || $this->patientInfo['diagnosis_confirm_email'] == NULL);
-            $emailDoctor = ($session['user']['diagnosis_confirm_email'] == "Yes" || $session['user']['diagnosis_confirm_email'] == NULL);
-            if ($emailPatient && $emailDoctor) {
-                $option = 1;
-            } else if ($emailPatient && !$emailDoctor) {
-                $option = 2;
-            } else if (!$emailPatient && $emailDoctor) {
-                $option = 3;
-            } else if (!$emailPatient && !$emailDoctor) {
-                $option = 4;
-            }
-            switch($option) {
-                case 1:
-                    $this->updateBillTable($appointmentId);
-                         $this->updateDiagnosisTable();
-                         $this->updatePayoutTable();
-                    
-                case 2:
-                    $this->updateBillTable($appointmentId);
-                         $this->updateDiagnosisTable();
-                         $this->updatePayoutTable();
-                    
-                case 3:
-                    $this->updateBillTable($appointmentId);
-                         $this->updateDiagnosisTable();
-                         $this->updatePayoutTable();
-                    
-                case 4:
-                    $this->updateBillTable($appointmentId);
-                    $this->updateDiagnosisTable();
-                    $this->updatePayoutTable();
-                    $this->success = "Diagnosis saved!";
-                    return true;
-                default:
-                    die("An internal error occurred.");
-            }
+            $this->updateBillTable($appointmentId);
+            $this->updateDiagnosisTable();
+            $this->updatePayoutTable();
+            $this->success = "Diagnosis saved!";
         }
     }
 
