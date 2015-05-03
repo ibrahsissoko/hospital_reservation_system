@@ -148,7 +148,7 @@ class AppointmentTableBuilder {
                         . "<td>" . $row["date"] . "</td><td>" . $row["time"] . "</td><td><a href=\""
                         . $link3 . "\">" . $row["nurse_name"] . "</td><td><a href=\"reschedule_appointment.php?id=" . $row['id']
                         . "&date=" . $row['date'] . "\">Reschedule</a></td><td><a href=\"cancel_appointment.php?id=". $row['id']
-                        . "\">Cancel</a><td><a href=\"bill_receipt.php?id=". $diagnosis['id']
+                        . "\" class='confirmation'>Cancel</a><td><a href=\"bill_receipt.php?id=". $diagnosis['id']
                         . "\">Bill/Diagnosis</a></td></tr>";
                 } else {
                     if ($userType == "doctor") {
