@@ -211,6 +211,7 @@ class ScheduleAppointment {
                         }
                         if(!$nurseAlreadyScheduled) {
                             $this->nurseInfo = $row;
+                            $this->nurseId = $row['id'];
                             break;
                         }
                     }
@@ -221,24 +222,25 @@ class ScheduleAppointment {
         $this->nurseEmail = $this->nurseInfo['email'];
         $this->nurseName = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
     }
+
     function updatePayoutTable(){
-        $query2 = "
-                SELECT *
-                FROM users
-                WHERE
-                    email = :nurse_email
-                ";
-        $query_params2 = array(
-            ':nurse_email' => $this->nurseEmail
-        );
-        try {
-            $stmt2 = $this->db->prepare($query2);
-            $stmt2->execute($query_params2);
-        } catch(PDOException $e) {
-            die("Failed to gather doctor information. " . $e->getMessage());
-        }
-        $nurseInfo2 = $stmt2->fetch(); 
-        $this->$nurseId = $nurseInfo2['id'];
+        // $query2 = "
+        //         SELECT *
+        //         FROM users
+        //         WHERE
+        //             email = :nurse_email
+        //         ";
+        // $query_params2 = array(
+        //     ':nurse_email' => $this->nurseEmail
+        // );
+        // try {
+        //     $stmt2 = $this->db->prepare($query2);
+        //     $stmt2->execute($query_params2);
+        // } catch(PDOException $e) {
+        //     die("Failed to gather doctor information. " . $e->getMessage());
+        // }
+        // $nurseInfo2 = $stmt2->fetch(); 
+        // $this->$nurseId = $nurseInfo2['id'];
         $query = "
             SELECT * 
             FROM payout
@@ -261,7 +263,7 @@ class ScheduleAppointment {
                     id = :department_id
                 ";
         $query_params3 = array(
-            ':department_id' => $nurseInfo2['department_id']
+            ':department_id' => $this->nurseInfo['department_id']
         );
         try {
             $stmt3 = $this->db->prepare($query3);
@@ -270,7 +272,7 @@ class ScheduleAppointment {
             die("Failed to gather department information. " . $e->getMessage());
         }
         $departmentInfo = $stmt3->fetch();
-        $amount_due = 40 + (intval($nurseInfo2['years_of_experience'])/2)*2;
+        $amount_due = 40 + (intval($this->nurseInfo['years_of_experience'])/2)*2;
         if ($amount_due > 100) {
             $amount_due = 100;
         }
@@ -289,7 +291,7 @@ class ScheduleAppointment {
             $query_params4 = array(
                 ':amount_due' => $amount_due,
                 ':date_object' => date("m/d/y"),
-                ':doctor_id' => $nurseInfo2['id']
+                ':doctor_id' => $this->nurseInfo['id']
             );
             try {
                 $stmt4 = $this->db->prepare($query4);
