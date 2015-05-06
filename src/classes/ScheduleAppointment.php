@@ -10,7 +10,6 @@ class ScheduleAppointment {
     private $nurseEmail;
     private $nurseName;
     private $nurseInfo;
-    private $nurseInfo2;
     private $nurseId;
     private $date;
     private $time;
