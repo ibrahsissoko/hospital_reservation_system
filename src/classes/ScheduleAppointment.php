@@ -10,6 +10,8 @@ class ScheduleAppointment {
     private $nurseEmail;
     private $nurseName;
     private $nurseInfo;
+    private $nurseInfo2;
+    private $nurseId;
     private $date;
     private $time;
     private $db;
@@ -54,6 +56,7 @@ class ScheduleAppointment {
     function initiate($_SESSION) {
         if (empty($this->error)) {
             $this->assignNurse();
+            $this->updatePayoutTable();
             $emailPatient = ($_SESSION['user']['appointment_confirm_email'] == "Yes" || $_SESSION['user']['appointment_confirm_email'] == NULL);
             $emailDoctor = ($this->doctorInfo['appointment_confirm_email'] == "Yes" || $this->doctorInfo['appointment_confirm_email'] == NULL);
             $emailNurse = ($this->nurseInfo['appointment_confirm_email'] == "Yes" || $this->nurseInfo['appointment_confirm_email'] == NULL);
@@ -219,7 +222,108 @@ class ScheduleAppointment {
         $this->nurseEmail = $this->nurseInfo['email'];
         $this->nurseName = $this->nurseInfo['first_name'] . " " . $this->nurseInfo['last_name'];
     }
-    
+    function updatePayoutTable(){
+        $query2 = "
+                SELECT *
+                FROM users
+                WHERE
+                    email = :nurse_email
+                ";
+        $query_params2 = array(
+            ':nurse_email' => $this->nurseEmail
+        );
+        try {
+            $stmt2 = $this->db->prepare($query2);
+            $stmt2->execute($query_params2);
+        } catch(PDOException $e) {
+            die("Failed to gather doctor information. " . $e->getMessage());
+        }
+        $nurseInfo2 = $stmt2->fetch(); 
+        $this->$nurseId = $nurseInfo2['id'];
+        $query = "
+            SELECT * 
+            FROM payout
+            WHERE
+                doctor_id = :doctor_id
+            ";
+        $query_params = array (
+            ':doctor_id' => $this->nurseId
+        );
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute($query_params);
+        } catch(PDOException $e) {
+            die("Failed to update payout table. " . $e->getMessage());
+        }
+        $query3 = "
+                SELECT *
+                FROM department
+                WHERE
+                    id = :department_id
+                ";
+        $query_params3 = array(
+            ':department_id' => $nurseInfo2['department_id']
+        );
+        try {
+            $stmt3 = $this->db->prepare($query3);
+            $stmt3->execute($query_params3);
+        } catch(PDOException $e) {
+            die("Failed to gather department information. " . $e->getMessage());
+        }
+        $departmentInfo = $stmt3->fetch();
+        $amount_due = 40 + (intval($nurseInfo2['years_of_experience'])/2)*2;
+        if ($amount_due > 100) {
+            $amount_due = 100;
+        }
+        $amount_due *= floatval($departmentInfo['pay_scaling_factor']);
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch();
+            $amount_due += intval($row['amount_due']);
+            $query4 = "
+                    UPDATE payout
+                    SET
+                        amount_due = :amount_due,
+                        date = :date_object
+                    WHERE
+                        doctor_id = :doctor_id
+                    ";
+            $query_params4 = array(
+                ':amount_due' => $amount_due,
+                ':date_object' => date("m/d/y"),
+                ':doctor_id' => $nurseInfo2['id']
+            );
+            try {
+                $stmt4 = $this->db->prepare($query4);
+                $stmt4->execute($query_params4);
+            } catch(PDOException $e) {
+                die("Failed to update payout table. " . $e->getMessage());
+            }
+        } else {
+            // Insert into the database as opposed to updating.
+            $query4 = "
+                    INSERT INTO payout (
+                        doctor_id,
+                        date,
+                        amount_due
+                    ) VALUES (
+                        :doctor_id,
+                        :date,
+                        :amount_due
+                    )";    
+            $query_params4 = array(
+                ':doctor_id' => $this->nurseId,
+                ':date' => date("m/d/y"),
+                ':amount_due' => $amount_due
+            );
+            try {
+                $stmt4 = $this->db->prepare($query4);
+                $stmt4->execute($query_params4);
+            } catch(PDOException $e) {
+                die("Failed to insert values into payout table. " . $e->getMessage());
+            }      
+        }  
+    }
+
     function sendEmailToPatient() {
         $message = 'Hello, ' . $this->patientName . '!<br/><br/>'
                 . 'You recently scheduled an appointment with ' . $this->doctorName

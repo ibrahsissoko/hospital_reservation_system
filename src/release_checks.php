@@ -64,9 +64,9 @@ if(empty($_SESSION['user'])) {
         die("Failed to run query: " . $ex->getMessage());
     }
     if ($stmt->rowCount() > 0) {
-        echo "Click the 'Release' button to have the doctor receive their payment.<br/><br/>";
+        echo "Click the 'Release' button to have the doctor/nurse receive their payment.<br/><br/>";
         echo '<table border="1" style="width:100%">';
-        echo '<tr><td>Doctor</td><td>Last Paid</td><td>Total Payment Due</td><td>Receipt</td><td>Release</td></tr>';
+        echo '<tr><td>Doctor/Nurse</td><td>Last Paid</td><td>Total Payment Due</td><td>Receipt</td><td>Release</td></tr>';
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $query2 = "
                         SELECT *
